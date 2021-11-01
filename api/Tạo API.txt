@@ -1,0 +1,9 @@
+I.	Tạo đồ án
+	1.  Tạo thư mục chứa solution và project (api - thư mục chứa tất cả)
+    2.  Tạo 1 solution tại thư mục MVC_Movie: ClockStoreWeb\api> dotnet new sln
+    3.  Tạo project: ClockStoreWeb\api> dotnet new webapi -o StoreApi
+    4.  ClockStoreWeb\api> dotnet sln add StoreApi 
+ 
+II. Cấu hình thư mục 
+    1.  Tạo thư mục Models
+    2.  Tạo thư mục wwwroot

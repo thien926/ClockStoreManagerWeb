@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "d1XIfB3+Fd4Q8wks9AXLNHzkV6thoUPDXerMUbR0+AfkvYFT7bu/XjirpUHsYfb9W2oj8DyljH0i51jf2jGKDA==",
+  "success": true,
+  "projectFilePath": "G:\\Git\\ClockStoreWeb\\api\\StoreApi\\StoreApi.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\FPT SHOP\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\FPT SHOP\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\FPT SHOP\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
+    "C:\\Users\\FPT SHOP\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
+    "C:\\Users\\FPT SHOP\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
+    "C:\\Users\\FPT SHOP\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\5.6.3\\swashbuckle.aspnetcore.swaggerui.5.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}

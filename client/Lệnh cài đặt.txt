@@ -1,0 +1,2 @@
+1.	npx create-react-app client
+2.  "start": "SET PORT=4200 && react-scripts start" tại package.json
