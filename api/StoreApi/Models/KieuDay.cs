@@ -12,6 +12,10 @@ namespace StoreApi.Models
 
         [Required(ErrorMessage = "Tên Kiểu Dây là bắt Buộc")]
         [StringLength(maximumLength:200, MinimumLength = 3, ErrorMessage = "Tên kiểu dây từ 3 đến 200 kí tự")]
-        public string Name { get; set; }
+        public string name { get; set; }
+        public ICollection<SanPham> SanPhams { get; set; }
+        public KieuDay() {
+            SanPhams = new HashSet<SanPham>();
+        }
     }
 }

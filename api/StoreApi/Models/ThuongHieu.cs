@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace StoreApi.Models
 {
-    public class KieuMay
+    public class ThuongHieu
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Tên Kiểu Máy là bắt Buộc")]
-        [StringLength(maximumLength:200, MinimumLength = 3, ErrorMessage = "Tên Kiểu Máy từ 3 đến 200 kí tự")]
+        [Required(ErrorMessage = "Tên thương hiệu là bắt Buộc")]
+        [StringLength(maximumLength:200, MinimumLength = 3, ErrorMessage = "Tên thương hiệu từ 3 đến 200 kí tự")]
         public string name { get; set; }
         public ICollection<SanPham> SanPhams { get; set; }
-        public KieuMay() {
+        public ThuongHieu() {
             SanPhams = new HashSet<SanPham>();
         }
     }
