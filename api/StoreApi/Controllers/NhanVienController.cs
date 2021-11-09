@@ -73,6 +73,9 @@ namespace StoreApi.Controllers
                 var token = jwtNhanVien.Verify(jwt);
                 string userId = token.Issuer;
                 var user = nhanVienRepository.NhanVien_GetByUser(userId);
+                
+                // quyenRepository.getById(user.quyenId)
+
                 if(user == null) {
                     return null;
                 }

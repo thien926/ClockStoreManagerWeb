@@ -38,15 +38,16 @@ namespace StoreApi
             // https://topdev.vn/blog/cors-la-gi/
             services.AddCors(options => {
                 options.AddPolicy("CorsPolicy", policy => {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(new []{"http://localhost:4200"});
+                    policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(new []{"http://localhost:4200"});
                 });
             });
             services.AddDbContext<ClockStoreDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<INhanVienRepository, NhanVienRepository>();
+            
             services.AddScoped<JwtNhanVienService>();
             services.AddScoped<JwtKhachHangService>();
+            services.AddScoped<INhanVienRepository, NhanVienRepository>();
 
         }
 
