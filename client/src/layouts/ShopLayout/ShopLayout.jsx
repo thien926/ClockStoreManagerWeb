@@ -1,7 +1,7 @@
 import React from 'react'
-import Footer from '../../components/Shop/Footer/Footer'
-import Header from '../../components/Shop/Header/Header'
-import Shop from '../../pages/Shop/Shop/Shop'
+import Footer from '../../components/ShopComponents/Footer/Footer'
+import Header from '../../components/ShopComponents/Header/Header'
+import Shop from '../../pages/ShopPages/Shop/Shop'
 import './ShopLayout.css'
 
 function ShopLayout() {

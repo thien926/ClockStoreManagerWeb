@@ -199,13 +199,22 @@ namespace StoreApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("fax")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("status")
-                        .HasColumnType("int");
+                    b.Property<string>("phone")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.HasKey("Id");
 
@@ -217,6 +226,10 @@ namespace StoreApi.Migrations
                     b.Property<string>("user")
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("dateborn")
                         .HasColumnType("datetime2");
@@ -233,8 +246,7 @@ namespace StoreApi.Migrations
 
                     b.Property<string>("password")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("phone")
                         .IsRequired()
@@ -376,7 +388,7 @@ namespace StoreApi.Migrations
                         .IsRequired();
 
                     b.HasOne("StoreApi.Models.NhanVien", "NV")
-                        .WithMany()
+                        .WithMany("hoaDons")
                         .HasForeignKey("NVuser");
 
                     b.Navigation("KH");
@@ -398,19 +410,19 @@ namespace StoreApi.Migrations
             modelBuilder.Entity("StoreApi.Models.SanPham", b =>
                 {
                     b.HasOne("StoreApi.Models.LoaiSanPham", "LSP")
-                        .WithMany()
+                        .WithMany("SanPhams")
                         .HasForeignKey("LSPId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StoreApi.Models.ThuongHieu", "brand")
-                        .WithMany()
+                        .WithMany("SanPhams")
                         .HasForeignKey("brandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StoreApi.Models.KieuMay", "machine")
-                        .WithMany()
+                        .WithMany("SanPhams")
                         .HasForeignKey("machineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -422,7 +434,7 @@ namespace StoreApi.Migrations
                         .IsRequired();
 
                     b.HasOne("StoreApi.Models.KieuDay", "wire")
-                        .WithMany()
+                        .WithMany("SanPhams")
                         .HasForeignKey("wireId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -448,9 +460,29 @@ namespace StoreApi.Migrations
                     b.Navigation("hoadons");
                 });
 
+            modelBuilder.Entity("StoreApi.Models.KieuDay", b =>
+                {
+                    b.Navigation("SanPhams");
+                });
+
+            modelBuilder.Entity("StoreApi.Models.KieuMay", b =>
+                {
+                    b.Navigation("SanPhams");
+                });
+
+            modelBuilder.Entity("StoreApi.Models.LoaiSanPham", b =>
+                {
+                    b.Navigation("SanPhams");
+                });
+
             modelBuilder.Entity("StoreApi.Models.NCC", b =>
                 {
                     b.Navigation("SanPhams");
+                });
+
+            modelBuilder.Entity("StoreApi.Models.NhanVien", b =>
+                {
+                    b.Navigation("hoaDons");
                 });
 
             modelBuilder.Entity("StoreApi.Models.Quyen", b =>
@@ -461,6 +493,11 @@ namespace StoreApi.Migrations
             modelBuilder.Entity("StoreApi.Models.SanPham", b =>
                 {
                     b.Navigation("chitietHDs");
+                });
+
+            modelBuilder.Entity("StoreApi.Models.ThuongHieu", b =>
+                {
+                    b.Navigation("SanPhams");
                 });
 #pragma warning restore 612, 618
         }
