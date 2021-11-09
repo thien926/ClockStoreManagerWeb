@@ -1,14 +1,10 @@
+import { applyMiddleware, createStore } from "redux";
+import appReducers from "./reducers/appReducer";
+import thunk from 'redux-thunk'
 
-import axios from 'axios';
+const Store = createStore(
+    appReducers,
+    applyMiddleware(thunk)
+)
 
-const API_URL = 'http://localhost:3000';
-
-export default function callApi(endpoint, method = 'GET', data) {
-    return axios({
-        method: method,
-        url: `${API_URL}/${endpoint}`,
-        data: data
-    }).catch((err) => {
-        console.log(err);
-    });
-};
+export default Store
