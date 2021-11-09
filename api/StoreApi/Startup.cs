@@ -12,7 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using StoreApi.Interfaces;
 using StoreApi.Repositories;
+using StoreApi.Services;
 
 namespace StoreApi
 {
@@ -41,6 +43,10 @@ namespace StoreApi
             });
             services.AddDbContext<ClockStoreDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<INhanVienRepository, NhanVienRepository>();
+            services.AddScoped<JwtNhanVienService>();
+            services.AddScoped<JwtKhachHangService>();
 
         }
 

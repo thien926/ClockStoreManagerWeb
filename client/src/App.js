@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import Shop from './pages/Shop/Shop/Shop';
+import Shop from './pages/ShopPages/Shop/Shop';
 import { Route, Routes } from 'react-router';
 import AdminLayout from './layouts/AdminLayout/AdminLayout';
-import ProductsAdmin from './pages/Admin/ProductsAdmin/ProductsAdmin';
+import ProductsAdmin from './pages/AdminPages/ProductsAdmin/ProductsAdmin';
 import ShopLayout from './layouts/ShopLayout/ShopLayout';
 
 function App() {

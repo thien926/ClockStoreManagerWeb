@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using StoreApi.Repositories;
 
 namespace StoreApi
 {
@@ -22,5 +24,26 @@ namespace StoreApi
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        // public static void Main(string[] args)
+        // {
+        //     var host = CreateHostBuilder();
+        //     using (var scope = host.Services.CreateScope())
+        //     {
+        //         var services = scope.ServiceProvider;
+        //         var context = services.GetRequiredService<ClockStoreDBContext>();
+        //         SeedData.Initialize(context);
+        //     }
+        //     host.Run();
+        // }
+
+        // public static IHost CreateHostBuilder()
+        // {
+        //     return Host.CreateDefaultBuilder().ConfigureWebHostDefaults(builder =>
+        //     {
+        //         builder.UseStartup<Startup>();
+        //     })
+        //     .Build();
+        // }
     }
 }
