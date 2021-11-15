@@ -89,6 +89,14 @@ function ProductsAdmin() {
                 </table>
             </div>
 
+            <div className='class-phan-trang'>
+                
+                <Link className='btn btn-info' to='1'>1</Link>
+                <a className='btn btn-default' href='1'>2</a>
+                <a className='btn btn-default' href='1'>3</a>
+                <a className='btn btn-default' href='1'>4</a>
+                <a className='btn btn-default' href='1'>5</a>
+            </div>
 
             <div className="row mt-3">
                 <div>
