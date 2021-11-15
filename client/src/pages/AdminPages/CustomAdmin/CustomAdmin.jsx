@@ -1,19 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import './ProductsAdmin.css'
-function ProductsAdmin() {
 
+function CustomAdmin() {
     return (
         <div>
             <div>
-                <h3 className="text-center mt-2">Quản lý sản phẩm</h3>
+                <h3 className="text-center mt-2">Quản lý khách hàng</h3>
                 <hr />
             </div>
             <div className="row">
-                <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <button type="button" className="btn btn-primary">Thêm sản phẩm <i className="fa fa-plus-circle" aria-hidden="true" /></button>
-                </div>
-                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div className="col-xs-7 col-sm-7 col-md-7 col-lg-7">
                     <div className="input-group">
                         <input type="text" className="form-control" id="exampleInputAmount" placeholder="Search" />
                         <span className="input-group-btn">
@@ -21,7 +16,7 @@ function ProductsAdmin() {
                         </span>
                     </div>
                 </div>
-                <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5">
                     <select name id="input" className="form-control" required="required">
                         <option value="a">Sắp xếp theo tên : A-Z</option>
                     </select>
@@ -92,7 +87,7 @@ function ProductsAdmin() {
 
             <div className="row mt-3">
                 <div>
-                    <h3 className="text-center mt-2">Thêm công việc</h3>
+                    <h3 className="text-center mt-2">Sửa khách hàng</h3>
                     <hr />
                 </div>
                 <table className="table table-hover ">
@@ -122,4 +117,4 @@ function ProductsAdmin() {
     )
 }
 
-export default ProductsAdmin
+export default CustomAdmin

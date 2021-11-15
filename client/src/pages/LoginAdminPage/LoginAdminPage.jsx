@@ -42,7 +42,7 @@ function LoginAdmin() {
                         <input type="password" className="form-control" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         <small className="note form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
-                    <button type="submit" className="btn btn-primary mt-4">Đăng nhập</button>
+                    <button type="submit" className="btn btn-primary mt-4 btn-login-admin">Đăng nhập</button>
                 </form>
             </div>
         </div>

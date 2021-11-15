@@ -30,6 +30,10 @@ body{
   background-color: rgb(24, 24, 24);
 }
 
+.card-body-active {
+  background-color: rgb(24, 24, 24);
+}
+
 .btn-collapse {
   float: right;
 }

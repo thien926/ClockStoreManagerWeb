@@ -1,4 +1,5 @@
 import React from 'react'
+import { Outlet } from 'react-router'
 import Footer from '../../components/ShopComponents/Footer/Footer'
 import Header from '../../components/ShopComponents/Header/Header'
 import Shop from '../../pages/ShopPages/Shop/Shop'
@@ -13,7 +14,8 @@ function ShopLayout() {
 
             <Header />
 
-            <Shop />
+            {/* <Shop /> */}
+            <Outlet />
 
             <Footer />
         </div>

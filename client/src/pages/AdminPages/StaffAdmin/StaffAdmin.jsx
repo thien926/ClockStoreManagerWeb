@@ -1,17 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import './ProductsAdmin.css'
-function ProductsAdmin() {
 
+function StaffAdmin() {
     return (
         <div>
             <div>
-                <h3 className="text-center mt-2">Quản lý sản phẩm</h3>
+                <h3 className="text-center mt-2">Quản lý nhân viên</h3>
                 <hr />
             </div>
             <div className="row">
                 <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <button type="button" className="btn btn-primary">Thêm sản phẩm <i className="fa fa-plus-circle" aria-hidden="true" /></button>
+                    <button type="button" className="btn btn-primary">Thêm nhân viên <i className="fa fa-plus-circle" aria-hidden="true" /></button>
                 </div>
                 <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <div className="input-group">
@@ -92,7 +90,7 @@ function ProductsAdmin() {
 
             <div className="row mt-3">
                 <div>
-                    <h3 className="text-center mt-2">Thêm công việc</h3>
+                    <h3 className="text-center mt-2">Thêm nhân viên</h3>
                     <hr />
                 </div>
                 <table className="table table-hover ">
@@ -122,4 +120,4 @@ function ProductsAdmin() {
     )
 }
 
-export default ProductsAdmin
+export default StaffAdmin
