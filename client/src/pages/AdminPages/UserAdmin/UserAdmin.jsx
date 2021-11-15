@@ -2,120 +2,106 @@ import React from 'react'
 
 function UserAdmin() {
     return (
-        <div className="content">
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-8">
-                        <div className="card">
-                            <div className="header">
-                                <h4 className="title">Edit Profile</h4>
-                            </div>
-                            <div className="content">
-                                <form>
-                                    <div className="row">
-                                        <div className="col-md-5">
-                                            <div className="form-group">
-                                                <label>Company (disabled)</label>
-                                                <input type="text" className="form-control" disabled placeholder="Company" defaultValue="Creative Code Inc." />
-                                            </div>
-                                        </div>
-                                        <div className="col-md-3">
-                                            <div className="form-group">
-                                                <label>Username</label>
-                                                <input type="text" className="form-control" placeholder="Username" defaultValue="michael23" />
-                                            </div>
-                                        </div>
-                                        <div className="col-md-4">
-                                            <div className="form-group">
-                                                <label htmlFor="exampleInputEmail1">Email address</label>
-                                                <input type="email" className="form-control" placeholder="Email" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <label>First Name</label>
-                                                <input type="text" className="form-control" placeholder="Company" defaultValue="Mike" />
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <div className="form-group">
-                                                <label>Last Name</label>
-                                                <input type="text" className="form-control" placeholder="Last Name" defaultValue="Andrew" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <div className="form-group">
-                                                <label>Address</label>
-                                                <input type="text" className="form-control" placeholder="Home Address" defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-4">
-                                            <div className="form-group">
-                                                <label>City</label>
-                                                <input type="text" className="form-control" placeholder="City" defaultValue="Mike" />
-                                            </div>
-                                        </div>
-                                        <div className="col-md-4">
-                                            <div className="form-group">
-                                                <label>Country</label>
-                                                <input type="text" className="form-control" placeholder="Country" defaultValue="Andrew" />
-                                            </div>
-                                        </div>
-                                        <div className="col-md-4">
-                                            <div className="form-group">
-                                                <label>Postal Code</label>
-                                                <input type="number" className="form-control" placeholder="ZIP Code" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <div className="form-group">
-                                                <label>About Me</label>
-                                                <textarea rows={5} className="form-control" placeholder="Here can be your description" value="Mike" defaultValue={"Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="submit" className="btn btn-info btn-fill pull-right">Update Profile</button>
-                                    <div className="clearfix" />
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-4">
-                        <div className="card card-user">
-                            <div className="image">
-                                <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..." />
-                            </div>
-                            <div className="content">
-                                <div className="author">
-                                    <a href="#">
-                                        <img className="avatar border-gray" src="assets/img/faces/face-3.jpg" alt="..." />
-                                        <h4 className="title">Mike Andrew<br />
-                                            <small>michael24</small>
-                                        </h4>
-                                    </a>
-                                </div>
-                                <p className="description text-center"> "Lamborghini Mercy <br />
-                                    Your chick she so thirsty <br />
-                                    I'm in that two seat Lambo"
-                                </p>
-                            </div>
-                            <hr />
-                            <div className="text-center">
-                                <button href="#" className="btn btn-simple"><i className="fa fa-facebook-square" /></button>
-                                <button href="#" className="btn btn-simple"><i className="fa fa-twitter" /></button>
-                                <button href="#" className="btn btn-simple"><i className="fa fa-google-plus-square" /></button>
-                            </div>
-                        </div>
-                    </div>
+        <div>
+            <div>
+                <h3 className="text-center mt-2">Quản lý tài khoản</h3>
+                <hr />
+            </div>
+            <div className="row">
+                <button type="button" className="btn btn-primary ml-2">Sửa tài khoản <i className="fa fa-plus-circle" aria-hidden="true" /></button>
+
+                <button type="button" className="btn btn-danger ml-2">Thay đổi mật khẩu <i className="fa fa-edit" aria-hidden="true" /></button>
+
+            </div>
+
+            <div className="row mt-3">
+                <table className="table table-hover ">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Iphone 6</td>
+                            <td>6000.0000đ</td>
+                            <td>
+                                <button type="button" className="btn btn-info">Sửa</button>
+                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Iphone 6</td>
+                            <td>6000.0000đ</td>
+                            <td>
+                                <button type="button" className="btn btn-info">Sửa</button>
+                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Iphone 6</td>
+                            <td>6000.0000đ</td>
+                            <td>
+                                <button type="button" className="btn btn-info">Sửa</button>
+                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Iphone 6</td>
+                            <td>6000.0000đ</td>
+                            <td>
+                                <button type="button" className="btn btn-info">Sửa</button>
+                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Iphone 6</td>
+                            <td>6000.0000đ</td>
+                            <td>
+                                <button type="button" className="btn btn-info">Sửa</button>
+                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div className="row mt-3">
+                <div>
+                    <h3 className="text-center mt-2">Thêm quyền</h3>
+                    <hr />
                 </div>
+                <table className="table table-hover ">
+                    <tbody>
+                        <tr>
+                            <td>Tên</td>
+                            <td>
+                                <input type="email" className="form-control" required="required" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Tên</td>
+                            <td>
+                                <input type="email" className="form-control" required="required" />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan="2"><button type="submit" className="btn btn-primary mt-4 btn-submit-product-admin">Thêm</button></td>
+                        </tr>
+
+                    </tbody>
+                </table>
             </div>
         </div>
 

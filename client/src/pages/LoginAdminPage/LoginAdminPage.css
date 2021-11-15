@@ -1,5 +1,5 @@
 .bg {
-  /* background-color: #0ca3d2; */
+  background-color: #6c757d;
   /* background-color: #2a373b; */
   height: 100vh;
 }
@@ -18,9 +18,9 @@
   color: red!important;
 }
 
-.btn {
+.btn-login-admin {
   margin-left: 35%!important;
-  width: 30%;
+  width: 30%!important;
 }
 
 .mx-auto{
