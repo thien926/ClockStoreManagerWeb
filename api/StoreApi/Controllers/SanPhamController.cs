@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StoreApi.DTOs;
 using StoreApi.Interfaces;
 using StoreApi.Models;
+using StoreApi.Services;
 
 namespace StoreApi.Controllers
 {
@@ -13,6 +15,7 @@ namespace StoreApi.Controllers
     [Route("api/[controller]")]
     public class SanPhamController : ControllerBase
     {
+        private int pageSize = 9;
         private readonly ISanPhamRepository sanPhamRepository;
         public SanPhamController(ISanPhamRepository sanPhamRepository) {
             this.sanPhamRepository = sanPhamRepository;
@@ -48,6 +51,24 @@ namespace StoreApi.Controllers
             catch(Exception e) {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteSP(int id) {
+            var SP = sanPhamRepository.SanPham_GetById(id);
+            if(SP == null) {
+                return NotFound(new { messgae = "Not" });
+            }
+            sanPhamRepository.SanPham_Delete(SP);
+            return Ok(new { messgae = "Ok" });
+        }
+
+        [HttpGet("filter-admin")]
+        public PaginatedList<SanPham> FilterAdmin(FilterDataAdminDto data) {
+            int count;
+            var SanPhams = sanPhamRepository.SanPham_FilterAdmin(data.sort, data.pageIndex, pageSize, out count);
+            var ListSP = new PaginatedList<SanPham>(SanPhams, count, data.pageIndex, pageSize);
+            return ListSP;
         }
     }
 }

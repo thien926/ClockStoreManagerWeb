@@ -13,5 +13,6 @@ namespace StoreApi.Interfaces
         IEnumerable<SanPham> SanPham_GetAll();
         SanPham SanPham_Update(SanPham NV); 
         void SanPham_Delete(SanPham NV); 
+        IEnumerable<SanPham> SanPham_FilterAdmin(string sort, int pageIndex, int pageSize, out int count);
     }
 }

@@ -22,6 +22,7 @@ namespace StoreApi.Repositories
 
         public SanPham SanPham_GetById(int id)
         {
+            // context.SanPhams.
             return context.SanPhams.FirstOrDefault(o => o.Id == id);
         }
 
@@ -30,17 +31,46 @@ namespace StoreApi.Repositories
             return context.SanPhams.ToList();
         }
 
-        public SanPham SanPham_Update(SanPham NV)
+        public SanPham SanPham_Update(SanPham SP)
         {
-            context.SanPhams.Update(NV);
+            context.SanPhams.Update(SP);
             context.SaveChanges();
-            return NV;
+            return SP;
         }
 
-        public void SanPham_Delete(SanPham NV)
+        public void SanPham_Delete(SanPham SP)
         {
-            context.SanPhams.Remove(NV);
+            context.SanPhams.Remove(SP);
             context.SaveChanges();
+        }
+
+        public IEnumerable<SanPham> SanPham_FilterAdmin(string sort, int pageIndex, int pageSize, out int count) {
+            var query = context.SanPhams.AsQueryable();
+            count = query.Count();
+            if(!string.IsNullOrEmpty(sort)){
+                switch(sort){
+                    case "name-asc": query = query.OrderBy(m => m.name);
+                                    break;
+                    case "name-desc": query = query.OrderByDescending(m => m.name);
+                                    break;
+                    case "price-asc": query = query.OrderBy(m => (int?)m.price);
+                                    break;
+                    case "price-desc": query = query.OrderByDescending(m => (int?)m.price);
+                                    break;
+                    default: break;
+                }
+            }
+
+            int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            if(pageIndex > TotalPages){
+                pageIndex = TotalPages;
+            }
+            if(pageIndex < 1){
+                pageIndex = 1;
+            }
+
+            return query.Skip((pageIndex - 1) * pageSize)
+                        .Take(pageSize).ToList();
         }
     }
 }

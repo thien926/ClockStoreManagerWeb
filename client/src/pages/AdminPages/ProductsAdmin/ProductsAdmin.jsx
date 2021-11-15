@@ -1,7 +1,29 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router'
+import { Link, useSelector, useDispatch } from 'react-router-dom'
 import './ProductsAdmin.css'
 function ProductsAdmin() {
+
+    // const AdminProductReducer = useSelector(state => state.AdminProductReducer);
+    // const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     // effect
+    //     // return () => {
+    //     //     cleanup
+    //     // }
+    // }, [dispatch])
+
+    const location = useLocation();
+    const [sort, setSort] = useState('name-asc');
+    const [pageIndex, setPageIndex] = useState(1);
+
+    useEffect(() => {
+        console.log(location);
+        // return () => {
+        //     cleanup
+        // }
+    }, [location])
 
     return (
         <div>
@@ -33,9 +55,18 @@ function ProductsAdmin() {
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Action</th>
+                            <th>ID</th>
+                            <th>Mã loại sản phẩm</th>
+                            <th>Mã thương hiệu</th>
+                            <th>Mã dây</th>
+                            <th>Mã máy</th>
+                            <th>Mã nhà cung cấp</th>
+                            <th>Tên</th>
+                            <th>Số lượng</th>
+                            <th>Giá</th>
+                            <th>Mô tả</th>
+                            <th>Hình ảnh</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
