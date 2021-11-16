@@ -325,6 +325,9 @@ namespace StoreApi.Migrations
                     b.Property<int>("price")
                         .HasColumnType("int");
 
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
                     b.Property<int>("wireId")
                         .HasColumnType("int");
 

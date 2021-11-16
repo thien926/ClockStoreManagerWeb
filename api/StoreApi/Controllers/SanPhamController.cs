@@ -32,38 +32,92 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<SanPham> AddSP(SanPham sp) {
-            try {
-                var SP = this.sanPhamRepository.SanPham_Add(sp);
-                return Created("success", SP);
+        public ActionResult<SanPham> AddSP(SanPhamDto spdto) {
+
+            // Console.WriteLine("SanPham Add: ");
+            // Console.WriteLine(spdto.LSPId);
+            // Console.WriteLine(spdto.brandId);
+            // Console.WriteLine(spdto.wireId);
+            // Console.WriteLine(spdto.machineId);
+            // Console.WriteLine(spdto.nccId);
+            // Console.WriteLine(spdto.name);
+            // Console.WriteLine(spdto.amount);
+            // Console.WriteLine(spdto.price);
+            // Console.WriteLine(spdto.description);
+            // Console.WriteLine("img:", spdto.img);
+
+            if(ModelState.IsValid){
+                try {
+                    SanPham sp = new SanPham();
+
+                    // Mapping
+                    sp.LSPId = spdto.LSPId;
+                    sp.brandId = spdto.brandId;
+                    sp.wireId = spdto.wireId;
+                    sp.machineId = spdto.machineId;
+                    sp.nccId = spdto.nccId;
+                    sp.name = spdto.name;
+                    sp.amount = spdto.amount;
+                    sp.price = spdto.price;
+                    sp.description = spdto.description;
+                    sp.img = spdto.img;
+                    sp.status = 0;
+
+                    var SP = this.sanPhamRepository.SanPham_Add(sp);
+                    return Created("success", SP);
+                }
+                catch(Exception e) {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
             }
-            catch(Exception e) {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
-        [HttpPut]
-        public ActionResult<SanPham> UpdateSP([FromBody] SanPham sp) {
-            try {
-                var SP = this.sanPhamRepository.SanPham_Update(sp);
-                return Created("success", SP);
+        [HttpPut("{id}")]
+        public ActionResult<SanPham> UpdateSP([FromBody] SanPhamDto spdto, int id) {
+            if(ModelState.IsValid) {
+                try {
+                    var sp = sanPhamRepository.SanPham_GetById(id);
+
+                    if(sp == null || spdto.Id != id) {
+                        return NotFound();
+                    }
+
+                    // Mapping
+                    sp.LSPId = spdto.LSPId;
+                    sp.brandId = spdto.brandId;
+                    sp.wireId = spdto.wireId;
+                    sp.machineId = spdto.machineId;
+                    sp.nccId = spdto.nccId;
+                    sp.name = spdto.name;
+                    sp.amount = spdto.amount;
+                    sp.price = spdto.price;
+                    sp.description = spdto.description;
+                    sp.img = spdto.img;
+                    sp.status = spdto.status;
+
+                    var SP = this.sanPhamRepository.SanPham_Update(sp);
+                    return Created("success", SP);
+                }
+                catch(Exception e) {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
             }
-            catch(Exception e) {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpDelete("{id}")]
         public ActionResult DeleteSP(int id) {
             var SP = sanPhamRepository.SanPham_GetById(id);
             if(SP == null) {
-                return NotFound(new { messgae = "Not" });
+                return NotFound();
             }
             sanPhamRepository.SanPham_Delete(SP);
             return Ok(new { messgae = "Ok" });
         }
 
-        [HttpGet("filter-admin")]
+        [HttpPost("filter-admin")]
         public PaginatedList<SanPham> FilterAdmin(FilterDataAdminDto data) {
             int count;
             var SanPhams = sanPhamRepository.SanPham_FilterAdmin(data.sort, data.pageIndex, pageSize, out count);
