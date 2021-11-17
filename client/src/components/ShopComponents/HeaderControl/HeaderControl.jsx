@@ -30,7 +30,7 @@ function HeaderControl() {
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <td className="si-pic"><img src="/img/select-product-1.jpg" alt /></td>
+                                            <td className="si-pic"><img src="/img/select-product-1.jpg" /></td>
                                             <td className="si-text">
                                                 <div className="product-selected">
                                                     <p>$60.00 x 1</p>
@@ -42,7 +42,7 @@ function HeaderControl() {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td className="si-pic"><img src="/img/select-product-2.jpg" alt /></td>
+                                            <td className="si-pic"><img src="/img/select-product-2.jpg" /></td>
                                             <td className="si-text">
                                                 <div className="product-selected">
                                                     <p>$60.00 x 1</p>

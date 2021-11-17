@@ -7,3 +7,4 @@
 7.  npm install axios --save
 8.  npm install js-cookie --save
 9.  npm i react-router-dom @types/react-router-dom
+10. npm i --save lodash
