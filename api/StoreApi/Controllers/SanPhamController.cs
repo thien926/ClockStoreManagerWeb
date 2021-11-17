@@ -16,6 +16,7 @@ namespace StoreApi.Controllers
     public class SanPhamController : ControllerBase
     {
         private int pageSize = 9;
+        private int range = 9;
         private readonly ISanPhamRepository sanPhamRepository;
         public SanPhamController(ISanPhamRepository sanPhamRepository) {
             this.sanPhamRepository = sanPhamRepository;
@@ -118,11 +119,20 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost("filter-admin")]
-        public PaginatedList<SanPham> FilterAdmin(FilterDataAdminDto data) {
+        public ViewProductAdminDto FilterAdmin(FilterDataAdminDto data) {
             int count;
-            var SanPhams = sanPhamRepository.SanPham_FilterAdmin(data.sort, data.pageIndex, pageSize, out count);
+            var SanPhams = sanPhamRepository.SanPham_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
             var ListSP = new PaginatedList<SanPham>(SanPhams, count, data.pageIndex, pageSize);
-            return ListSP;
+            ViewProductAdminDto view = new ViewProductAdminDto() {
+                ListSP = ListSP,
+                // sort = data.sort,
+                pageIndex = data.pageIndex,
+                pageSize = this.pageSize,
+                count = count,
+                range = this.range,
+                totalPage = ListSP.TotalPages
+            };
+            return view;
         }
     }
 }

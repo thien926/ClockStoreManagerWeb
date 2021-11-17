@@ -44,8 +44,14 @@ namespace StoreApi.Repositories
             context.SaveChanges();
         }
 
-        public IEnumerable<SanPham> SanPham_FilterAdmin(string sort, int pageIndex, int pageSize, out int count) {
+        public IEnumerable<SanPham> SanPham_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
             var query = context.SanPhams.AsQueryable();
+            
+            if(!string.IsNullOrEmpty(search)) {
+                search = search.ToLower();
+                query = query.Where(m => m.name.ToLower().Contains(search));
+            }
+
             count = query.Count();
             if(!string.IsNullOrEmpty(sort)){
                 switch(sort){

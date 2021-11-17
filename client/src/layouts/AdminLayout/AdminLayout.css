@@ -47,6 +47,7 @@ body{
   position: fixed;
   height: 100%;
   overflow: auto;
+  z-index: 1;
 }
 
 .sidebar h3 {
@@ -80,6 +81,7 @@ div.content {
   padding: 1px 16px;
   /* height: 100vh; */
   height: unset;
+  width: fit-content;
   min-height: 700px;
   background-color: #eef9fc;;
 }

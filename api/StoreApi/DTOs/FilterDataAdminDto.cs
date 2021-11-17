@@ -7,6 +7,7 @@ namespace StoreApi.DTOs
 {
     public class FilterDataAdminDto
     {
+        public string search { get; set; }
         public int pageIndex { get; set; }
         public string sort { get; set; }
     }

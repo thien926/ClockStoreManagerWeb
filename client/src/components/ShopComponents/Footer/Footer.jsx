@@ -8,7 +8,7 @@ function Footer() {
                     <div className="col-lg-3">
                         <div className="footer-left">
                             <div className="footer-logo">
-                                <a href="#"><img src="img/footer-logo.png" alt /></a>
+                                <a href="#"><img src="img/footer-logo.png" /></a>
                             </div>
                             <ul>
                                 <li>Address: 60-49 Road 11378 New York</li>
@@ -67,7 +67,7 @@ function Footer() {
                                 {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
                             </div>
                             <div className="payment-pic">
-                                <img src="img/payment-method.png" alt />
+                                <img src="img/payment-method.png" />
                             </div>
                         </div>
                     </div>
