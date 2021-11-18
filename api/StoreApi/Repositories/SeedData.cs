@@ -11,6 +11,111 @@ namespace StoreApi.Repositories
         public static void Initialize(ClockStoreDBContext context)
         {
             context.Database.EnsureCreated();
+            if(!context.HoaDons.Any()) 
+            {
+                temp = true;
+                context.HoaDons.AddRange(new List<HoaDon>{
+                    new HoaDon{
+                        bill_id = 1,
+                        user_kh = "Thiện",
+                        user_nv = "",
+                        phone = "0364117408",
+                        address = "Bình Định",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        date_order = new System.DateTime(2020, 5, 18, 5, 4, 6),
+                        total = 1055000,
+                        status = 4
+                    },
+                    new HoaDon{
+                        bill_id = 2,
+                        user_kh = "Thiên",
+                        user_nv = "bh01",
+                        phone = "0364117408",
+                        address = "Bình Định",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        date_order = new System.DateTime(2020, 5, 18, 5, 4, 6),
+                        total = 1155000,
+                        status = 3
+                    },
+                    new HoaDon{
+                        bill_id = 3,
+                        user_kh = "Hưng",
+                        user_nv = "",
+                        phone = "0364117408",
+                        address = "Hồ Chí Minh",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        date_order = new System.DateTime(2020, 5, 18, 5, 4, 6),
+                        total = 1115000,
+                        status = 2
+                    },
+                    new HoaDon{
+                        bill_id = 4,
+                        user_kh = "Thinh",
+                        user_nv = "",
+                        phone = "0364117408",
+                        address = "Hồ Chí Minh",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        date_order = new System.DateTime(2020, 5, 18, 5, 4, 6),
+                        total = 1200000,
+                        status = 1
+                    }
+                });
+	            context.SaveChanges();
+            }
+            if(!context.ChiTietHoaDons.Any()){
+                temp = true;
+                context.ChiTietHoaDons.AddRange(new List<ChiTietHoaDon>{
+                    new ChiTietHoaDon{
+                        bill_id = 1,
+                        product_id = 1,
+                        name = "Đồng hồ nam chính hãng LOBINNI L17511-1",
+                        amount = 30,
+                        price = 5480000,
+                        img = "/image/sp1.jpg"
+                    },
+                    new ChiTietHoaDon{
+                        bill_id = 1,
+                        product_id = 2,
+                        name = "Đồng hồ nam chính hãng LOBINNI L12032-1",
+                        amount = 35,
+                        price = 4550000,
+                        img = "/image/sp2.jpg"
+                    },
+                    new ChiTietHoaDon{
+                        bill_id = 1,
+                        product_id = 5,
+                        name = "Đồng hồ nam chính hãng LOBINNI L9010-1",
+                        amount = 42,
+                        price = 5280000,
+                        img = "/image/sp3.jpg"
+                    },
+                    new ChiTietHoaDon{
+                        bill_id = 2,
+                        product_id = 5,
+                        name = "Đồng hồ nam chính hãng LOBINNI L16050-2",
+                        amount = 50,
+                        price = 4800000,
+                        img = "/image/sp4.jpg"
+                    },
+                    new ChiTietHoaDon{
+                        bill_id = 2,
+                        product_id = 6,
+                        name = "Đồng hồ nam chính hãng LOBINNI L18016-1",
+                        amount = 52,
+                        price = 4850000,
+                        img = "/image/sp5.jpg"
+                    },
+                    new ChiTietHoaDon{
+                        bill_id = 3,
+                        product_id = 7,
+                        name = "Đồng hồ nam chính hãng LOBINNI L9010-3",
+                        amount = 36,
+                        price = 5280000,
+                        img = "/image/sp6.jpg"
+                    }
+                });
+                context.SaveChanges();
+            }
 
             if (!context.Quyens.Any())
             {
