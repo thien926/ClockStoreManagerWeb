@@ -11,6 +11,45 @@ namespace StoreApi.Repositories
         public static void Initialize(ClockStoreDBContext context)
         {
             context.Database.EnsureCreated();
+             if(!context.KhachHangs.Any()){
+                temp = true;
+                context.KhachHangs.AddRange(new List<KhachHang>{
+                    new KhachHang{
+                        user = "thien",
+                        password = "1234",
+                        name = "Nguyễn Ngọc Thiện",
+                        phone = "0364117408",
+                        mail = "tructruong.070202@gmail.com",
+                        address = "Bình Định",
+                        gender = "Nam",
+                        dateborn = new System.DateTime(2000, 5, 8),
+                        status = 1
+                    },
+                    new KhachHang{
+                        user = "thinh",
+                        password = "1234",
+                        name = "Nguyễn Phước Thịnh",
+                        phone = "0379783638",
+                        mail = "phuocthinh22012000@gmail.com",
+                        address = "Hồ Chí Minh",
+                        gender = "Nam",
+                        dateborn = new System.DateTime(2000, 1, 22),
+                        status = 1
+                    },
+                    new KhachHang{
+                        user = "Thien",
+                        password = "1234",
+                        name = "Cung Xương Hồng Thiên",
+                        phone = "0379783638",
+                        mail = "Thien123456789@gmail.com",
+                        address = "Hồ Chí Minh",
+                        gender = "Nam",
+                        dateborn = new System.DateTime(2000, 1, 22),
+                        status = 1
+                    }
+                });
+                context.SaveChanges();
+            }
             if(!context.HoaDons.Any()) 
             {
                 temp = true;
