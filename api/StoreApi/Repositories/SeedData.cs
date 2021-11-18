@@ -38,7 +38,98 @@ namespace StoreApi.Repositories
                 });
                 context.SaveChanges();
             }
-
+            if(!context.PhieuNhaps.Any()){
+                temp = true;
+                context.PhieuNhaps.AddRange(new List<PhieuNhap>{
+                    new PhieuNhap{
+                        id = 1,
+	                    ncc_id =5 ,
+                        nv_user = admin,
+                        phone = "0364117408",
+                        address = "Bình Định",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        total = 1055000,
+                        status = 1
+                    },
+                    new PhieuNhap{
+                        id = 2,
+	                    ncc_id = 2,
+                        nv_user = ql01,
+                        phone = "0364117408",
+                        address = "Hồ Chí Minh",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        total = 1055000,
+                        status = 1
+                    },
+                    new PhieuNhap{
+                        id = 3,
+	                    ncc_id =3 ,
+                        nv_user = nh01,
+                        phone = "0364117408",
+                        address = "Hồ Chí Minh",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        total = 1055000,
+                        status = 1
+                    },
+                    new PhieuNhap{
+                        id = 4,
+	                    ncc_id =4 ,
+                        nv_user = ql01,
+                        phone = "0364117408",
+                        address = "Hồ Chí Minh",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        total = 1055000,
+                        status = 1
+                    }
+                });
+                context.SaveChanges();
+            }
+             if(!context.ChiTietPhieuNhaps.Any()){
+                temp = true;
+                context.ChiTietPhieuNhaps.AddRange(new List<ChiTietPhieuNhap>{
+                    new ChiTietPhieuNhap{
+                        coupon_id = 1,
+                        product_id = 1,
+                        name = "Đồng hồ nam chính hãng LOBINNI L17511-1",
+                        amount = 30,
+                        price = 5480000,
+                        img = "/image/sp1.jpg"
+                    },
+                    new ChiTietPhieuNhap{
+                        coupon_id = 2,
+                        product_id = 1,
+                        name = "Đồng hồ nam chính hãng LOBINNI L12032-1",
+                        amount = 35,
+                        price = 4550000,
+                        img = "/image/sp2.jpg"
+                    },
+                    new ChiTietPhieuNhap{
+                        coupon_id = 3,
+                        product_id = 1,
+                        name = "Đồng hồ nam chính hãng LOBINNI L9010-1",
+                        amount = 42,
+                        price = 5280000,
+                        img = "/image/sp3.jpg"
+                    },
+                    new ChiTietPhieuNhap{
+                        coupon_id = 4,
+                        product_id = 1,
+                        name = "Đồng hồ nam chính hãng LOBINNI L16050-2",
+                        amount = 50,
+                        price = 4800000,
+                        img = "/image/sp4.jpg"
+                    },
+                    new ChiTietPhieuNhap{
+                        coupon_id = 5,
+                        product_id = 1,
+                        name = "Đồng hồ nam chính hãng LOBINNI L18016-1",
+                        amount = 52,
+                        price = 4850000,
+                        img = "/image/sp5.jpg"
+                    }
+                });
+                context.SaveChanges();
+             }
             if (!context.NhanViens.Any())
             {
                 context.NhanViens.AddRange(new List<NhanVien>{
