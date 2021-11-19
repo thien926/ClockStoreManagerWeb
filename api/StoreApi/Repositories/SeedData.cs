@@ -2594,9 +2594,9 @@ namespace StoreApi.Repositories
             {
                 context.HoaDons.AddRange(new List<HoaDon>{
                     new HoaDon{
-                        Id = 1,
-                        KHuser = "Thiện",
-                        NVuser = "",
+                        // Id = 1,
+                        KHuser = "thien",
+                        NVuser = "bh01",
                         phone = "0364117408",
                         address = "Bình Định",
                         date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
@@ -2605,8 +2605,8 @@ namespace StoreApi.Repositories
                         status = 4
                     },
                     new HoaDon{
-                        Id = 2,
-                        KHuser = "Thiên",
+                        // Id = 2,
+                        KHuser = "thinh",
                         NVuser = "bh01",
                         phone = "0364117408",
                         address = "Bình Định",
@@ -2616,9 +2616,9 @@ namespace StoreApi.Repositories
                         status = 3
                     },
                     new HoaDon{
-                        Id = 3,
-                        KHuser = "Hưng",
-                        NVuser = "",
+                        // Id = 3,
+                        KHuser = "hung",
+                        NVuser = "bh01",
                         phone = "0364117408",
                         address = "Hồ Chí Minh",
                         date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
@@ -2627,9 +2627,9 @@ namespace StoreApi.Repositories
                         status = 2
                     },
                     new HoaDon{
-                        Id = 4,
+                        // Id = 4,
                         KHuser = "Thinh",
-                        NVuser = "",
+                        NVuser = "bh01",
                         phone = "0364117408",
                         address = "Hồ Chí Minh",
                         date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
@@ -2700,7 +2700,7 @@ namespace StoreApi.Repositories
                     new PhieuNhap{
                         Id = 1,
 	                    nccId =5 ,
-                        NVuser = "admin",
+                        NVuser = "nh01",
                         phone = "0364117408",
                         address = "Bình Định",
                         date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
@@ -2710,7 +2710,7 @@ namespace StoreApi.Repositories
                     new PhieuNhap{
                         Id = 2,
 	                    nccId = 2,
-                        NVuser = "ql01",
+                        NVuser = "nh01",
                         phone = "0364117408",
                         address = "Hồ Chí Minh",
                         date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
