@@ -184,7 +184,7 @@ function Shop(props) {
                   <div className="col-lg-4 col-sm-6">
                     <div className="product-item">
                       <div className="pi-pic">
-                        <img src="/img/products/product-1.jpg" alt />
+                        <img src="/img/products/product-1.jpg" />
                         <div className="sale pp-sale">Sale</div>
                         <div className="icon">
                           <i className="icon_heart_alt" />
@@ -210,7 +210,7 @@ function Shop(props) {
                   <div className="col-lg-4 col-sm-6">
                     <div className="product-item">
                       <div className="pi-pic">
-                        <img src="/img/products/product-2.jpg" alt />
+                        <img src="/img/products/product-2.jpg" />
                         <div className="icon">
                           <i className="icon_heart_alt" />
                         </div>
@@ -235,7 +235,7 @@ function Shop(props) {
                   <div className="col-lg-4 col-sm-6">
                     <div className="product-item">
                       <div className="pi-pic">
-                        <img src="/img/products/product-3.jpg" alt />
+                        <img src="/img/products/product-3.jpg" />
                         <div className="icon">
                           <i className="icon_heart_alt" />
                         </div>
@@ -260,7 +260,7 @@ function Shop(props) {
                   <div className="col-lg-4 col-sm-6">
                     <div className="product-item">
                       <div className="pi-pic">
-                        <img src="/img/products/product-4.jpg" alt />
+                        <img src="/img/products/product-4.jpg" />
                         <div className="icon">
                           <i className="icon_heart_alt" />
                         </div>
@@ -285,7 +285,7 @@ function Shop(props) {
                   <div className="col-lg-4 col-sm-6">
                     <div className="product-item">
                       <div className="pi-pic">
-                        <img src="/img/products/product-5.jpg" alt />
+                        <img src="/img/products/product-5.jpg" />
                         <div className="icon">
                           <i className="icon_heart_alt" />
                         </div>
@@ -310,7 +310,7 @@ function Shop(props) {
                   <div className="col-lg-4 col-sm-6">
                     <div className="product-item">
                       <div className="pi-pic">
-                        <img src="/img/products/product-6.jpg" alt />
+                        <img src="/img/products/product-6.jpg" />
                         <div className="icon">
                           <i className="icon_heart_alt" />
                         </div>
@@ -335,7 +335,7 @@ function Shop(props) {
                   <div className="col-lg-4 col-sm-6">
                     <div className="product-item">
                       <div className="pi-pic">
-                        <img src="/img/products/product-7.jpg" alt />
+                        <img src="/img/products/product-7.jpg" />
                         <div className="sale pp-sale">Sale</div>
                         <div className="icon">
                           <i className="icon_heart_alt" />
@@ -361,7 +361,7 @@ function Shop(props) {
                   <div className="col-lg-4 col-sm-6">
                     <div className="product-item">
                       <div className="pi-pic">
-                        <img src="/img/products/product-8.jpg" alt />
+                        <img src="/img/products/product-8.jpg" />
                         <div className="icon">
                           <i className="icon_heart_alt" />
                         </div>
@@ -386,7 +386,7 @@ function Shop(props) {
                   <div className="col-lg-4 col-sm-6">
                     <div className="product-item">
                       <div className="pi-pic">
-                        <img src="/img/products/product-9.jpg" alt />
+                        <img src="/img/products/product-9.jpg" />
                         <div className="icon">
                           <i className="icon_heart_alt" />
                         </div>

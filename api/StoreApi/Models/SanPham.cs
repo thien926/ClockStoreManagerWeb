@@ -38,8 +38,11 @@ namespace StoreApi.Models
         [Required(ErrorMessage = "Mô tả Sản Phẩm là bắt Buộc")]
         public string description { get; set; }
 
-        [Required(ErrorMessage = "Hình ảnh là bắt Buộc")]
+        [Required(ErrorMessage = "Hình ảnh là bắt buộc")]
         public string img { get; set; }
+
+        [Required(ErrorMessage = "Trạng thái là bắt buộc")]
+        public int status { get; set; }
 
         public virtual LoaiSanPham LSP { get; set; }
         public virtual ThuongHieu brand { get; set; }
@@ -49,6 +52,7 @@ namespace StoreApi.Models
         public ICollection<ChiTietHD> chitietHDs { get; set; }
 
         public SanPham() {
+            status = 0;
             amount = 0;
             chitietHDs = new HashSet<ChiTietHD>();
         }

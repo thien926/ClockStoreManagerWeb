@@ -48,7 +48,7 @@ namespace StoreApi
             services.AddScoped<JwtNhanVienService>();
             services.AddScoped<JwtKhachHangService>();
             services.AddScoped<INhanVienRepository, NhanVienRepository>();
-
+            services.AddScoped<ISanPhamRepository, SanPhamRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

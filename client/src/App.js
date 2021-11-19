@@ -12,6 +12,7 @@ import ProductTypeAdmin from './pages/AdminPages/ProductTypeAdmin/ProductTypeAdm
 import PermissionAdmin from './pages/AdminPages/PermissionAdmin/PermissionAdmin';
 import UserAdmin from './pages/AdminPages/UserAdmin/UserAdmin';
 import Home from './pages/ShopPages/Home/Home';
+import NoMatch from './components/NoMatch/NoMatch';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path='/admin/product-type' element={<ProductTypeAdmin />} />
         <Route path='/admin/permission' element={<PermissionAdmin />} />
       </Route>
+      <Route path="*" element={<NoMatch />} />
       <Route path='/auth/login' element={<LoginAdminPage /> } />
     </Routes>
 
