@@ -15,7 +15,7 @@ namespace StoreApi.Repositories
                 context.KhachHangs.AddRange(new List<KhachHang>{
                     new KhachHang{
                         user = "thien",
-                        password = "1234",
+                        password = "$2a$11$XEBzrWRO7huzaPNtZzbo2u19kRZzXKeQ4VwH1hMLta2Tfoh1oUONy", //1234
                         name = "Nguyễn Ngọc Thiện",
                         phone = "0364117408",
                         mail = "tructruong.070202@gmail.com",
@@ -26,7 +26,7 @@ namespace StoreApi.Repositories
                     },
                     new KhachHang{
                         user = "thinh",
-                        password = "1234",
+                        password = "$2a$11$XEBzrWRO7huzaPNtZzbo2u19kRZzXKeQ4VwH1hMLta2Tfoh1oUONy", //1234
                         name = "Nguyễn Phước Thịnh",
                         phone = "0379783638",
                         mail = "phuocthinh22012000@gmail.com",
@@ -36,11 +36,22 @@ namespace StoreApi.Repositories
                         status = 1
                     },
                     new KhachHang{
-                        user = "Thien",
-                        password = "1234",
+                        user = "thien405",
+                        password = "$2a$11$XEBzrWRO7huzaPNtZzbo2u19kRZzXKeQ4VwH1hMLta2Tfoh1oUONy", //1234
                         name = "Cung Xương Hồng Thiên",
                         phone = "0379783638",
                         mail = "Thien123456789@gmail.com",
+                        address = "Hồ Chí Minh",
+                        gender = "Nam",
+                        dateborn = new System.DateTime(2000, 1, 22),
+                        status = 1
+                    },
+                    new KhachHang{
+                        user = "hung",
+                        password = "$2a$11$XEBzrWRO7huzaPNtZzbo2u19kRZzXKeQ4VwH1hMLta2Tfoh1oUONy", //1234
+                        name = "Võ Minh Hưng",
+                        phone = "0379783638",
+                        mail = "hung@gmail.com",
                         address = "Hồ Chí Minh",
                         gender = "Nam",
                         dateborn = new System.DateTime(2000, 1, 22),
