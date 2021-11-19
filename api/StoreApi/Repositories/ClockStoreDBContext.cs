@@ -22,6 +22,8 @@ namespace StoreApi.Repositories
         public DbSet<KhachHang> KhachHangs { get; set; }
         public DbSet<HoaDon> HoaDons { get; set; }
         public DbSet<ChiTietHD> ChiTietHDs { get; set; }
+        public DbSet<PhieuNhap> PhieuNhaps { get; set; }
+        public DbSet<ChiTietPN> ChiTietPNs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
