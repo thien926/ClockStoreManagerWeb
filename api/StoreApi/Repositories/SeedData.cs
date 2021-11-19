@@ -11,7 +11,7 @@ namespace StoreApi.Repositories
         public static void Initialize(ClockStoreDBContext context)
         {
             context.Database.EnsureCreated();
-             if(!context.KhachHangs.Any()){
+            if(!context.KhachHangs.Any()){
                 context.KhachHangs.AddRange(new List<KhachHang>{
                     new KhachHang{
                         user = "thien",
@@ -60,109 +60,7 @@ namespace StoreApi.Repositories
                 });
                 context.SaveChanges();
             }
-            if(!context.HoaDons.Any()) 
-            {
-                context.HoaDons.AddRange(new List<HoaDon>{
-                    new HoaDon{
-                        Id = 1,
-                        KHuser = "Thiện",
-                        NVuser = "",
-                        phone = "0364117408",
-                        address = "Bình Định",
-                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
-                        date_order = new System.DateTime(2020, 5, 18, 5, 4, 6),
-                        total = 1055000,
-                        status = 4
-                    },
-                    new HoaDon{
-                        Id = 2,
-                        KHuser = "Thiên",
-                        NVuser = "bh01",
-                        phone = "0364117408",
-                        address = "Bình Định",
-                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
-                        date_order = new System.DateTime(2020, 5, 18, 5, 4, 6),
-                        total = 1155000,
-                        status = 3
-                    },
-                    new HoaDon{
-                        Id = 3,
-                        KHuser = "Hưng",
-                        NVuser = "",
-                        phone = "0364117408",
-                        address = "Hồ Chí Minh",
-                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
-                        date_order = new System.DateTime(2020, 5, 18, 5, 4, 6),
-                        total = 1115000,
-                        status = 2
-                    },
-                    new HoaDon{
-                        Id = 4,
-                        KHuser = "Thinh",
-                        NVuser = "",
-                        phone = "0364117408",
-                        address = "Hồ Chí Minh",
-                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
-                        date_order = new System.DateTime(2020, 5, 18, 5, 4, 6),
-                        total = 1200000,
-                        status = 1
-                    }
-                });
-	            context.SaveChanges();
-            }
-            if(!context.ChiTietHDs.Any()){
-                context.ChiTietHDs.AddRange(new List<ChiTietHD>{
-                    new ChiTietHD{
-                        billId = 1,
-                        productId = 1,
-                        name = "Đồng hồ nam chính hãng LOBINNI L17511-1",
-                        amount = 30,
-                        price = 5480000,
-                        img = "/image/sp1.jpg"
-                    },
-                    new ChiTietHD{
-                        billId = 1,
-                        productId = 2,
-                        name = "Đồng hồ nam chính hãng LOBINNI L12032-1",
-                        amount = 35,
-                        price = 4550000,
-                        img = "/image/sp2.jpg"
-                    },
-                    new ChiTietHD{
-                        billId = 1,
-                        productId = 5,
-                        name = "Đồng hồ nam chính hãng LOBINNI L9010-1",
-                        amount = 42,
-                        price = 5280000,
-                        img = "/image/sp3.jpg"
-                    },
-                    new ChiTietHD{
-                        billId = 2,
-                        productId = 5,
-                        name = "Đồng hồ nam chính hãng LOBINNI L16050-2",
-                        amount = 50,
-                        price = 4800000,
-                        img = "/image/sp4.jpg"
-                    },
-                    new ChiTietHD{
-                        billId = 2,
-                        productId = 6,
-                        name = "Đồng hồ nam chính hãng LOBINNI L18016-1",
-                        amount = 52,
-                        price = 4850000,
-                        img = "/image/sp5.jpg"
-                    },
-                    new ChiTietHD{
-                        billId = 3,
-                        productId = 7,
-                        name = "Đồng hồ nam chính hãng LOBINNI L9010-3",
-                        amount = 36,
-                        price = 5280000,
-                        img = "/image/sp6.jpg"
-                    }
-                });
-                context.SaveChanges();
-            }
+            
             if (!context.Quyens.Any())
             {
                 context.Quyens.AddRange(new List<Quyen>{
@@ -189,96 +87,7 @@ namespace StoreApi.Repositories
                 });
                 context.SaveChanges();
             }
-            if(!context.PhieuNhaps.Any()){
-                context.PhieuNhaps.AddRange(new List<PhieuNhap>{
-                    new PhieuNhap{
-                        Id = 1,
-	                    nccId =5 ,
-                        NVuser = "admin",
-                        phone = "0364117408",
-                        address = "Bình Định",
-                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
-                        total = 1055000,
-                        status = 1
-                    },
-                    new PhieuNhap{
-                        Id = 2,
-	                    nccId = 2,
-                        NVuser = "ql01",
-                        phone = "0364117408",
-                        address = "Hồ Chí Minh",
-                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
-                        total = 1055000,
-                        status = 1
-                    },
-                    new PhieuNhap{
-                        Id = 3,
-	                    nccId =3 ,
-                        NVuser = "nh01",
-                        phone = "0364117408",
-                        address = "Hồ Chí Minh",
-                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
-                        total = 1055000,
-                        status = 1
-                    },
-                    new PhieuNhap{
-                        Id = 4,
-	                    nccId =4 ,
-                        NVuser = "ql01",
-                        phone = "0364117408",
-                        address = "Hồ Chí Minh",
-                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
-                        total = 1055000,
-                        status = 1
-                    }
-                });
-                context.SaveChanges();
-            }
-             if(!context.ChiTietPNs.Any()){
-                context.ChiTietPNs.AddRange(new List<ChiTietPN>{
-                    new ChiTietPN{
-                        couponId = 1,
-                        productId = 1,
-                        name = "Đồng hồ nam chính hãng LOBINNI L17511-1",
-                        amount = 30,
-                        price = 5480000,
-                        img = "/image/sp1.jpg"
-                    },
-                    new ChiTietPN{
-                        couponId = 2,
-                        productId = 1,
-                        name = "Đồng hồ nam chính hãng LOBINNI L12032-1",
-                        amount = 35,
-                        price = 4550000,
-                        img = "/image/sp2.jpg"
-                    },
-                    new ChiTietPN{
-                        couponId = 3,
-                        productId = 1,
-                        name = "Đồng hồ nam chính hãng LOBINNI L9010-1",
-                        amount = 42,
-                        price = 5280000,
-                        img = "/image/sp3.jpg"
-                    },
-                    new ChiTietPN{
-                        couponId = 4,
-                        productId = 1,
-                        name = "Đồng hồ nam chính hãng LOBINNI L16050-2",
-                        amount = 50,
-                        price = 4800000,
-                        img = "/image/sp4.jpg"
-                    },
-                    new ChiTietPN{
-                        couponId = 5,
-                        productId = 1,
-                        name = "Đồng hồ nam chính hãng LOBINNI L18016-1",
-                        amount = 52,
-                        price = 4850000,
-                        img = "/image/sp5.jpg"
-                    }
-                });
-                context.SaveChanges();
-             }
+            
             if (!context.NhanViens.Any())
             {
                 context.NhanViens.AddRange(new List<NhanVien>{
@@ -333,6 +142,7 @@ namespace StoreApi.Repositories
                 });
                 context.SaveChanges();
             }
+
             if (!context.KieuDays.Any())
             {
                 
@@ -352,6 +162,7 @@ namespace StoreApi.Repositories
                 });
                 context.SaveChanges();
             }
+
             if (!context.KieuMays.Any())
             {
                 
@@ -367,6 +178,7 @@ namespace StoreApi.Repositories
                 });
                 context.SaveChanges();
             }
+
             if (!context.LoaiSanPhams.Any())
             {
                 
@@ -2777,7 +2589,204 @@ namespace StoreApi.Repositories
                 });
                 context.SaveChanges();
             }
-        
+
+            if(!context.HoaDons.Any()) 
+            {
+                context.HoaDons.AddRange(new List<HoaDon>{
+                    new HoaDon{
+                        Id = 1,
+                        KHuser = "Thiện",
+                        NVuser = "",
+                        phone = "0364117408",
+                        address = "Bình Định",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        date_order = new System.DateTime(2020, 5, 18, 5, 4, 6),
+                        total = 1055000,
+                        status = 4
+                    },
+                    new HoaDon{
+                        Id = 2,
+                        KHuser = "Thiên",
+                        NVuser = "bh01",
+                        phone = "0364117408",
+                        address = "Bình Định",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        date_order = new System.DateTime(2020, 5, 18, 5, 4, 6),
+                        total = 1155000,
+                        status = 3
+                    },
+                    new HoaDon{
+                        Id = 3,
+                        KHuser = "Hưng",
+                        NVuser = "",
+                        phone = "0364117408",
+                        address = "Hồ Chí Minh",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        date_order = new System.DateTime(2020, 5, 18, 5, 4, 6),
+                        total = 1115000,
+                        status = 2
+                    },
+                    new HoaDon{
+                        Id = 4,
+                        KHuser = "Thinh",
+                        NVuser = "",
+                        phone = "0364117408",
+                        address = "Hồ Chí Minh",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        date_order = new System.DateTime(2020, 5, 18, 5, 4, 6),
+                        total = 1200000,
+                        status = 1
+                    }
+                });
+	            context.SaveChanges();
+            }
+            
+            if(!context.ChiTietHDs.Any()){
+                context.ChiTietHDs.AddRange(new List<ChiTietHD>{
+                    new ChiTietHD{
+                        billId = 1,
+                        productId = 1,
+                        name = "Đồng hồ nam chính hãng LOBINNI L17511-1",
+                        amount = 30,
+                        price = 5480000,
+                        img = "/image/sp1.jpg"
+                    },
+                    new ChiTietHD{
+                        billId = 1,
+                        productId = 2,
+                        name = "Đồng hồ nam chính hãng LOBINNI L12032-1",
+                        amount = 35,
+                        price = 4550000,
+                        img = "/image/sp2.jpg"
+                    },
+                    new ChiTietHD{
+                        billId = 1,
+                        productId = 5,
+                        name = "Đồng hồ nam chính hãng LOBINNI L9010-1",
+                        amount = 42,
+                        price = 5280000,
+                        img = "/image/sp3.jpg"
+                    },
+                    new ChiTietHD{
+                        billId = 2,
+                        productId = 5,
+                        name = "Đồng hồ nam chính hãng LOBINNI L16050-2",
+                        amount = 50,
+                        price = 4800000,
+                        img = "/image/sp4.jpg"
+                    },
+                    new ChiTietHD{
+                        billId = 2,
+                        productId = 6,
+                        name = "Đồng hồ nam chính hãng LOBINNI L18016-1",
+                        amount = 52,
+                        price = 4850000,
+                        img = "/image/sp5.jpg"
+                    },
+                    new ChiTietHD{
+                        billId = 3,
+                        productId = 7,
+                        name = "Đồng hồ nam chính hãng LOBINNI L9010-3",
+                        amount = 36,
+                        price = 5280000,
+                        img = "/image/sp6.jpg"
+                    }
+                });
+                context.SaveChanges();
+            }
+            
+            if(!context.PhieuNhaps.Any()){
+                context.PhieuNhaps.AddRange(new List<PhieuNhap>{
+                    new PhieuNhap{
+                        Id = 1,
+	                    nccId =5 ,
+                        NVuser = "admin",
+                        phone = "0364117408",
+                        address = "Bình Định",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        total = 1055000,
+                        status = 1
+                    },
+                    new PhieuNhap{
+                        Id = 2,
+	                    nccId = 2,
+                        NVuser = "ql01",
+                        phone = "0364117408",
+                        address = "Hồ Chí Minh",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        total = 1055000,
+                        status = 1
+                    },
+                    new PhieuNhap{
+                        Id = 3,
+	                    nccId =3 ,
+                        NVuser = "nh01",
+                        phone = "0364117408",
+                        address = "Hồ Chí Minh",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        total = 1055000,
+                        status = 1
+                    },
+                    new PhieuNhap{
+                        Id = 4,
+	                    nccId =4 ,
+                        NVuser = "ql01",
+                        phone = "0364117408",
+                        address = "Hồ Chí Minh",
+                        date_receice = new System.DateTime(2020, 5, 8, 5, 4, 6),
+                        total = 1055000,
+                        status = 1
+                    }
+                });
+                context.SaveChanges();
+            }
+            
+            if(!context.ChiTietPNs.Any()){
+                context.ChiTietPNs.AddRange(new List<ChiTietPN>{
+                    new ChiTietPN{
+                        couponId = 1,
+                        productId = 1,
+                        name = "Đồng hồ nam chính hãng LOBINNI L17511-1",
+                        amount = 30,
+                        price = 5480000,
+                        img = "/image/sp1.jpg"
+                    },
+                    new ChiTietPN{
+                        couponId = 2,
+                        productId = 1,
+                        name = "Đồng hồ nam chính hãng LOBINNI L12032-1",
+                        amount = 35,
+                        price = 4550000,
+                        img = "/image/sp2.jpg"
+                    },
+                    new ChiTietPN{
+                        couponId = 3,
+                        productId = 1,
+                        name = "Đồng hồ nam chính hãng LOBINNI L9010-1",
+                        amount = 42,
+                        price = 5280000,
+                        img = "/image/sp3.jpg"
+                    },
+                    new ChiTietPN{
+                        couponId = 4,
+                        productId = 1,
+                        name = "Đồng hồ nam chính hãng LOBINNI L16050-2",
+                        amount = 50,
+                        price = 4800000,
+                        img = "/image/sp4.jpg"
+                    },
+                    new ChiTietPN{
+                        couponId = 5,
+                        productId = 1,
+                        name = "Đồng hồ nam chính hãng LOBINNI L18016-1",
+                        amount = 52,
+                        price = 4850000,
+                        img = "/image/sp5.jpg"
+                    }
+                });
+                context.SaveChanges();
+            }
+            
         }
     }
 }
