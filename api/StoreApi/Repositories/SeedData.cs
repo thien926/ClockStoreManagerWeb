@@ -12,7 +12,6 @@ namespace StoreApi.Repositories
         {
             context.Database.EnsureCreated();
              if(!context.KhachHangs.Any()){
-                temp = true;
                 context.KhachHangs.AddRange(new List<KhachHang>{
                     new KhachHang{
                         user = "thien",
@@ -52,7 +51,6 @@ namespace StoreApi.Repositories
             }
             if(!context.HoaDons.Any()) 
             {
-                temp = true;
                 context.HoaDons.AddRange(new List<HoaDon>{
                     new HoaDon{
                         bill_id = 1,
@@ -102,7 +100,6 @@ namespace StoreApi.Repositories
 	            context.SaveChanges();
             }
             if(!context.ChiTietHoaDons.Any()){
-                temp = true;
                 context.ChiTietHoaDons.AddRange(new List<ChiTietHoaDon>{
                     new ChiTietHoaDon{
                         bill_id = 1,
@@ -183,7 +180,6 @@ namespace StoreApi.Repositories
                 context.SaveChanges();
             }
             if(!context.PhieuNhaps.Any()){
-                temp = true;
                 context.PhieuNhaps.AddRange(new List<PhieuNhap>{
                     new PhieuNhap{
                         id = 1,
@@ -229,7 +225,6 @@ namespace StoreApi.Repositories
                 context.SaveChanges();
             }
              if(!context.ChiTietPhieuNhaps.Any()){
-                temp = true;
                 context.ChiTietPhieuNhaps.AddRange(new List<ChiTietPhieuNhap>{
                     new ChiTietPhieuNhap{
                         coupon_id = 1,
