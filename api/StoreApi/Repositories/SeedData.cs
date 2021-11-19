@@ -11,7 +11,6 @@ namespace StoreApi.Repositories
         public static void Initialize(ClockStoreDBContext context)
         {
             context.Database.EnsureCreated();
-
             if (!context.Quyens.Any())
             {
                 context.Quyens.AddRange(new List<Quyen>{
@@ -38,7 +37,6 @@ namespace StoreApi.Repositories
                 });
                 context.SaveChanges();
             }
-
             if (!context.NhanViens.Any())
             {
                 context.NhanViens.AddRange(new List<NhanVien>{
