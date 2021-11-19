@@ -58,10 +58,6 @@ namespace StoreApi.Repositories
                                     break;
                     case "name-desc": query = query.OrderByDescending(m => m.name);
                                     break;
-                    case "price-asc": query = query.OrderBy(m => (int?)m.price);
-                                    break;
-                    case "price-desc": query = query.OrderByDescending(m => (int?)m.price);
-                                    break;
                     default: break;
                 }
             }
