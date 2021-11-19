@@ -75,7 +75,8 @@ namespace StoreApi.Migrations
 
                     b.Property<string>("phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("status")
                         .HasColumnType("int");
@@ -266,6 +267,48 @@ namespace StoreApi.Migrations
                     b.ToTable("NhanViens");
                 });
 
+            modelBuilder.Entity("StoreApi.Models.PhieuNhap", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NVuser")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("date_receice")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("nccId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("phone")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("total")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NVuser");
+
+                    b.HasIndex("nccId");
+
+                    b.ToTable("PhieuNhaps");
+                });
+
             modelBuilder.Entity("StoreApi.Models.Quyen", b =>
                 {
                     b.Property<int>("Id")
@@ -408,6 +451,25 @@ namespace StoreApi.Migrations
                         .IsRequired();
 
                     b.Navigation("quyen");
+                });
+
+            modelBuilder.Entity("StoreApi.Models.PhieuNhap", b =>
+                {
+                    b.HasOne("StoreApi.Models.NhanVien", "NV")
+                        .WithMany()
+                        .HasForeignKey("NVuser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StoreApi.Models.NCC", "ncc")
+                        .WithMany()
+                        .HasForeignKey("nccId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ncc");
+
+                    b.Navigation("NV");
                 });
 
             modelBuilder.Entity("StoreApi.Models.SanPham", b =>

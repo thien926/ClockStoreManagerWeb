@@ -23,7 +23,7 @@ namespace StoreApi.Repositories
         public DbSet<HoaDon> HoaDons { get; set; }
         public DbSet<ChiTietHD> ChiTietHDs { get; set; }
         public DbSet<PhieuNhap> PhieuNhaps { get; set; }
-        public DbSet<ChiTietPN> ChiTietPNs { get; set; }
+        // public DbSet<ChiTietPN> ChiTietPNs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +34,8 @@ namespace StoreApi.Repositories
 
             modelBuilder.Entity<ChiTietHD>()
                .HasKey(c => new { c.billId, c.productId });
+            // modelBuilder.Entity<ChiTietPN>()
+            //    .HasKey(c => new { c.couponId, c.productId });
         }
     }
 }

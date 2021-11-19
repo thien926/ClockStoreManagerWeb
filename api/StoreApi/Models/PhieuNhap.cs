@@ -38,12 +38,12 @@ namespace StoreApi.Models
 
         public virtual NCC ncc { get; set;}
         public virtual NhanVien NV { get; set; }
-        public ICollection<ChiTietPN> chitietPNs {get; set;}
+        // public ICollection<ChiTietPN> chitietPNs {get; set;}
 
         public PhieuNhap (){
             total = 0;
             status = 1;
-            this.chitietPNs = new HashSet<ChiTietPN>();
+            // this.chitietPNs = new HashSet<ChiTietPN>();
         }
     }
 }

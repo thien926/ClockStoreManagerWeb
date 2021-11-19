@@ -13,37 +13,37 @@ namespace StoreApi
 {
     public class Program
     {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-
         // public static void Main(string[] args)
         // {
-        //     var host = CreateHostBuilder();
-        //     using (var scope = host.Services.CreateScope())
-        //     {
-        //         var services = scope.ServiceProvider;
-        //         var context = services.GetRequiredService<ClockStoreDBContext>();
-        //         SeedData.Initialize(context);
-        //     }
-        //     host.Run();
+        //     CreateHostBuilder(args).Build().Run();
         // }
 
-        // public static IHost CreateHostBuilder()
-        // {
-        //     return Host.CreateDefaultBuilder().ConfigureWebHostDefaults(builder =>
-        //     {
-        //         builder.UseStartup<Startup>();
-        //     })
-        //     .Build();
-        // }
+        // public static IHostBuilder CreateHostBuilder(string[] args) =>
+        //     Host.CreateDefaultBuilder(args)
+        //         .ConfigureWebHostDefaults(webBuilder =>
+        //         {
+        //             webBuilder.UseStartup<Startup>();
+        //         });
+
+        public static void Main(string[] args)
+        {
+            var host = CreateHostBuilder();
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<ClockStoreDBContext>();
+                SeedData.Initialize(context);
+            }
+            host.Run();
+        }
+
+        public static IHost CreateHostBuilder()
+        {
+            return Host.CreateDefaultBuilder().ConfigureWebHostDefaults(builder =>
+            {
+                builder.UseStartup<Startup>();
+            })
+            .Build();
+        }
     }
 }

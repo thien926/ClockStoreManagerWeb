@@ -2741,51 +2741,51 @@ namespace StoreApi.Repositories
                 context.SaveChanges();
             }
             
-            if(!context.ChiTietPNs.Any()){
-                context.ChiTietPNs.AddRange(new List<ChiTietPN>{
-                    new ChiTietPN{
-                        couponId = 1,
-                        productId = 1,
-                        name = "Đồng hồ nam chính hãng LOBINNI L17511-1",
-                        amount = 30,
-                        price = 5480000,
-                        img = "/image/sp1.jpg"
-                    },
-                    new ChiTietPN{
-                        couponId = 2,
-                        productId = 1,
-                        name = "Đồng hồ nam chính hãng LOBINNI L12032-1",
-                        amount = 35,
-                        price = 4550000,
-                        img = "/image/sp2.jpg"
-                    },
-                    new ChiTietPN{
-                        couponId = 3,
-                        productId = 1,
-                        name = "Đồng hồ nam chính hãng LOBINNI L9010-1",
-                        amount = 42,
-                        price = 5280000,
-                        img = "/image/sp3.jpg"
-                    },
-                    new ChiTietPN{
-                        couponId = 4,
-                        productId = 1,
-                        name = "Đồng hồ nam chính hãng LOBINNI L16050-2",
-                        amount = 50,
-                        price = 4800000,
-                        img = "/image/sp4.jpg"
-                    },
-                    new ChiTietPN{
-                        couponId = 5,
-                        productId = 1,
-                        name = "Đồng hồ nam chính hãng LOBINNI L18016-1",
-                        amount = 52,
-                        price = 4850000,
-                        img = "/image/sp5.jpg"
-                    }
-                });
-                context.SaveChanges();
-            }
+            // if(!context.ChiTietPNs.Any()){
+            //     context.ChiTietPNs.AddRange(new List<ChiTietPN>{
+            //         new ChiTietPN{
+            //             couponId = 1,
+            //             productId = 1,
+            //             name = "Đồng hồ nam chính hãng LOBINNI L17511-1",
+            //             amount = 30,
+            //             price = 5480000,
+            //             img = "/image/sp1.jpg"
+            //         },
+            //         new ChiTietPN{
+            //             couponId = 2,
+            //             productId = 1,
+            //             name = "Đồng hồ nam chính hãng LOBINNI L12032-1",
+            //             amount = 35,
+            //             price = 4550000,
+            //             img = "/image/sp2.jpg"
+            //         },
+            //         new ChiTietPN{
+            //             couponId = 3,
+            //             productId = 1,
+            //             name = "Đồng hồ nam chính hãng LOBINNI L9010-1",
+            //             amount = 42,
+            //             price = 5280000,
+            //             img = "/image/sp3.jpg"
+            //         },
+            //         new ChiTietPN{
+            //             couponId = 4,
+            //             productId = 1,
+            //             name = "Đồng hồ nam chính hãng LOBINNI L16050-2",
+            //             amount = 50,
+            //             price = 4800000,
+            //             img = "/image/sp4.jpg"
+            //         },
+            //         new ChiTietPN{
+            //             couponId = 5,
+            //             productId = 1,
+            //             name = "Đồng hồ nam chính hãng LOBINNI L18016-1",
+            //             amount = 52,
+            //             price = 4850000,
+            //             img = "/image/sp5.jpg"
+            //         }
+            //     });
+            //     context.SaveChanges();
+            // }
             
         }
     }

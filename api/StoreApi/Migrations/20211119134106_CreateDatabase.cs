@@ -195,7 +195,7 @@ namespace StoreApi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     KHuser = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     NVuser = table.Column<string>(type: "nvarchar(25)", nullable: true),
-                    phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     date_receice = table.Column<DateTime>(type: "datetime2", nullable: true),
                     date_order = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -217,6 +217,37 @@ namespace StoreApi.Migrations
                         principalTable: "NhanViens",
                         principalColumn: "user",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PhieuNhaps",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nccId = table.Column<int>(type: "int", nullable: false),
+                    NVuser = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    date_receice = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    total = table.Column<long>(type: "bigint", nullable: false),
+                    status = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PhieuNhaps", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PhieuNhaps_NCCs_nccId",
+                        column: x => x.nccId,
+                        principalTable: "NCCs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PhieuNhaps_NhanViens_NVuser",
+                        column: x => x.NVuser,
+                        principalTable: "NhanViens",
+                        principalColumn: "user",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -268,6 +299,16 @@ namespace StoreApi.Migrations
                 column: "quyenId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PhieuNhaps_nccId",
+                table: "PhieuNhaps",
+                column: "nccId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PhieuNhaps_NVuser",
+                table: "PhieuNhaps",
+                column: "NVuser");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SanPhams_brandId",
                 table: "SanPhams",
                 column: "brandId");
@@ -297,6 +338,9 @@ namespace StoreApi.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ChiTietHDs");
+
+            migrationBuilder.DropTable(
+                name: "PhieuNhaps");
 
             migrationBuilder.DropTable(
                 name: "HoaDons");
