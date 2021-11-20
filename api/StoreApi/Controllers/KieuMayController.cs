@@ -12,7 +12,7 @@ using StoreApi.Services;
 namespace StoreApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]")]  
     public class KieuMayController : ControllerBase
     {
         private int pageSize = 9;
@@ -52,7 +52,7 @@ namespace StoreApi.Controllers
                     KieuMay km = new KieuMay();
 
                     // Mapping
-                    km.Id = kmdto.Id;
+                    //km.Id = kmdto.Id;
                     km.name = kmdto.name;
                     var KM = this.KieuMayRepository.KieuMay_Add(km);
                     return Created("success", KM);
@@ -76,7 +76,7 @@ namespace StoreApi.Controllers
                     }
 
                     // Mapping
-                    km.Id = kmdto.Id;
+                    //km.Id = kmdto.Id;
                     km.name = kmdto.name;
 
                     var KM = this.KieuMayRepository.KieuMay_Update(km);
@@ -103,16 +103,16 @@ namespace StoreApi.Controllers
         public ViewKieuMayAdminDto FilterAdmin(FilterDataAdminDto data) {
             int count;
             var KieuMays = KieuMayRepository.KieuMay_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
-            var ListSP = new PaginatedList<KieuMay>(KieuMays, count, data.pageIndex, pageSize);
+            var ListKM = new PaginatedList<KieuMay>(KieuMays, count, data.pageIndex, pageSize);
             ViewKieuMayAdminDto view = new ViewKieuMayAdminDto() {
-                ListSP = ListSP,
+                ListKM = ListKM,
                 search = data.search,
                 sort = data.sort,
                 pageIndex = data.pageIndex,
                 pageSize = this.pageSize,
                 count = count,
                 range = this.range,
-                totalPage = ListSP.TotalPages
+                totalPage = ListKM.TotalPages
             };
             return view;
         }

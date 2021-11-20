@@ -9,7 +9,7 @@ namespace StoreApi.DTOs
 {
     public class ViewKieuMayAdminDto
     {
-        public PaginatedList<KieuMay> ListSP { get; set; }
+        public PaginatedList<KieuMay> ListKM { get; set; }
         // public string sort { get; set;}
         public String search{ get; set; }
         public String sort{ get; set; }
