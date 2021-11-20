@@ -125,7 +125,8 @@ namespace StoreApi.Controllers
             var ListSP = new PaginatedList<SanPham>(SanPhams, count, data.pageIndex, pageSize);
             ViewProductAdminDto view = new ViewProductAdminDto() {
                 ListSP = ListSP,
-                // sort = data.sort,
+                search = data.search,
+                sort = data.sort,
                 pageIndex = data.pageIndex,
                 pageSize = this.pageSize,
                 count = count,
