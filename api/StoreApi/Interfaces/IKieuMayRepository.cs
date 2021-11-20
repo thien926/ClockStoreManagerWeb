@@ -8,7 +8,7 @@ namespace StoreApi.Interfaces
 {
     public interface IKieuMayRepository
     {
-        KieuMay KieuMay_Add(KieuMay sp); 
+        KieuMay KieuMay_Add(KieuMay km); 
         KieuMay KieuMay_GetById(int id); 
         IEnumerable<KieuMay> KieuMay_GetAll();
         KieuMay KieuMay_Update(KieuMay NV); 

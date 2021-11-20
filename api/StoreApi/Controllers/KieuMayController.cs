@@ -33,7 +33,7 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<KieuMay> AddSP(KieuMayDto spdto) {
+        public ActionResult<KieuMay> Addkm(KieuMayDto kmdto) {
 
             // Console.WriteLine("KieuMay Add: ");
             // Console.WriteLine(spdto.LSPId);
@@ -49,13 +49,13 @@ namespace StoreApi.Controllers
 
             if(ModelState.IsValid){
                 try {
-                    KieuMay sp = new KieuMay();
+                    KieuMay km = new KieuMay();
 
                     // Mapping
-                    sp.Id = spdto.Id;
-                    sp.name = spdto.name;
-                    var SP = this.KieuMayRepository.KieuMay_Add(sp);
-                    return Created("success", SP);
+                    km.Id = kmdto.Id;
+                    km.name = kmdto.name;
+                    var KM = this.KieuMayRepository.KieuMay_Add(km);
+                    return Created("success", KM);
                 }
                 catch(Exception e) {
                     return StatusCode(StatusCodes.Status500InternalServerError);
@@ -66,21 +66,21 @@ namespace StoreApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<KieuMay> UpdateSP([FromBody] KieuMayDto spdto, int id) {
+        public ActionResult<KieuMay> Updatekm([FromBody] KieuMayDto kmdto, int id) {
             if(ModelState.IsValid) {
                 try {
-                    var sp = KieuMayRepository.KieuMay_GetById(id);
+                    var km = KieuMayRepository.KieuMay_GetById(id);
 
-                    if(sp == null || spdto.Id != id) {
+                    if(km == null || kmdto.Id != id) {
                         return NotFound();
                     }
 
                     // Mapping
-                    sp.Id = spdto.Id;
-                    sp.name = spdto.name;
+                    km.Id = kmdto.Id;
+                    km.name = kmdto.name;
 
-                    var SP = this.KieuMayRepository.KieuMay_Update(sp);
-                    return Created("success", SP);
+                    var KM = this.KieuMayRepository.KieuMay_Update(km);
+                    return Created("success", KM);
                 }
                 catch(Exception e) {
                     return StatusCode(StatusCodes.Status500InternalServerError);
@@ -90,12 +90,12 @@ namespace StoreApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteSP(int id) {
-            var SP = KieuMayRepository.KieuMay_GetById(id);
-            if(SP == null) {
+        public ActionResult Deletekm(int id) {
+            var km = KieuMayRepository.KieuMay_GetById(id);
+            if(km == null) {
                 return NotFound();
             }
-            KieuMayRepository.KieuMay_Delete(SP);
+            KieuMayRepository.KieuMay_Delete(km);
             return Ok(new { messgae = "Ok" });
         }
 
