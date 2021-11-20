@@ -23,8 +23,10 @@ namespace StoreApi.Models
         public string phone{get; set;}
         public string fax { get; set; }
         public ICollection<SanPham> SanPhams { get; set; }
+        public ICollection<PhieuNhap> phieuNhaps { get; set; }
         public NCC(){
             SanPhams = new HashSet<SanPham>();
+            phieuNhaps = new HashSet<PhieuNhap>();
         }
     }
 }

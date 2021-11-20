@@ -14,14 +14,16 @@ namespace StoreApi.Models
         [StringLength(maximumLength:25, MinimumLength = 3, ErrorMessage = "Mã khách hàng từ 3 đến 25 kí tự")]
         [RegularExpression(pattern: @"^[a-zA-Z][\w]{1,}", ErrorMessage="Mã khách hàng phải bắt đầu bằng chữ")]
         public string KHuser {get; set;}
+        
         public string NVuser { get; set;}
 
         [Required(ErrorMessage = "Số điện thoại là bắt buộc")]
-        [RegularExpression(pattern: "^([\\d]{10,11})", ErrorMessage="Số điện thoại phải là số và dài từ 10 đến 11")]
+        [RegularExpression(pattern: @"^(09|03|07|08|05)+([0-9]{8})")]
+        [StringLength(10, ErrorMessage = "Số điện thoại có 10 kí tự")] 
         public string phone{get; set;}
 
         [Required(ErrorMessage = "Địa chỉ là bắt buộc")]
-        public string address {get; set;}
+        public string address { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime? date_receice{get; set;}
@@ -30,10 +32,11 @@ namespace StoreApi.Models
         [DataType(DataType.Date)]
         public DateTime date_order{get; set;}
 
+        [Required(ErrorMessage = "Tổng là bắt buộc")]
         public long total { get; set;}
 
+        [Required(ErrorMessage = "Trạng thái là bắt buộc")]
         public int status { get; set;}
-
         public virtual KhachHang KH { get; set;}
         public virtual NhanVien NV { get; set; }
         public ICollection<ChiTietHD> chitietHDs {get; set;}
