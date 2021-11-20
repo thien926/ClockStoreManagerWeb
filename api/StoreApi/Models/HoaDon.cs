@@ -14,6 +14,7 @@ namespace StoreApi.Models
         [StringLength(maximumLength:25, MinimumLength = 3, ErrorMessage = "Mã khách hàng từ 3 đến 25 kí tự")]
         [RegularExpression(pattern: @"^[a-zA-Z][\w]{1,}", ErrorMessage="Mã khách hàng phải bắt đầu bằng chữ")]
         public string KHuser {get; set;}
+        
         public string NVuser { get; set;}
 
         [Required(ErrorMessage = "Số điện thoại là bắt buộc")]
@@ -36,7 +37,6 @@ namespace StoreApi.Models
 
         [Required(ErrorMessage = "Trạng thái là bắt buộc")]
         public int status { get; set;}
-
         public virtual KhachHang KH { get; set;}
         public virtual NhanVien NV { get; set; }
         public ICollection<ChiTietHD> chitietHDs {get; set;}

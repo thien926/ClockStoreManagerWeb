@@ -10,14 +10,14 @@ namespace StoreApi.Models
     {
         [Key]
         [Required(ErrorMessage = "Mã phiếu nhập là bắt buộc")]
-        public int couponId{get; set;}
+        public int couponId { get; set; }
 
         [Key]
         [Required(ErrorMessage = "Mã sản phẩm là bắt buộc")]
-        public int productId{get; set;}
+        public int productId { get; set;}
 
         [Required(ErrorMessage = "Tên sản phẩm là bắt buộc")]
-        public string name {get; set;}
+        public string name { get; set;}
 
         [Required(ErrorMessage = "Số lượng sản phẩm là bắt buộc")]
         public int amount { get; set;}

@@ -20,22 +20,37 @@ namespace StoreApi.Repositories
         public DbSet<Quyen> Quyens { get; set; }
         public DbSet<NhanVien> NhanViens { get; set; }
         public DbSet<KhachHang> KhachHangs { get; set; }
+        
         public DbSet<HoaDon> HoaDons { get; set; }
         public DbSet<ChiTietHD> ChiTietHDs { get; set; }
+        
         public DbSet<PhieuNhap> PhieuNhaps { get; set; }
-        // public DbSet<ChiTietPN> ChiTietPNs { get; set; }
-
+        public DbSet<ChiTietPN> ChiTietPNs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // modelBuilder.Entity<NhanVien>(entity => {
-            //     entity.HasOne(field => field.quyenId)
-            //     .WithMany(fk => fk.)
-            // });
-
+            
+            modelBuilder.Entity<ChiTietPN>()
+               .HasKey(pn => new { pn.couponId, pn.productId });
             modelBuilder.Entity<ChiTietHD>()
                .HasKey(c => new { c.billId, c.productId });
-            // modelBuilder.Entity<ChiTietPN>()
-            //    .HasKey(c => new { c.couponId, c.productId });
+            
+            var cascadeFKs = modelBuilder.Model.GetEntityTypes()
+                .SelectMany(t => t.GetForeignKeys())
+                .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+
+            foreach (var fk in cascadeFKs){
+                // Console.WriteLine(fk.GetConstraintName());
+                if(fk.GetConstraintName().Contains("FK_ChiTietHDs_SanPhams_productId") || 
+                    fk.GetConstraintName().Contains("FK_ChiTietPNs_SanPhams_productId")){
+                        fk.DeleteBehavior = DeleteBehavior.Restrict;
+                    }
+                // fk.GetConstraintName();
+                
+            }
+                
+
+            base.OnModelCreating(modelBuilder);
+
         }
     }
 }

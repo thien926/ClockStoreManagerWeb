@@ -8,15 +8,15 @@ namespace StoreApi.Models
 {
     public class PhieuNhap
     {
-        public int Id{get; set;}
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Mã nhà cung cấp là bắt buộc")]
-        public int nccId {get; set;}
+        public int nccId { get; set; }
 
         [Required(ErrorMessage = "Mã nhân viên bắt buộc")]
         [StringLength(maximumLength:25, MinimumLength = 3, ErrorMessage = "Mã nhân viên từ 3 đến 25 kí tự")]
         [RegularExpression(pattern: @"^[a-zA-Z][\w]{1,}", ErrorMessage="Mã nhân viên phải bắt đầu bằng chữ")]
-        public string NVuser { get; set;}
+        public string NVuser { get; set; }
 
         [Required(ErrorMessage = "Số điện thoại là bắt buộc")]
         [RegularExpression(pattern: @"^(09|03|07|08|05)+([0-9]{8})")]
@@ -26,7 +26,7 @@ namespace StoreApi.Models
         [Required(ErrorMessage = "Địa chỉ là bắt buộc")]
         public string address { get; set; }
 
-        [Required(ErrorMessage = "Ngày nhận là bắt buộc")]
+        [Required(ErrorMessage = "Ngày nhập là bắt buộc")]
         [DataType(DataType.Date)]
         public DateTime date_receice{get; set;}
 
@@ -36,14 +36,13 @@ namespace StoreApi.Models
         [Required(ErrorMessage = "Trạng thái là bắt buộc")]
         public int status { get; set;}
 
-        public virtual NCC ncc { get; set;}
+        public virtual NCC ncc { get; set; }
         public virtual NhanVien NV { get; set; }
-        // public ICollection<ChiTietPN> chitietPNs {get; set;}
-
-        public PhieuNhap (){
+        public ICollection<ChiTietPN> chiTietPNs { get; set; }
+        public PhieuNhap() {
             total = 0;
             status = 1;
-            // this.chitietPNs = new HashSet<ChiTietPN>();
+            chiTietPNs = new HashSet<ChiTietPN>();
         }
     }
 }

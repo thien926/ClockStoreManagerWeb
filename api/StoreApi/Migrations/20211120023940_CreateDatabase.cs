@@ -12,7 +12,7 @@ namespace StoreApi.Migrations
                 columns: table => new
                 {
                     user = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    password = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -275,12 +275,45 @@ namespace StoreApi.Migrations
                         column: x => x.productId,
                         principalTable: "SanPhams",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChiTietPNs",
+                columns: table => new
+                {
+                    couponId = table.Column<int>(type: "int", nullable: false),
+                    productId = table.Column<int>(type: "int", nullable: false),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    amount = table.Column<int>(type: "int", nullable: false),
+                    price = table.Column<long>(type: "bigint", nullable: false),
+                    img = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChiTietPNs", x => new { x.couponId, x.productId });
+                    table.ForeignKey(
+                        name: "FK_ChiTietPNs_PhieuNhaps_couponId",
+                        column: x => x.couponId,
+                        principalTable: "PhieuNhaps",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChiTietPNs_SanPhams_productId",
+                        column: x => x.productId,
+                        principalTable: "SanPhams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChiTietHDs_productId",
                 table: "ChiTietHDs",
+                column: "productId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChiTietPNs_productId",
+                table: "ChiTietPNs",
                 column: "productId");
 
             migrationBuilder.CreateIndex(
@@ -340,10 +373,13 @@ namespace StoreApi.Migrations
                 name: "ChiTietHDs");
 
             migrationBuilder.DropTable(
-                name: "PhieuNhaps");
+                name: "ChiTietPNs");
 
             migrationBuilder.DropTable(
                 name: "HoaDons");
+
+            migrationBuilder.DropTable(
+                name: "PhieuNhaps");
 
             migrationBuilder.DropTable(
                 name: "SanPhams");
