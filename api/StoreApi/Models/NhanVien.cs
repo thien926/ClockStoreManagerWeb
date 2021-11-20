@@ -49,9 +49,11 @@ namespace StoreApi.Models
 
         public virtual Quyen quyen { get; set; }
         public ICollection<HoaDon> hoaDons { get; set; }
+        public ICollection<PhieuNhap> phieuNhaps { get; set; }
         public NhanVien() {
             this.status = 0;
             hoaDons = new HashSet<HoaDon>();
+            phieuNhaps = new HashSet<PhieuNhap>();
         }
     }
 }

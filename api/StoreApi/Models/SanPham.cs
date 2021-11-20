@@ -50,11 +50,12 @@ namespace StoreApi.Models
         public virtual KieuMay machine { get; set; }
         public virtual NCC ncc { get; set; }
         public ICollection<ChiTietHD> chitietHDs { get; set; }
-
+        public ICollection<ChiTietPN> chiTietPNs { get; set; }
         public SanPham() {
             status = 0;
             amount = 0;
             chitietHDs = new HashSet<ChiTietHD>();
+            chiTietPNs = new HashSet<ChiTietPN>();
         }
     }
 }
