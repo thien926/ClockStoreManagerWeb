@@ -63,9 +63,9 @@ namespace StoreApi.Repositories
             }
 
             int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-            if(pageIndex > TotalPages){
-                pageIndex = TotalPages;
-            }
+            // if(pageIndex > TotalPages){
+            //     pageIndex = TotalPages;
+            // }
             if(pageIndex < 1){
                 pageIndex = 1;
             }
