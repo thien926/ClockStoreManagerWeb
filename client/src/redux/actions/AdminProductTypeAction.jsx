@@ -6,7 +6,7 @@ export const GET_PRODUCT_TYPE_ADMIN = 'GET_PRODUCT_TYPE_ADMIN'
 
 export const actGetProductTypeAdmin = (data) => (dispatch) => {
     axios.post(
-        `${API_URL}filter-admin`,
+        `${API_URL}loaisanpham/filter-admin`,
         data,
         {
             headers : {
@@ -16,6 +16,7 @@ export const actGetProductTypeAdmin = (data) => (dispatch) => {
             credentials: 'include',
         }
     ).then((res) => {
+        console.log("actGetProductTypeAdmin success");
         dispatch({
             type : GET_PRODUCT_TYPE_ADMIN,
             payload : res.data
