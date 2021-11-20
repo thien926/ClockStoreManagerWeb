@@ -151,3 +151,13 @@ D:\student\MVC\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\StoreApi.dll
 D:\student\MVC\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\ref\StoreApi.dll
 D:\student\MVC\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\StoreApi.pdb
 D:\student\MVC\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\StoreApi.genruntimeconfig.cache
+C:\Users\Vo Minh Hung\Documents\GitHub\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\StoreApi.csproj.AssemblyReference.cache
+C:\Users\Vo Minh Hung\Documents\GitHub\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\StoreApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Vo Minh Hung\Documents\GitHub\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\StoreApi.AssemblyInfoInputs.cache
+C:\Users\Vo Minh Hung\Documents\GitHub\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\StoreApi.AssemblyInfo.cs
+C:\Users\Vo Minh Hung\Documents\GitHub\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\StoreApi.csproj.CoreCompileInputs.cache
+C:\Users\Vo Minh Hung\Documents\GitHub\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\StoreApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Vo Minh Hung\Documents\GitHub\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\StoreApi.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Vo Minh Hung\Documents\GitHub\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\StoreApi.dll
+C:\Users\Vo Minh Hung\Documents\GitHub\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\ref\StoreApi.dll
+C:\Users\Vo Minh Hung\Documents\GitHub\ClockStoreManagerWeb\api\StoreApi\obj\Debug\net5.0\StoreApi.pdb
