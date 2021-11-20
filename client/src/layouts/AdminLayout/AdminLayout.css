@@ -82,7 +82,7 @@ div.content {
   /* height: 100vh; */
   height: unset;
   width: fit-content;
-  min-height: 700px;
+  min-width: 80vw;
   background-color: #eef9fc;;
 }
 /* Phần media */
@@ -137,4 +137,8 @@ div.content {
 
 .class-phan-trang {
   text-align: center;
+}
+
+.layout-admin {
+  background-color: #eef9fc;
 }

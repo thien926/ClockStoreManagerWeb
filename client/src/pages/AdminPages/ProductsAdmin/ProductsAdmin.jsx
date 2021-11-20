@@ -7,6 +7,7 @@ import { actGetProductAdmin } from '../../../redux/actions/AdminProductAction';
 import './ProductsAdmin.css'
 import AdminProductItem from '../../../components/AdminComponents/AdminProductComponent/AdminProductItem'
 import AdminProductControl from '../../../components/AdminComponents/AdminProductComponent/AdminProductControl';
+import AdminProductFormAction from '../../../components/AdminComponents/AdminProductComponent/AdminProductFormAction';
 
 
 function ProductsAdmin() {
@@ -17,6 +18,8 @@ function ProductsAdmin() {
     const [sort, setSort] = useState('name-asc');
     const [pageIndex, setPageIndex] = useState(1);
     const [search, setSearch] = useState('');
+
+    // html list sản phẩm
     const [elmsListSP, setElmsListSP] = useState(null);
 
     // State phân trang
@@ -225,7 +228,7 @@ function ProductsAdmin() {
             </div>
 
             <div className="row mt-3 ml-3 mr-3">
-                {/* <AdminProductFormAction /> */}
+                <AdminProductFormAction />
             </div>
 
         </div>
