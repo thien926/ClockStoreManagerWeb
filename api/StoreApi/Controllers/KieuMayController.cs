@@ -33,7 +33,7 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<KieuMay> Addkm(KieuMayDto kmdto) {
+        public ActionResult<KieuMay> AddKM(KieuMayDto kmdto) {
 
             // Console.WriteLine("KieuMay Add: ");
             // Console.WriteLine(spdto.LSPId);
@@ -66,7 +66,7 @@ namespace StoreApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<KieuMay> Updatekm([FromBody] KieuMayDto kmdto, int id) {
+        public ActionResult<KieuMay> UpdateKM([FromBody] KieuMayDto kmdto, int id) {
             if(ModelState.IsValid) {
                 try {
                     var km = KieuMayRepository.KieuMay_GetById(id);
@@ -90,7 +90,7 @@ namespace StoreApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Deletekm(int id) {
+        public ActionResult DeleteKM(int id) {
             var km = KieuMayRepository.KieuMay_GetById(id);
             if(km == null) {
                 return NotFound();
