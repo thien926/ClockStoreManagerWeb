@@ -34,28 +34,16 @@ namespace StoreApi.Controllers
         [HttpPost]
         public ActionResult<LoaiSanPham> AddLSP(LoaiSanPhamDto lspdto) {
 
-            // Console.WriteLine("LoaiSanPham Add: ");
-            // Console.WriteLine(lspdto.LSPId);
-            // Console.WriteLine(lspdto.brandId);
-            // Console.WriteLine(lspdto.wireId);
-            // Console.WriteLine(lspdto.machineId);
-            // Console.WriteLine(lspdto.nccId);
-            // Console.WriteLine(lspdto.name);
-            // Console.WriteLine(lspdto.amount);
-            // Console.WriteLine(lspdto.price);
-            // Console.WriteLine(lspdto.description);
-            // Console.WriteLine("img:", lspdto.img);
-
             if(ModelState.IsValid){
                 try {
                     LoaiSanPham lsp = new LoaiSanPham();
 
                     // Mapping
-                    lsp.Id = lspdto.Id;
+                    // lsp.Id = lspdto.Id;
                     lsp.name = lspdto.name;
                     lsp.description = lspdto.description;
 
-                    var LSP = this.LoaisanPhamRepository.LoaiSanPham_Add(lsp);
+                    var LSP = this.LoaiSanPhamRepository.LoaiSanPham_Add(lsp);
                     return Created("success", LSP);
                 }
                 catch(Exception e) {
@@ -77,7 +65,7 @@ namespace StoreApi.Controllers
                     }
 
                     // Mapping
-                    lsp.Id = lspdto.Id;
+                    // lsp.Id = lspdto.Id;
                     lsp.name = lspdto.name;
                     lsp.description = lspdto.description;
 
