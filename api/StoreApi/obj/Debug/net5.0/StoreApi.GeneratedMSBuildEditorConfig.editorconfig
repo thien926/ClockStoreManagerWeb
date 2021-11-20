@@ -7,4 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = StoreApi
-build_property.ProjectDir = C:\Users\Vo Minh Hung\Documents\GitHub\ClockStoreManagerWeb\api\StoreApi\
+build_property.ProjectDir = D:\student\MVC\ClockStoreManagerWeb\api\StoreApi\

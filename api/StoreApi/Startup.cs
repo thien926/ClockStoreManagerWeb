@@ -49,7 +49,7 @@ namespace StoreApi
             services.AddScoped<JwtKhachHangService>();
             services.AddScoped<INhanVienRepository, NhanVienRepository>();
             services.AddScoped<ISanPhamRepository, SanPhamRepository>();
-
+            services.AddScoped<IThuongHieuRepository, ThuongHieuRepository>();
             services.AddScoped<IKieuMayRepository, KieuMayRepository>();
 
             services.AddScoped<ILoaiSanPhamRepository, LoaiSanPhamRepository>();

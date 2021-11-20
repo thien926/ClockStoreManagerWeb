@@ -1,27 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vo Minh Hung\\Documents\\GitHub\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj": {}
+    "D:\\student\\MVC\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vo Minh Hung\\Documents\\GitHub\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj": {
+    "D:\\student\\MVC\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vo Minh Hung\\Documents\\GitHub\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj",
+        "projectUniqueName": "D:\\student\\MVC\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj",
         "projectName": "StoreApi",
-        "projectPath": "C:\\Users\\Vo Minh Hung\\Documents\\GitHub\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj",
-        "packagesPath": "C:\\Users\\Vo Minh Hung\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vo Minh Hung\\Documents\\GitHub\\ClockStoreManagerWeb\\api\\StoreApi\\obj\\",
+        "projectPath": "D:\\student\\MVC\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj",
+        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+        "outputPath": "D:\\student\\MVC\\ClockStoreManagerWeb\\api\\StoreApi\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Vo Minh Hung\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
