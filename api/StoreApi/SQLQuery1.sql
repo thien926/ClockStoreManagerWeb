@@ -18,6 +18,16 @@ select * from KhachHangs
 select * from NhanViens
 select * from Quyens
 select * from HoaDons
+select * from ChiTietHDs
+select * from SanPhams
+select * from ChiTietPNs
+select * from PhieuNhaps
+
+
+select * from SanPhams
+select * from nccs
+select * from KieuMays
+select * from KieuDays
 
 insert into Quyens 
 values('thien', 'aa');
