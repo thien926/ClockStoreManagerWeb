@@ -16,7 +16,7 @@ namespace StoreApi.Models
         public string user{get; set;}
 
         [Required(ErrorMessage = "Mật khẩu là bắt buộc")]
-        [StringLength(maximumLength:25, MinimumLength = 4, ErrorMessage = "Mật khẩu từ 4 đến 25 kí tự")]
+        // [StringLength(maximumLength:25, MinimumLength = 4, ErrorMessage = "Mật khẩu từ 4 đến 25 kí tự")]
         public string password{get; set;}
 
         [Required(ErrorMessage = "Họ tên là bắt buộc")]
