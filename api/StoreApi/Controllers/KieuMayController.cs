@@ -100,12 +100,14 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost("filter-admin")]
-        public ViewProductAdminDto FilterAdmin(FilterDataAdminDto data) {
+        public ViewKieuMayAdminDto FilterAdmin(FilterDataAdminDto data) {
             int count;
             var KieuMays = KieuMayRepository.KieuMay_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
             var ListSP = new PaginatedList<KieuMay>(KieuMays, count, data.pageIndex, pageSize);
-            ViewProductAdminDto view = new ViewProductAdminDto() {
-                // sort = data.sort,
+            ViewKieuMayAdminDto view = new ViewKieuMayAdminDto() {
+                ListSP = ListSP,
+                search = data.search,
+                sort = data.sort,
                 pageIndex = data.pageIndex,
                 pageSize = this.pageSize,
                 count = count,
