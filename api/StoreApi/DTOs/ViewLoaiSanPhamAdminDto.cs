@@ -10,7 +10,8 @@ namespace StoreApi.DTOs
     public class ViewLoaiSanPhamAdminDto
     {
         public PaginatedList<LoaiSanPham> ListLSP { get; set; }
-        // public string sort { get; set;}
+        public string sort { get; set;}
+        public string search { get; set;}
         public int pageIndex{ get; set; }
 
         // Kích thước của 1 trang có bao nhiêu loại sản phẩm

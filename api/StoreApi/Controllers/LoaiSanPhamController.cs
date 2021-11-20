@@ -102,13 +102,14 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost("filter-admin")]
-        public ViewProductAdminDto FilterAdmin(FilterDataAdminDto data) {
+        public ViewLoaiSanPhamAdminDto FilterAdmin(FilterDataAdminDto data) {
             int count;
             var LoaiSanPhams = LoaiSanPhamRepository.LoaiSanPham_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
             var ListLSP = new PaginatedList<LoaiSanPham>(LoaiSanPhams, count, data.pageIndex, pageSize);
-            ViewProductAdminDto view = new ViewProductAdminDto() {
+            ViewLoaiSanPhamAdminDto view = new ViewLoaiSanPhamAdminDto() {
                 ListLSP = ListLSP,
-                // sort = data.sort,
+                sort = data.sort,
+                search = data.search,
                 pageIndex = data.pageIndex,
                 pageSize = this.pageSize,
                 count = count,
