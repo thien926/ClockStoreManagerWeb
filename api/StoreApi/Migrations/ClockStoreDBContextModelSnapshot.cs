@@ -48,6 +48,35 @@ namespace StoreApi.Migrations
                     b.ToTable("ChiTietHDs");
                 });
 
+            modelBuilder.Entity("StoreApi.Models.ChiTietPN", b =>
+                {
+                    b.Property<int>("couponId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("productId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("img")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("price")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("couponId", "productId");
+
+                    b.HasIndex("productId");
+
+                    b.ToTable("ChiTietPNs");
+                });
+
             modelBuilder.Entity("StoreApi.Models.HoaDon", b =>
                 {
                     b.Property<int>("Id")
@@ -75,7 +104,8 @@ namespace StoreApi.Migrations
 
                     b.Property<string>("phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("status")
                         .HasColumnType("int");
@@ -121,8 +151,7 @@ namespace StoreApi.Migrations
 
                     b.Property<string>("password")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("phone")
                         .IsRequired()
@@ -266,6 +295,48 @@ namespace StoreApi.Migrations
                     b.ToTable("NhanViens");
                 });
 
+            modelBuilder.Entity("StoreApi.Models.PhieuNhap", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NVuser")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("date_receice")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("nccId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("phone")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.Property<long>("total")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NVuser");
+
+                    b.HasIndex("nccId");
+
+                    b.ToTable("PhieuNhaps");
+                });
+
             modelBuilder.Entity("StoreApi.Models.Quyen", b =>
                 {
                     b.Property<int>("Id")
@@ -374,10 +445,29 @@ namespace StoreApi.Migrations
                     b.HasOne("StoreApi.Models.SanPham", "product")
                         .WithMany("chitietHDs")
                         .HasForeignKey("productId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("bill");
+
+                    b.Navigation("product");
+                });
+
+            modelBuilder.Entity("StoreApi.Models.ChiTietPN", b =>
+                {
+                    b.HasOne("StoreApi.Models.PhieuNhap", "coupon")
+                        .WithMany("chiTietPNs")
+                        .HasForeignKey("couponId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StoreApi.Models.SanPham", "product")
+                        .WithMany("chiTietPNs")
+                        .HasForeignKey("productId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("coupon");
 
                     b.Navigation("product");
                 });
@@ -408,6 +498,25 @@ namespace StoreApi.Migrations
                         .IsRequired();
 
                     b.Navigation("quyen");
+                });
+
+            modelBuilder.Entity("StoreApi.Models.PhieuNhap", b =>
+                {
+                    b.HasOne("StoreApi.Models.NhanVien", "NV")
+                        .WithMany("phieuNhaps")
+                        .HasForeignKey("NVuser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StoreApi.Models.NCC", "ncc")
+                        .WithMany("phieuNhaps")
+                        .HasForeignKey("nccId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ncc");
+
+                    b.Navigation("NV");
                 });
 
             modelBuilder.Entity("StoreApi.Models.SanPham", b =>
@@ -480,12 +589,21 @@ namespace StoreApi.Migrations
 
             modelBuilder.Entity("StoreApi.Models.NCC", b =>
                 {
+                    b.Navigation("phieuNhaps");
+
                     b.Navigation("SanPhams");
                 });
 
             modelBuilder.Entity("StoreApi.Models.NhanVien", b =>
                 {
                     b.Navigation("hoaDons");
+
+                    b.Navigation("phieuNhaps");
+                });
+
+            modelBuilder.Entity("StoreApi.Models.PhieuNhap", b =>
+                {
+                    b.Navigation("chiTietPNs");
                 });
 
             modelBuilder.Entity("StoreApi.Models.Quyen", b =>
@@ -496,6 +614,8 @@ namespace StoreApi.Migrations
             modelBuilder.Entity("StoreApi.Models.SanPham", b =>
                 {
                     b.Navigation("chitietHDs");
+
+                    b.Navigation("chiTietPNs");
                 });
 
             modelBuilder.Entity("StoreApi.Models.ThuongHieu", b =>
