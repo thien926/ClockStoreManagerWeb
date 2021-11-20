@@ -23,6 +23,7 @@ III.Tiếp theo : Cách tạo 1 table và database
             "DefaultConnection": "Data Source=DESKTOP-06LRG85\\SQLEXPRESS; Initial Catalog=CLOCKSTOREWEB;Integrated Security=true; uid=sa; password=1234567890"
         }
     2.  Tạo ClockStoreDBContext tại Repositories
+    2.  Startup
     3.  Tạo Model KieuDay
     4.  public DbSet<KieuDay> KieuDays { get; set; } tại ClockStoreDBContext
     5.  Tại Startup.cs tạo kết nối với database để khi chạy có thể kết nối
@@ -32,3 +33,6 @@ III.Tiếp theo : Cách tạo 1 table và database
         dotnet ef migrations add CreateKieuDaysTable
     7.  dotnet ef database update  để update database cho sqlserver
     8.  Tương tự cho các Model còn lại (cái nào đã làm rồi thì không làm nữa)
+
+
+

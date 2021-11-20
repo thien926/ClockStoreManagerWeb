@@ -3859,7 +3859,8 @@ ol {
 
 @media only screen and (min-width: 1200px) and (max-width: 1920px) {
 	.inner-header .advanced-search .input-group button {
-		right: -14px;
+		/* right: -14px; */
+		right: -200px;
 	}
 	.product-item .pi-pic ul li a {
 		padding: 16px 12px 12px 11px;
@@ -3882,7 +3883,8 @@ ol {
 		max-width: 36%;
 	}
 	.inner-header .advanced-search .input-group {
-		max-width: 64%;
+		/* max-width: 64%; */
+		max-width: 100%;
 	}
 	.nav-item .nav-menu li a {
 		padding: 16px 26px 15px;
@@ -3991,7 +3993,8 @@ ol {
 		padding-right: 25px;
 	}
 	.inner-header .advanced-search .input-group {
-		max-width: 60%;
+		/* max-width: 60%; */
+		max-width: 100%;
 	}
 	.inner-header .nav-right li {
 		margin-left: 8px;
