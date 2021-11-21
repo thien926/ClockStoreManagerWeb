@@ -17,15 +17,24 @@
 //     "totalPage": 1
 // }
 
-import { GET_PRODUCT_TYPE_ADMIN } from "../actions/AdminProductTypeAction";
+import { GET_PRODUCT_TYPE_ADMIN, 
+    UPDATE_PRODUCT_TYPE_ADMIN, 
+    ADD_PRODUCT_TYPE_ADMIN 
+} from "../actions/AdminProductTypeAction";
 
-const initialState = {};
+const initialState = {
+    // data : {},
+    // message : ''
+};
 
 const AdminProductTypeReducer = (state = initialState, action) => {       //action.type action.payload
     switch (action.type) {
         case GET_PRODUCT_TYPE_ADMIN:
             return action.payload;
-        
+        case ADD_PRODUCT_TYPE_ADMIN:
+            return action.payload;
+        case UPDATE_PRODUCT_TYPE_ADMIN: 
+            return action.payload;
         default:
             return {
                 ...state
@@ -34,3 +43,8 @@ const AdminProductTypeReducer = (state = initialState, action) => {       //acti
 }
 
 export default AdminProductTypeReducer
+
+// return {
+//     ...state,
+//     data: [...action.payload]
+// };

@@ -81,6 +81,7 @@ div.content {
   padding: 1px 16px;
   /* height: 100vh; */
   height: unset;
+  min-height: 100vh;
   width: fit-content;
   min-width: 80vw;
   background-color: #eef9fc;;

@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router'
+import { toast } from 'react-toastify'
 import AdminProductTypeControl from '../../../components/AdminComponents/AdminProductTypeComponent/AdminProductTypeControl'
 import AdminProductTypeFormAction from '../../../components/AdminComponents/AdminProductTypeComponent/AdminProductTypeFormAction'
 import AdminProductTypeItem from '../../../components/AdminComponents/AdminProductTypeComponent/AdminProductTypeItem'
 import AdminProductTypePaging from '../../../components/AdminComponents/AdminProductTypeComponent/AdminProductTypePaging'
-import { actGetProductTypeAdmin } from '../../../redux/actions/AdminProductTypeAction'
+import { actGetProductTypeAdmin, actAddProductTypeAdmin } from '../../../redux/actions/AdminProductTypeAction'
 
 function ProductTypeAdmin() {
 
@@ -19,6 +20,9 @@ function ProductTypeAdmin() {
 
     //State Html
     const [elmListLSP, setElmListLSP] = useState(null);
+
+    const [formAction, setFormAction] = useState({id : null, name : '', description : ''});
+    const [actionValue, setActionValue] = useState('');
 
     const location = useLocation();
     const dispatch = useDispatch();
@@ -92,9 +96,9 @@ function ProductTypeAdmin() {
         // console.log("productTypeReducer: ", productTypeReducer);
 
         var result = null;
-        if(productTypeReducer.listLSP) {
+        if(productTypeReducer.listLSP && productTypeReducer.listLSP.length > 0) {
             result = productTypeReducer.listLSP.map((productType, index) => {
-                return <AdminProductTypeItem key={index} index={index} productType={productType}/>
+                return <AdminProductTypeItem key={index} index={index} productType={productType} actionUpdate={actionUpdate}/>
             })
         }
         setElmListLSP(result);
@@ -108,6 +112,41 @@ function ProductTypeAdmin() {
         navigate('/admin/product-type?search=' + search + '&sort=' + sortValue + '&pageIndex=' + pageIndex);
     }
 
+    const actionAdd = () => {
+        // console.log("action Add");
+        setFormAction({id : null, name : '', description : ''});
+        setActionValue("add");
+    }
+
+    const actionUpdate = (data) => {
+        // console.log(data);
+        setFormAction(data);
+        setActionValue("update");
+    }
+
+    const showForm = useCallback(
+        () => {
+            if(!actionValue) {
+                return null;
+            }
+            return <AdminProductTypeFormAction formAction={formAction} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
+        },
+        [actionValue, formAction],
+    )
+
+    const submitActionForm = (data) => {
+        
+        var filter = {
+            search : search,
+            sort: sort,
+            pageIndex:pageIndex
+        }
+        console.log(filter);
+        dispatch(actAddProductTypeAdmin(data, filter));
+        toast.success("success");
+        // console.log(res);
+    }
+
     return (
         <div>
             <div>
@@ -115,7 +154,7 @@ function ProductTypeAdmin() {
                 <hr />
             </div>
             
-            <AdminProductTypeControl search={search} changeSearch={changeSearch} sort={sort} changeSort={changeSort}/>
+            <AdminProductTypeControl search={search} changeSearch={changeSearch} sort={sort} changeSort={changeSort} actionAdd={actionAdd}/>
 
             <div className="row mt-3">
                 <table className="table table-hover ">
@@ -136,8 +175,8 @@ function ProductTypeAdmin() {
             
             <AdminProductTypePaging productTypeReducer={productTypeReducer}/>
 
-            <AdminProductTypeFormAction />
-
+            {/* <AdminProductTypeFormAction formAction={formAction} actionValue={actionValue}/> */}
+            {showForm()}
         </div>
     )
 }
