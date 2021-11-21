@@ -39,7 +39,7 @@ namespace StoreApi.Controllers
                     KieuDay kd = new KieuDay();
 
                     // Mapping
-                    kd.Id = kddto.Id;
+                    // kd.Id = kddto.Id;
                     kd.name = kddto.name;
 
                     var KD = this.KieuDayRepository.KieuDay_Add(kd);
