@@ -4,49 +4,47 @@ using System.Linq;
 using System.Threading.Tasks;
 using StoreApi.Interfaces;
 using StoreApi.Models;
-
 namespace StoreApi.Repositories
 {
-    
-    public class LoaiSanPhamRepository : ILoaiSanPhamRepository
+    public class KieuDayRepository : IKieuDayRepository
     {
         private readonly ClockStoreDBContext context;
-        public LoaiSanPhamRepository(ClockStoreDBContext context) {
+        public KieuDayRepository(ClockStoreDBContext context) {
             this.context = context;
         }
-        public LoaiSanPham LoaiSanPham_Add(LoaiSanPham lsp)
+        public KieuDay KieuDay_Add(KieuDay kd)
         {
-            context.LoaiSanPhams.Add(lsp);
+            context.KieuDays.Add(kd);
             context.SaveChanges();
-            return lsp;
+            return kd;
         }
 
-        public LoaiSanPham LoaiSanPham_GetById(int id)
+        public KieuDay KieuDay_GetById(int id)
         {
-            // context.LoaiSanPhams.
-            return context.LoaiSanPhams.FirstOrDefault(o => o.Id == id);
+            // context.KieuDays.
+            return context.KieuDays.FirstOrDefault(o => o.Id == id);
         }
 
-        public IEnumerable<LoaiSanPham> LoaiSanPham_GetAll()
+        public IEnumerable<KieuDay> KieuDay_GetAll()
         {
-            return context.LoaiSanPhams.ToList();
+            return context.KieuDays.ToList();
         }
 
-        public LoaiSanPham LoaiSanPham_Update(LoaiSanPham SP)
+        public KieuDay KieuDay_Update(KieuDay kd)
         {
-            context.LoaiSanPhams.Update(SP);
+            context.KieuDays.Update(kd);
             context.SaveChanges();
-            return SP;
+            return kd;
         }
 
-        public void LoaiSanPham_Delete(LoaiSanPham SP)
+        public void KieuDay_Delete(KieuDay kd)
         {
-            context.LoaiSanPhams.Remove(SP);
+            context.KieuDays.Remove(kd);
             context.SaveChanges();
         }
 
-        public IEnumerable<LoaiSanPham> LoaiSanPham_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
-            var query = context.LoaiSanPhams.AsQueryable();
+        public IEnumerable<KieuDay> KieuDay_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
+            var query = context.KieuDays.AsQueryable();
             
             if(!string.IsNullOrEmpty(search)) {
                 search = search.ToLower();
