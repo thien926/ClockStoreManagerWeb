@@ -65,7 +65,7 @@ namespace StoreApi.Controllers
                     }
 
                     // Mapping
-                    // lsp.Id = lspdto.Id;
+                    lsp.Id = lspdto.Id;
                     lsp.name = lspdto.name;
                     lsp.description = lspdto.description;
 
