@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 
 function AdminProductTypeFormAction(props) {
 
-    const { formAction } = props;
+    const { formValue } = props;
 
     const [id, setId] = useState(null);
     const [name, setName] = useState('');
@@ -10,17 +10,17 @@ function AdminProductTypeFormAction(props) {
     const [title, setTitle] = useState('Thêm loại sản phẩm');
 
     useEffect(() => {
-        setId(formAction.id);
-        setName(formAction.name);
-        setDescription(formAction.description);
+        setId(formValue.id);
+        setName(formValue.name);
+        setDescription(formValue.description);
 
-        if(formAction.id) {
-            setTitle("Sửa loại sản phẩm có Id = " + formAction.id);
+        if(formValue.id) {
+            setTitle("Sửa loại sản phẩm có Id = " + formValue.id);
         }
         else {
             setTitle("Thêm loại sản phẩm");
         }
-    }, [formAction])
+    }, [formValue])
 
     const actionSubmit = () => {
         var data = {
@@ -30,14 +30,17 @@ function AdminProductTypeFormAction(props) {
         }
         if(!id) {
             data.id = 1;
+            props.submitActionForm(data, "add");
         }
-        props.submitActionForm(data);
+        else {
+            props.submitActionForm(data, "update");
+        }
         // console.log(data);
     }
 
     const showBtnSubmit = () => {
         // console.log("showBtnSubmit");
-        if(formAction.id) {
+        if(formValue.id) {
             return <button type="button" onClick={actionSubmit} className="btn btn-primary mr-2">Sửa</button>
         }
         return <button type="button" onClick={actionSubmit} className="btn btn-primary mr-2">Thêm</button>;

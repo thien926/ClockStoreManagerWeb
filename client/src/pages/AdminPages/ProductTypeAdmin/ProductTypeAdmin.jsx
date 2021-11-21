@@ -6,7 +6,8 @@ import AdminProductTypeControl from '../../../components/AdminComponents/AdminPr
 import AdminProductTypeFormAction from '../../../components/AdminComponents/AdminProductTypeComponent/AdminProductTypeFormAction'
 import AdminProductTypeItem from '../../../components/AdminComponents/AdminProductTypeComponent/AdminProductTypeItem'
 import AdminProductTypePaging from '../../../components/AdminComponents/AdminProductTypeComponent/AdminProductTypePaging'
-import { actGetProductTypeAdmin, actAddProductTypeAdmin } from '../../../redux/actions/AdminProductTypeAction'
+import { ADD_LSP_ERROR, ADD_LSP_SUCCESS, DELETE_LSP_ERROR, DELETE_LSP_SUCCESS, UPDATE_LSP_ERROR, UPDATE_LSP_SUCCESS } from '../../../constants/Message'
+import { actGetProductTypeAdmin, actAddProductTypeAdmin, actUpdateProductTypeAdmin, actResetMessageLSP, actDeleteProductType } from '../../../redux/actions/AdminProductTypeAction'
 
 function ProductTypeAdmin() {
 
@@ -21,7 +22,7 @@ function ProductTypeAdmin() {
     //State Html
     const [elmListLSP, setElmListLSP] = useState(null);
 
-    const [formAction, setFormAction] = useState({id : null, name : '', description : ''});
+    const [formValue, setFormValue] = useState({id : null, name : '', description : ''});
     const [actionValue, setActionValue] = useState('');
 
     const location = useLocation();
@@ -81,6 +82,7 @@ function ProductTypeAdmin() {
         }
     }, [location])
 
+    // Load danh sách loại sản phẩm
     useEffect(() => {
         // console.log("search: ", utf8_from_str(search));
         var data = {
@@ -92,59 +94,101 @@ function ProductTypeAdmin() {
         dispatch(actGetProductTypeAdmin(data));
     }, [sort, search, pageIndex, dispatch])
 
+    // tiến hành show danh sách loại sản phâm khi có dữ liệu
     useEffect(() => {
         // console.log("productTypeReducer: ", productTypeReducer);
 
         var result = null;
-        if(productTypeReducer.listLSP && productTypeReducer.listLSP.length > 0) {
-            result = productTypeReducer.listLSP.map((productType, index) => {
-                return <AdminProductTypeItem key={index} index={index} productType={productType} actionUpdate={actionUpdate}/>
+        if(productTypeReducer.dataValue.listLSP && productTypeReducer.dataValue.listLSP.length > 0) {
+            result = productTypeReducer.dataValue.listLSP.map((productType, index) => {
+                return <AdminProductTypeItem key={index} index={index} productType={productType} actionUpdate={actionUpdate} actionDelete={actionDelete}/>
             })
         }
+        // dispatch(actResetMessageLSP());
         setElmListLSP(result);
-    }, [productTypeReducer])
+    }, [productTypeReducer.dataValue])
 
+    // Hiện thông báo khi thêm, sửa, xóa    
+    useEffect(() => {
+        switch (productTypeReducer.message) {
+            case ADD_LSP_SUCCESS:
+            case DELETE_LSP_SUCCESS:
+            case UPDATE_LSP_SUCCESS:
+                toast.success(productTypeReducer.message);
+                var filter = {
+                    search : search,
+                    sort: sort,
+                    pageIndex:pageIndex
+                }
+                dispatch(actGetProductTypeAdmin(filter));
+                dispatch(actResetMessageLSP());
+                break;
+            case ADD_LSP_ERROR : 
+            case DELETE_LSP_ERROR:
+            case UPDATE_LSP_ERROR :
+                toast.error(productTypeReducer.message); 
+                dispatch(actResetMessageLSP());
+                break;
+            default:
+                break;
+        }
+    }, [productTypeReducer.message])
+
+    // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
         navigate('/admin/product-type?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
     }
 
+    // đi đến URL khác khi sort
     const changeSort = (sortValue) => {
         navigate('/admin/product-type?search=' + search + '&sort=' + sortValue + '&pageIndex=' + pageIndex);
     }
 
+    // nhấn button Thêm => Hiện form
     const actionAdd = () => {
         // console.log("action Add");
-        setFormAction({id : null, name : '', description : ''});
+        setFormValue({id : null, name : '', description : ''});
         setActionValue("add");
     }
 
+    // Nhấn button Sửa => hiện form
     const actionUpdate = (data) => {
         // console.log(data);
-        setFormAction(data);
+        setFormValue(data);
         setActionValue("update");
     }
 
+    // sau khi có giá trị của form thì hiện form
     const showForm = useCallback(
         () => {
             if(!actionValue) {
                 return null;
             }
-            return <AdminProductTypeFormAction formAction={formAction} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
+            return <AdminProductTypeFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
         },
-        [actionValue, formAction],
+        [actionValue, formValue],
     )
-
-    const submitActionForm = (data) => {
-        
-        var filter = {
-            search : search,
-            sort: sort,
-            pageIndex:pageIndex
+    
+    // submit form thêm sửa loại sản phẩm
+    const submitActionForm = (data, action) => {
+        // console.log(data);
+        if(action === "add") {
+            dispatch(actAddProductTypeAdmin(data));
         }
-        console.log(filter);
-        dispatch(actAddProductTypeAdmin(data, filter));
-        toast.success("success");
-        // console.log(res);
+        else if(action === "update") {
+            dispatch(actUpdateProductTypeAdmin(data, data.id));
+        }
+        
+        console.log("message: ",productTypeReducer.message);
+        setActionValue('');
+    }
+
+    // Thực hiện thao tác xóa
+    const actionDelete = (id) => {
+        var res = window.confirm("Bạn có chắc muốn xóa loại sản phẩm có Id = " + id + " không?");
+        if(res) {
+            dispatch(actDeleteProductType(id));
+        }
     }
 
     return (
@@ -173,9 +217,9 @@ function ProductTypeAdmin() {
                 </table>
             </div>
             
-            <AdminProductTypePaging productTypeReducer={productTypeReducer}/>
+            <AdminProductTypePaging dataValue={productTypeReducer.dataValue}/>
 
-            {/* <AdminProductTypeFormAction formAction={formAction} actionValue={actionValue}/> */}
+            {/* <AdminProductTypeFormValue formValue={formValue} actionValue={actionValue}/> */}
             {showForm()}
         </div>
     )

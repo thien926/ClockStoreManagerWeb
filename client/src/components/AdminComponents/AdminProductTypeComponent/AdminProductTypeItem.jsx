@@ -21,7 +21,7 @@ function AdminProductTypeItem(props) {
             <td>{ productType.description }</td>
             <td>
                 <button type="button" className="btn btn-info" onClick={actionBtnSua}>Sửa</button>
-                <button type="button" className="btn btn-warning ml-1">Xóa</button>
+                <button type="button" className="btn btn-warning ml-1" onClick={() => props.actionDelete(productType.id)}>Xóa</button>
             </td>
 
         </tr>

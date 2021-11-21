@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function AdminProductTypePaging(props) {
 
-    const { productTypeReducer } = props;
+    const { dataValue } = props;
 
     // State phân trang
     const [previous, setPrevious] = useState(null);
@@ -12,13 +12,13 @@ function AdminProductTypePaging(props) {
     const [notFound, setNotFound] = useState('Không tìm thấy loại sản phẩm nào!');
 
     useEffect(() => {
-        var result = null, pageIndex = productTypeReducer.pageIndex;
-        var search = productTypeReducer.search, sort = productTypeReducer.sort;
+        var result = null, pageIndex = dataValue.pageIndex;
+        var search = dataValue.search, sort = dataValue.sort;
         var nextPage = null, previousPage = null;
-        if (productTypeReducer.pageIndex) {
-            var totalPage = productTypeReducer.totalPage;
+        if (dataValue.pageIndex) {
+            var totalPage = dataValue.totalPage;
             var pageMin, pageMax;
-            var range = productTypeReducer.range, middle = totalPage / 2;
+            var range = dataValue.range, middle = totalPage / 2;
             if (totalPage <= range) {
                 pageMin = 1;
                 pageMax = totalPage;
@@ -97,7 +97,7 @@ function AdminProductTypePaging(props) {
             }
         }
         
-        if (productTypeReducer.listLSP && productTypeReducer.listLSP.length > 0) {
+        if (dataValue.listLSP && dataValue.listLSP.length > 0) {
             setElmsPhanTrang(result);
             setNext(nextPage);
             setPrevious(previousPage);
@@ -109,7 +109,7 @@ function AdminProductTypePaging(props) {
             setPrevious(null);
             setNotFound('Không tìm thấy loại sản phẩm nào!');
         }
-    }, [productTypeReducer])
+    }, [dataValue])
 
     return (
         <div className='class-phan-trang'>

@@ -1,40 +1,68 @@
 
 // const initialState = {
-//     "listLSP": [
-//         {
-//             "id": 1,
-//             "name": "ĐỒNG HỒ ĐỂ BÀN",
-//             "description": "Đồng hồ dành để bàn cho việc học và làm việc",
-//             "sanPhams": []
-//         }
-//     ],
-//     "sort": "name-asc",
-//     "search": "",
-//     "pageIndex": 1,
-//     "pageSize": 9,
-//     "count": 5,
-//     "range": 9,
-//     "totalPage": 1
+//     dataValue : {
+//         "listLSP": [
+//             {
+//                 "id": 1,
+//                 "name": "ĐỒNG HỒ ĐỂ BÀN",
+//                 "description": "Đồng hồ dành để bàn cho việc học và làm việc",
+//                 "sanPhams": []
+//             }
+//         ],
+//         "sort": "name-asc",
+//         "search": "",
+//         "pageIndex": 1,
+//         "pageSize": 9,
+//         "count": 5,
+//         "range": 9,
+//         "totalPage": 1
+//     },
+//     message : ''
 // }
 
-import { GET_PRODUCT_TYPE_ADMIN, 
-    UPDATE_PRODUCT_TYPE_ADMIN, 
-    ADD_PRODUCT_TYPE_ADMIN 
+import {
+    GET_PRODUCT_TYPE_ADMIN,
+    UPDATE_PRODUCT_TYPE_ADMIN,
+    ADD_PRODUCT_TYPE_ADMIN,
+    DELETE_PRODUCT_TYPE_ADMIN,
+    RESET_MESSAGE_LSP
 } from "../actions/AdminProductTypeAction";
 
 const initialState = {
-    // data : {},
-    // message : ''
+    dataValue: {},
+    message: ''
 };
 
 const AdminProductTypeReducer = (state = initialState, action) => {       //action.type action.payload
+    
     switch (action.type) {
+        case RESET_MESSAGE_LSP:
+            return {
+                ...state,
+                message: action.payload
+            }
         case GET_PRODUCT_TYPE_ADMIN:
-            return action.payload;
+            return {
+                ...state,
+                dataValue: action.payload
+            }
         case ADD_PRODUCT_TYPE_ADMIN:
-            return action.payload;
-        case UPDATE_PRODUCT_TYPE_ADMIN: 
-            return action.payload;
+            console.log("payload: ", action.payload);
+            return {
+                ...state,
+                message: action.payload
+            };
+        case UPDATE_PRODUCT_TYPE_ADMIN:
+            console.log("payload: ", action.payload);
+            return {
+                ...state,
+                message: action.payload
+            };
+        case DELETE_PRODUCT_TYPE_ADMIN:
+            return {
+                ...state,
+                message: action.payload
+            };
         default:
             return {
                 ...state
@@ -43,8 +71,3 @@ const AdminProductTypeReducer = (state = initialState, action) => {       //acti
 }
 
 export default AdminProductTypeReducer
-
-// return {
-//     ...state,
-//     data: [...action.payload]
-// };
