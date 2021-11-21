@@ -47,7 +47,8 @@ namespace StoreApi
             
             services.AddScoped<JwtNhanVienService>();
             services.AddScoped<JwtKhachHangService>();
-            services.AddScoped<INhanVienRepository, NhanVienRepository>();
+            //services.AddScoped<INhanVienRepository, NhanVienRepository>();
+            services.AddScoped<IPhieuNhapRepository, PhieuNhapRepository>();
             services.AddScoped<ISanPhamRepository, SanPhamRepository>();
 
             services.AddScoped<IKieuMayRepository, KieuMayRepository>();
