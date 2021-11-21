@@ -13,5 +13,6 @@ namespace StoreApi.Interfaces
         IEnumerable<PhieuNhap> PhieuNhap_GetAll();
         PhieuNhap PhieuNhap_Update(PhieuNhap NV); 
         void PhieuNhap_Delete(PhieuNhap NV); 
+        IEnumerable<PhieuNhap> PhieuNhap_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count);
     }
 }

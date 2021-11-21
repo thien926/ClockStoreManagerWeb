@@ -43,5 +43,36 @@ namespace StoreApi.Repositories
             context.PhieuNhaps.Remove(SP);
             context.SaveChanges();
         }
+
+        public IEnumerable<PhieuNhap> PhieuNhap_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
+            var query = context.PhieuNhaps.AsQueryable();
+            
+            if(!string.IsNullOrEmpty(search)) {
+                search = search.ToLower();
+                query = query.Where(m => m.address.ToLower().Contains(search));
+            }
+
+            count = query.Count();
+            if(!string.IsNullOrEmpty(sort)){
+                switch(sort){
+                    case "address-asc": query = query.OrderBy(m => m.address);
+                                    break;
+                    case "address-desc": query = query.OrderByDescending(m => m.address);
+                                    break;
+                    default: break;
+                }
+            }
+
+            int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            // if(pageIndex > TotalPages){
+            //     pageIndex = TotalPages;
+            // }
+            if(pageIndex < 1){
+                pageIndex = 1;
+            }
+
+            return query.Skip((pageIndex - 1) * pageSize)
+                        .Take(pageSize).ToList();
+        }
     }
 }

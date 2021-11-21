@@ -109,5 +109,22 @@ namespace StoreApi.Controllers
             PhieuNhapRepository.PhieuNhap_Delete(PN);
             return Ok(new { messgae = "Ok" });
         }
+        [HttpPost("filter-admin")]
+        public ViewPhieuNhapAdminDto FilterAdmin(FilterDataAdminDto data) {
+            int count;
+            var PhieuNhaps = PhieuNhapRepository.PhieuNhap_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
+            var ListPN = new PaginatedList<PhieuNhap>(PhieuNhaps, count, data.pageIndex, pageSize);
+            ViewPhieuNhapAdminDto view = new ViewPhieuNhapAdminDto() {
+                ListPN = ListPN,
+                search = data.search,
+                sort = data.sort,
+                pageIndex = data.pageIndex,
+                pageSize = this.pageSize,
+                count = count,
+                range = this.range,
+                totalPage = ListPN.TotalPages
+            };
+            return view;
+        }
     }
 }
