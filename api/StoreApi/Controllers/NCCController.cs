@@ -41,8 +41,9 @@ namespace StoreApi.Controllers
                     // Mapping
                     // ncc.Id = nccdto.Id;
                     ncc.name = nccdto.name;
-                    ncc.description = nccdto.description;
-
+                    ncc.address = nccdto.address;
+                    ncc.phone = nccdto.phone;
+                    ncc.fax = nccdto.fax;
                     var NCC = this.NCCRepository.NCC_Add(ncc);
                     return Created("success", NCC);
                 }
@@ -55,22 +56,24 @@ namespace StoreApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<NCC> UpdateLSP([FromBody] NCCDto lspdto, int id) {
+        public ActionResult<NCC> UpdateLSP([FromBody] NCCDto nccdto, int id) {
             if(ModelState.IsValid) {
                 try {
-                    var lsp = NCCRepository.NCC_GetById(id);
+                    var ncc = NCCRepository.NCC_GetById(id);
 
-                    if(lsp == null || lspdto.Id != id) {
+                    if(ncc == null || nccdto.Id != id) {
                         return NotFound();
                     }
 
                     // Mapping
-                    // lsp.Id = lspdto.Id;
-                    lsp.name = lspdto.name;
-                    lsp.description = lspdto.description;
+                    ncc.Id = nccdto.Id;
+                    ncc.name = nccdto.name;
+                    ncc.address = nccdto.address;
+                    ncc.phone = nccdto.phone;
+                    ncc.fax = nccdto.fax;
 
-                    var LSP = this.NCCRepository.NCC_Update(lsp);
-                    return Created("success", LSP);
+                    var nCC = this.NCCRepository.NCC_Update(ncc);
+                    return Created("success", nCC);
                 }
                 catch(Exception e) {
                     return StatusCode(StatusCodes.Status500InternalServerError);
