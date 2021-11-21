@@ -88,7 +88,7 @@ function PermissionAdmin() {
             </div>
 
 
-            <div className="row mt-3">
+            <div className="row mt-3 ml-3 mr-3">
                 <div>
                     <h3 className="text-center mt-2">Thêm quyền</h3>
                     <hr />
@@ -108,12 +108,12 @@ function PermissionAdmin() {
 
                             </td>
                         </tr>
-                        <tr>
-                            <td colSpan="2"><button type="submit" className="btn btn-primary mt-4 btn-submit-product-admin">Thêm</button></td>
-                        </tr>
-
                     </tbody>
                 </table>
+                <div className="mb-3">
+                    <button type="button" className="btn btn-primary mr-2">Thêm</button>
+                    <button type="button" className="btn btn-danger mr-2">Hủy</button>
+                </div>
             </div>
 
         </div>

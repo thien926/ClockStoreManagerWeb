@@ -15,7 +15,7 @@ function AdminProductFormAction(props) {
                     <tr>
                         <td>Id</td>
                         <td>
-                            <input type="email" className="form-control" required="required" enabled={Id != -1} />
+                            <input type="email" className="form-control" required="required" />
                         </td>
                     </tr>
                     <tr>
