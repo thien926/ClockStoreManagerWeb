@@ -84,11 +84,11 @@ namespace StoreApi.Controllers
 
         [HttpDelete("{id}")]
         public ActionResult DeleteLSP(int id) {
-            var LSP = NCCRepository.NCC_GetById(id);
-            if(LSP == null) {
+            var NCC = NCCRepository.NCC_GetById(id);
+            if(NCC == null) {
                 return NotFound();
             }
-            NCCRepository.NCC_Delete(LSP);
+            NCCRepository.NCC_Delete(NCC);
             return Ok(new { messgae = "Ok" });
         }
 
@@ -96,16 +96,16 @@ namespace StoreApi.Controllers
         public ViewNCCAdminDto FilterAdmin(FilterDataAdminDto data) {
             int count;
             var NCCs = NCCRepository.NCC_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
-            var ListLSP = new PaginatedList<NCC>(NCCs, count, data.pageIndex, pageSize);
+            var ListNCC = new PaginatedList<NCC>(NCCs, count, data.pageIndex, pageSize);
             ViewNCCAdminDto view = new ViewNCCAdminDto() {
-                ListLSP = ListLSP,
+                ListNCC = ListNCC,
                 sort = data.sort,
                 search = data.search,
                 pageIndex = data.pageIndex,
                 pageSize = this.pageSize,
                 count = count,
                 range = this.range,
-                totalPage = ListLSP.TotalPages
+                totalPage = ListNCC.TotalPages
             };
             return view;
         }
