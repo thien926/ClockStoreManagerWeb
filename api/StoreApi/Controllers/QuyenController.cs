@@ -31,7 +31,7 @@ namespace StoreApi.Controllers
         public ActionResult<Quyen> GetById(int id) {
             return this.QuyenRepository.Quyen_GetById(id);
         }
-
+        //qưeqweqwe
         [HttpPost]
         public ActionResult<Quyen> AddQ(QuyenDto qdto) {
             if(ModelState.IsValid){
