@@ -1,15 +1,20 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import Category from "../../../components/ShopComponents/ShopPageComponent/Category";
 import ProductItem from "../../../components/ShopComponents/ShopPageComponent/ProductItem";
 import ResultSearch from "../../../components/ShopComponents/ShopPageComponent/ResultSearch";
 import ShopPaging from "../../../components/ShopComponents/ShopPageComponent/ShopPaging";
 import Sort from "../../../components/ShopComponents/ShopPageComponent/Sort";
 
-function Shop(props) {
-  // let match = useMatch();
+import './Shop.css'
 
-  console.log("Param: ", useLocation());
+function Shop(props) {
+  
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log(location);
+  }, [location])
 
   return (
     <div>
@@ -18,7 +23,7 @@ function Shop(props) {
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcrumb-text">
-                <a href="#"><i className="fa fa-home" /> Trang chủ</a>
+                <Link to='/home'><i className="fa fa-home" /> Trang chủ</Link>
                 <span>Cửa hàng</span>
               </div>
             </div>
