@@ -11,8 +11,8 @@ namespace StoreApi.Interfaces
         ThuongHieu ThuongHieu_Add(ThuongHieu th); 
         ThuongHieu ThuongHieu_GetById(int id); 
         IEnumerable<ThuongHieu> ThuongHieu_GetAll();
-        ThuongHieu ThuongHieu_Update(ThuongHieu NV); 
-        void ThuongHieu_Delete(ThuongHieu NV); 
+        ThuongHieu ThuongHieu_Update(ThuongHieu TH); 
+        void ThuongHieu_Delete(ThuongHieu TH); 
         IEnumerable<ThuongHieu> ThuongHieu_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count);
     }
 }
