@@ -34,19 +34,6 @@ namespace StoreApi.Controllers
 
         [HttpPost]
         public ActionResult<SanPham> AddSP(SanPhamDto spdto) {
-
-            // Console.WriteLine("SanPham Add: ");
-            // Console.WriteLine(spdto.LSPId);
-            // Console.WriteLine(spdto.brandId);
-            // Console.WriteLine(spdto.wireId);
-            // Console.WriteLine(spdto.machineId);
-            // Console.WriteLine(spdto.nccId);
-            // Console.WriteLine(spdto.name);
-            // Console.WriteLine(spdto.amount);
-            // Console.WriteLine(spdto.price);
-            // Console.WriteLine(spdto.description);
-            // Console.WriteLine("img:", spdto.img);
-
             if(ModelState.IsValid){
                 try {
                     SanPham sp = new SanPham();
@@ -134,6 +121,13 @@ namespace StoreApi.Controllers
                 totalPage = ListSP.TotalPages
             };
             return view;
+        }
+
+        [HttpPost("filter-shop")]
+        public ViewProductsShopDto FilterShop(FilterProductsShopDto data) {
+            int count;
+            
+            return null;
         }
     }
 }

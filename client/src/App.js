@@ -30,9 +30,11 @@ function App() {
         <Route path='/admin/staff' element={<StaffAdmin />} />
         <Route path='/admin/product-type' element={<ProductTypeAdmin />} />
         <Route path='/admin/permission' element={<PermissionAdmin />} />
+        
       </Route>
       <Route path="*" element={<NoMatch />} />
       <Route path='/auth/login' element={<LoginAdminPage /> } />
+      
     </Routes>
 
   );
