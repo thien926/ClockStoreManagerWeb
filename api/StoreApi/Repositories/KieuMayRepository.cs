@@ -7,46 +7,45 @@ using StoreApi.Models;
 
 namespace StoreApi.Repositories
 {
-    
-    public class LoaiSanPhamRepository : ILoaiSanPhamRepository
+    public class KieuMayRepository : IKieuMayRepository
     {
         private readonly ClockStoreDBContext context;
-        public LoaiSanPhamRepository(ClockStoreDBContext context) {
+        public KieuMayRepository(ClockStoreDBContext context) {
             this.context = context;
         }
-        public LoaiSanPham LoaiSanPham_Add(LoaiSanPham lsp)
+        public KieuMay KieuMay_Add(KieuMay sp)
         {
-            context.LoaiSanPhams.Add(lsp);
+            context.KieuMays.Add(sp);
             context.SaveChanges();
-            return lsp;
+            return sp;
         }
 
-        public LoaiSanPham LoaiSanPham_GetById(int id)
+        public KieuMay KieuMay_GetById(int id)
         {
-            // context.LoaiSanPhams.
-            return context.LoaiSanPhams.FirstOrDefault(o => o.Id == id);
+            // context.KieuMays.
+            return context.KieuMays.FirstOrDefault(o => o.Id == id);
         }
 
-        public IEnumerable<LoaiSanPham> LoaiSanPham_GetAll()
+        public IEnumerable<KieuMay> KieuMay_GetAll()
         {
-            return context.LoaiSanPhams.ToList();
+            return context.KieuMays.ToList();
         }
 
-        public LoaiSanPham LoaiSanPham_Update(LoaiSanPham SP)
+        public KieuMay KieuMay_Update(KieuMay SP)
         {
-            context.LoaiSanPhams.Update(SP);
+            context.KieuMays.Update(SP);
             context.SaveChanges();
             return SP;
         }
 
-        public void LoaiSanPham_Delete(LoaiSanPham SP)
+        public void KieuMay_Delete(KieuMay SP)
         {
-            context.LoaiSanPhams.Remove(SP);
+            context.KieuMays.Remove(SP);
             context.SaveChanges();
         }
 
-        public IEnumerable<LoaiSanPham> LoaiSanPham_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
-            var query = context.LoaiSanPhams.AsQueryable();
+        public IEnumerable<KieuMay> KieuMay_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
+            var query = context.KieuMays.AsQueryable();
             
             if(!string.IsNullOrEmpty(search)) {
                 search = search.ToLower();
