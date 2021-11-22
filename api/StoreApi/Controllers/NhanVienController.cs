@@ -68,22 +68,23 @@ namespace StoreApi.Controllers
 
         [HttpGet]
         public IEnumerable<NhanVien> GetAll() {
-            try {
-                var jwt = Request.Cookies["jwt-nhanvien"];
-                var token = jwtNhanVien.Verify(jwt);
-                string userId = token.Issuer;
-                var user = nhanVienRepository.NhanVien_GetByUser(userId);
+            // try {
+            //     var jwt = Request.Cookies["jwt-nhanvien"];
+            //     var token = jwtNhanVien.Verify(jwt);
+            //     string userId = token.Issuer;
+            //     var user = nhanVienRepository.NhanVien_GetByUser(userId);
                 
-                // quyenRepository.getById(user.quyenId)
+            //     // quyenRepository.getById(user.quyenId)
 
-                if(user == null) {
-                    return null;
-                }
-                return nhanVienRepository.NhanVien_GetAll();
-            }
-            catch(Exception e) {
-                return null;
-            }
+            //     if(user == null) {
+            //         return null;
+            //     }
+            //     return nhanVienRepository.NhanVien_GetAll();
+            // }
+            // catch(Exception e) {
+            //     return null;
+            // }
+            return nhanVienRepository.NhanVien_GetAll();
         }
     }
 }
