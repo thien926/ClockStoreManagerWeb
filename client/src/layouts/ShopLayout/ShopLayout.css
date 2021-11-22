@@ -729,7 +729,8 @@ ol {
 	color: #ffffff;
 	border-right: 2px solid #3b3b3b;
 	text-transform: uppercase;
-	padding: 16px 42px 15px;
+	padding: 20px 20px 20px 20px;
+	/* padding: 16px 42px 15px; */
 	-webkit-transition: all 0.3s;
 	-o-transition: all 0.3s;
 	transition: all 0.3s;
@@ -2019,7 +2020,7 @@ ol {
 	bottom: -4px;
 	width: 100%;
 	height: 2px;
-	background: #e7ab3c;
+	/* background: #e7ab3c; */
 	content: "";
 }
 
@@ -3866,7 +3867,8 @@ ol {
 		padding: 16px 12px 12px 11px;
 	}
 	.nav-item .nav-menu li a {
-		padding: 16px 45px 15px;
+		padding: 20px 20px 20px 20px;
+		/* padding: 16px 45px 15px; */
 	}
 }
 
@@ -3887,7 +3889,8 @@ ol {
 		max-width: 100%;
 	}
 	.nav-item .nav-menu li a {
-		padding: 16px 26px 15px;
+		padding: 20px 20px 20px 20px;
+		/* padding: 16px 26px 15px; */
 	}
 	.hero-items .owl-nav button[type=button] {
 		left: 5px;
@@ -4003,7 +4006,8 @@ ol {
 		padding: 14px 40px 14px 18px;
 	}
 	.nav-item .nav-menu li a {
-		padding: 16px 10px 15px;
+		padding: 20px 20px 20px 20px;
+		/* padding: 16px 10px 15px; */
 	}
 	.instagram-photo .insta-item .inside-text h5 {
 		font-size: 14px;
