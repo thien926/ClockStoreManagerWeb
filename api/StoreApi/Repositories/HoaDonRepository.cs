@@ -31,16 +31,16 @@ namespace StoreApi.Repositories
             return context.HoaDons.ToList();
         }
 
-        public HoaDon HoaDon_Update(HoaDon SP)
+        public HoaDon HoaDon_Update(HoaDon HD)
         {
-            context.HoaDons.Update(SP);
+            context.HoaDons.Update(HD);
             context.SaveChanges();
-            return SP;
+            return HD;
         }
 
-        public void HoaDon_Delete(HoaDon SP)
+        public void HoaDon_Delete(HoaDon HD)
         {
-            context.HoaDons.Remove(SP);
+            context.HoaDons.Remove(HD);
             context.SaveChanges();
         }
 

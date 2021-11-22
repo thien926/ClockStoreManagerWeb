@@ -33,7 +33,7 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<HoaDon> AddSP(HoaDonDto hddto) {
+        public ActionResult<HoaDon> AddHD(HoaDonDto hddto) {
 
             if(ModelState.IsValid){
                 try {
