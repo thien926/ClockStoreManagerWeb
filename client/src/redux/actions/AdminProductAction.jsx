@@ -20,6 +20,7 @@ export const actGetProductAdmin = (data) => (dispatch) => {
             type : GET_PRODUCT_ADMIN,
             payload : res.data
         });
+        // dispatch
     }).catch((err) => {
         console.log(err);
     })

@@ -7,6 +7,7 @@ import { actGetProductAdmin } from '../../../redux/actions/AdminProductAction';
 import './ProductsAdmin.css'
 import AdminProductItem from '../../../components/AdminComponents/AdminProductComponent/AdminProductItem'
 import AdminProductControl from '../../../components/AdminComponents/AdminProductComponent/AdminProductControl';
+import AdminProductFormAction from '../../../components/AdminComponents/AdminProductComponent/AdminProductFormAction';
 
 
 function ProductsAdmin() {
@@ -17,6 +18,8 @@ function ProductsAdmin() {
     const [sort, setSort] = useState('name-asc');
     const [pageIndex, setPageIndex] = useState(1);
     const [search, setSearch] = useState('');
+
+    // html list sản phẩm
     const [elmsListSP, setElmsListSP] = useState(null);
 
     // State phân trang
@@ -30,14 +33,14 @@ function ProductsAdmin() {
     // Khi url thay đổi => sort, pageIndex thay đổi => setSort, setPageIndex
     useEffect(() => {
         var {search} = location;
-        if(search == "") {
+        if(search === "") {
             setSort('name-asc');
             setPageIndex(1);
             setSearch('');
         } 
         else {
             var dauHoi = search.split('?');
-            var dauVa = dauHoi[1].split('&');
+            var dauVa = dauHoi[dauHoi.length-1].split('&');
             var dauBang;
             for(let i = 0; i < dauVa.length; ++i) {
                 dauBang = dauVa[i].split('=');
@@ -74,7 +77,7 @@ function ProductsAdmin() {
             pageIndex: pageIndex
         }
         dispatch(actGetProductAdmin(data));
-    }, [search, sort, pageIndex]);
+    }, [search, sort, pageIndex, dispatch]);
 
     // khi sản phẩm thay đổi => show danh sách sản phẩm và phân trang
     useEffect(() => {
@@ -163,7 +166,7 @@ function ProductsAdmin() {
                 </>
             }
 
-            if(pageIndex != totalPage && totalPage != 0) {
+            if(pageIndex !== totalPage && totalPage !== 0) {
                 nextPage = <>
                     <Link className='btn btn-default' to={`?search=${search}&sort=${sort}&pageIndex=${pageIndex+1}`}><i className="fa fa-angle-right" aria-hidden="true" /></Link>
                     <Link className='btn btn-default' to={`?search=${search}&sort=${sort}&pageIndex=${totalPage}`}><i className="fa fa-angle-double-right" aria-hidden="true" /></Link>
@@ -225,7 +228,7 @@ function ProductsAdmin() {
             </div>
 
             <div className="row mt-3 ml-3 mr-3">
-                {/* <AdminProductFormAction /> */}
+                <AdminProductFormAction />
             </div>
 
         </div>
