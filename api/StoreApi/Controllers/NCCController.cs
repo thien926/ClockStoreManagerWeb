@@ -32,7 +32,7 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<NCC> AddLSP(NCCDto nccdto) {
+        public ActionResult<NCC> AddNCC(NCCDto nccdto) {
 
             if(ModelState.IsValid){
                 try {
@@ -56,7 +56,7 @@ namespace StoreApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<NCC> UpdateLSP([FromBody] NCCDto nccdto, int id) {
+        public ActionResult<NCC> UpdateNCC([FromBody] NCCDto nccdto, int id) {
             if(ModelState.IsValid) {
                 try {
                     var ncc = NCCRepository.NCC_GetById(id);
@@ -83,7 +83,7 @@ namespace StoreApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteLSP(int id) {
+        public ActionResult DeleteNCC(int id) {
             var NCC = NCCRepository.NCC_GetById(id);
             if(NCC == null) {
                 return NotFound();
