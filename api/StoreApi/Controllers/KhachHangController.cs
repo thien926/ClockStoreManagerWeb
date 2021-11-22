@@ -21,7 +21,7 @@ namespace StoreApi.Controllers
         public KhachHangController(IKhachHangRepository KhachHangRepository) {
             this.KhachHangRepository = KhachHangRepository;
         }
-
+        /////qưeqweqweqweqwe
         [HttpGet]
         public IEnumerable<KhachHang> GetAll() {
             return this.KhachHangRepository.KhachHang_GetAll();
