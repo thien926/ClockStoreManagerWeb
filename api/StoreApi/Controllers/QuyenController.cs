@@ -34,19 +34,6 @@ namespace StoreApi.Controllers
 
         [HttpPost]
         public ActionResult<Quyen> AddQ(QuyenDto qdto) {
-
-            // Console.WriteLine("Quyen Add: ");
-            // Console.WriteLine(spdto.LSPId);
-            // Console.WriteLine(spdto.brandId);
-            // Console.WriteLine(spdto.wireId);
-            // Console.WriteLine(spdto.machineId);
-            // Console.WriteLine(spdto.nccId);
-            // Console.WriteLine(spdto.name);
-            // Console.WriteLine(spdto.amount);
-            // Console.WriteLine(spdto.price);
-            // Console.WriteLine(spdto.description);
-            // Console.WriteLine("img:", spdto.img);
-
             if(ModelState.IsValid){
                 try {
                     Quyen q = new Quyen();
