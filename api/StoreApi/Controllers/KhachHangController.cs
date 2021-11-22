@@ -53,7 +53,7 @@ namespace StoreApi.Controllers
 
                     // Mapping
                     kh.user = khdto.user;
-                    kh.password = BCrypt.Net.BCrypt.HashPassword(khdto.password) ;
+                    kh.password = khdto.password;
                     kh.name = khdto.name;
                     kh.phone = khdto.phone;
                     kh.mail = khdto.mail;
@@ -86,7 +86,7 @@ namespace StoreApi.Controllers
 
                     // Mapping
                     kh.user = khdto.user;
-                    kh.password = BCrypt.Net.BCrypt.HashPassword(khdto.password) ;
+                    kh.password = khdto.password;
                     kh.name = khdto.name;
                     kh.phone = khdto.phone;
                     kh.mail = khdto.mail;
