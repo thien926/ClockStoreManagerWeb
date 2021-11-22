@@ -54,6 +54,7 @@ namespace StoreApi
 
             services.AddScoped<ILoaiSanPhamRepository, LoaiSanPhamRepository>();
             services.AddScoped<IHoaDonRepository, HoaDonRepository>();
+            services.AddScoped<IChiTietHDRepository, ChiTietHDRepository>();
 
         }
 

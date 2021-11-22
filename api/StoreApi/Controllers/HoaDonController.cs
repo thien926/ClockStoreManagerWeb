@@ -62,7 +62,7 @@ namespace StoreApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<HoaDon> UpdateSP([FromBody] HoaDonDto hddto, int id) {
+        public ActionResult<HoaDon> UpdateHD([FromBody] HoaDonDto hddto, int id) {
             if(ModelState.IsValid) {
                 try {
                     var hd = HoaDonRepository.HoaDon_GetById(id);
@@ -93,7 +93,7 @@ namespace StoreApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteSP(int id) {
+        public ActionResult DeleteHD(int id) {
             var HD = HoaDonRepository.HoaDon_GetById(id);
             if(HD == null) {
                 return NotFound();
