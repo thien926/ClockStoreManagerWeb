@@ -65,6 +65,7 @@ namespace StoreApi.Controllers
 
                     // Mapping
                     //q.Id = qdto.Id;
+                    
                     q.name = qdto.name;
                     q.details = qdto.details;
 
