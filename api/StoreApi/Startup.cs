@@ -50,7 +50,7 @@ namespace StoreApi
             services.AddScoped<INhanVienRepository, NhanVienRepository>();
             services.AddScoped<ISanPhamRepository, SanPhamRepository>();
             services.AddScoped<IQuyenRepository, QuyenRepository>();
-
+            services.AddScoped<IThuongHieuRepository, ThuongHieuRepository>();
             services.AddScoped<IKieuMayRepository, KieuMayRepository>();
 
             services.AddScoped<ILoaiSanPhamRepository, LoaiSanPhamRepository>();

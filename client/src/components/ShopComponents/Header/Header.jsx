@@ -1,10 +1,42 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation } from 'react-router'
+import { actGetProductTypeHeader } from '../../../redux/actions/HeaderProductTypeAction'
 import CustomLinkShop from '../CustomLinkShop/CustomLinkShop'
 import HeaderControl from '../HeaderControl/HeaderControl'
 import './Header.css'
 
 function Header() {
+
+    const HeaderProductTypeReducer = useSelector(state => state.HeaderProductTypeReducer);
+    const [elmCustomLinks, setElmCustomLinks] = useState(null);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(actGetProductTypeHeader());
+    }, [dispatch])
+
+    useEffect(() => {
+        // console.log(HeaderProductTypeReducer);
+        var result = null;
+        // var i = 0;
+        if (HeaderProductTypeReducer.length > 0) {
+            result = HeaderProductTypeReducer.map((loaiSanPham, index) => {
+                // ++i;
+                // if (i >= 5) {
+                //     return null;
+                // }
+                return <CustomLinkShop key={index} to={`/shop/${loaiSanPham.id}`}>{loaiSanPham.name}</CustomLinkShop>
+            });
+
+            
+        }
+
+        setElmCustomLinks(result);
+        // var result = null;
+        // result = HeaderProductTypeReducer.
+    }, [HeaderProductTypeReducer])
 
     return (
         <header className="header-section">
@@ -33,7 +65,7 @@ function Header() {
             </div>
             <div className="container">
                 <div className="inner-header">
-                    
+
                     <HeaderControl />
 
                 </div>
@@ -58,7 +90,7 @@ function Header() {
                     </div> */}
                     <nav className="nav-menu mobile-menu">
                         <ul>
-                            <li><a href="./index.html">Home</a></li>
+                            {/* <li><a href="./index.html">Home</a></li>
                             <li><a href="./shop.html">Shop</a></li>
                             <li><a href="#">Collection</a>
                                 <ul className="dropdown">
@@ -78,12 +110,13 @@ function Header() {
                                     <li><a href="./register.html">Register</a></li>
                                     <li><a href="./login.html">Login</a></li>
                                 </ul>
-                            </li>
-                            {/* <CustomLinkShop to='/home'>Trang chủ</CustomLinkShop>
-                            <CustomLinkShop to='/shop/1'>Đồng hồ nam</CustomLinkShop>
+                            </li> */}
+                            <CustomLinkShop to='/home'>Trang chủ</CustomLinkShop>
+                            {/* <CustomLinkShop to='/shop/1'>Đồng hồ nam</CustomLinkShop>
                             <CustomLinkShop to='/shop/2'>Đồng hồ nữ</CustomLinkShop>
                             <CustomLinkShop to='/shop/3'>Đồng hồ để bàn</CustomLinkShop>
                             <CustomLinkShop to='/shop/4'>Đồng hồ treo tường</CustomLinkShop> */}
+                            {elmCustomLinks}
                         </ul>
                     </nav>
                     <div id="mobile-menu-wrap" />
