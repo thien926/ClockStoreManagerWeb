@@ -55,6 +55,7 @@ namespace StoreApi.Repositories
             count = query.Count();
             if(!string.IsNullOrEmpty(sort)){
                 switch(sort){
+                    
                     case "KHuser-asc": query = query.OrderBy(m => m.KHuser);
                                     break;
                     case "KHuser-desc": query = query.OrderByDescending(m => m.KHuser);
@@ -67,6 +68,10 @@ namespace StoreApi.Repositories
                                     break;
                     case "total-desc": query = query.OrderByDescending(m => (long?)m.total);
                                     break;
+                    case "status-asc": query = query.OrderBy(m => (int?)m.status);
+                                    break;
+                    case "status-desc": query = query.OrderByDescending(m => (int?)m.status);
+                                    break;                
                     default: break;
                 }
             }
