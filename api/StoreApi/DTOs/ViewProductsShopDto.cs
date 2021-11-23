@@ -29,4 +29,5 @@ namespace StoreApi.DTOs
         // Tổng database có bao nhiêu trang
         public int totalPage { get; set; }
     }
+    
 }
