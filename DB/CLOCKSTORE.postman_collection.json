@@ -984,6 +984,162 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "NCCController",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/ncc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"ncc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/ncc/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"ncc",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddNCC",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Cty Đà Thiện\",\r\n    \"address\": \"Đà Lạt\",\r\n    \"phone\": \"0364117408\",\r\n    \"fax\": \"4598-8789-8789-7897\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/ncc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"ncc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateNCC",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 9,\r\n    \"name\": \"Cty Đà Thiện 2\",\r\n    \"address\": \"Đà Lạt\",\r\n    \"phone\": \"0364117408\",\r\n    \"fax\": \"4598-8789-8789-7897\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/ncc/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"ncc",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteNCC",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/ncc/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"ncc",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FilterAdmin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"search\" : \"bến\",\r\n    \"pageIndex\" : 1,\r\n    \"sort\" : \"name-asc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/ncc/filter-admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"ncc",
+								"filter-admin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

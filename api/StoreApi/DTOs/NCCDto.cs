@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-
-namespace StoreApi.Models
+namespace StoreApi.DTOs
 {
-    public class NCC
+    public class NCCDto
     {
         public int Id {get; set;}
 
@@ -22,11 +20,5 @@ namespace StoreApi.Models
         [StringLength(10, ErrorMessage = "Số điện thoại có 10 kí tự")] 
         public string phone{get; set;}
         public string fax { get; set; }
-        public ICollection<SanPham> SanPhams { get; set; }
-        public ICollection<PhieuNhap> phieuNhaps { get; set; }
-        public NCC(){
-            SanPhams = new HashSet<SanPham>();
-            phieuNhaps = new HashSet<PhieuNhap>();
-        }
     }
 }
