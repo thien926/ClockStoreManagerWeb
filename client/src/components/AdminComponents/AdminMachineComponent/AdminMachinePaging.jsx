@@ -1,15 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-function AdminProductTypePaging(props) {
+function AdminMachinePaging(props) {
 
     const { dataValue } = props;
-
     // State phân trang
     const [previous, setPrevious] = useState(null);
     const [elmsPhanTrang, setElmsPhanTrang] = useState(null);
     const [next, setNext] = useState(null);
-    const [notFound, setNotFound] = useState('Không tìm thấy loại sản phẩm nào!');
+    const [notFound, setNotFound] = useState('Không tìm thấy kiểu máy nào!');
 
     useEffect(() => {
         var result = null, pageIndex = dataValue.pageIndex;
@@ -97,7 +96,7 @@ function AdminProductTypePaging(props) {
             }
         }
         
-        if (dataValue.listLSP && dataValue.listLSP.length > 0) {
+        if (dataValue.listKM && dataValue.listKM.length > 0) {
             setElmsPhanTrang(result);
             setNext(nextPage);
             setPrevious(previousPage);
@@ -110,9 +109,14 @@ function AdminProductTypePaging(props) {
             setNotFound('Không tìm thấy loại sản phẩm nào!');
         }
     }, [dataValue])
-
     return (
         <div className='class-phan-trang'>
+            {/* <Link className='btn btn-default' to='1'><i className="fa fa-angle-double-left" aria-hidden="true" /></Link>
+            <Link className='btn btn-default' to='1'><i className="fa fa-angle-left" aria-hidden="true" /></Link>
+            <Link className='btn btn-info' to='1'>1</Link>
+            <Link className='btn btn-default' to='2'>2</Link>
+            <Link className='btn btn-default' to='1'><i className="fa fa-angle-right" aria-hidden="true" /></Link>
+            <Link className='btn btn-default' to='1'><i className="fa fa-angle-double-right" aria-hidden="true" /></Link> */}
             {previous}
             {elmsPhanTrang}
             {next}
@@ -121,4 +125,4 @@ function AdminProductTypePaging(props) {
     )
 }
 
-export default AdminProductTypePaging
+export default AdminMachinePaging

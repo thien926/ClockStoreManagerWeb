@@ -7,45 +7,44 @@ using StoreApi.Models;
 
 namespace StoreApi.Repositories
 {
-    public class KieuMayRepository : IKieuMayRepository
+    public class KhachHangRepository : IKhachHangRepository
     {
         private readonly ClockStoreDBContext context;
-        public KieuMayRepository(ClockStoreDBContext context) {
+        public KhachHangRepository(ClockStoreDBContext context) {
             this.context = context;
         }
-        public KieuMay KieuMay_Add(KieuMay sp)
+        public KhachHang KhachHang_Add(KhachHang sp)
         {
-            context.KieuMays.Add(sp);
+            context.KhachHangs.Add(sp);
             context.SaveChanges();
             return sp;
         }
 
-        public KieuMay KieuMay_GetById(int id)
+        public KhachHang KhachHang_GetByUser(string user)
         {
-            // context.KieuMays.
-            return context.KieuMays.FirstOrDefault(o => o.Id == id);
+            return context.KhachHangs.FirstOrDefault(u => u.user == user);
         }
 
-        public IEnumerable<KieuMay> KieuMay_GetAll()
+        public IEnumerable<KhachHang> KhachHang_GetAll()
         {
-            return context.KieuMays.ToList();
+            return context.KhachHangs.ToList();
         }
 
-        public KieuMay KieuMay_Update(KieuMay SP)
+        public KhachHang KhachHang_Update(KhachHang SP)
         {
-            context.KieuMays.Update(SP);
+            context.KhachHangs.Update(SP);
             context.SaveChanges();
             return SP;
         }
 
-        public void KieuMay_Delete(KieuMay SP)
+        public void KhachHang_Delete(KhachHang SP)
         {
-            context.KieuMays.Remove(SP);
+            context.KhachHangs.Remove(SP);
             context.SaveChanges();
         }
 
-        public IEnumerable<KieuMay> KieuMay_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
-            var query = context.KieuMays.AsQueryable();
+        public IEnumerable<KhachHang> KhachHang_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
+            var query = context.KhachHangs.AsQueryable();
             
             if(!string.IsNullOrEmpty(search)) {
                 search = search.ToLower();
@@ -58,10 +57,6 @@ namespace StoreApi.Repositories
                     case "name-asc": query = query.OrderBy(m => m.name);
                                     break;
                     case "name-desc": query = query.OrderByDescending(m => m.name);
-                                    break;
-                    case "id-asc": query = query.OrderBy(m => m.Id);
-                                    break;
-                    case "id-desc": query = query.OrderByDescending(m => m.Id);
                                     break;
                     default: break;
                 }

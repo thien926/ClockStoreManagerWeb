@@ -143,3 +143,7 @@ div.content {
 .layout-admin {
   background-color: #eef9fc;
 }
+
+.note-validate {
+  color: red;
+}
