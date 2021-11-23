@@ -56,6 +56,8 @@ namespace StoreApi
 
             services.AddScoped<ILoaiSanPhamRepository, LoaiSanPhamRepository>();
 
+            services.AddScoped<IKieuDayRepository, KieuDayRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
