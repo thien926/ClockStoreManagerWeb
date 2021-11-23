@@ -132,17 +132,6 @@ namespace StoreApi.Controllers
         [HttpPost("filter-shop")]
         public ViewProductsShopDto FilterShop(FilterProductsShopDto data) {
             int count;
-            decimal pricemax;
-            int lspId;
-            
-            if(!int.IsNullOrEmpty(data.lspId)){
-                lspId = LSPService.LoaiSanPham_GetById(data.lspID);
-                data.Search = null;
-            }
-            else{
-                NameType = null;
-            }
-
             var SanPhams = sanPhamRepository.SanPham_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
             var ListSP = new PaginatedList<SanPham>(SanPhams, count, data.pageIndex, pageSize); 
             // Console.WriteLine(ListSP.TotalPages);
