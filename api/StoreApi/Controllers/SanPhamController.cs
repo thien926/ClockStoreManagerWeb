@@ -132,7 +132,7 @@ namespace StoreApi.Controllers
         [HttpPost("filter-shop")]
         public ViewProductsShopDto FilterShop(FilterProductsShopDto data) {
             int count;
-            var SanPhams = sanPhamRepository.FilterShop(data.ListSP, data.lspId, data.branchId, data.machineId, data.wireId, data.priceFrom, data.priceTo, data.search, data.sort, data.pageIndex, Constants.pageSize, out count, Constants.Range, ListSP.TotalPages );
+            var SanPhams = sanPhamRepository.SanPham_FilterShop(data.lspId, data.branchId, data.machineId, data.wireId, data.priceFrom, data.priceTo, data.search, data.sort, data.pageIndex, pageSize, out count );
             var ListSP = new PaginatedList<SanPham>(SanPhams, count, data.pageIndex, pageSize); 
             // Console.WriteLine(ListSP.TotalPages);
             var indexVSM = new ViewProductsShopDto()
@@ -147,9 +147,9 @@ namespace StoreApi.Controllers
                 search = data.search,
                 sort = data.sort,
                 pageIndex = data.pageIndex,
-                pageSize = Constants.pageSize,
+                pageSize = this.pageSize,
                 count = count,
-                range = Constants.Range,
+                range = this.Range,
                 totalPage = ListSP.TotalPages,
             };
             return indexVSM;
