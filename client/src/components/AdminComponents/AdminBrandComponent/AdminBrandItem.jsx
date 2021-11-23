@@ -1,13 +1,13 @@
 import React from 'react'
 
-function AdminWireItem(props) {
+function AdminBrandItem(props) {
 
-    const { wire, index } = props;
+    const { brand, index } = props;
 
     const actionBtnSua = () => {
         var data = {
-            id : wire.id,
-            name : wire.name
+            id : brand.id,
+            name : brand.name
         }
         props.actionUpdate(data);
     }
@@ -15,14 +15,14 @@ function AdminWireItem(props) {
     return (
         <tr>
             <td>{index+1}</td>
-            <td>{wire.id}</td>
-            <td>{wire.name}</td>
+            <td>{brand.id}</td>
+            <td>{brand.name}</td>
             <td>
                 <button onClick={actionBtnSua} type="button" className="btn btn-info">Sửa</button>
-                <button onClick={() => props.actionDelete(wire.id)} type="button" className="btn btn-warning ml-1">Xóa</button>
+                <button onClick={() => props.actionDelete(brand.id)} type="button" className="btn btn-warning ml-1">Xóa</button>
             </td>
         </tr>
     )
 }
 
-export default AdminWireItem
+export default AdminBrandItem

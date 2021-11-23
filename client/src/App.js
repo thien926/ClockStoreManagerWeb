@@ -16,6 +16,7 @@ import NoMatch from './components/NoMatch/NoMatch';
 import MachineAdmin from './pages/AdminPages/MachineAdmin/MachineAdmin';
 import WireAdmin from './pages/AdminPages/WireAdmin/WireAdmin';
 import NCCAdmin from './pages/AdminPages/NCCAdmin/NCCAdmin';
+import BrandAdmin from './pages/AdminPages/BrandAdmin/BrandAdmin';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path='/admin/custom' element={<CustomAdmin />} />
         <Route path='/admin/staff' element={<StaffAdmin />} />
         <Route path='/admin/ncc' element={<NCCAdmin />} />
+        <Route path='/admin/brand' element={<BrandAdmin />} />
         <Route path='/admin/product-type' element={<ProductTypeAdmin />} />
         <Route path='/admin/machine' element={<MachineAdmin />} />
         <Route path='/admin/wire' element={<WireAdmin />} />
