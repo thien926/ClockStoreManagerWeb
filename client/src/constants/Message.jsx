@@ -23,10 +23,18 @@ export const ADD_WIRE_ERROR = 'Thêm kiểu dây thất bại!';
 export const UPDATE_WIRE_ERROR = 'Sửa kiểu dây thất bại!';
 export const DELETE_WIRE_ERROR = 'Xóa kiểu dây thất bại!';
 
-// Kiểu dây
+// Nhà cung cấp
 export const ADD_NCC_SUCCESS = 'Thêm nhà cung cấp thành công!';
 export const UPDATE_NCC_SUCCESS = 'Sửa nhà cung cấp thành công!';
 export const DELETE_NCC_SUCCESS = 'Xóa nhà cung cấp thành công!';
 export const ADD_NCC_ERROR = 'Thêm nhà cung cấp thất bại!';
 export const UPDATE_NCC_ERROR = 'Sửa nhà cung cấp thất bại!';
 export const DELETE_NCC_ERROR = 'Xóa nhà cung cấp thất bại!';
+
+// Thương hiệu
+export const ADD_BRAND_SUCCESS = 'Thêm thương hiệu thành công!';
+export const UPDATE_BRAND_SUCCESS = 'Sửa thương hiệu thành công!';
+export const DELETE_BRAND_SUCCESS = 'Xóa thương hiệu thành công!';
+export const ADD_BRAND_ERROR = 'Thêm thương hiệu thất bại!';
+export const UPDATE_BRAND_ERROR = 'Sửa thương hiệu thất bại!';
+export const DELETE_BRAND_ERROR = 'Xóa thương hiệu thất bại!';

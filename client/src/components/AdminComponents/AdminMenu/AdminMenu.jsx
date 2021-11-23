@@ -21,6 +21,7 @@ function AdminMenu() {
                         <CustomLinkMobileMenuAdmin to='/admin/custom'>Khách hàng</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/staff'>Nhân viên</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/ncc'>Nhà cung cấp</CustomLinkMobileMenuAdmin>
+                        <CustomLinkMobileMenuAdmin to='/admin/brand'>Thương hiệu</CustomLinkMobileMenuAdmin>
                         
                         <CustomLinkMobileMenuAdmin to='/admin/products'>Sản phẩm</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/product-type'>Loại sản phẩm</CustomLinkMobileMenuAdmin>
@@ -38,6 +39,7 @@ function AdminMenu() {
                 <CustomLinkAdmin to='/admin/custom'>Khách hàng</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/staff">Nhân viên</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/ncc">Nhà cung cấp</CustomLinkAdmin>
+                <CustomLinkAdmin to="/admin/brand">Thương hiệu</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/products">Sản phẩm</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/product-type">Loại sản phẩm</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/machine">Kiểu máy</CustomLinkAdmin>
