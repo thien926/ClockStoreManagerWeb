@@ -15,6 +15,12 @@ namespace StoreApi.Controllers
     [Route("api/[controller]")]
     public class SanPhamController : ControllerBase
     {
+        private readonly SanPhamRepository sanPhamRepository;
+        private readonly LoaiSanPhamRepository LSPRepository;
+        public SanPhamController(SanPhamRepository sanPhamRepository, LoaiSanPhamRepository LSPRepository) {
+            this.sanPhamRepository = sanPhamRepository;
+            this.LSPRepository = LSPRepository;
+        }
         private int pageSize = 9;
         private int range = 9;
         private readonly ISanPhamRepository sanPhamRepository;
@@ -126,8 +132,39 @@ namespace StoreApi.Controllers
         [HttpPost("filter-shop")]
         public ViewProductsShopDto FilterShop(FilterProductsShopDto data) {
             int count;
+            decimal pricemax;
+            int lspId;
             
-            return null;
+            if(!int.IsNullOrEmpty(data.lspId)){
+                lspId = LSPService.LoaiSanPham_GetById(data.lspID);
+                data.Search = null;
+            }
+            else{
+                NameType = null;
+            }
+
+            var SanPhams = sanPhamRepository.SanPham_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
+            var ListSP = new PaginatedList<SanPham>(SanPhams, count, data.pageIndex, pageSize); 
+            // Console.WriteLine(ListSP.TotalPages);
+            var indexVSM = new ViewProductsShopDto()
+            {
+                ListSP = ListSP,
+                lspId = data.lspId,
+                branchId = data.branchId,
+                machineId = data.machineId,
+                wireId = data.wireId,
+                priceFrom = data.priceFrom,
+                priceTo = data.priceTo,
+                search = data.search,
+                sort = data.sort,
+                pageIndex = data.pageIndex,
+                pageSize = Constants.pageSize,
+                count = count,
+                range = Constants.Range,
+                totalPage = ListSP.TotalPages,
+            };
+            return indexVSM;
         }
+        
     }
 }
