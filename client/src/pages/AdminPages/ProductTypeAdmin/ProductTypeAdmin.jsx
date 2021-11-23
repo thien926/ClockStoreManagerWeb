@@ -7,7 +7,7 @@ import AdminProductTypeFormAction from '../../../components/AdminComponents/Admi
 import AdminProductTypeItem from '../../../components/AdminComponents/AdminProductTypeComponent/AdminProductTypeItem'
 import AdminProductTypePaging from '../../../components/AdminComponents/AdminProductTypeComponent/AdminProductTypePaging'
 import { ADD_LSP_ERROR, ADD_LSP_SUCCESS, DELETE_LSP_ERROR, DELETE_LSP_SUCCESS, UPDATE_LSP_ERROR, UPDATE_LSP_SUCCESS } from '../../../constants/Message'
-import { actGetProductTypeAdmin, actAddProductTypeAdmin, actUpdateProductTypeAdmin, actResetMessageLSP, actDeleteProductType } from '../../../redux/actions/AdminProductTypeAction'
+import { actGetProductTypeAdmin, actAddProductTypeAdmin, actUpdateProductTypeAdmin, actResetMessageLSPAdmin, actDeleteProductType } from '../../../redux/actions/AdminProductTypeAction'
 
 function ProductTypeAdmin() {
 
@@ -16,8 +16,8 @@ function ProductTypeAdmin() {
 
     // State URL
     const [search, setSearch] = useState('');
-    const [sort, setSort] = useState('');
-    const [pageIndex, setPageIndex] = useState('');
+    const [sort, setSort] = useState('name-asc');
+    const [pageIndex, setPageIndex] = useState(1);
 
     //State Html
     const [elmListLSP, setElmListLSP] = useState(null);
@@ -73,7 +73,7 @@ function ProductTypeAdmin() {
                         
                         break;
                     case "search":
-                        setSearch(dauBang[1]);
+                        setSearch(utf8_from_str(dauBang[1]));
                         break;
                     default:
                         break;
@@ -86,7 +86,7 @@ function ProductTypeAdmin() {
     useEffect(() => {
         // console.log("search: ", utf8_from_str(search));
         var data = {
-            search : utf8_from_str(search),
+            search : search,
             sort : sort,
             pageIndex : pageIndex
         }
@@ -104,7 +104,7 @@ function ProductTypeAdmin() {
                 return <AdminProductTypeItem key={index} index={index} productType={productType} actionUpdate={actionUpdate} actionDelete={actionDelete}/>
             })
         }
-        // dispatch(actResetMessageLSP());
+        // dispatch(actResetMessageLSPAdmin());
         setElmListLSP(result);
     }, [productTypeReducer.dataValue])
 
@@ -121,13 +121,13 @@ function ProductTypeAdmin() {
                     pageIndex:pageIndex
                 }
                 dispatch(actGetProductTypeAdmin(filter));
-                dispatch(actResetMessageLSP());
+                dispatch(actResetMessageLSPAdmin());
                 break;
             case ADD_LSP_ERROR : 
             case DELETE_LSP_ERROR:
             case UPDATE_LSP_ERROR :
                 toast.error(productTypeReducer.message); 
-                dispatch(actResetMessageLSP());
+                dispatch(actResetMessageLSPAdmin());
                 break;
             default:
                 break;
@@ -161,10 +161,15 @@ function ProductTypeAdmin() {
     // sau khi có giá trị của form thì hiện form
     const showForm = useCallback(
         () => {
-            if(!actionValue) {
-                return null;
+            switch (actionValue) {
+                case 'add':
+                case 'update':
+                    return <AdminProductTypeFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
+            
+                default:
+                    return null;
             }
-            return <AdminProductTypeFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
+            
         },
         [actionValue, formValue],
     )
@@ -172,15 +177,21 @@ function ProductTypeAdmin() {
     // submit form thêm sửa loại sản phẩm
     const submitActionForm = (data, action) => {
         // console.log(data);
-        if(action === "add") {
-            dispatch(actAddProductTypeAdmin(data));
-        }
-        else if(action === "update") {
-            dispatch(actUpdateProductTypeAdmin(data, data.id));
+
+        switch (action) {
+            case 'add':
+                dispatch(actAddProductTypeAdmin(data));
+                setActionValue('');
+                break;
+            case 'update':
+                dispatch(actUpdateProductTypeAdmin(data, data.id));
+                setActionValue('');
+                break;
+            default:
+                break;
         }
         
         console.log("message: ",productTypeReducer.message);
-        setActionValue('');
     }
 
     // Thực hiện thao tác xóa
@@ -188,6 +199,9 @@ function ProductTypeAdmin() {
         var res = window.confirm("Bạn có chắc muốn xóa loại sản phẩm có Id = " + id + " không?");
         if(res) {
             dispatch(actDeleteProductType(id));
+        }
+        else {
+            toast.error(DELETE_LSP_ERROR)
         }
     }
 
