@@ -78,5 +78,9 @@ namespace StoreApi.Repositories
             return query.Skip((pageIndex - 1) * pageSize)
                         .Take(pageSize).ToList();
         }
+        public IEnumerable<SanPham> SanPham_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
+        
+        
+        }
     }
 }
