@@ -22,6 +22,7 @@ function AdminMenu() {
                         <CustomLinkMobileMenuAdmin to='/admin/staff'>Nhân viên</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/products'>Sản phẩm</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/product-type'>Loại sản phẩm</CustomLinkMobileMenuAdmin>
+                        <CustomLinkAdmin to="/admin/machine">Kiểu máy</CustomLinkAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/permission'>Quyền</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/bill'>Hóa đơn</CustomLinkMobileMenuAdmin>
 
@@ -35,6 +36,7 @@ function AdminMenu() {
                 <CustomLinkAdmin to="/admin/staff">Nhân viên</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/products">Sản phẩm</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/product-type">Loại sản phẩm</CustomLinkAdmin>
+                <CustomLinkAdmin to="/admin/machine">Kiểu máy</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/permission">Quyền</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/bill">Hóa đơn</CustomLinkAdmin>
             </div>
