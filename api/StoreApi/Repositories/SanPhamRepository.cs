@@ -78,9 +78,48 @@ namespace StoreApi.Repositories
             return query.Skip((pageIndex - 1) * pageSize)
                         .Take(pageSize).ToList();
         }
-        public IEnumerable<SanPham> SanPham_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
-        
-        
+        public IEnumerable<SanPham> SanPham_FilterShop(int lspId, int branchId, int machineId, int wireId, int priceFrom, int priceTo, string search, string sort, int pageIndex,int pageSize, out int count ) {
+            var query = context.SanPhams.AsQueryable();
+            query = query.Where(m => m.LSPId == lspId);
+            search = search.ToLower();
+            query = query.Where(m => m.name.ToLower().Contains(search));
+            query = query.Where(m => m.branchId == branchId);
+            query = query.Where(m => m.machineId == machineId);
+            query = query.Where(m => m.wireId == wireId);
+            query = query.Where(m => m.price >= pricefrom && m.price <= priceto);
+            if(!string.IsNullOrEmpty(search)) {
+                search = search.ToLower();
+                query = query.Where(m => m.name.ToLower().Contains(search));
+            }
+
+            count = query.Count();
+            if(!string.IsNullOrEmpty(sort)){
+                switch(sort){
+                    case "name-asc": query = query.OrderBy(m => m.name);
+                                    break;
+                    case "name-desc": query = query.OrderByDescending(m => m.name);
+                                    break;
+                    case "price-asc": query = query.OrderBy(m => (int?)m.price);
+                                    break;
+                    case "price-desc": query = query.OrderByDescending(m => (int?)m.price);
+                                    break;
+                    default: break;
+                }
+            }
+
+            int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            // if(pageIndex > TotalPages){
+            //     pageIndex = TotalPages;
+            // }
+            if(pageIndex < 1){
+                pageIndex = 1;
+            }
+
+            return query.Skip((pageIndex - 1) * pageSize)
+                        .Take(pageSize).ToList();
+                   
+
+
         }
     }
 }
