@@ -1,61 +1,53 @@
-
-
 // const initialState = {
 //     dataValue: {
-//         listKM: [
+//         listKD: [
 //             {
 //                 id: 1,
-//                 name: "Máy cơ"
-//             },
-//             {
-//                 id: 2,
-//                 name: "Máy điện tử - Pin"
+//                 name: "Dây da"
 //             }
 //         ],
-//         search: "",
 //         sort: "name-asc",
+//         search: "",
 //         pageIndex: 1,
 //         pageSize: 9,
-//         count: 2,
+//         count: 3,
 //         range: 9,
 //         totalPage: 1
 //     },
 //     message : ''
 // }
 
-import { ADD_MACHINE_ADMIN, DELETE_MACHINE_ADMIN, GET_MACHINE_ADMIN,
-    RESET_MESSAGE_MACHINE_ADMIN,
-    UPDATE_MACHINE_ADMIN
-} from "../actions/AdminMachineAction";
+import { ADD_WIRE_ADMIN, DELETE_WIRE_ADMIN, GET_WIRE_ADMIN, RESET_MESSAGE_WIRE_ADMIN, UPDATE_WIRE_ADMIN } from "../actions/AdminWireAction";
 
 const initialState = {
-    dataValue : {},
+    dataValue: {},
     message : ''
 }
 
-const AdminMachineReducer = (state = initialState, action) => {
+
+const AdminWireReducer = (state = initialState, action) => {
     switch (action.type) {
-        case RESET_MESSAGE_MACHINE_ADMIN:
+        case RESET_MESSAGE_WIRE_ADMIN:
             return {
                 ...state,
                 message : action.payload
             }
-        case GET_MACHINE_ADMIN:
+        case GET_WIRE_ADMIN:
             return {
                 ...state,
                 dataValue : action.payload
             }
-        case ADD_MACHINE_ADMIN:
+        case ADD_WIRE_ADMIN:
             return {
                 ...state,
                 message: action.payload
             };
-        case UPDATE_MACHINE_ADMIN:
+        case UPDATE_WIRE_ADMIN:
             return {
                 ...state,
                 message: action.payload
             };
-        case DELETE_MACHINE_ADMIN:
+        case DELETE_WIRE_ADMIN:
             return {
                 ...state,
                 message: action.payload
@@ -67,4 +59,5 @@ const AdminMachineReducer = (state = initialState, action) => {
     }
 }
 
-export default AdminMachineReducer
+export default AdminWireReducer
+

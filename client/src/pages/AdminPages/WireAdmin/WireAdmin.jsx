@@ -1,22 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router'
-import { toast } from 'react-toastify'
-import AdminMachineControl from '../../../components/AdminComponents/AdminMachineComponent/AdminMachineControl'
-import AdminMachineFormAction from '../../../components/AdminComponents/AdminMachineComponent/AdminMachineFormAction'
-import AdminMachineItem from '../../../components/AdminComponents/AdminMachineComponent/AdminMachineItem'
-import AdminMachinePaging from '../../../components/AdminComponents/AdminMachineComponent/AdminMachinePaging'
-import { ADD_MACHINE_ERROR, ADD_MACHINE_SUCCESS, DELETE_MACHINE_ERROR, DELETE_MACHINE_SUCCESS, UPDATE_MACHINE_ERROR, UPDATE_MACHINE_SUCCESS } from '../../../constants/Message'
-import { actAddMachineAdmin, actDeleteMachineAdmin, actGetMachineAdmin, actResetMessageMachineAdmin, actUpdateMachineAdmin } from '../../../redux/actions/AdminMachineAction'
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router';
+import { ADD_WIRE_ERROR, ADD_WIRE_SUCCESS, DELETE_WIRE_ERROR, DELETE_WIRE_SUCCESS, UPDATE_WIRE_ERROR, UPDATE_WIRE_SUCCESS } from '../../../constants/Message';
+import { toast } from 'react-toastify';
+import { actAddWireAdmin, actDeleteWireAdmin, actGetWireAdmin, actResetMessageWireAdmin, actUpdateWireAdmin } from '../../../redux/actions/AdminWireAction'
+import AdminWireItem from '../../../components/AdminComponents/AdminWireComponent/AdminWireItem'
+import AdminWireFormAction from '../../../components/AdminComponents/AdminWireComponent/AdminWireFormAction'
+import AdminWireControl from '../../../components/AdminComponents/AdminWireComponent/AdminWireControl'
+import AdminWirePaging from '../../../components/AdminComponents/AdminWireComponent/AdminWirePaging'
 
-function MachineAdmin() {
-    
-    const AdminMachineReducer = useSelector(state => state.AdminMachineReducer)
+function WireAdmin() {
+    const AdminWireReducer = useSelector(state => state.AdminWireReducer)
 
     const [search, setSearch] = useState('');
     const [sort, setSort] = useState('name-asc');
     const [pageIndex, setPageIndex] = useState(1);
-    const [elmListMachines, setElmListMachines] = useState(null);
+    const [elmListWires, setElmListWires] = useState(null);
 
     const [actionValue, setActionValue] = useState('');
     const [formValue, setFormValue] = useState({id: null, name: ''});
@@ -77,53 +76,55 @@ function MachineAdmin() {
             search,
             pageIndex
         }
-        dispatch(actGetMachineAdmin(data));
+        dispatch(actGetWireAdmin(data));
     }, [search, sort, pageIndex, dispatch])
 
     useEffect(() => {
+        // console.log()
         var result = null;
-        if(AdminMachineReducer.dataValue.listKM && AdminMachineReducer.dataValue.listKM.length > 0) {
-            result = AdminMachineReducer.dataValue.listKM.map((item, index) => {
-                return <AdminMachineItem key={index} machine={item} index={index} actionUpdate={actionUpdate} actionDelete={actionDelete}/>
+        if(AdminWireReducer.dataValue.listKD && AdminWireReducer.dataValue.listKD.length > 0) {
+            result = AdminWireReducer.dataValue.listKD.map((item, index) => {
+                return <AdminWireItem key={index} wire={item} index={index} actionUpdate={actionUpdate} actionDelete={actionDelete}/>
             })
         }
-        setElmListMachines(result);
-    }, [AdminMachineReducer.dataValue])
+        setElmListWires(result);
+    }, [AdminWireReducer.dataValue])
 
     // Hiên thông báo các sự kiện
     useEffect(() => {
-        switch (AdminMachineReducer.message) {
-            case ADD_MACHINE_SUCCESS:
-            case DELETE_MACHINE_SUCCESS:
-            case UPDATE_MACHINE_SUCCESS:
-                toast.success(AdminMachineReducer.message);
+        switch (AdminWireReducer.message) {
+            case ADD_WIRE_SUCCESS:
+            case DELETE_WIRE_SUCCESS:
+            case UPDATE_WIRE_SUCCESS:
+                toast.success(AdminWireReducer.message);
                 var filter = {
                     search : search,
                     sort: sort,
                     pageIndex:pageIndex
                 }
-                dispatch(actGetMachineAdmin(filter));
-                dispatch(actResetMessageMachineAdmin());
+                // console.log(filter);
+                dispatch(actGetWireAdmin(filter));
+                dispatch(actResetMessageWireAdmin());
                 break;
-            case ADD_MACHINE_ERROR : 
-            case DELETE_MACHINE_ERROR:
-            case UPDATE_MACHINE_ERROR :
-                toast.error(AdminMachineReducer.message); 
-                dispatch(actResetMessageMachineAdmin());
+            case ADD_WIRE_ERROR : 
+            case DELETE_WIRE_ERROR:
+            case UPDATE_WIRE_ERROR :
+                toast.error(AdminWireReducer.message); 
+                dispatch(actResetMessageWireAdmin());
                 break;
             default:
                 break;
         }
-    }, [AdminMachineReducer.message])
+    }, [AdminWireReducer.message])
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
-        navigate('/admin/machine?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
+        navigate('/admin/wire?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
     }
 
     // đi đến URL khác khi sort
     const changeSort = (sortValue) => {
-        navigate('/admin/machine?search=' + search + '&sort=' + sortValue + '&pageIndex=' + pageIndex);
+        navigate('/admin/wire?search=' + search + '&sort=' + sortValue + '&pageIndex=' + pageIndex);
     }
 
     const showForm = useCallback(
@@ -131,7 +132,7 @@ function MachineAdmin() {
             switch (actionValue) {
                 case 'add':
                 case 'update':
-                    return <AdminMachineFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
+                    return <AdminWireFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
             
                 default:
                     return null;
@@ -153,11 +154,11 @@ function MachineAdmin() {
     const submitActionForm = (data, action) => {
         switch (action) {
             case 'add':
-                dispatch(actAddMachineAdmin(data));
+                dispatch(actAddWireAdmin(data));
                 setActionValue('');
                 break;
             case 'update':
-                dispatch(actUpdateMachineAdmin(data, data.id))
+                dispatch(actUpdateWireAdmin(data, data.id))
                 setActionValue('');
                 break;
             default:
@@ -169,10 +170,10 @@ function MachineAdmin() {
     const actionDelete = (id) => {
         var res = window.confirm("Bạn có chắc muốn xóa kiểu máy có Id = " + id + " không?");
         if(res) {
-            dispatch(actDeleteMachineAdmin(id));
+            dispatch(actDeleteWireAdmin(id));
         }
         else {
-            toast.error(DELETE_MACHINE_ERROR);
+            toast.error(DELETE_WIRE_ERROR);
         }
     }
 
@@ -183,7 +184,7 @@ function MachineAdmin() {
                 <hr />
             </div>
             
-            <AdminMachineControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort} actionAdd={actionAdd}/>
+            <AdminWireControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort} actionAdd={actionAdd}/>
 
             <div className="row mt-3">
                 <table className="table table-hover ">
@@ -196,13 +197,13 @@ function MachineAdmin() {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* <AdminMachineItem /> */}
-                        {elmListMachines}
+                        {/* <AdminWireItem /> */}
+                        {elmListWires}
                     </tbody>
                 </table>
             </div>
 
-            <AdminMachinePaging dataValue={AdminMachineReducer.dataValue}/>
+            <AdminWirePaging dataValue={AdminWireReducer.dataValue}/>
 
             {showForm()}
 
@@ -210,4 +211,4 @@ function MachineAdmin() {
     )
 }
 
-export default MachineAdmin
+export default WireAdmin

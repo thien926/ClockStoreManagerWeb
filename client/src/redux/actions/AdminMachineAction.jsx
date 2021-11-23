@@ -87,7 +87,7 @@ export const actUpdateMachineAdmin = (data, id) => (dispatch) => {
     });
 }
 
-export const actDeleteMachine = (id) => (dispatch) => {
+export const actDeleteMachineAdmin = (id) => (dispatch) => {
     axios.delete(
         `${API_URL}kieumay/${id}`,
         {
