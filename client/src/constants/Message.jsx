@@ -22,3 +22,11 @@ export const DELETE_WIRE_SUCCESS = 'Xóa kiểu dây thành công!';
 export const ADD_WIRE_ERROR = 'Thêm kiểu dây thất bại!';
 export const UPDATE_WIRE_ERROR = 'Sửa kiểu dây thất bại!';
 export const DELETE_WIRE_ERROR = 'Xóa kiểu dây thất bại!';
+
+// Kiểu dây
+export const ADD_NCC_SUCCESS = 'Thêm nhà cung cấp thành công!';
+export const UPDATE_NCC_SUCCESS = 'Sửa nhà cung cấp thành công!';
+export const DELETE_NCC_SUCCESS = 'Xóa nhà cung cấp thành công!';
+export const ADD_NCC_ERROR = 'Thêm nhà cung cấp thất bại!';
+export const UPDATE_NCC_ERROR = 'Sửa nhà cung cấp thất bại!';
+export const DELETE_NCC_ERROR = 'Xóa nhà cung cấp thất bại!';

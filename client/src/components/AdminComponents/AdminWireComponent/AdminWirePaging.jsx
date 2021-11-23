@@ -112,7 +112,7 @@ function AdminWirePaging(props) {
             setElmsPhanTrang(null);
             setNext(null);
             setPrevious(null);
-            setNotFound('Không tìm thấy loại sản phẩm nào!');
+            setNotFound('Không tìm thấy kiểu dây nào!');
         }
     }, [dataValue])
     return (

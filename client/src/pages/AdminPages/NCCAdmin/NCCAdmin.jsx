@@ -1,21 +1,21 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
-import { ADD_WIRE_ERROR, ADD_WIRE_SUCCESS, DELETE_WIRE_ERROR, DELETE_WIRE_SUCCESS, UPDATE_WIRE_ERROR, UPDATE_WIRE_SUCCESS } from '../../../constants/Message';
 import { toast } from 'react-toastify';
-import { actAddWireAdmin, actDeleteWireAdmin, actGetWireAdmin, actResetMessageWireAdmin, actUpdateWireAdmin } from '../../../redux/actions/AdminWireAction'
-import AdminWireItem from '../../../components/AdminComponents/AdminWireComponent/AdminWireItem'
-import AdminWireFormAction from '../../../components/AdminComponents/AdminWireComponent/AdminWireFormAction'
-import AdminWireControl from '../../../components/AdminComponents/AdminWireComponent/AdminWireControl'
-import AdminWirePaging from '../../../components/AdminComponents/AdminWireComponent/AdminWirePaging'
+import { ADD_NCC_ERROR, ADD_NCC_SUCCESS, DELETE_NCC_ERROR, DELETE_NCC_SUCCESS, UPDATE_NCC_ERROR, UPDATE_NCC_SUCCESS } from '../../../constants/Message';
+import AdminNCCItem from '../../../components/AdminComponents/AdminNCCComponent/AdminNCCItem'
+import AdminNCCFormAction from '../../../components/AdminComponents/AdminNCCComponent/AdminNCCFormAction'
+import AdminNCCControl from '../../../components/AdminComponents/AdminNCCComponent/AdminNCCControl'
+import AdminNCCPaging from '../../../components/AdminComponents/AdminNCCComponent/AdminNCCPaging'
+import { actAddNCCAdmin, actDeleteNCCAdmin, actGetNCCAdmin, actResetMessageNCCAdmin, actUpdateNCCAdmin } from '../../../redux/actions/AdminNCCAction'
 
-function WireAdmin() {
-    const AdminWireReducer = useSelector(state => state.AdminWireReducer)
+function NCCAdmin() {
+    const AdminNCCReducer = useSelector(state => state.AdminNCCReducer)
 
     const [search, setSearch] = useState('');
     const [sort, setSort] = useState('name-asc');
     const [pageIndex, setPageIndex] = useState(1);
-    const [elmListWires, setElmListWires] = useState(null);
+    const [elmListNCCs, setElmListNCCs] = useState(null);
 
     const [actionValue, setActionValue] = useState('');
     const [formValue, setFormValue] = useState({id: null, name: ''});
@@ -76,55 +76,55 @@ function WireAdmin() {
             search,
             pageIndex
         }
-        dispatch(actGetWireAdmin(data));
+        dispatch(actGetNCCAdmin(data));
     }, [search, sort, pageIndex, dispatch])
 
     useEffect(() => {
-        // console.log()
+        // console.log(AdminNCCReducer.dataValue)
         var result = null;
-        if(AdminWireReducer.dataValue.listKD && AdminWireReducer.dataValue.listKD.length > 0) {
-            result = AdminWireReducer.dataValue.listKD.map((item, index) => {
-                return <AdminWireItem key={index} wire={item} index={index} actionUpdate={actionUpdate} actionDelete={actionDelete}/>
+        if(AdminNCCReducer.dataValue.listNCC && AdminNCCReducer.dataValue.listNCC.length > 0) {
+            result = AdminNCCReducer.dataValue.listNCC.map((item, index) => {
+                return <AdminNCCItem key={index} ncc={item} index={index} actionUpdate={actionUpdate} actionDelete={actionDelete}/>
             })
         }
-        setElmListWires(result);
-    }, [AdminWireReducer.dataValue])
+        setElmListNCCs(result);
+    }, [AdminNCCReducer.dataValue])
 
     // Hiên thông báo các sự kiện
     useEffect(() => {
-        switch (AdminWireReducer.message) {
-            case ADD_WIRE_SUCCESS:
-            case DELETE_WIRE_SUCCESS:
-            case UPDATE_WIRE_SUCCESS:
-                toast.success(AdminWireReducer.message);
+        switch (AdminNCCReducer.message) {
+            case ADD_NCC_SUCCESS:
+            case DELETE_NCC_SUCCESS:
+            case UPDATE_NCC_SUCCESS:
+                toast.success(AdminNCCReducer.message);
                 var filter = {
                     search : search,
                     sort: sort,
                     pageIndex:pageIndex
                 }
                 // console.log(filter);
-                dispatch(actGetWireAdmin(filter));
-                dispatch(actResetMessageWireAdmin());
+                dispatch(actGetNCCAdmin(filter));
+                dispatch(actResetMessageNCCAdmin());
                 break;
-            case ADD_WIRE_ERROR : 
-            case DELETE_WIRE_ERROR:
-            case UPDATE_WIRE_ERROR :
-                toast.error(AdminWireReducer.message); 
-                dispatch(actResetMessageWireAdmin());
+            case ADD_NCC_ERROR : 
+            case DELETE_NCC_ERROR:
+            case UPDATE_NCC_ERROR :
+                toast.error(AdminNCCReducer.message); 
+                dispatch(actResetMessageNCCAdmin());
                 break;
             default:
                 break;
         }
-    }, [AdminWireReducer.message])
+    }, [AdminNCCReducer.message])
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
-        navigate('/admin/wire?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
+        navigate('/admin/ncc?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
     }
 
     // đi đến URL khác khi sort
     const changeSort = (sortValue) => {
-        navigate('/admin/wire?search=' + search + '&sort=' + sortValue + '&pageIndex=' + pageIndex);
+        navigate('/admin/ncc?search=' + search + '&sort=' + sortValue + '&pageIndex=' + pageIndex);
     }
 
     const showForm = useCallback(
@@ -132,7 +132,7 @@ function WireAdmin() {
             switch (actionValue) {
                 case 'add':
                 case 'update':
-                    return <AdminWireFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
+                    return <AdminNCCFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
             
                 default:
                     return null;
@@ -142,7 +142,7 @@ function WireAdmin() {
     )
 
     const actionAdd = () => {
-        setFormValue({id: null, name:''});
+        setFormValue({id: null, name:'', address:'', phone: '', fax:''});
         setActionValue("add");
     }
 
@@ -154,11 +154,11 @@ function WireAdmin() {
     const submitActionForm = (data, action) => {
         switch (action) {
             case 'add':
-                dispatch(actAddWireAdmin(data));
+                dispatch(actAddNCCAdmin(data));
                 setActionValue('');
                 break;
             case 'update':
-                dispatch(actUpdateWireAdmin(data, data.id))
+                dispatch(actUpdateNCCAdmin(data, data.id))
                 setActionValue('');
                 break;
             default:
@@ -168,23 +168,23 @@ function WireAdmin() {
 
     // Thực hiện thao tác xóa
     const actionDelete = (id) => {
-        var res = window.confirm("Bạn có chắc muốn xóa kiểu dây có Id = " + id + " không?");
+        var res = window.confirm("Bạn có chắc muốn xóa nhà cung cấp có Id = " + id + " không?");
         if(res) {
-            dispatch(actDeleteWireAdmin(id));
+            dispatch(actDeleteNCCAdmin(id));
         }
         else {
-            toast.error(DELETE_WIRE_ERROR);
+            toast.error(DELETE_NCC_ERROR);
         }
     }
 
     return (
         <div>
             <div>
-                <h3 className="text-center mt-2">Quản lý kiểu dây</h3>
+                <h3 className="text-center mt-2">Quản lý nhà cung cấp</h3>
                 <hr />
             </div>
             
-            <AdminWireControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort} actionAdd={actionAdd}/>
+            <AdminNCCControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort} actionAdd={actionAdd}/>
 
             <div className="row mt-3">
                 <table className="table table-hover ">
@@ -193,17 +193,20 @@ function WireAdmin() {
                             <th>STT</th>
                             <th>Id</th>
                             <th>Tên</th>
+                            <th>Địa chỉ</th>
+                            <th>Số điện thoại</th>
+                            <th>Fax</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* <AdminWireItem /> */}
-                        {elmListWires}
+                        {/* <AdminNCCItem /> */}
+                        {elmListNCCs}
                     </tbody>
                 </table>
             </div>
 
-            <AdminWirePaging dataValue={AdminWireReducer.dataValue}/>
+            <AdminNCCPaging dataValue={AdminNCCReducer.dataValue}/>
 
             {showForm()}
 
@@ -211,4 +214,4 @@ function WireAdmin() {
     )
 }
 
-export default WireAdmin
+export default NCCAdmin
