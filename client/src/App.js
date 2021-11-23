@@ -13,6 +13,8 @@ import PermissionAdmin from './pages/AdminPages/PermissionAdmin/PermissionAdmin'
 import UserAdmin from './pages/AdminPages/UserAdmin/UserAdmin';
 import Home from './pages/ShopPages/Home/Home';
 import NoMatch from './components/NoMatch/NoMatch';
+import MachineAdmin from './pages/AdminPages/MachineAdmin/MachineAdmin';
+import WireAdmin from './pages/AdminPages/WireAdmin/WireAdmin';
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
         <Route path='/admin/custom' element={<CustomAdmin />} />
         <Route path='/admin/staff' element={<StaffAdmin />} />
         <Route path='/admin/product-type' element={<ProductTypeAdmin />} />
+        <Route path='/admin/machine' element={<MachineAdmin />} />
+        <Route path='/admin/wire' element={<WireAdmin />} />
         <Route path='/admin/permission' element={<PermissionAdmin />} />
         
       </Route>
