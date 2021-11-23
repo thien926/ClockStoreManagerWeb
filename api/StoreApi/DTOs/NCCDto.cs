@@ -10,7 +10,7 @@ namespace StoreApi.DTOs
         public int Id {get; set;}
 
         [Required(ErrorMessage = "Tên nhà cung cấp là bắt buộc")]
-        [StringLength(maximumLength: 200, ErrorMessage = "Tên nhà cung cấp trong khoảng 200 kí tự")]
+        [StringLength(maximumLength:200, MinimumLength = 3, ErrorMessage = "Tên nhà cung cấp từ 3 đến 200 kí tự")]
         public string name { get; set;}
 
         [Required(ErrorMessage = "Địa chỉ là bắt buộc")]
