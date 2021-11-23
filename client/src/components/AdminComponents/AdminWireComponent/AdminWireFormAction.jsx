@@ -34,6 +34,7 @@ function AdminWireFormAction(props) {
     }
 
     const actionSubmit = () => {
+        setNoteName('');
         if(!name) {
             setNoteName('Tên kiểu dây là bắt buộc!');
             return;

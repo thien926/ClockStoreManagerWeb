@@ -34,6 +34,7 @@ function AdminMachineFormAction(props) {
     }
 
     const actionSubmit = () => {
+        setNoteName('');
         if(!name) {
             setNoteName('Tên kiểu máy là bắt buộc!');
             return;

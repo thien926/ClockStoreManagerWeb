@@ -19,6 +19,7 @@ namespace StoreApi.Models
         public string address { get; set; }
         
         [Required(ErrorMessage = "Số điện thoại là bắt buộc")]
+        [RegularExpression(pattern: @"^(09|03|07|08|05)+([0-9]{8})")]
         [StringLength(10, ErrorMessage = "Số điện thoại có 10 kí tự")] 
         public string phone{get; set;}
         public string fax { get; set; }

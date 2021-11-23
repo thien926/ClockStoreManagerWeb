@@ -29,6 +29,8 @@ function AdminProductTypeFormAction(props) {
     }, [formValue])
 
     const actionSubmit = () => {
+        setNoteName('');
+        setNoteDescription('');
         var temp = true;
 
         if(!name) {

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-function AdminMachinePaging(props) {
+function AdminNCCPaging(props) {
 
     const { dataValue } = props;
     // State phân trang
     const [previous, setPrevious] = useState(null);
     const [elmsPhanTrang, setElmsPhanTrang] = useState(null);
     const [next, setNext] = useState(null);
-    const [notFound, setNotFound] = useState('Không tìm thấy kiểu máy nào!');
+    const [notFound, setNotFound] = useState('Không tìm thấy kiểu dây nào!');
 
     useEffect(() => {
         var result = null, pageIndex = dataValue.pageIndex;
@@ -96,7 +96,7 @@ function AdminMachinePaging(props) {
             }
         }
         
-        if (dataValue.listKM && dataValue.listKM.length > 0) {
+        if (dataValue.listNCC && dataValue.listNCC.length > 0) {
             setElmsPhanTrang(result);
             if(!result) {
                 setNext(null);
@@ -112,7 +112,7 @@ function AdminMachinePaging(props) {
             setElmsPhanTrang(null);
             setNext(null);
             setPrevious(null);
-            setNotFound('Không tìm thấy kiểu máy nào!');
+            setNotFound('Không tìm thấy nhà cung cấp nào!');
         }
     }, [dataValue])
     return (
@@ -131,4 +131,4 @@ function AdminMachinePaging(props) {
     )
 }
 
-export default AdminMachinePaging
+export default AdminNCCPaging
