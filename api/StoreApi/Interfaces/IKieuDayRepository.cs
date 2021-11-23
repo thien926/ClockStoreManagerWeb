@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using StoreApi.Models;
+
 namespace StoreApi.Interfaces
 {
-    public interface KieuDayRepository
+    public interface IKieuDayRepository
     {
         KieuDay KieuDay_Add(KieuDay kd); 
         KieuDay KieuDay_GetById(int id); 
