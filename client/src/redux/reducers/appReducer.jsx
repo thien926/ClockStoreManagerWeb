@@ -3,12 +3,20 @@ import AdminProductReducer from "./AdminProductReducer";
 import LoginAdminReducer from "./LoginAdminReducer";
 import AdminProductTypeReducer from './AdminProductTypeReducer'
 import HeaderProductTypeReducer from "./HeaderProductTypeReducer";
+import AdminMachineReducer from "./AdminMachineReducer";
+import AdminWireReducer from "./AdminWireReducer";
+import AdminNCCReducer from "./AdminNCCReducer";
+import AdminBrandReducer from "./AdminBrandReducer";
 
 const appReducers = combineReducers({
     LoginAdminReducer : LoginAdminReducer,
     AdminProductReducer : AdminProductReducer,
     AdminProductTypeReducer,
     HeaderProductTypeReducer,
+    AdminMachineReducer,
+    AdminWireReducer,
+    AdminNCCReducer,
+    AdminBrandReducer
 })
 
 export default appReducers

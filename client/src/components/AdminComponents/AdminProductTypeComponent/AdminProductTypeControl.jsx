@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function AdminProductTypeControl(props) {
 
     const [search, setSearch] = useState(props.search);
+
+    useEffect(() => {
+        setSearch(props.search);
+    }, [props.search])
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -28,6 +32,8 @@ function AdminProductTypeControl(props) {
                 <select id="input" className="form-control" required="required" value={props.sort} onChange={(e) => props.changeSort(e.target.value)}>
                     <option value="name-asc">Sắp xếp theo tên : A-Z</option>
                     <option value="name-desc">Sắp xếp theo tên : Z-A</option>
+                    <option value="id-asc">Sắp xếp theo Id : Tăng dần</option>
+                    <option value="id-desc">Sắp xếp theo Id : Giảm dần</option>
                 </select>
             </div>
 

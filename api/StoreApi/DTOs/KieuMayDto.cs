@@ -11,7 +11,7 @@ namespace StoreApi.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Tên Kiểu Máy là bắt Buộc")]
+        [StringLength(maximumLength:200, MinimumLength = 3, ErrorMessage = "Tên Kiểu Máy từ 3 đến 200 kí tự")]
         public string name { get; set; }
-        public ICollection<SanPham> SanPhams { get; set; }
     }
 }

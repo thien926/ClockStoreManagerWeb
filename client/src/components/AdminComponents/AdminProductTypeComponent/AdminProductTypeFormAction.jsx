@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function AdminProductTypeFormAction(props) {
 
@@ -9,10 +9,16 @@ function AdminProductTypeFormAction(props) {
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('Thêm loại sản phẩm');
 
+    const [noteName, setNoteName] = useState('');
+    const [noteDescription, setNoteDescription] = useState('');
+
     useEffect(() => {
         setId(formValue.id);
         setName(formValue.name);
         setDescription(formValue.description);
+
+        setNoteName('');
+        setNoteDescription('');
 
         if(formValue.id) {
             setTitle("Sửa loại sản phẩm có Id = " + formValue.id);
@@ -23,6 +29,35 @@ function AdminProductTypeFormAction(props) {
     }, [formValue])
 
     const actionSubmit = () => {
+        setNoteName('');
+        setNoteDescription('');
+        var temp = true;
+
+        if(!name) {
+            setNoteName('Tên loại sản phẩm là bắt buộc!');
+            temp = false;
+        }
+        else {
+            if(name.length < 3) {
+                setNoteName('Tên loại sản phẩm tối thiểu 3 kí tự!');
+                temp = false;
+            }
+    
+            if(name.length > 200) {
+                setNoteName('Tên loại sản phẩm nhiều nhất là 200 kí tự!');
+                temp = false;
+            }
+        }
+
+        if(!description) {
+            setNoteDescription('Mô tả là bắt buộc!');
+            temp = false;
+        }
+
+        if(!temp){
+            return;
+        }
+
         var data = {
             id : id,
             name : name,
@@ -59,12 +94,18 @@ function AdminProductTypeFormAction(props) {
                         <td>
                             <input type="text" className="form-control" required="required" value={name} onChange={(e) => setName(e.target.value)}/>
                         </td>
+                        <td className='note-validate'>
+                            {noteName}
+                        </td>
                     </tr>
                     <tr>
                         <td>Mô tả: </td>
                         <td>
                             <input type="text" className="form-control" required="required" value={description} onChange={(e) => setDescription(e.target.value)}/>
 
+                        </td>
+                        <td className='note-validate'>
+                            {noteDescription}
                         </td>
                     </tr>
                 </tbody>

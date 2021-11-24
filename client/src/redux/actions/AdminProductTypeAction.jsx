@@ -12,11 +12,11 @@ export const GET_PRODUCT_TYPE_ADMIN = 'GET_PRODUCT_TYPE_ADMIN'
 export const UPDATE_PRODUCT_TYPE_ADMIN = 'UPDATE_PRODUCT_TYPE_ADMIN';
 export const ADD_PRODUCT_TYPE_ADMIN = 'ADD_PRODUCT_TYPE_ADMIN';
 export const DELETE_PRODUCT_TYPE_ADMIN = 'DELETE_PRODUCT_TYPE_ADMIN';
-export const RESET_MESSAGE_LSP = 'RESET_MESSAGE_LSP';
+export const RESET_MESSAGE_LSP_ADMIN = 'RESET_MESSAGE_LSP_ADMIN';
 
-export const actResetMessageLSP = () => (dispatch) => {
+export const actResetMessageLSPAdmin = () => (dispatch) => {
     dispatch({
-        type : RESET_MESSAGE_LSP,
+        type : RESET_MESSAGE_LSP_ADMIN,
         payload : ''
     })
 }
