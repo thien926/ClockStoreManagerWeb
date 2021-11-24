@@ -18,8 +18,17 @@ namespace StoreApi.Controllers
         private int pageSize = 9;
         private int range = 9;
         private readonly ISanPhamRepository sanPhamRepository;
-        public SanPhamController(ISanPhamRepository sanPhamRepository) {
+        private readonly ILoaiSanPhamRepository loaiSanPhamRepository;
+        private readonly IThuongHieuRepository thuongHieuRepository;
+        private readonly IKieuMayRepository kieuMayRepository;
+        private readonly IKieuDayRepository kieuDayRepository;
+        public SanPhamController(ISanPhamRepository sanPhamRepository, ILoaiSanPhamRepository loaiSanPhamRepository,
+        IThuongHieuRepository thuongHieuRepository, IKieuMayRepository kieuMayRepository,IKieuDayRepository kieuDayRepository ) {
             this.sanPhamRepository = sanPhamRepository;
+            this.loaiSanPhamRepository = loaiSanPhamRepository;
+            this.thuongHieuRepository = thuongHieuRepository;
+            this.kieuMayRepository = kieuMayRepository;
+            this.kieuDayRepository = kieuDayRepository;
         }
 
         [HttpGet]
@@ -126,8 +135,29 @@ namespace StoreApi.Controllers
         [HttpPost("filter-shop")]
         public ViewProductsShopDto FilterShop(FilterProductsShopDto data) {
             int count;
-            
-            return null;
+            var SanPhams = sanPhamRepository.SanPham_FilterProductShop(data.lspId, data.branchId, data.machineId, data.wireId, data.priceFrom, data.priceTo, data.search, data.sort, data.pageIndex, pageSize, out count);
+            var LSP = loaiSanPhamRepository.LoaiSanPham_GetById(data.lspId);
+            var TH = thuongHieuRepository.ThuongHieu_GetById(data.branchId);
+            var KM = kieuMayRepository.KieuMay_GetById(data.machineId);
+            var KD = kieuDayRepository.KieuDay_GetById(data.wireId);
+            var ListSP = new PaginatedList<SanPham>(SanPhams, count, data.pageIndex, pageSize);
+            ViewProductsShopDto view = new ViewProductsShopDto() {
+                ListSP = ListSP,
+                LSP = LSP,
+                TH = TH,
+                KM = KM,
+                KD = KD,
+                priceFrom = data.priceFrom,
+                priceTo = data.priceTo,
+                search = data.search,
+                sort = data.sort,
+                pageIndex = data.pageIndex,
+                pageSize = this.pageSize,
+                count = count,
+                range = this.range,
+                totalPage = ListSP.TotalPages
+            };
+            return view;
         }
     }
 }

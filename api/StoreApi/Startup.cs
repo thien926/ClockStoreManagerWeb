@@ -44,7 +44,8 @@ namespace StoreApi
             services.AddDbContext<ClockStoreDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            
+            // services.AddControllers().AddJsonOptions(x =>
+            //     x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
             services.AddScoped<JwtNhanVienService>();
             services.AddScoped<JwtKhachHangService>();
             services.AddScoped<IKhachHangRepository, KhachHangRepository>();
@@ -53,10 +54,8 @@ namespace StoreApi
             services.AddScoped<IQuyenRepository, QuyenRepository>();
             services.AddScoped<IThuongHieuRepository, ThuongHieuRepository>();
             services.AddScoped<IKieuMayRepository, KieuMayRepository>();
-
             services.AddScoped<ILoaiSanPhamRepository, LoaiSanPhamRepository>();
             services.AddScoped<INCCRepository, NCCRepository>();
-
             services.AddScoped<IKieuDayRepository, KieuDayRepository>();
 
         }

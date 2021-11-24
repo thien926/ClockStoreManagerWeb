@@ -1,20 +1,187 @@
-import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Category from "../../../components/ShopComponents/ShopPageComponent/Category";
 import ProductItem from "../../../components/ShopComponents/ShopPageComponent/ProductItem";
 import ResultSearch from "../../../components/ShopComponents/ShopPageComponent/ResultSearch";
 import ShopPaging from "../../../components/ShopComponents/ShopPageComponent/ShopPaging";
 import Sort from "../../../components/ShopComponents/ShopPageComponent/Sort";
+import { actGetProductShopPage } from "../../../redux/actions/ShopPageAction";
 
 import './Shop.css'
 
 function Shop(props) {
-  
+
+  const HeaderProductTypeReducer = useSelector(state => state.HeaderProductTypeReducer);
+  const ShopPageReducer = useSelector(state => state.ShopPageReducer);
+
+  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState('name-asc');
+  const [pageIndex, setPageIndex] = useState(1);
+  const [lspId, setLspId] = useState('');
+  const [branchId, setBranchId] = useState('');
+  const [machineId, setMachineId] = useState('');
+  const [wireId, setWireId] = useState('');
+  const [priceFrom, setPriceFrom] = useState('');
+  const [priceTo, setPriceTo] = useState('');
+
+  const [elmsProductList, setElmsProductList] = useState(null);
+
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const utf8_from_str = (s) => {
+    var temp = decodeURIComponent(s);
+    temp = temp.split("+");
+    temp = temp.join(" ");
+    return temp;
+  }
 
   useEffect(() => {
-    console.log(location);
-  }, [location])
+    // console.log(location);
+    let IDLSP = parseInt(location.pathname.replace("/shop/", ""));
+    if (IDLSP) {
+      setLspId(IDLSP);
+      if (HeaderProductTypeReducer.length > 0) {
+        let temp = false;
+        for (let index = 0; index < HeaderProductTypeReducer.length; index++) {
+          if (HeaderProductTypeReducer[index].id === IDLSP) {
+            temp = true;
+            break;
+          }
+        }
+        if (!temp) {
+          navigate('/notfound');
+        }
+      }
+    }
+    else {
+      // console.log(utf8_from_str(location.pathname.replace("/shop/", "")));
+      setLspId('');
+      setSearch(utf8_from_str(location.pathname.replace("/shop/", "")));
+    }
+
+    var { search } = location;
+    if (search === "") {
+      setSort('name-asc');
+      setPageIndex(1);
+      // setSearch('');
+    }
+    else {
+      var dauHoi = search.split('?');
+      var dauVa = dauHoi[dauHoi.length - 1].split('&');
+      var dauBang, value;
+      for (let i = 0; i < dauVa.length; ++i) {
+        dauBang = dauVa[i].split('=');
+        switch (dauBang[0]) {
+          case "sort":
+            setSort(dauBang[1]);
+            break;
+          case "pageIndex":
+            value = parseInt(dauBang[1]);
+            if (value) {
+              setPageIndex(value);
+            }
+            else {
+              setPageIndex(1);
+            }
+            break;
+          case "branchId":
+            value = parseInt(dauBang[1]);
+            if (value) {
+              setBranchId(value);
+            }
+            else {
+              setBranchId('');
+            }
+            break;
+          case "machineId":
+            value = parseInt(dauBang[1]);
+            if (value) {
+              setMachineId(value);
+            }
+            else {
+              setMachineId('');
+            }
+            break;
+          case "wireId":
+            value = parseInt(dauBang[1]);
+            if (value) {
+              setWireId(value);
+            }
+            else {
+              setWireId('');
+            }
+            break;
+          case "price":
+            value = dauBang[1].split("-");
+            let from, to;
+            if (value.length >= 2) {
+              from = parseInt(value[0]);
+              to = parseInt(value[1]);
+
+              if (from) {
+                setPriceFrom(from);
+              }
+              else {
+                setPriceFrom('');
+              }
+
+              if (to) {
+                setPriceTo(to);
+              }
+              else {
+                setPriceTo('');
+              }
+            }
+            else {
+              setPriceTo('');
+              value = parseInt(dauBang[1]);
+              if (value) {
+                setPriceFrom(value);
+              }
+              else {
+                setPriceFrom(1);
+              }
+            }
+            break;
+          // case "search":
+          //   setSearch(utf8_from_str(dauBang[1]));
+          //   break;
+          default:
+            break;
+        }
+      }
+    }
+  }, [location, HeaderProductTypeReducer, navigate])
+
+  useEffect(() => {
+    var data = {
+      lspId: ((lspId === '') ? -1 : lspId),
+      branchId: ((branchId === '') ? -1 : branchId),
+      machineId: ((machineId === '') ? -1 : machineId),
+      wireId: ((wireId === '') ? -1 : wireId),
+      priceFrom: ((priceFrom === '') ? -1 : priceFrom),
+      priceTo: ((priceTo === '') ? -1 : priceTo),
+      search: search,
+      sort: "name-asc",
+      pageIndex: pageIndex
+    }
+    dispatch(actGetProductShopPage(data));
+    console.log("data:", data)
+
+  }, [lspId, branchId, wireId, machineId, search, sort, pageIndex, priceFrom, priceTo, dispatch])
+
+  useEffect(() => {
+    var result = null;
+    if (ShopPageReducer.listSP && ShopPageReducer.listSP.length > 0) {
+      result = ShopPageReducer.listSP.map((item, index) => {
+        return <ProductItem key={index} product={item} />
+      })
+    }
+    setElmsProductList(result);
+  }, [ShopPageReducer])
 
   return (
     <div>
@@ -41,7 +208,7 @@ function Shop(props) {
                 <div className="row">
 
                   <ResultSearch />
-                  
+
                 </div>
 
                 <Sort />
@@ -49,19 +216,11 @@ function Shop(props) {
               </div>
               <div className="product-list">
                 <div className="row">
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
+                  {elmsProductList}
                 </div>
               </div>
-              
-              <ShopPaging />
+
+              <ShopPaging ShopPageReducer={ShopPageReducer}/>
 
             </div>
           </div>

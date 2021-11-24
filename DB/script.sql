@@ -246,4 +246,3 @@ INSERT [dbo].[ChiTietPNs] ([couponId], [productId], [name], [amount], [price], [
 INSERT [dbo].[ChiTietPNs] ([couponId], [productId], [name], [amount], [price], [img]) VALUES (2, 107, N'Đồng hồ nam chính hãng LOBINNI L9010-1', 10, 5280000, N'/image/sp3.jpg')
 INSERT [dbo].[ChiTietPNs] ([couponId], [productId], [name], [amount], [price], [img]) VALUES (3, 108, N'Đồng hồ nam chính hãng LOBINNI L12032-1', 10, 4550000, N'/image/sp2.jpg')
 INSERT [dbo].[ChiTietPNs] ([couponId], [productId], [name], [amount], [price], [img]) VALUES (4, 109, N'Đồng hồ nam chính hãng LOBINNI L17511-1', 10, 5480000, N'/image/sp1.jpg')
-INSERT [dbo].[__EFMigrationsHistory] ([MigrationId], [ProductVersion]) VALUES (N'20211120023940_CreateDatabase', N'5.0.11')

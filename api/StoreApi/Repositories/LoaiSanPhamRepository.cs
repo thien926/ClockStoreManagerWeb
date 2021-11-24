@@ -23,7 +23,6 @@ namespace StoreApi.Repositories
 
         public LoaiSanPham LoaiSanPham_GetById(int id)
         {
-            // context.LoaiSanPhams.
             return context.LoaiSanPhams.FirstOrDefault(o => o.Id == id);
         }
 

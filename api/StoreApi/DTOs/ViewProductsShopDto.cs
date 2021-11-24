@@ -10,10 +10,10 @@ namespace StoreApi.DTOs
     public class ViewProductsShopDto
     {
         public PaginatedList<SanPham> ListSP { get; set; }
-        public int lspId { get; set; }
-        public int branchId { get; set; }
-        public int machineId { get; set; }
-        public int wireId { get; set; }
+        public LoaiSanPham LSP { get; set; }
+        public ThuongHieu TH { get; set; }
+        public KieuMay KM { get; set; }
+        public KieuDay KD { get; set; }
         public int priceFrom { get; set; }
         public int priceTo { get; set; }
         public string search { get; set;}
