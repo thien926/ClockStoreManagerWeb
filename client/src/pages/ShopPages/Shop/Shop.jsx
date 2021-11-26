@@ -39,10 +39,21 @@ function Shop(props) {
   }
 
   useEffect(() => {
-    // console.log(location);
+    setSearch('');
+    setSort('name-asc');
+    setPageIndex(1);
+    setLspId('');
+    setBranchId('');
+    setMachineId('');
+    setWireId('');
+    setPriceFrom('');
+    setPriceTo('');
+
+    // console.log("location:", location);
     let IDLSP = parseInt(location.pathname.replace("/shop/", ""));
     if (IDLSP) {
       setLspId(IDLSP);
+      setSearch('');
       if (HeaderProductTypeReducer.length > 0) {
         let temp = false;
         for (let index = 0; index < HeaderProductTypeReducer.length; index++) {
@@ -63,12 +74,8 @@ function Shop(props) {
     }
 
     var { search } = location;
-    if (search === "") {
-      setSort('name-asc');
-      setPageIndex(1);
-      // setSearch('');
-    }
-    else {
+
+    if (search !== "") {
       var dauHoi = search.split('?');
       var dauVa = dauHoi[dauHoi.length - 1].split('&');
       var dauBang, value;
@@ -83,17 +90,11 @@ function Shop(props) {
             if (value) {
               setPageIndex(value);
             }
-            else {
-              setPageIndex(1);
-            }
             break;
           case "branchId":
             value = parseInt(dauBang[1]);
             if (value) {
               setBranchId(value);
-            }
-            else {
-              setBranchId('');
             }
             break;
           case "machineId":
@@ -101,17 +102,11 @@ function Shop(props) {
             if (value) {
               setMachineId(value);
             }
-            else {
-              setMachineId('');
-            }
             break;
           case "wireId":
             value = parseInt(dauBang[1]);
             if (value) {
               setWireId(value);
-            }
-            else {
-              setWireId('');
             }
             break;
           case "price":
@@ -124,19 +119,12 @@ function Shop(props) {
               if (from) {
                 setPriceFrom(from);
               }
-              else {
-                setPriceFrom('');
-              }
 
               if (to) {
                 setPriceTo(to);
               }
-              else {
-                setPriceTo('');
-              }
             }
             else {
-              setPriceTo('');
               value = parseInt(dauBang[1]);
               if (value) {
                 setPriceFrom(value);
@@ -165,23 +153,28 @@ function Shop(props) {
       priceFrom: ((priceFrom === '') ? -1 : priceFrom),
       priceTo: ((priceTo === '') ? -1 : priceTo),
       search: search,
-      sort: "name-asc",
+      sort: sort,
       pageIndex: pageIndex
     }
     dispatch(actGetProductShopPage(data));
-    console.log("data:", data)
+    console.log("dataSearch:", data)
 
   }, [lspId, branchId, wireId, machineId, search, sort, pageIndex, priceFrom, priceTo, dispatch])
 
   useEffect(() => {
+    // console.log(ShopPageReducer.products);
     var result = null;
-    if (ShopPageReducer.listSP && ShopPageReducer.listSP.length > 0) {
-      result = ShopPageReducer.listSP.map((item, index) => {
+    if (ShopPageReducer.products.listSP && ShopPageReducer.products.listSP.length > 0) {
+      result = ShopPageReducer.products.listSP.map((item, index) => {
         return <ProductItem key={index} product={item} />
       })
     }
     setElmsProductList(result);
-  }, [ShopPageReducer])
+  }, [ShopPageReducer.products])
+
+  // const changeSort = (value) => {
+  //   navigate(value);
+  // }
 
   return (
     <div>
@@ -201,17 +194,17 @@ function Shop(props) {
         <div className="container">
           <div className="row">
 
-            <Category />
+            <Category products={ShopPageReducer.products}/>
 
             <div className="col-lg-9 order-1 order-lg-2">
               <div className="product-show-option">
                 <div className="row">
 
-                  <ResultSearch />
+                  <ResultSearch products={ShopPageReducer.products} />
 
                 </div>
 
-                <Sort />
+                <Sort products={ShopPageReducer.products}/>
 
               </div>
               <div className="product-list">
@@ -220,7 +213,7 @@ function Shop(props) {
                 </div>
               </div>
 
-              <ShopPaging ShopPageReducer={ShopPageReducer}/>
+              <ShopPaging products={ShopPageReducer.products} />
 
             </div>
           </div>

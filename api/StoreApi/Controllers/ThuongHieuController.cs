@@ -22,6 +22,7 @@ namespace StoreApi.Controllers
             this.ThuongHieuRepository = ThuongHieuRepository;
         }
 
+        // shop
         [HttpGet]
         public IEnumerable<ThuongHieu> GetAll() {
             return this.ThuongHieuRepository.ThuongHieu_GetAll();

@@ -63,15 +63,38 @@
 //     "totalPage": 1
 // }
 
-import { GET_PRODUCT_SHOP_PAGE } from "../actions/ShopPageAction";
+import { GET_BRANCH_SHOP_PAGE, GET_MACHINE_SHOP_PAGE, GET_PRODUCT_SHOP_PAGE, GET_WIRE_SHOP_PAGE } from "../actions/ShopPageAction";
 
-const initialState = {}
+const initialState = {
+    products: {},
+    brands: [],
+    machines: [],
+    wires: []
+}
 
 
 const ShopPageReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_PRODUCT_SHOP_PAGE:
-            return action.payload;
+            return {
+                ...state,
+                products: action.payload
+            }
+        case GET_BRANCH_SHOP_PAGE:
+            return {
+                ...state,
+                brands: [...action.payload]
+            }
+        case GET_WIRE_SHOP_PAGE:
+            return {
+                ...state,
+                wires: [...action.payload]
+            }
+        case GET_MACHINE_SHOP_PAGE:
+            return {
+                ...state,
+                machines: [...action.payload]
+            }
         default:
             return {
                 ...state

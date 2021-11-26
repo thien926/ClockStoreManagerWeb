@@ -1775,7 +1775,8 @@ ol {
 .filter-widget .filter-range-wrap .range-slider .price-input input {
 	font-size: 16px;
 	color: #252525;
-	max-width: 20%;
+	/* max-width: 20%; */
+	max-width: 30%;
 	text-align: center;
 	border: 1px solid #ebebeb;
 	border-radius: 2px;

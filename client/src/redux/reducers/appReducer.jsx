@@ -8,6 +8,7 @@ import AdminWireReducer from "./AdminWireReducer";
 import AdminNCCReducer from "./AdminNCCReducer";
 import AdminBrandReducer from "./AdminBrandReducer";
 import ShopPageReducer from './ShopPageReducer'
+import HomePageReducer from './HomePageReducer'
 
 const appReducers = combineReducers({
     LoginAdminReducer : LoginAdminReducer,
@@ -18,7 +19,8 @@ const appReducers = combineReducers({
     AdminWireReducer,
     AdminNCCReducer,
     AdminBrandReducer,
-    ShopPageReducer
+    ShopPageReducer,
+    HomePageReducer
 })
 
 export default appReducers

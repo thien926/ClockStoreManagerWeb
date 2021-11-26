@@ -159,5 +159,19 @@ namespace StoreApi.Controllers
             };
             return view;
         }
+
+        [HttpGet("home-page")]
+        public List<ListSPHomePage> FilterHomePage() {
+            var LSP = loaiSanPhamRepository.LoaiSanPham_GetAll();
+            var viewHomePage = new List<ListSPHomePage>();
+            foreach (var item in LSP)
+            {
+                var newListHomePage = new ListSPHomePage();
+                newListHomePage.LSP = item;
+                newListHomePage.listSP = sanPhamRepository.SanPham_GetByLSPId(item.Id);
+                viewHomePage.Add(newListHomePage);
+            }
+            return viewHomePage;
+        }
     }
 }

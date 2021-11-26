@@ -107,6 +107,16 @@ namespace StoreApi.Repositories
             if(priceFrom >= 0 && priceTo >= 0) {
                 query = query.Where(m => m.price >= priceFrom && m.price <= priceTo);
             }
+            else {
+                if(priceFrom < 0 && priceTo >= 0) {
+                    query = query.Where(m => m.price <= priceTo);
+                }
+                else {
+                    if(priceFrom >= 0 && priceTo < 0) {
+                        query = query.Where(m => m.price >= priceFrom);
+                    }
+                }
+            }
 
             query = query.Where(m => m.status == 1);
 
@@ -135,6 +145,13 @@ namespace StoreApi.Repositories
 
             return query.Skip((pageIndex - 1) * pageSize)
                         .Take(pageSize).ToList();
+        }
+
+        public IEnumerable<SanPham> SanPham_GetByLSPId(int lspId)
+        {
+            var query = context.SanPhams.AsQueryable();
+            query = query.Where(m => m.LSPId == lspId);
+            return query.Take(8).ToList();
         }
     }
 }

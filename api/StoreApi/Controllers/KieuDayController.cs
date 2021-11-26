@@ -21,6 +21,7 @@ namespace StoreApi.Controllers
             this.KieuDayRepository = KieuDayRepository;
         }
 
+        // shop
         [HttpGet]
         public IEnumerable<KieuDay> GetAll() {
             return this.KieuDayRepository.KieuDay_GetAll();

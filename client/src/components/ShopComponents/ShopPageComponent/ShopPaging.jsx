@@ -3,35 +3,52 @@ import  { Link } from 'react-router-dom'
 
 function ShopPaging(props) {
 
-    const { ShopPageReducer } = props;
+    const { products } = props;
     const [previous, setPrevious] = useState(null);
     const [elmsPhanTrang, setElmsPhanTrang] = useState(null);
     const [next, setNext] = useState(null);
 
     useEffect(() => {
         var ulrlPage = "?";
-        var result = null, pageIndex = ShopPageReducer.pageIndex;
-        var search = ShopPageReducer.search, sort = ShopPageReducer.sort;
+        var result = null, pageIndex = products.pageIndex;
+        var sort = products.sort;
         var nextPage = null, previousPage = null;
+        var price = "";
+        // if(search) {
+        //     ulrlPage += "search=" + search + "&";
+        // }
+        if(products.th) {
+            ulrlPage += "branchId=" +  products.th.id + "&";
+        }
+        if(products.km) {
+            ulrlPage += "machineId=" +  products.km.id + "&";
+        }
+        if(products.kd) {
+            ulrlPage += "wireId=" +  products.kd.id + "&";
+        }
 
-        if(search) {
-            ulrlPage += "search=" + search + "&";
+        if(products.priceFrom >= 0 && products.priceTo >= 0) {
+            price = "&" + products.priceFrom + "-" + products.priceTo;
         }
-        if(ShopPageReducer.th) {
-            ulrlPage += "branchId=" +  ShopPageReducer.th.id + "&";
+        else {
+            if(products.priceFrom < 0 && products.priceTo >= 0) {
+                price = "&0-" + products.priceTo;
+            }
+            else {
+                if(products.priceFrom >= 0 && products.priceTo < 0) {
+                    price = "&" + products.priceFrom + "-max";
+                }
+                else {
+                    price = "";
+                }
+            }
         }
-        if(ShopPageReducer.km) {
-            ulrlPage += "machineId=" +  ShopPageReducer.km.id + "&";
-        }
-        if(ShopPageReducer.kd) {
-            ulrlPage += "wireId=" +  ShopPageReducer.kd.id + "&";
-        }
-        ulrlPage += "sort=" + sort + "&pageIndex=";
+        ulrlPage += "sort=" + sort + price + "&pageIndex=";
 
-        if (ShopPageReducer.pageIndex) {
-            var totalPage = ShopPageReducer.totalPage;
+        if (products.pageIndex) {
+            var totalPage = products.totalPage;
             var pageMin, pageMax;
-            var range = ShopPageReducer.range, middle = totalPage / 2;
+            var range = products.range, middle = totalPage / 2;
             if (totalPage <= range) {
                 pageMin = 1;
                 pageMax = totalPage;
@@ -110,7 +127,7 @@ function ShopPaging(props) {
             }
         }
         
-        if (ShopPageReducer.listSP && ShopPageReducer.listSP.length > 0) {
+        if (products.listSP && products.listSP.length > 0) {
             setElmsPhanTrang(result);
             if(!result) {
                 setNext(null);
@@ -126,7 +143,7 @@ function ShopPaging(props) {
             setNext(null);
             setPrevious(null);
         }
-    }, [ShopPageReducer])
+    }, [products])
 
     return (
         <div className="loading-more">
