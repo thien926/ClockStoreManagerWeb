@@ -165,13 +165,14 @@ namespace StoreApi.Controllers
         // home page
         [HttpGet("home-page")]
         public List<ListSPHomePage> FilterHomePage() {
+            int pageSize = 8;
             var LSP = loaiSanPhamRepository.LoaiSanPham_GetAll();
             var viewHomePage = new List<ListSPHomePage>();
             foreach (var item in LSP)
             {
                 var newListHomePage = new ListSPHomePage();
                 newListHomePage.LSP = item;
-                newListHomePage.listSP = sanPhamRepository.SanPham_GetByLSPId(item.Id);
+                newListHomePage.listSP = sanPhamRepository.SanPham_GetByLSPId(item.Id, pageSize);
                 viewHomePage.Add(newListHomePage);
             }
             return viewHomePage;
@@ -179,14 +180,22 @@ namespace StoreApi.Controllers
 
         // product page
         [HttpGet("product/{id}")]
-        public ActionResult<SanPham> GetProductDetail(int id) {
+        public ActionResult<ViewProductPageDto> GetProductDetail(int id) {
+            int pageSize = 4;
+
             var sanpham = this.sanPhamRepository.SanPham_GetById(id);
             var LSP = loaiSanPhamRepository.LoaiSanPham_GetById(sanpham.LSPId);
             var TH = thuongHieuRepository.ThuongHieu_GetById(sanpham.brandId);
             var KM = kieuMayRepository.KieuMay_GetById(sanpham.machineId);
             var KD = kieuDayRepository.KieuDay_GetById(sanpham.wireId);
 
-            return sanpham;
+            var spLienQuan = sanPhamRepository.SanPham_GetByLSPId(sanpham.LSPId, pageSize);
+            
+            var view = new ViewProductPageDto();
+            view.product = sanpham;
+            view.ListRelationship = spLienQuan;
+
+            return view;
         }
     }
 }

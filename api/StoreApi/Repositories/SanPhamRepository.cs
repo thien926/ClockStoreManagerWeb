@@ -147,11 +147,15 @@ namespace StoreApi.Repositories
                         .Take(pageSize).ToList();
         }
 
-        public IEnumerable<SanPham> SanPham_GetByLSPId(int lspId)
+        public IEnumerable<SanPham> SanPham_GetByLSPId(int lspId, int pageSize)
         {
             var query = context.SanPhams.AsQueryable();
             query = query.Where(m => m.LSPId == lspId);
-            return query.Take(8).ToList();
+            
+            if(pageSize < 0) {
+                return query.ToList();
+            }
+            return query.Take(pageSize).ToList();
         }
     }
 }

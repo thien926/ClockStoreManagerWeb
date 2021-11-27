@@ -9,6 +9,7 @@ import AdminNCCReducer from "./AdminNCCReducer";
 import AdminBrandReducer from "./AdminBrandReducer";
 import ShopPageReducer from './ShopPageReducer'
 import HomePageReducer from './HomePageReducer'
+import ProductPageReducer from './ProductPageReducer'
 
 const appReducers = combineReducers({
     LoginAdminReducer : LoginAdminReducer,
@@ -20,7 +21,8 @@ const appReducers = combineReducers({
     AdminNCCReducer,
     AdminBrandReducer,
     ShopPageReducer,
-    HomePageReducer
+    HomePageReducer,
+    ProductPageReducer
 })
 
 export default appReducers
