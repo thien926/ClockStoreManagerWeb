@@ -106,6 +106,7 @@ function ProductTypeAdmin() {
         }
         // dispatch(actResetMessageLSPAdmin());
         setElmListLSP(result);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productTypeReducer.dataValue])
 
     // Hiện thông báo khi thêm, sửa, xóa    
@@ -132,6 +133,7 @@ function ProductTypeAdmin() {
             default:
                 break;
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productTypeReducer.message])
 
     // đi đến URL khác khi search

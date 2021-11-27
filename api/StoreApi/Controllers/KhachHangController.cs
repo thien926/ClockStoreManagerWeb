@@ -18,74 +18,113 @@ namespace StoreApi.Controllers
         private int pageSize = 9;
         private int range = 9;
         private readonly IKhachHangRepository KhachHangRepository;
-        public KhachHangController(IKhachHangRepository KhachHangRepository) {
+        private readonly JwtKhachHangService jwtKhachHang;
+        public KhachHangController(IKhachHangRepository KhachHangRepository, JwtKhachHangService jwtKhachHang)
+        {
             this.KhachHangRepository = KhachHangRepository;
+            this.jwtKhachHang = jwtKhachHang;
         }
 
         [HttpGet]
-        public IEnumerable<KhachHang> GetAll() {
+        public IEnumerable<KhachHang> GetAll()
+        {
             return this.KhachHangRepository.KhachHang_GetAll();
         }
 
         [HttpGet("{user}")]
-        public ActionResult<KhachHang> GetByUser(String user) {
+        public ActionResult<KhachHang> GetByUser(String user)
+        {
             return this.KhachHangRepository.KhachHang_GetByUser(user);
         }
 
+        // register page
         [HttpPost]
-        public ActionResult<KhachHang> AddKH(KhachHangDto khdto) {
+        public ActionResult<KhachHang> AddKH(KhachHangDto khdto)
+        {
 
-            // Console.WriteLine("KhachHang Add: ");
-            // Console.WriteLine(spdto.LSPId);
-            // Console.WriteLine(spdto.brandId);
-            // Console.WriteLine(spdto.wireId);
-            // Console.WriteLine(spdto.machineId);
-            // Console.WriteLine(spdto.nccId);
-            // Console.WriteLine(spdto.name);
-            // Console.WriteLine(spdto.amount);
-            // Console.WriteLine(spdto.price);
-            // Console.WriteLine(spdto.description);
-            // Console.WriteLine("img:", spdto.img);
-
-            if(ModelState.IsValid){
-                try {
+            if (ModelState.IsValid)
+            {
+                try
+                {
                     KhachHang kh = new KhachHang();
 
                     // Mapping
                     kh.user = khdto.user;
-                    kh.password = khdto.password;
+                    kh.password = BCrypt.Net.BCrypt.HashPassword(khdto.password);
                     kh.name = khdto.name;
                     kh.phone = khdto.phone;
                     kh.mail = khdto.mail;
                     kh.address = khdto.address;
                     kh.gender = khdto.gender;
                     kh.dateborn = khdto.dateborn;
-                    kh.status = khdto.status;
-                    kh.status = 0;
+                    kh.status = 1;
 
                     var KH = this.KhachHangRepository.KhachHang_Add(kh);
                     return Created("success", KH);
                 }
-                catch(Exception e) {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
+                catch (Exception e)
+                {
+                    return BadRequest(e);
                 }
             }
 
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            return BadRequest();
+        }
+
+        // login page
+        [HttpPost("login")]
+        public ActionResult<KhachHang> Login(LoginShopDto khdto)
+        {
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var kh = KhachHangRepository.KhachHang_GetByUser(khdto.user);
+
+                    if (kh == null)
+                    {
+                        return NotFound(new { message = "Tài khoản không tồn tại!" });
+                    }
+
+                    if (!BCrypt.Net.BCrypt.Verify(khdto.password, kh.password))
+                    {
+                        return BadRequest(new { message = "Mật khẩu không đúng!" });
+                    }
+
+                    var jwt = jwtKhachHang.Generate(kh.user);
+                    Response.Cookies.Append("jwt-khachhang", jwt, new CookieOptions
+                    {
+                        HttpOnly = true
+                    });
+
+                    return Ok(kh);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e);
+                }
+            }
+
+            return BadRequest();
         }
 
         [HttpPut("{user}")]
-        public ActionResult<KhachHang> UpdateKH([FromBody] KhachHangDto khdto, String user) {
-            if(ModelState.IsValid) {
-                try {
+        public ActionResult<KhachHang> UpdateKH([FromBody] KhachHangDto khdto, String user)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
                     var kh = KhachHangRepository.KhachHang_GetByUser(user);
 
-                    if(kh == null || khdto.user != user) {
+                    if (kh == null || khdto.user != user)
+                    {
                         return NotFound();
                     }
 
                     // Mapping
-                    kh.user = khdto.user;
+                    // kh.user = khdto.user;
                     kh.password = khdto.password;
                     kh.name = khdto.name;
                     kh.phone = khdto.phone;
@@ -98,17 +137,20 @@ namespace StoreApi.Controllers
                     var KH = this.KhachHangRepository.KhachHang_Update(kh);
                     return Created("success", KH);
                 }
-                catch(Exception e) {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
+                catch (Exception e)
+                {
+                    return BadRequest(e);
                 }
             }
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            return BadRequest();
         }
 
         [HttpDelete("{user}")]
-        public ActionResult DeleteKH(String user) {
+        public ActionResult DeleteKH(String user)
+        {
             var KH = KhachHangRepository.KhachHang_GetByUser(user);
-            if(KH == null) {
+            if (KH == null)
+            {
                 return NotFound();
             }
             KhachHangRepository.KhachHang_Delete(KH);
@@ -116,11 +158,13 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost("filter-admin")]
-        public ViewKhachHangAdminDto FilterAdmin(FilterDataAdminDto data) {
+        public ViewKhachHangAdminDto FilterAdmin(FilterDataAdminDto data)
+        {
             int count;
             var KhachHangs = KhachHangRepository.KhachHang_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
             var ListKH = new PaginatedList<KhachHang>(KhachHangs, count, data.pageIndex, pageSize);
-            ViewKhachHangAdminDto view = new ViewKhachHangAdminDto() {
+            ViewKhachHangAdminDto view = new ViewKhachHangAdminDto()
+            {
                 ListKH = ListKH,
                 search = data.search,
                 sort = data.sort,

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
+import { Link } from 'react-router-dom'
 import { actGetProductTypeHeader } from '../../../redux/actions/HeaderProductTypeAction'
 import CustomLinkShop from '../CustomLinkShop/CustomLinkShop'
 import HeaderControl from '../HeaderControl/HeaderControl'
@@ -9,7 +10,10 @@ import './Header.css'
 function Header() {
 
     const HeaderProductTypeReducer = useSelector(state => state.HeaderProductTypeReducer);
+    const UserKhachHangReducer = useSelector(state => state.UserKhachHangReducer)
+
     const [elmCustomLinks, setElmCustomLinks] = useState(null);
+    const [elmUser, setElmUser] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -20,23 +24,24 @@ function Header() {
     useEffect(() => {
         // console.log(HeaderProductTypeReducer);
         var result = null;
-        // var i = 0;
         if (HeaderProductTypeReducer.length > 0) {
             result = HeaderProductTypeReducer.map((loaiSanPham, index) => {
-                // ++i;
-                // if (i >= 5) {
-                //     return null;
-                // }
                 return <CustomLinkShop key={index} to={`/shop/${loaiSanPham.id}`}>{loaiSanPham.name}</CustomLinkShop>
             });
-
-            
         }
 
         setElmCustomLinks(result);
-        // var result = null;
-        // result = HeaderProductTypeReducer.
     }, [HeaderProductTypeReducer])
+
+    useEffect(() => {
+        setElmUser(<Link to='/login' className="login-panel"><i className="fa fa-user" />Đăng nhập</Link>);
+
+        if(UserKhachHangReducer.dataValue) {
+            setElmUser(<a className="login-panel"><i className="fa fa-user" />{UserKhachHangReducer.dataValue.name}</a>);
+        }
+
+        // console
+    }, [UserKhachHangReducer.dataValue])
 
     return (
         <header className="header-section">
@@ -53,7 +58,9 @@ function Header() {
                         </div>
                     </div>
                     <div className="ht-right">
-                        <a className="login-panel"><i className="fa fa-user" />Login</a>
+                        {/* <Link to='/login' className="login-panel"><i className="fa fa-user" />Đăng nhập</Link> */}
+                        {elmUser}
+                        
                         <div className="top-social">
                             <a href="https://www.facebook.com/thien926"><i className="ti-facebook" /></a>
                             <a ><i className="ti-twitter-alt" /></a>

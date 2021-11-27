@@ -105,7 +105,7 @@ function ProductsAdmin() {
             } else {
                 if (pageIndex < middle) {
                     if (pageIndex > range) {
-                        if(range % 2 == 0) {
+                        if(range % 2 === 0) {
                             pageMin = pageIndex - Math.floor(range / 2);
                             pageMax = pageIndex + Math.floor(range / 2);
                         }
@@ -122,7 +122,7 @@ function ProductsAdmin() {
                         pageMin = totalPage - range;
                         pageMax = totalPage;
                     } else {
-                        if(range % 2 == 0) {
+                        if(range % 2 === 0) {
                             pageMin = pageIndex - Math.floor(range / 2);
                             pageMax = pageIndex + Math.floor(range / 2);
                         }

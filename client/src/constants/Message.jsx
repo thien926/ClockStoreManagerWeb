@@ -38,3 +38,13 @@ export const DELETE_BRAND_SUCCESS = 'Xóa thương hiệu thành công!';
 export const ADD_BRAND_ERROR = 'Thêm thương hiệu thất bại!';
 export const UPDATE_BRAND_ERROR = 'Sửa thương hiệu thất bại!';
 export const DELETE_BRAND_ERROR = 'Xóa thương hiệu thất bại!';
+
+// User Khách hàng
+export const ACT_REGISTER_SUCCESS = 'Đăng ký thành công!';
+export const ACT_LOGIN_SUCCESS = 'Đăng nhập thành công!';
+export const ACT_LOGOUT_SUCCESS = 'Đăng xuất thành công!';
+export const ACT_REGISTER_ERROR = 'Đăng ký thất bại!';
+export const ACT_LOGIN_ERROR = 'Đăng nhập thất bại!';
+export const ACT_LOGOUT_ERROR = 'Đăng xuất thất bại!';
+export const ACT_LOGIN_USER_ERROR = 'Tài khoản không tồn tại!';
+export const ACT_LOGIN_PASSWORD_ERROR = 'Mật khẩu không đúng!';
