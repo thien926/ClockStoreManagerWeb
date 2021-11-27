@@ -17,6 +17,7 @@ import MachineAdmin from './pages/AdminPages/MachineAdmin/MachineAdmin';
 import WireAdmin from './pages/AdminPages/WireAdmin/WireAdmin';
 import NCCAdmin from './pages/AdminPages/NCCAdmin/NCCAdmin';
 import BrandAdmin from './pages/AdminPages/BrandAdmin/BrandAdmin';
+import Product from './pages/ShopPages/Product/Product';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/home' element={<Home />} />
         {/* <Route path='/shop' element={<Shop />} /> */}
         <Route path='/shop/:productId' element={<Shop />} />
+        <Route path='/product' element={<Product />} />
       </Route>
       <Route element={<AdminLayout />}>
         <Route path='/admin/account' element={<UserAdmin />} />

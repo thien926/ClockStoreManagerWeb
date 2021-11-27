@@ -1,7 +1,17 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 function HeaderControl() {
+
+    const [search, setSearch] = useState('');
+
+    const navigate = useNavigate();
+
+    const searchSubmit = (e) => {
+        e.preventDefault();
+        navigate('/shop/' + search);
+    }   
+
     return (
         <div className="row">
             <div className="col-lg-2 col-md-2">
@@ -13,9 +23,9 @@ function HeaderControl() {
             </div>
             <div className="col-lg-7 col-md-7">
                 <div className="advanced-search">
-                    <form action="#" className="input-group form-search-shop">
-                        <input type="text" className="input-search-shop" placeholder="Tên sản phẩm" />
-                        <button type="button"><i className="ti-search" /></button>
+                    <form onSubmit={searchSubmit} className="input-group form-search-shop">
+                        <input type="text" className="input-search-shop" placeholder="Tên sản phẩm" value={search} onChange={(e) => setSearch(e.target.value)}/>
+                        <button type="submit"><i className="ti-search" /></button>
                     </form>
                 </div>
             </div>

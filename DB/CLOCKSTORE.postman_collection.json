@@ -147,6 +147,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "FilterShop",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lspId\" : 4,\r\n    \"branchId\" : 1,\r\n    \"machineId\" : 1,\r\n    \"wireId\": 1,\r\n    \"priceFrom\" : 1000,\r\n    \"priceTo\": 5600000,\r\n    \"search\" : \"\",\r\n    \"sort\" : \"name-asc\",\r\n    \"pageIndex\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/sanpham/filter-shop",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sanpham",
+								"filter-shop"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

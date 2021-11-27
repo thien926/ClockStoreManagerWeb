@@ -1,297 +1,67 @@
 import React from "react";
-import '../../../../public/css/'
+import { Link } from "react-router-dom";
 
 function Product() {
   return (
     <div>
-      {/* Breadcrumb Section Begin */}
       <div className="breacrumb-section">
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcrumb-text product-more">
-                <a href="./home.html">
-                  <i className="fa fa-home" /> Home
-                </a>
-                <a href="./shop.html">Shop</a>
-                <span>Detail</span>
+                <Link to="/home">
+                  <i className="fa fa-home" /> Trang chủ
+                </Link>
+                <span>Chi tiết sản phẩm</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* Breadcrumb Section Begin */}
-      {/* Product Shop Section Begin */}
+
       <section className="product-shop spad page-details">
         <div className="container">
           <div className="row">
-            <div className="col-lg-3">
-              <div className="filter-widget">
-                <h4 className="fw-title">Categories</h4>
-                <ul className="filter-catagories">
-                  <li>
-                    <a href="#">Men</a>
-                  </li>
-                  <li>
-                    <a href="#">Women</a>
-                  </li>
-                  <li>
-                    <a href="#">Kids</a>
-                  </li>
-                </ul>
-              </div>
-              <div className="filter-widget">
-                <h4 className="fw-title">Brand</h4>
-                <div className="fw-brand-check">
-                  <div className="bc-item">
-                    <label htmlFor="bc-calvin">
-                      Calvin Klein
-                      <input type="checkbox" id="bc-calvin" />
-                      <span className="checkmark" />
-                    </label>
-                  </div>
-                  <div className="bc-item">
-                    <label htmlFor="bc-diesel">
-                      Diesel
-                      <input type="checkbox" id="bc-diesel" />
-                      <span className="checkmark" />
-                    </label>
-                  </div>
-                  <div className="bc-item">
-                    <label htmlFor="bc-polo">
-                      Polo
-                      <input type="checkbox" id="bc-polo" />
-                      <span className="checkmark" />
-                    </label>
-                  </div>
-                  <div className="bc-item">
-                    <label htmlFor="bc-tommy">
-                      Tommy Hilfiger
-                      <input type="checkbox" id="bc-tommy" />
-                      <span className="checkmark" />
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="filter-widget">
-                <h4 className="fw-title">Price</h4>
-                <div className="filter-range-wrap">
-                  <div className="range-slider">
-                    <div className="price-input">
-                      <input type="text" id="minamount" />
-                      <input type="text" id="maxamount" />
-                    </div>
-                  </div>
-                  <div
-                    className="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                    data-min={33}
-                    data-max={98}
-                  >
-                    <div className="ui-slider-range ui-corner-all ui-widget-header" />
-                    <span
-                      tabIndex={0}
-                      className="ui-slider-handle ui-corner-all ui-state-default"
-                    />
-                    <span
-                      tabIndex={0}
-                      className="ui-slider-handle ui-corner-all ui-state-default"
-                    />
-                  </div>
-                </div>
-                <a href="#" className="filter-btn">
-                  Filter
-                </a>
-              </div>
-              <div className="filter-widget">
-                <h4 className="fw-title">Color</h4>
-                <div className="fw-color-choose">
-                  <div className="cs-item">
-                    <input type="radio" id="cs-black" />
-                    <label className="cs-black" htmlFor="cs-black">
-                      Black
-                    </label>
-                  </div>
-                  <div className="cs-item">
-                    <input type="radio" id="cs-violet" />
-                    <label className="cs-violet" htmlFor="cs-violet">
-                      Violet
-                    </label>
-                  </div>
-                  <div className="cs-item">
-                    <input type="radio" id="cs-blue" />
-                    <label className="cs-blue" htmlFor="cs-blue">
-                      Blue
-                    </label>
-                  </div>
-                  <div className="cs-item">
-                    <input type="radio" id="cs-yellow" />
-                    <label className="cs-yellow" htmlFor="cs-yellow">
-                      Yellow
-                    </label>
-                  </div>
-                  <div className="cs-item">
-                    <input type="radio" id="cs-red" />
-                    <label className="cs-red" htmlFor="cs-red">
-                      Red
-                    </label>
-                  </div>
-                  <div className="cs-item">
-                    <input type="radio" id="cs-green" />
-                    <label className="cs-green" htmlFor="cs-green">
-                      Green
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="filter-widget">
-                <h4 className="fw-title">Size</h4>
-                <div className="fw-size-choose">
-                  <div className="sc-item">
-                    <input type="radio" id="s-size" />
-                    <label htmlFor="s-size">s</label>
-                  </div>
-                  <div className="sc-item">
-                    <input type="radio" id="m-size" />
-                    <label htmlFor="m-size">m</label>
-                  </div>
-                  <div className="sc-item">
-                    <input type="radio" id="l-size" />
-                    <label htmlFor="l-size">l</label>
-                  </div>
-                  <div className="sc-item">
-                    <input type="radio" id="xs-size" />
-                    <label htmlFor="xs-size">xs</label>
-                  </div>
-                </div>
-              </div>
-              <div className="filter-widget">
-                <h4 className="fw-title">Tags</h4>
-                <div className="fw-tags">
-                  <a href="#">Towel</a>
-                  <a href="#">Shoes</a>
-                  <a href="#">Coat</a>
-                  <a href="#">Dresses</a>
-                  <a href="#">Trousers</a>
-                  <a href="#">Men's hats</a>
-                  <a href="#">Backpack</a>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-9">
+
+            <div className="col-lg-12">
               <div className="row">
                 <div className="col-lg-6">
                   <div className="product-pic-zoom">
                     <img
                       className="product-big-img"
                       src="img/product-single/product-1.jpg"
-                      alt
                     />
-                    <div className="zoom-icon">
-                      <i className="fa fa-search-plus" />
-                    </div>
                   </div>
-                  <div className="product-thumbs">
-                    <div className="product-thumbs-track ps-slider owl-carousel">
-                      <div
-                        className="pt active"
-                        data-imgbigurl="img/product-single/product-1.jpg"
-                      >
-                        <img src="img/product-single/product-1.jpg" alt />
-                      </div>
-                      <div
-                        className="pt"
-                        data-imgbigurl="img/product-single/product-2.jpg"
-                      >
-                        <img src="img/product-single/product-2.jpg" alt />
-                      </div>
-                      <div
-                        className="pt"
-                        data-imgbigurl="img/product-single/product-3.jpg"
-                      >
-                        <img src="img/product-single/product-3.jpg" alt />
-                      </div>
-                      <div
-                        className="pt"
-                        data-imgbigurl="img/product-single/product-3.jpg"
-                      >
-                        <img src="img/product-single/product-3.jpg" alt />
-                      </div>
-                    </div>
-                  </div>
+
                 </div>
                 <div className="col-lg-6">
-                  <div className="product-details">
+                  <div className="product-details mt-3">
                     <div className="pd-title">
-                      <span>oranges</span>
-                      <h3>Pure Pineapple</h3>
-                      <a href="#" className="heart-icon">
-                        <i className="icon_heart_alt" />
-                      </a>
-                    </div>
-                    <div className="pd-rating">
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star" />
-                      <i className="fa fa-star-o" />
-                      <span>(5)</span>
+                      <h3>Đồng hồ nam chính hãng LOBINNI L3603-4</h3>
                     </div>
                     <div className="pd-desc">
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur ing elit, sed do
-                        eiusmod tempor sum dolor sit amet, consectetur
-                        adipisicing elit, sed do mod tempor
-                      </p>
                       <h4>
-                        $495.00 <span>629.99</span>
+                        2680000đ
                       </h4>
                     </div>
-                    <div className="pd-color">
-                      <h6>Color</h6>
-                      <div className="pd-color-choose">
-                        <div className="cc-item">
-                          <input type="radio" id="cc-black" />
-                          <label htmlFor="cc-black" />
-                        </div>
-                        <div className="cc-item">
-                          <input type="radio" id="cc-yellow" />
-                          <label htmlFor="cc-yellow" className="cc-yellow" />
-                        </div>
-                        <div className="cc-item">
-                          <input type="radio" id="cc-violet" />
-                          <label htmlFor="cc-violet" className="cc-violet" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="pd-size-choose">
-                      <div className="sc-item">
-                        <input type="radio" id="sm-size" />
-                        <label htmlFor="sm-size">s</label>
-                      </div>
-                      <div className="sc-item">
-                        <input type="radio" id="md-size" />
-                        <label htmlFor="md-size">m</label>
-                      </div>
-                      <div className="sc-item">
-                        <input type="radio" id="lg-size" />
-                        <label htmlFor="lg-size">l</label>
-                      </div>
-                      <div className="sc-item">
-                        <input type="radio" id="xl-size" />
-                        <label htmlFor="xl-size">xs</label>
-                      </div>
-                    </div>
+
                     <div className="quantity">
+                      <button type="button" className="btn btn-info mr-3">
+                        <i className="fa fa-minus" />
+                      </button>
                       <div className="pro-qty">
                         <input type="text" defaultValue={1} />
                       </div>
-                      <a href="#" className="primary-btn pd-cart">
-                        Add To Cart
-                      </a>
+                      <button type="button" className="btn btn-info">
+                        <i className="fa fa-plus" />
+                      </button>
                     </div>
-                    <ul className="pd-tags">
+                    <button className="primary-btn pd-cart">
+                      Thêm sản phẩm
+                    </button>
+                    <ul className="pd-tags mt-4">
                       <li>
-                        <span>CATEGORIES</span>: More Accessories, Wallets &amp;
+                        <span>Thương hiệu</span>: More Accessories, Wallets &amp;
                         Cases
                       </li>
                       <li>
