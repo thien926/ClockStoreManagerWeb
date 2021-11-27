@@ -177,6 +177,49 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "FilterHomePage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/sanpham/home-page",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sanpham",
+								"home-page"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetProductDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/sanpham/product/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sanpham",
+								"product",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

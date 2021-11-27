@@ -26,8 +26,8 @@ function App() {
       <Route element={<ShopLayout />}>
         <Route path='/home' element={<Home />} />
         {/* <Route path='/shop' element={<Shop />} /> */}
-        <Route path='/shop/:productId' element={<Shop />} />
-        <Route path='/product' element={<Product />} />
+        <Route path='/shop/:productTypeId' element={<Shop />} />
+        <Route path='/product/:productId' element={<Product />} />
       </Route>
       <Route element={<AdminLayout />}>
         <Route path='/admin/account' element={<UserAdmin />} />
