@@ -132,6 +132,7 @@ namespace StoreApi.Controllers
             return view;
         }
 
+        // shop page
         [HttpPost("filter-shop")]
         public ViewProductsShopDto FilterShop(FilterProductsShopDto data) {
             int count;
@@ -160,6 +161,8 @@ namespace StoreApi.Controllers
             return view;
         }
 
+
+        // home page
         [HttpGet("home-page")]
         public List<ListSPHomePage> FilterHomePage() {
             var LSP = loaiSanPhamRepository.LoaiSanPham_GetAll();
@@ -172,6 +175,18 @@ namespace StoreApi.Controllers
                 viewHomePage.Add(newListHomePage);
             }
             return viewHomePage;
+        }
+
+        // product page
+        [HttpGet("product/{id}")]
+        public ActionResult<SanPham> GetProductDetail(int id) {
+            var sanpham = this.sanPhamRepository.SanPham_GetById(id);
+            var LSP = loaiSanPhamRepository.LoaiSanPham_GetById(sanpham.LSPId);
+            var TH = thuongHieuRepository.ThuongHieu_GetById(sanpham.brandId);
+            var KM = kieuMayRepository.KieuMay_GetById(sanpham.machineId);
+            var KD = kieuDayRepository.KieuDay_GetById(sanpham.wireId);
+
+            return sanpham;
         }
     }
 }
