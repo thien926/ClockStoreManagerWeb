@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function CustomAdmin() {
     return (
@@ -84,8 +85,19 @@ function CustomAdmin() {
                 </table>
             </div>
 
+            <div className='class-phan-trang'>
+                <Link className='btn btn-default' to='1'><i className="fa fa-angle-double-left" aria-hidden="true" /></Link>
+                <Link className='btn btn-default' to='1'><i className="fa fa-angle-left" aria-hidden="true" /></Link>
 
-            <div className="row mt-3">
+                <Link className='btn btn-info' to='1'>1</Link>
+                <Link className='btn btn-default' to='2'>2</Link>
+
+                <Link className='btn btn-default' to='1'><i className="fa fa-angle-right" aria-hidden="true" /></Link>
+                <Link className='btn btn-default' to='1'><i className="fa fa-angle-double-right" aria-hidden="true" /></Link>
+                
+            </div>
+
+            <div className="row mt-3 ml-3 mr-3">
                 <div>
                     <h3 className="text-center mt-2">Sửa khách hàng</h3>
                     <hr />
@@ -105,12 +117,12 @@ function CustomAdmin() {
 
                             </td>
                         </tr>
-                        <tr>
-                            <td colSpan="2"><button type="submit" className="btn btn-primary mt-4 btn-submit-product-admin">Thêm</button></td>
-                        </tr>
-
                     </tbody>
                 </table>
+                <div className="mb-3">
+                    <button type="button" className="btn btn-primary mr-2">Sửa</button>
+                    <button type="button" className="btn btn-danger mr-2">Hủy</button>
+                </div>
             </div>
 
         </div>

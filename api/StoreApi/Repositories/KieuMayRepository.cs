@@ -59,14 +59,18 @@ namespace StoreApi.Repositories
                                     break;
                     case "name-desc": query = query.OrderByDescending(m => m.name);
                                     break;
+                    case "id-asc": query = query.OrderBy(m => m.Id);
+                                    break;
+                    case "id-desc": query = query.OrderByDescending(m => m.Id);
+                                    break;
                     default: break;
                 }
             }
 
             int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-            if(pageIndex > TotalPages){
-                pageIndex = TotalPages;
-            }
+            // if(pageIndex > TotalPages){
+            //     pageIndex = TotalPages;
+            // }
             if(pageIndex < 1){
                 pageIndex = 1;
             }

@@ -1,10 +1,180 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Category from "../../../components/ShopComponents/ShopPageComponent/Category";
+import ProductItem from "../../../components/ShopComponents/ShopPageComponent/ProductItem";
+import ResultSearch from "../../../components/ShopComponents/ShopPageComponent/ResultSearch";
+import ShopPaging from "../../../components/ShopComponents/ShopPageComponent/ShopPaging";
+import Sort from "../../../components/ShopComponents/ShopPageComponent/Sort";
+import { actGetProductShopPage } from "../../../redux/actions/ShopPageAction";
+
+import './Shop.css'
 
 function Shop(props) {
-  // let match = useMatch();
 
-  console.log("Param: ", useLocation());
+  const HeaderProductTypeReducer = useSelector(state => state.HeaderProductTypeReducer);
+  const ShopPageReducer = useSelector(state => state.ShopPageReducer);
+
+  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState('name-asc');
+  const [pageIndex, setPageIndex] = useState(1);
+  const [lspId, setLspId] = useState('');
+  const [branchId, setBranchId] = useState('');
+  const [machineId, setMachineId] = useState('');
+  const [wireId, setWireId] = useState('');
+  const [priceFrom, setPriceFrom] = useState('');
+  const [priceTo, setPriceTo] = useState('');
+
+  const [elmsProductList, setElmsProductList] = useState(null);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const utf8_from_str = (s) => {
+    var temp = decodeURIComponent(s);
+    temp = temp.split("+");
+    temp = temp.join(" ");
+    return temp;
+  }
+
+  useEffect(() => {
+    setSearch('');
+    setSort('name-asc');
+    setPageIndex(1);
+    setLspId('');
+    setBranchId('');
+    setMachineId('');
+    setWireId('');
+    setPriceFrom('');
+    setPriceTo('');
+
+    // console.log("location:", location);
+    let IDLSP = parseInt(location.pathname.replace("/shop/", ""));
+    if (IDLSP) {
+      setLspId(IDLSP);
+      setSearch('');
+      if (HeaderProductTypeReducer.length > 0) {
+        let temp = false;
+        for (let index = 0; index < HeaderProductTypeReducer.length; index++) {
+          if (HeaderProductTypeReducer[index].id === IDLSP) {
+            temp = true;
+            break;
+          }
+        }
+        if (!temp) {
+          navigate('/notfound');
+        }
+      }
+    }
+    else {
+      // console.log(utf8_from_str(location.pathname.replace("/shop/", "")));
+      setLspId('');
+      setSearch(utf8_from_str(location.pathname.replace("/shop/", "")));
+    }
+
+    var { search } = location;
+
+    if (search !== "") {
+      var dauHoi = search.split('?');
+      var dauVa = dauHoi[dauHoi.length - 1].split('&');
+      var dauBang, value;
+      for (let i = 0; i < dauVa.length; ++i) {
+        dauBang = dauVa[i].split('=');
+        switch (dauBang[0]) {
+          case "sort":
+            setSort(dauBang[1]);
+            break;
+          case "pageIndex":
+            value = parseInt(dauBang[1]);
+            if (value) {
+              setPageIndex(value);
+            }
+            break;
+          case "branchId":
+            value = parseInt(dauBang[1]);
+            if (value) {
+              setBranchId(value);
+            }
+            break;
+          case "machineId":
+            value = parseInt(dauBang[1]);
+            if (value) {
+              setMachineId(value);
+            }
+            break;
+          case "wireId":
+            value = parseInt(dauBang[1]);
+            if (value) {
+              setWireId(value);
+            }
+            break;
+          case "price":
+            value = dauBang[1].split("-");
+            let from, to;
+            if (value.length >= 2) {
+              from = parseInt(value[0]);
+              to = parseInt(value[1]);
+
+              if (from) {
+                setPriceFrom(from);
+              }
+
+              if (to) {
+                setPriceTo(to);
+              }
+            }
+            else {
+              value = parseInt(dauBang[1]);
+              if (value) {
+                setPriceFrom(value);
+              }
+              else {
+                setPriceFrom(1);
+              }
+            }
+            break;
+          // case "search":
+          //   setSearch(utf8_from_str(dauBang[1]));
+          //   break;
+          default:
+            break;
+        }
+      }
+    }
+  }, [location, HeaderProductTypeReducer, navigate])
+
+  useEffect(() => {
+    var data = {
+      lspId: ((lspId === '') ? -1 : lspId),
+      branchId: ((branchId === '') ? -1 : branchId),
+      machineId: ((machineId === '') ? -1 : machineId),
+      wireId: ((wireId === '') ? -1 : wireId),
+      priceFrom: ((priceFrom === '') ? -1 : priceFrom),
+      priceTo: ((priceTo === '') ? -1 : priceTo),
+      search: search,
+      sort: sort,
+      pageIndex: pageIndex
+    }
+    dispatch(actGetProductShopPage(data));
+    console.log("dataSearch:", data)
+
+  }, [lspId, branchId, wireId, machineId, search, sort, pageIndex, priceFrom, priceTo, dispatch])
+
+  useEffect(() => {
+    // console.log(ShopPageReducer.products);
+    var result = null;
+    if (ShopPageReducer.products.listSP && ShopPageReducer.products.listSP.length > 0) {
+      result = ShopPageReducer.products.listSP.map((item, index) => {
+        return <ProductItem key={index} product={item} />
+      })
+    }
+    setElmsProductList(result);
+  }, [ShopPageReducer.products])
+
+  // const changeSort = (value) => {
+  //   navigate(value);
+  // }
 
   return (
     <div>
@@ -13,8 +183,8 @@ function Shop(props) {
           <div className="row">
             <div className="col-lg-12">
               <div className="breadcrumb-text">
-                <a href="#"><i className="fa fa-home" /> Home</a>
-                <span>Shop</span>
+                <Link to='/home'><i className="fa fa-home" /> Trang chủ</Link>
+                <span>Cửa hàng</span>
               </div>
             </div>
           </div>
@@ -23,399 +193,28 @@ function Shop(props) {
       <section className="product-shop spad">
         <div className="container">
           <div className="row">
-            <div className="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
-              <div className="filter-widget">
-                <h4 className="fw-title">Categories</h4>
-                <ul className="filter-catagories">
-                  <li><a href="#">Men</a></li>
-                  <li><a href="#">Women</a></li>
-                  <li><a href="#">Kids</a></li>
-                </ul>
-              </div>
-              <div className="filter-widget">
-                <h4 className="fw-title">Brand</h4>
-                <div className="fw-brand-check">
-                  <div className="bc-item">
-                    <label htmlFor="bc-calvin">
-                      Calvin Klein
-                      <input type="checkbox" id="bc-calvin" />
-                      <span className="checkmark" />
-                    </label>
-                  </div>
-                  <div className="bc-item">
-                    <label htmlFor="bc-diesel">
-                      Diesel
-                      <input type="checkbox" id="bc-diesel" />
-                      <span className="checkmark" />
-                    </label>
-                  </div>
-                  <div className="bc-item">
-                    <label htmlFor="bc-polo">
-                      Polo
-                      <input type="checkbox" id="bc-polo" />
-                      <span className="checkmark" />
-                    </label>
-                  </div>
-                  <div className="bc-item">
-                    <label htmlFor="bc-tommy">
-                      Tommy Hilfiger
-                      <input type="checkbox" id="bc-tommy" />
-                      <span className="checkmark" />
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="filter-widget">
-                <h4 className="fw-title">Price</h4>
-                <div className="filter-range-wrap">
-                  <div className="range-slider">
-                    <div className="price-input">
-                      <input type="text" id="minamount" />
-                      <input type="text" id="maxamount" />
-                    </div>
-                  </div>
-                  <div className="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min={33} data-max={98}>
-                    <div className="ui-slider-range ui-corner-all ui-widget-header" />
-                    <span tabIndex={0} className="ui-slider-handle ui-corner-all ui-state-default" />
-                    <span tabIndex={0} className="ui-slider-handle ui-corner-all ui-state-default" />
-                  </div>
-                </div>
-                <a href="#" className="filter-btn">Filter</a>
-              </div>
-              <div className="filter-widget">
-                <h4 className="fw-title">Color</h4>
-                <div className="fw-color-choose">
-                  <div className="cs-item">
-                    <input type="radio" id="cs-black" />
-                    <label className="cs-black" htmlFor="cs-black">Black</label>
-                  </div>
-                  <div className="cs-item">
-                    <input type="radio" id="cs-violet" />
-                    <label className="cs-violet" htmlFor="cs-violet">Violet</label>
-                  </div>
-                  <div className="cs-item">
-                    <input type="radio" id="cs-blue" />
-                    <label className="cs-blue" htmlFor="cs-blue">Blue</label>
-                  </div>
-                  <div className="cs-item">
-                    <input type="radio" id="cs-yellow" />
-                    <label className="cs-yellow" htmlFor="cs-yellow">Yellow</label>
-                  </div>
-                  <div className="cs-item">
-                    <input type="radio" id="cs-red" />
-                    <label className="cs-red" htmlFor="cs-red">Red</label>
-                  </div>
-                  <div className="cs-item">
-                    <input type="radio" id="cs-green" />
-                    <label className="cs-green" htmlFor="cs-green">Green</label>
-                  </div>
-                </div>
-              </div>
-              <div className="filter-widget">
-                <h4 className="fw-title">Size</h4>
-                <div className="fw-size-choose">
-                  <div className="sc-item">
-                    <input type="radio" id="s-size" />
-                    <label htmlFor="s-size">s</label>
-                  </div>
-                  <div className="sc-item">
-                    <input type="radio" id="m-size" />
-                    <label htmlFor="m-size">m</label>
-                  </div>
-                  <div className="sc-item">
-                    <input type="radio" id="l-size" />
-                    <label htmlFor="l-size">l</label>
-                  </div>
-                  <div className="sc-item">
-                    <input type="radio" id="xs-size" />
-                    <label htmlFor="xs-size">xs</label>
-                  </div>
-                </div>
-              </div>
-              <div className="filter-widget">
-                <h4 className="fw-title">Tags</h4>
-                <div className="fw-tags">
-                  <a href="#">Towel </a>
-                  <a href="#">Shoes</a>
-                  <a href="#">Coat</a>
-                  <a href="#">Dresses</a>
-                  <a href="#">Trousers</a>
-                  <a href="#">Men's hats</a>
-                  <a href="#">Backpack</a>
-                </div>
-              </div>
-            </div>
+
+            <Category products={ShopPageReducer.products}/>
+
             <div className="col-lg-9 order-1 order-lg-2">
               <div className="product-show-option">
                 <div className="row">
-                  <div className="filter-widget">
-                    <h4 className="fw-title">Kết quả tìm kiếm</h4>
-                    <div className="fw-tags">
-                      <a href="#">Towel </a>
-                      <a href="#">Shoes</a>
-                      <a href="#">Coat</a>
-                      <a href="#">Dresses</a>
-                      <a href="#">Trousers</a>
-                      <a href="#">Men's hats</a>
-                      <a href="#">Backpack</a>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-7 col-md-7">
 
-                    <div className="select-option">
-                      <select className="sorting">
-                        <option value>Default Sorting</option>
-                      </select>
-                      <select className="p-show">
-                        <option value>Show:</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-lg-5 col-md-5 text-right">
-                    <p>Show 01- 09 Of 36 Product</p>
-                  </div>
+                  <ResultSearch products={ShopPageReducer.products} />
 
                 </div>
+
+                <Sort products={ShopPageReducer.products}/>
+
               </div>
               <div className="product-list">
                 <div className="row">
-                  <div className="col-lg-4 col-sm-6">
-                    <div className="product-item">
-                      <div className="pi-pic">
-                        <img src="/img/products/product-1.jpg" />
-                        <div className="sale pp-sale">Sale</div>
-                        <div className="icon">
-                          <i className="icon_heart_alt" />
-                        </div>
-                        <ul>
-                          <li className="w-icon active"><a href="#"><i className="icon_bag_alt" /></a></li>
-                          <li className="quick-view"><a href="#">+ Quick View</a></li>
-                          <li className="w-icon"><a href="#"><i className="fa fa-random" /></a></li>
-                        </ul>
-                      </div>
-                      <div className="pi-text">
-                        <div className="catagory-name">Towel</div>
-                        <a href="#">
-                          <h5>Pure Pineapple</h5>
-                        </a>
-                        <div className="product-price">
-                          $14.00
-                          <span>$35.00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-sm-6">
-                    <div className="product-item">
-                      <div className="pi-pic">
-                        <img src="/img/products/product-2.jpg" />
-                        <div className="icon">
-                          <i className="icon_heart_alt" />
-                        </div>
-                        <ul>
-                          <li className="w-icon active"><a href="#"><i className="icon_bag_alt" /></a></li>
-                          <li className="quick-view"><a href="#">+ Quick View</a></li>
-                          <li className="w-icon"><a href="#"><i className="fa fa-random" /></a></li>
-                        </ul>
-                      </div>
-                      <div className="pi-text">
-                        <div className="catagory-name">Coat</div>
-                        <a href="#">
-                          <h5>Guangzhou sweater</h5>
-                        </a>
-                        <div className="product-price">
-                          $13.00
-                          <span>$35.00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-sm-6">
-                    <div className="product-item">
-                      <div className="pi-pic">
-                        <img src="/img/products/product-3.jpg" />
-                        <div className="icon">
-                          <i className="icon_heart_alt" />
-                        </div>
-                        <ul>
-                          <li className="w-icon active"><a href="#"><i className="icon_bag_alt" /></a></li>
-                          <li className="quick-view"><a href="#">+ Quick View</a></li>
-                          <li className="w-icon"><a href="#"><i className="fa fa-random" /></a></li>
-                        </ul>
-                      </div>
-                      <div className="pi-text">
-                        <div className="catagory-name">Shoes</div>
-                        <a href="#">
-                          <h5>Guangzhou sweater</h5>
-                        </a>
-                        <div className="product-price">
-                          $34.00
-                          <span>$35.00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-sm-6">
-                    <div className="product-item">
-                      <div className="pi-pic">
-                        <img src="/img/products/product-4.jpg" />
-                        <div className="icon">
-                          <i className="icon_heart_alt" />
-                        </div>
-                        <ul>
-                          <li className="w-icon active"><a href="#"><i className="icon_bag_alt" /></a></li>
-                          <li className="quick-view"><a href="#">+ Quick View</a></li>
-                          <li className="w-icon"><a href="#"><i className="fa fa-random" /></a></li>
-                        </ul>
-                      </div>
-                      <div className="pi-text">
-                        <div className="catagory-name">Coat</div>
-                        <a href="#">
-                          <h5>Microfiber Wool Scarf</h5>
-                        </a>
-                        <div className="product-price">
-                          $64.00
-                          <span>$35.00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-sm-6">
-                    <div className="product-item">
-                      <div className="pi-pic">
-                        <img src="/img/products/product-5.jpg" />
-                        <div className="icon">
-                          <i className="icon_heart_alt" />
-                        </div>
-                        <ul>
-                          <li className="w-icon active"><a href="#"><i className="icon_bag_alt" /></a></li>
-                          <li className="quick-view"><a href="#">+ Quick View</a></li>
-                          <li className="w-icon"><a href="#"><i className="fa fa-random" /></a></li>
-                        </ul>
-                      </div>
-                      <div className="pi-text">
-                        <div className="catagory-name">Shoes</div>
-                        <a href="#">
-                          <h5>Men's Painted Hat</h5>
-                        </a>
-                        <div className="product-price">
-                          $44.00
-                          <span>$35.00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-sm-6">
-                    <div className="product-item">
-                      <div className="pi-pic">
-                        <img src="/img/products/product-6.jpg" />
-                        <div className="icon">
-                          <i className="icon_heart_alt" />
-                        </div>
-                        <ul>
-                          <li className="w-icon active"><a href="#"><i className="icon_bag_alt" /></a></li>
-                          <li className="quick-view"><a href="#">+ Quick View</a></li>
-                          <li className="w-icon"><a href="#"><i className="fa fa-random" /></a></li>
-                        </ul>
-                      </div>
-                      <div className="pi-text">
-                        <div className="catagory-name">Shoes</div>
-                        <a href="#">
-                          <h5>Converse Shoes</h5>
-                        </a>
-                        <div className="product-price">
-                          $34.00
-                          <span>$35.00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-sm-6">
-                    <div className="product-item">
-                      <div className="pi-pic">
-                        <img src="/img/products/product-7.jpg" />
-                        <div className="sale pp-sale">Sale</div>
-                        <div className="icon">
-                          <i className="icon_heart_alt" />
-                        </div>
-                        <ul>
-                          <li className="w-icon active"><a href="#"><i className="icon_bag_alt" /></a></li>
-                          <li className="quick-view"><a href="#">+ Quick View</a></li>
-                          <li className="w-icon"><a href="#"><i className="fa fa-random" /></a></li>
-                        </ul>
-                      </div>
-                      <div className="pi-text">
-                        <div className="catagory-name">Towel</div>
-                        <a href="#">
-                          <h5>Pure Pineapple</h5>
-                        </a>
-                        <div className="product-price">
-                          $64.00
-                          <span>$35.00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-sm-6">
-                    <div className="product-item">
-                      <div className="pi-pic">
-                        <img src="/img/products/product-8.jpg" />
-                        <div className="icon">
-                          <i className="icon_heart_alt" />
-                        </div>
-                        <ul>
-                          <li className="w-icon active"><a href="#"><i className="icon_bag_alt" /></a></li>
-                          <li className="quick-view"><a href="#">+ Quick View</a></li>
-                          <li className="w-icon"><a href="#"><i className="fa fa-random" /></a></li>
-                        </ul>
-                      </div>
-                      <div className="pi-text">
-                        <div className="catagory-name">Coat</div>
-                        <a href="#">
-                          <h5>2 Layer Windbreaker</h5>
-                        </a>
-                        <div className="product-price">
-                          $44.00
-                          <span>$35.00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 col-sm-6">
-                    <div className="product-item">
-                      <div className="pi-pic">
-                        <img src="/img/products/product-9.jpg" />
-                        <div className="icon">
-                          <i className="icon_heart_alt" />
-                        </div>
-                        <ul>
-                          <li className="w-icon active"><a href="#"><i className="icon_bag_alt" /></a></li>
-                          <li className="quick-view"><a href="#">+ Quick View</a></li>
-                          <li className="w-icon"><a href="#"><i className="fa fa-random" /></a></li>
-                        </ul>
-                      </div>
-                      <div className="pi-text">
-                        <div className="catagory-name">Shoes</div>
-                        <a href="#">
-                          <h5>Converse Shoes</h5>
-                        </a>
-                        <div className="product-price">
-                          $34.00
-                          <span>$35.00</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  {elmsProductList}
                 </div>
               </div>
-              <div className="loading-more">
-                <i className="icon_loading" />
-                <a href="#">
-                  Loading More
-                </a>
-              </div>
+
+              <ShopPaging products={ShopPageReducer.products} />
+
             </div>
           </div>
         </div>
