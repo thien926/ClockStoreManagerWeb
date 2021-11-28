@@ -118,7 +118,7 @@ export const actGetCurrentUserKhachHang = (data) => (dispatch) => {
 }
 
 export const actLogoutKhachHang = () => (dispatch) => {
-    axios.post(
+    axios.get(
         `${API_URL}khachhang/logout`,
         {
             header: {

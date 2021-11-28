@@ -179,11 +179,11 @@ namespace StoreApi.Controllers
             }
         }
 
-        [HttpPost("logout")]
+        [HttpGet("logout")]
         public ActionResult Logout()
-        {  
+        {
             Response.Cookies.Delete("jwt-khachhang");
-            
+
             return Ok();
         }
 
