@@ -53,7 +53,7 @@ function Header() {
                 <div className="ht-right">
                     <a className="login-panel" onClick={clickLogout}><i className="fa fa-user" />Đăng xuất</a>
                     <div className="top-social">
-                        <a className="ml-3">{UserKhachHangReducer.dataValue.name}</a>
+                        <Link to='/user' className="ml-3">{UserKhachHangReducer.dataValue.name}</Link>
                     </div>
                 </div>
             );

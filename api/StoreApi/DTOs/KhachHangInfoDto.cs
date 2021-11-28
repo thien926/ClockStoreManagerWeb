@@ -4,20 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace StoreApi.Models
+namespace StoreApi.DTOs
 {
-    public class KhachHang
+    public class KhachHangInfoDto
     {
-        // public int Id { get; set; }
-        [Key]
         [Required(ErrorMessage = "Tài khoản bắt buộc")]
         [StringLength(maximumLength:25, MinimumLength = 3, ErrorMessage = "Tài khoản từ 3 đến 25 kí tự")]
         [RegularExpression(pattern: @"^[a-zA-Z][\w]{1,}", ErrorMessage="Tài khoản phải bắt đầu bằng chữ")]
         public string user{get; set;}
-
-        [Required(ErrorMessage = "Mật khẩu là bắt buộc")]
-        // [StringLength(maximumLength:25, MinimumLength = 4, ErrorMessage = "Mật khẩu từ 4 đến 25 kí tự")]
-        public string password{get; set;}
 
         [Required(ErrorMessage = "Họ tên là bắt buộc")]
         [StringLength(maximumLength:100, MinimumLength = 4, ErrorMessage = "Họ tên từ 4 đến 100 kí tự")]
@@ -42,18 +36,7 @@ namespace StoreApi.Models
 
         [Required(ErrorMessage = "Ngày sinh là bắt buộc")]
         [DataType(DataType.Date)]
-        public DateTime dateborn{get; set;}
+        public DateTime dateborn {get; set;}
 
-        [Required(ErrorMessage = "Trạng thái là bắt buộc")]
-        [RegularExpression(pattern: "^(1|0)$", ErrorMessage="Trạng thái là 1 hoặc 0")]
-        public int status{get; set;}
-        
-        public ICollection<HoaDon> hoadons {get; set;}
-
-        public KhachHang()
-        {
-            status = 1;
-            this.hoadons = new HashSet<HoaDon>();
-        }
     }
 }

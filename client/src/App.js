@@ -20,6 +20,11 @@ import BrandAdmin from './pages/AdminPages/BrandAdmin/BrandAdmin';
 import Product from './pages/ShopPages/Product/Product';
 import Register from './pages/ShopPages/Register/Register';
 import Login from './pages/ShopPages/Login/Login';
+import User from './pages/ShopPages/User/User';
+import UserDetail from './components/ShopComponents/UserPageComponent/UserDetail';
+import UserUpdateInfo from './components/ShopComponents/UserPageComponent/UserUpdateInfo';
+import UserUpdatePassword from './components/ShopComponents/UserPageComponent/UserUpdatePassword';
+import UserOrder from './components/ShopComponents/UserPageComponent/UserOrder';
 
 function App() {
   return (
@@ -32,6 +37,14 @@ function App() {
         <Route path='/product/:productId' element={<Product />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
+
+        <Route path='/user' element={<Navigate to="/user/detail" />} />
+        <Route element={<User />}>
+          <Route path='/user/detail' element={<UserDetail />} />
+          <Route path='/user/update-info' element={<UserUpdateInfo />} />
+          <Route path='/user/update-pass' element={<UserUpdatePassword />} />
+          <Route path='/user/order' element={<UserOrder />} />
+        </Route>
       </Route>
       <Route element={<AdminLayout />}>
         <Route path='/admin/account' element={<UserAdmin />} />

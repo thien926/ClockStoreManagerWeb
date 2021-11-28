@@ -37,30 +37,78 @@ namespace StoreApi.Controllers
             return this.KhachHangRepository.KhachHang_GetByUser(user);
         }
 
-        [HttpPut("{user}")]
-        public ActionResult<KhachHang> UpdateKH([FromBody] KhachHangDto khdto, String user)
+        // Update User Page
+        [HttpPut("updateInfoKH")]
+        public ActionResult<KhachHang> UpdateInfoKH([FromBody] KhachHangInfoDto khdto)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
+                    // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
+                    var jwt = Request.Cookies["jwt-khachhang"];
+                    if(jwt == null) {
+                        return NotFound(new { messgae = "Khách hàng chưa đăng nhập tài khoản!"});
+                    }
+                    var token = jwtKhachHang.Verify(jwt);
+                    var user = token.Issuer;
                     var kh = KhachHangRepository.KhachHang_GetByUser(user);
 
                     if (kh == null || khdto.user != user)
                     {
-                        return NotFound();
+                        return NotFound(new { messgae = "Không tìm thấy tài khoản khách hàng!"});
                     }
 
-                    // Mapping
+                    // Mapping và sửa thông tin
                     // kh.user = khdto.user;
-                    kh.password = khdto.password;
                     kh.name = khdto.name;
                     kh.phone = khdto.phone;
                     kh.mail = khdto.mail;
                     kh.address = khdto.address;
                     kh.gender = khdto.gender;
                     kh.dateborn = khdto.dateborn;
-                    kh.status = khdto.status;
+
+                    var KH = this.KhachHangRepository.KhachHang_Update(kh);
+                    return Created("success", KH);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e);
+                }
+            }
+            return BadRequest();
+        }
+
+        // Update User Page
+        [HttpPut("updatePasswordKH")]
+        public ActionResult<KhachHang> UpdatePasswordKH([FromBody] KhachHangPasswordDto khdto)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
+                    var jwt = Request.Cookies["jwt-khachhang"];
+                    if(jwt == null) {
+                        return NotFound(new { messgae = "Khách hàng chưa đăng nhập tài khoản!"});
+                    }
+                    var token = jwtKhachHang.Verify(jwt);
+                    var user = token.Issuer;
+                    var kh = KhachHangRepository.KhachHang_GetByUser(user);
+
+                    if (kh == null || khdto.user != user)
+                    {
+                        return NotFound(new { messgae = "Không tìm thấy tài khoản khách hàng!"});
+                    }
+
+                    if (!BCrypt.Net.BCrypt.Verify(khdto.oldPassword, kh.password))
+                    {
+                        return BadRequest(new { message = "Mật khẩu không đúng!" });
+                    }
+
+                    // Mapping và sửa thông tin
+                    // kh.user = khdto.user;
+                    kh.password = BCrypt.Net.BCrypt.HashPassword(khdto.newPassword);
 
                     var KH = this.KhachHangRepository.KhachHang_Update(kh);
                     return Created("success", KH);
@@ -159,6 +207,7 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
+        // get user shop
         [HttpGet("usercurrent")]
         public ActionResult<KhachHang> UserCurrent()
         {
@@ -179,6 +228,7 @@ namespace StoreApi.Controllers
             }
         }
 
+        // logout shop
         [HttpGet("logout")]
         public ActionResult Logout()
         {
