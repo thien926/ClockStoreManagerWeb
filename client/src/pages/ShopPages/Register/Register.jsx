@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify';
-import { ACT_LOGOUT_ERROR, ACT_LOGOUT_SUCCESS, ACT_REGISTER_ERROR, ACT_REGISTER_SUCCESS } from '../../../constants/Message';
-import { actRegisterKhachHang, actResetMessageUserKhachHang, actResetMessageUserKhachHangserKhachHangactResetMessageUserKhachHang } from '../../../redux/actions/UserKhachHangAction';
+import { ACT_REGISTER_ERROR, ACT_REGISTER_SUCCESS } from '../../../constants/Message';
+import { actRegisterKhachHang, actResetMessageUserKhachHang } from '../../../redux/actions/UserKhachHangAction';
 import './Register.css'
 
 function Register() {
@@ -33,12 +33,10 @@ function Register() {
     useEffect(() => {
         switch (UserKhachHangReducer.message) {
             case ACT_REGISTER_SUCCESS:
-            case ACT_LOGOUT_SUCCESS:
                 toast.success(UserKhachHangReducer.message);
                 dispatch(actResetMessageUserKhachHang())
                 break;
             case ACT_REGISTER_ERROR:
-            case ACT_LOGOUT_ERROR:
                 toast.error(UserKhachHangReducer.message);
                 dispatch(actResetMessageUserKhachHang())
                 break;

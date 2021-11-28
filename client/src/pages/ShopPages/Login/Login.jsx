@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify';
-import { ACT_LOGIN_ERROR, ACT_LOGIN_PASSWORD_ERROR, ACT_LOGIN_SUCCESS, ACT_LOGIN_USER_ERROR, ACT_LOGOUT_ERROR, ACT_LOGOUT_SUCCESS } from '../../../constants/Message';
+import { ACT_LOGIN_ERROR, ACT_LOGIN_PASSWORD_ERROR, ACT_LOGIN_SUCCESS, ACT_LOGIN_USER_ERROR } from '../../../constants/Message';
 import { actLoginKhachHang, actResetMessageUserKhachHang } from '../../../redux/actions/UserKhachHangAction';
 
 function Login() {
@@ -19,13 +19,11 @@ function Login() {
     useEffect(() => {
         switch (UserKhachHangReducer.message) {
             case ACT_LOGIN_SUCCESS:
-            case ACT_LOGOUT_SUCCESS:
                 setUser('');
                 setPassword('');
                 toast.success(UserKhachHangReducer.message);
                 dispatch(actResetMessageUserKhachHang())
                 break;
-            case ACT_LOGOUT_ERROR:
             case ACT_LOGIN_ERROR:
             case ACT_LOGIN_PASSWORD_ERROR:
             case ACT_LOGIN_USER_ERROR:

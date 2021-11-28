@@ -26,7 +26,7 @@ function LoaiSanPhamHomePage(props) {
 
                 {showListSP()}
             </div>
-            <div class="owl-dots text-center" ><Link to={`/shop/${item.lsp.id}`} className="hoverNone">Xem thêm</Link></div>
+            <div className="owl-dots text-center" ><Link to={`/shop/${item.lsp.id}`} className="hoverNone">Xem thêm</Link></div>
         </div>
     )
 }

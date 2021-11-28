@@ -37,6 +37,56 @@ namespace StoreApi.Controllers
             return this.KhachHangRepository.KhachHang_GetByUser(user);
         }
 
+        [HttpPut("{user}")]
+        public ActionResult<KhachHang> UpdateKH([FromBody] KhachHangDto khdto, String user)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var kh = KhachHangRepository.KhachHang_GetByUser(user);
+
+                    if (kh == null || khdto.user != user)
+                    {
+                        return NotFound();
+                    }
+
+                    // Mapping
+                    // kh.user = khdto.user;
+                    kh.password = khdto.password;
+                    kh.name = khdto.name;
+                    kh.phone = khdto.phone;
+                    kh.mail = khdto.mail;
+                    kh.address = khdto.address;
+                    kh.gender = khdto.gender;
+                    kh.dateborn = khdto.dateborn;
+                    kh.status = khdto.status;
+
+                    var KH = this.KhachHangRepository.KhachHang_Update(kh);
+                    return Created("success", KH);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e);
+                }
+            }
+            return BadRequest();
+        }
+
+        [HttpDelete("{user}")]
+        public ActionResult DeleteKH(String user)
+        {
+            var KH = KhachHangRepository.KhachHang_GetByUser(user);
+            if (KH == null)
+            {
+                return NotFound();
+            }
+            KhachHangRepository.KhachHang_Delete(KH);
+            return Ok(new { messgae = "Ok" });
+        }
+
+        // ====================
+
         // register page
         [HttpPost]
         public ActionResult<KhachHang> AddKH(KhachHangDto khdto)
@@ -109,52 +159,32 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
-        [HttpPut("{user}")]
-        public ActionResult<KhachHang> UpdateKH([FromBody] KhachHangDto khdto, String user)
+        [HttpGet("usercurrent")]
+        public ActionResult<KhachHang> UserCurrent()
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    var kh = KhachHangRepository.KhachHang_GetByUser(user);
+                var jwt = Request.Cookies["jwt-khachhang"];
 
-                    if (kh == null || khdto.user != user)
-                    {
-                        return NotFound();
-                    }
+                var token = jwtKhachHang.Verify(jwt);
 
-                    // Mapping
-                    // kh.user = khdto.user;
-                    kh.password = khdto.password;
-                    kh.name = khdto.name;
-                    kh.phone = khdto.phone;
-                    kh.mail = khdto.mail;
-                    kh.address = khdto.address;
-                    kh.gender = khdto.gender;
-                    kh.dateborn = khdto.dateborn;
-                    kh.status = khdto.status;
-
-                    var KH = this.KhachHangRepository.KhachHang_Update(kh);
-                    return Created("success", KH);
-                }
-                catch (Exception e)
-                {
-                    return BadRequest(e);
-                }
+                var userId = token.Issuer;
+                var user = KhachHangRepository.KhachHang_GetByUser(userId);
+                // Console.WriteLine(user.name);
+                return Ok(user);
             }
-            return BadRequest();
+            catch (Exception e)
+            {
+                return Unauthorized();
+            }
         }
 
-        [HttpDelete("{user}")]
-        public ActionResult DeleteKH(String user)
-        {
-            var KH = KhachHangRepository.KhachHang_GetByUser(user);
-            if (KH == null)
-            {
-                return NotFound();
-            }
-            KhachHangRepository.KhachHang_Delete(KH);
-            return Ok(new { messgae = "Ok" });
+        [HttpPost("logout")]
+        public ActionResult Logout()
+        {  
+            Response.Cookies.Delete("jwt-khachhang");
+            
+            return Ok();
         }
 
         [HttpPost("filter-admin")]

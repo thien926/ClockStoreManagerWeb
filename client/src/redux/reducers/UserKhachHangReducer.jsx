@@ -14,14 +14,13 @@
 //     message : ''
 // }
 
-import { ACT_KHACHHANG_LOGIN, ACT_KHACHHANG_REGISTER, RESET_MESSAGE_USER_KHACHHANG } from "../actions/UserKhachHangAction";
+import { ACT_GET_CURRENT_USER_KHACHHANG, ACT_KHACHHANG_LOGIN, ACT_KHACHHANG_LOGOUT, ACT_KHACHHANG_REGISTER, RESET_MESSAGE_USER_KHACHHANG } from "../actions/UserKhachHangAction";
 
-var data = JSON.parse(localStorage.getItem("khachhang"));
 
 const initialState = {
-    dataValue: data ? data : {},
+    dataValue: {},
     message: '',
-    cart : {}
+    cart: {}
 }
 
 const UserKhachHangReducer = (state = initialState, action) => {
@@ -39,8 +38,19 @@ const UserKhachHangReducer = (state = initialState, action) => {
         case ACT_KHACHHANG_LOGIN:
             return {
                 ...state,
-                dataValue : action.payload.khachhang,
-                message : action.payload.message
+                dataValue: action.payload.khachhang,
+                message: action.payload.message
+            }
+        case ACT_GET_CURRENT_USER_KHACHHANG:
+            return {
+                ...state,
+                dataValue: action.payload.khachhang
+            }
+        case ACT_KHACHHANG_LOGOUT:
+            return {
+                ...state,
+                dataValue: action.payload.khachhang,
+                message: action.payload.message
             }
         default:
             return {
