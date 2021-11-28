@@ -88,6 +88,7 @@ function WireAdmin() {
             })
         }
         setElmListWires(result);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [AdminWireReducer.dataValue])
 
     // Hiên thông báo các sự kiện

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
+import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { ACT_LOGOUT_ERROR, ACT_LOGOUT_SUCCESS } from '../../../constants/Message'
 import { actGetProductTypeHeader } from '../../../redux/actions/HeaderProductTypeAction'
+import { actGetCurrentUserKhachHang, actLogoutKhachHang, actResetMessageUserKhachHang } from '../../../redux/actions/UserKhachHangAction'
 import CustomLinkShop from '../CustomLinkShop/CustomLinkShop'
 import HeaderControl from '../HeaderControl/HeaderControl'
 import './Header.css'
@@ -9,34 +13,74 @@ import './Header.css'
 function Header() {
 
     const HeaderProductTypeReducer = useSelector(state => state.HeaderProductTypeReducer);
+    const UserKhachHangReducer = useSelector(state => state.UserKhachHangReducer)
+
     const [elmCustomLinks, setElmCustomLinks] = useState(null);
+    const [elmUser, setElmUser] = useState(null);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(actGetProductTypeHeader());
+        dispatch(actGetCurrentUserKhachHang());
     }, [dispatch])
 
     useEffect(() => {
         // console.log(HeaderProductTypeReducer);
         var result = null;
-        // var i = 0;
         if (HeaderProductTypeReducer.length > 0) {
             result = HeaderProductTypeReducer.map((loaiSanPham, index) => {
-                // ++i;
-                // if (i >= 5) {
-                //     return null;
-                // }
                 return <CustomLinkShop key={index} to={`/shop/${loaiSanPham.id}`}>{loaiSanPham.name}</CustomLinkShop>
             });
-
-            
         }
 
         setElmCustomLinks(result);
-        // var result = null;
-        // result = HeaderProductTypeReducer.
     }, [HeaderProductTypeReducer])
+
+    useEffect(() => {
+        setElmUser(
+            <div className="ht-right">
+                <Link to='/register' className="login-panel"><i className="fa fa-user" />Đăng ký</Link>
+
+                <div className="top-social">
+                    <Link to='/login' className="ml-3"><i className="fa fa-user" />&nbsp;Đăng nhập</Link>
+                </div>
+            </div>
+        );
+
+        if (UserKhachHangReducer.dataValue.name) {
+            setElmUser(
+                <div className="ht-right">
+                    <a className="login-panel" onClick={clickLogout}><i className="fa fa-user" />Đăng xuất</a>
+                    <div className="top-social">
+                        <a className="ml-3">{UserKhachHangReducer.dataValue.name}</a>
+                    </div>
+                </div>
+            );
+        }
+
+        // console
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [UserKhachHangReducer.dataValue])
+
+    useEffect(() => {
+        switch (UserKhachHangReducer.message) {
+            case ACT_LOGOUT_SUCCESS:
+                toast.success(UserKhachHangReducer.message);
+                dispatch(actResetMessageUserKhachHang())
+                break;
+            case ACT_LOGOUT_ERROR:
+                toast.error(UserKhachHangReducer.message);
+                dispatch(actResetMessageUserKhachHang())
+                break;
+            default:
+                break;
+        }
+    }, [UserKhachHangReducer.message, dispatch])
+
+    const clickLogout = () => {
+        dispatch(actLogoutKhachHang());
+    }
 
     return (
         <header className="header-section">
@@ -52,15 +96,13 @@ function Header() {
                             036.411.7408
                         </div>
                     </div>
-                    <div className="ht-right">
-                        <a className="login-panel"><i className="fa fa-user" />Login</a>
+                    {/* <div className="ht-right">
+                        <Link to='/login' className="login-panel"><i className="fa fa-user" />Đăng nhập</Link>
                         <div className="top-social">
-                            <a href="https://www.facebook.com/thien926"><i className="ti-facebook" /></a>
-                            <a ><i className="ti-twitter-alt" /></a>
-                            <a ><i className="ti-linkedin" /></a>
-                            <a ><i className="ti-pinterest" /></a>
+                            <Link to='/login' className="ml-3"><i className="fa fa-user" /> &nbsp;Đăng ký</Link>
                         </div>
-                    </div>
+                    </div> */}
+                    {elmUser}
                 </div>
             </div>
             <div className="container">

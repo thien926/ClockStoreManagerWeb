@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './LoginAdminPage.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { actGetUser, actLoginAdmin } from '../../redux/actions/LoginAdminAction';
+import { actLoginAdmin } from '../../redux/actions/LoginAdminAction';
 
 function LoginAdmin() {
 

@@ -36,11 +36,15 @@ namespace StoreApi
             //Sửa chỗ này nè
             // cho phép 4200 truy cập 5001 
             // https://topdev.vn/blog/cors-la-gi/
-            services.AddCors(options => {
-                options.AddPolicy("CorsPolicy", policy => {
-                    policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(new []{"http://localhost:4200"});
-                });
-            });
+            // services.AddCors(options => {
+            //     options.AddPolicy("CorsPolicy", policy => {
+            //         policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(new []{"http://localhost:4200"});
+            //     });
+            // });
+
+
+            services.AddCors();
+
             services.AddDbContext<ClockStoreDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -67,10 +71,6 @@ namespace StoreApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            // Thiện
-            else {
-                app.UseHsts();
-            }
 
             app.UseHttpsRedirection();
 
@@ -78,7 +78,13 @@ namespace StoreApi
 
             //sửa
             // sử dụng Cors để domain 4200 truy cập vào 5001
-            app.UseCors("CorsPolicy");
+            // app.UseCors("CorsPolicy");
+            app.UseCors(options => options
+                .WithOrigins(new []{"http://localhost:4200"})
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+            );
             
             // dùng để truy cập wwwroot từ domain
             app.UseStaticFiles();

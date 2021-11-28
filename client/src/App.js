@@ -18,6 +18,8 @@ import WireAdmin from './pages/AdminPages/WireAdmin/WireAdmin';
 import NCCAdmin from './pages/AdminPages/NCCAdmin/NCCAdmin';
 import BrandAdmin from './pages/AdminPages/BrandAdmin/BrandAdmin';
 import Product from './pages/ShopPages/Product/Product';
+import Register from './pages/ShopPages/Register/Register';
+import Login from './pages/ShopPages/Login/Login';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         {/* <Route path='/shop' element={<Shop />} /> */}
         <Route path='/shop/:productTypeId' element={<Shop />} />
         <Route path='/product/:productId' element={<Product />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
       </Route>
       <Route element={<AdminLayout />}>
         <Route path='/admin/account' element={<UserAdmin />} />

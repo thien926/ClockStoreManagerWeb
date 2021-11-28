@@ -15,7 +15,7 @@ namespace StoreApi.Models
 
         [Required(ErrorMessage = "Mật khẩu là bắt buộc")]
         [StringLength(maximumLength:25, MinimumLength = 4, ErrorMessage = "Mật khẩu từ 4 đến 25 kí tự")]
-        public string password{get; set;}
+        public string password { get; set; }
 
         [Required(ErrorMessage = "Họ tên là bắt buộc")]
         [StringLength(maximumLength:100, MinimumLength = 4, ErrorMessage = "Họ tên từ 4 đến 100 kí tự")]
@@ -34,7 +34,7 @@ namespace StoreApi.Models
         public string address { get; set; }
 
         [Required(ErrorMessage = "Giới tính là bắt buộc")]
-        [RegularExpression(pattern: "(Nam|Nữ)/g", ErrorMessage="Giới tính là Nam hoặc Nữ")]
+        [RegularExpression(pattern: "^(Nam|Nữ)$", ErrorMessage="Giới tính là Nam hoặc Nữ")]
         [StringLength(maximumLength:3, MinimumLength = 2, ErrorMessage = "Giới tính từ 2 đến 3 kí tự")]
         public string gender { get; set; }
 
@@ -43,7 +43,7 @@ namespace StoreApi.Models
         public DateTime dateborn{get; set;}
 
         [Required(ErrorMessage = "Trạng thái là bắt buộc")]
-        [RegularExpression(pattern: "(1|0)/g", ErrorMessage="Trạng thái là 1 hoặc 0")]
+        [RegularExpression(pattern: "^(1|0)$", ErrorMessage="Trạng thái là 1 hoặc 0")]
         public int status{get; set;}
 
     }
