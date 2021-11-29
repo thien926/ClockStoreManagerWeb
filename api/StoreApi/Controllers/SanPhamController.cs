@@ -18,8 +18,17 @@ namespace StoreApi.Controllers
         private int pageSize = 9;
         private int range = 9;
         private readonly ISanPhamRepository sanPhamRepository;
-        public SanPhamController(ISanPhamRepository sanPhamRepository) {
+        private readonly ILoaiSanPhamRepository loaiSanPhamRepository;
+        private readonly IThuongHieuRepository thuongHieuRepository;
+        private readonly IKieuMayRepository kieuMayRepository;
+        private readonly IKieuDayRepository kieuDayRepository;
+        public SanPhamController(ISanPhamRepository sanPhamRepository, ILoaiSanPhamRepository loaiSanPhamRepository,
+        IThuongHieuRepository thuongHieuRepository, IKieuMayRepository kieuMayRepository,IKieuDayRepository kieuDayRepository ) {
             this.sanPhamRepository = sanPhamRepository;
+            this.loaiSanPhamRepository = loaiSanPhamRepository;
+            this.thuongHieuRepository = thuongHieuRepository;
+            this.kieuMayRepository = kieuMayRepository;
+            this.kieuDayRepository = kieuDayRepository;
         }
 
         [HttpGet]
@@ -34,19 +43,6 @@ namespace StoreApi.Controllers
 
         [HttpPost]
         public ActionResult<SanPham> AddSP(SanPhamDto spdto) {
-
-            // Console.WriteLine("SanPham Add: ");
-            // Console.WriteLine(spdto.LSPId);
-            // Console.WriteLine(spdto.brandId);
-            // Console.WriteLine(spdto.wireId);
-            // Console.WriteLine(spdto.machineId);
-            // Console.WriteLine(spdto.nccId);
-            // Console.WriteLine(spdto.name);
-            // Console.WriteLine(spdto.amount);
-            // Console.WriteLine(spdto.price);
-            // Console.WriteLine(spdto.description);
-            // Console.WriteLine("img:", spdto.img);
-
             if(ModelState.IsValid){
                 try {
                     SanPham sp = new SanPham();
@@ -133,6 +129,72 @@ namespace StoreApi.Controllers
                 range = this.range,
                 totalPage = ListSP.TotalPages
             };
+            return view;
+        }
+
+        // shop page
+        [HttpPost("filter-shop")]
+        public ViewProductsShopDto FilterShop(FilterProductsShopDto data) {
+            int count;
+            var SanPhams = sanPhamRepository.SanPham_FilterProductShop(data.lspId, data.branchId, data.machineId, data.wireId, data.priceFrom, data.priceTo, data.search, data.sort, data.pageIndex, pageSize, out count);
+            var LSP = loaiSanPhamRepository.LoaiSanPham_GetById(data.lspId);
+            var TH = thuongHieuRepository.ThuongHieu_GetById(data.branchId);
+            var KM = kieuMayRepository.KieuMay_GetById(data.machineId);
+            var KD = kieuDayRepository.KieuDay_GetById(data.wireId);
+            var ListSP = new PaginatedList<SanPham>(SanPhams, count, data.pageIndex, pageSize);
+            ViewProductsShopDto view = new ViewProductsShopDto() {
+                ListSP = ListSP,
+                LSP = LSP,
+                TH = TH,
+                KM = KM,
+                KD = KD,
+                priceFrom = data.priceFrom,
+                priceTo = data.priceTo,
+                search = data.search,
+                sort = data.sort,
+                pageIndex = data.pageIndex,
+                pageSize = this.pageSize,
+                count = count,
+                range = this.range,
+                totalPage = ListSP.TotalPages
+            };
+            return view;
+        }
+
+
+        // home page
+        [HttpGet("home-page")]
+        public List<ListSPHomePage> FilterHomePage() {
+            int pageSize = 8;
+            var LSP = loaiSanPhamRepository.LoaiSanPham_GetAll();
+            var viewHomePage = new List<ListSPHomePage>();
+            foreach (var item in LSP)
+            {
+                var newListHomePage = new ListSPHomePage();
+                newListHomePage.LSP = item;
+                newListHomePage.listSP = sanPhamRepository.SanPham_GetByLSPId(item.Id, pageSize);
+                viewHomePage.Add(newListHomePage);
+            }
+            return viewHomePage;
+        }
+
+        // product page
+        [HttpGet("product/{id}")]
+        public ActionResult<ViewProductPageDto> GetProductDetail(int id) {
+            int pageSize = 4;
+
+            var sanpham = this.sanPhamRepository.SanPham_GetById(id);
+            var LSP = loaiSanPhamRepository.LoaiSanPham_GetById(sanpham.LSPId);
+            var TH = thuongHieuRepository.ThuongHieu_GetById(sanpham.brandId);
+            var KM = kieuMayRepository.KieuMay_GetById(sanpham.machineId);
+            var KD = kieuDayRepository.KieuDay_GetById(sanpham.wireId);
+
+            var spLienQuan = sanPhamRepository.SanPham_GetByLSPId(sanpham.LSPId, pageSize);
+            
+            var view = new ViewProductPageDto();
+            view.product = sanpham;
+            view.ListRelationship = spLienQuan;
+
             return view;
         }
     }

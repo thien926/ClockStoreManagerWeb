@@ -10,7 +10,7 @@ using StoreApi.Repositories;
 namespace StoreApi.Migrations
 {
     [DbContext(typeof(ClockStoreDBContext))]
-    [Migration("20211120023940_CreateDatabase")]
+    [Migration("20211124082954_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
