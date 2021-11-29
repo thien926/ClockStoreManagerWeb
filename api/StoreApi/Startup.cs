@@ -63,6 +63,7 @@ namespace StoreApi
             services.AddScoped<IChiTietHDRepository, ChiTietHDRepository>();
             services.AddScoped<INCCRepository, NCCRepository>();
             services.AddScoped<IKieuDayRepository, KieuDayRepository>();
+            services.AddScoped<IHoaDonRepository, HoaDonRepository>();
 
 
         }

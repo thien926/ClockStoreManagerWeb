@@ -44,7 +44,7 @@ namespace StoreApi.Models
 
         [Required(ErrorMessage = "Trạng thái là bắt buộc")]
         [RegularExpression(pattern: "^(1|0)$", ErrorMessage="Trạng thái là 1 hoặc 0")]
-        public int status{get; set;}
+        public int status { get; set; }
 
     }
 }

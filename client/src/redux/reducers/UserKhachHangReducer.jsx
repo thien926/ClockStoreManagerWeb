@@ -14,7 +14,7 @@
 //     message : ''
 // }
 
-import { ACT_GET_CURRENT_USER_KHACHHANG, ACT_KHACHHANG_LOGIN, ACT_KHACHHANG_LOGOUT, ACT_KHACHHANG_REGISTER, RESET_MESSAGE_USER_KHACHHANG } from "../actions/UserKhachHangAction";
+import { ACT_GET_CURRENT_USER_KHACHHANG, ACT_KHACHHANG_LOGIN, ACT_KHACHHANG_LOGOUT, ACT_KHACHHANG_REGISTER, ACT_KHACHHANG_UPDATE_INFO, ACT_KHACHHANG_UPDATE_PASSWORD, RESET_MESSAGE_USER_KHACHHANG } from "../actions/UserKhachHangAction";
 
 
 const initialState = {
@@ -50,6 +50,18 @@ const UserKhachHangReducer = (state = initialState, action) => {
             return {
                 ...state,
                 dataValue: action.payload.khachhang,
+                message: action.payload.message
+            }
+        case ACT_KHACHHANG_UPDATE_INFO:
+            return {
+                ...state,
+                dataValue: action.payload.khachhang,
+                message: action.payload.message
+            }
+        case ACT_KHACHHANG_UPDATE_PASSWORD:
+            return {
+                ...state,
+                dataValue: action.payload.khachhang ? action.payload.khachhang : state.dataValue,
                 message: action.payload.message
             }
         default:
