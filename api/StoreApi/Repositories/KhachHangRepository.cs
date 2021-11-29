@@ -13,11 +13,11 @@ namespace StoreApi.Repositories
         public KhachHangRepository(ClockStoreDBContext context) {
             this.context = context;
         }
-        public KhachHang KhachHang_Add(KhachHang sp)
+        public KhachHang KhachHang_Add(KhachHang kh)
         {
-            context.KhachHangs.Add(sp);
+            context.KhachHangs.Add(kh);
             context.SaveChanges();
-            return sp;
+            return kh;
         }
 
         public KhachHang KhachHang_GetByUser(string user)
@@ -30,16 +30,16 @@ namespace StoreApi.Repositories
             return context.KhachHangs.ToList();
         }
 
-        public KhachHang KhachHang_Update(KhachHang SP)
+        public KhachHang KhachHang_Update(KhachHang kh)
         {
-            context.KhachHangs.Update(SP);
+            context.KhachHangs.Update(kh);
             context.SaveChanges();
-            return SP;
+            return kh;
         }
 
-        public void KhachHang_Delete(KhachHang SP)
+        public void KhachHang_Delete(KhachHang kh)
         {
-            context.KhachHangs.Remove(SP);
+            context.KhachHangs.Remove(kh);
             context.SaveChanges();
         }
 

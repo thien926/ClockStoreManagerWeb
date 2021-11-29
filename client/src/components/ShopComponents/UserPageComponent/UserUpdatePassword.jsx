@@ -98,7 +98,7 @@ function UserUpdatePassword() {
     return (
         <div className="col-lg-9 order-1 order-lg-2">
             <div className="product-show-option">
-                <h4>Sửa thông tin cá nhân</h4>
+                <h4>Sửa mật khẩu cá nhân</h4>
             </div>
             <form>
                 <table className="table table-hover">
