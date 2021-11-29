@@ -32,35 +32,37 @@ namespace StoreApi.Controllers
             return this.HoaDonRepository.HoaDon_GetById(id);
         }
 
-        [HttpPost]
-        public ActionResult<HoaDon> AddHD(HoaDonDto hddto) {
+        // [HttpPost]
+        // public ActionResult<HoaDon> AddHD(HoaDonDto hddto) {
 
-            if(ModelState.IsValid){
-                try {
-                    HoaDon hd = new HoaDon();
+        //     if(ModelState.IsValid){
+        //         try {
+        //             HoaDon hd = new HoaDon();
 
-                    // Mapping
-                    // hd.LSPId = hddto.LSPId;
-                    hd.KHuser = hddto.KHuser;
-                    hd.NVuser = hddto.NVuser;
-                    hd.phone = hddto.phone;
-                    hd.address = hddto.address;
-                    hd.date_receice = hddto.date_receice;
-                    hd.date_order = hddto.date_order;
-                    hd.total = hddto.total;
-                    hd.status = 0;
+        //             // Mapping
+        //             // hd.LSPId = hddto.LSPId;
+        //             hd.KHuser = hddto.KHuser;
+        //             hd.NVuser = hddto.NVuser;
+        //             hd.phone = hddto.phone;
+        //             hd.address = hddto.address;
+        //             hd.date_receice = hddto.date_receice;
+        //             hd.date_order = hddto.date_order;
+        //             hd.total = hddto.total;
+        //             hd.status = 0;
 
-                    var HD = this.HoaDonRepository.HoaDon_Add(hd);
-                    return Created("success", HD);
-                }
-                catch(Exception e) {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
-                }
-            }
+        //             var HD = this.HoaDonRepository.HoaDon_Add(hd);
+        //             return Created("success", HD);
+        //         }
+        //         catch(Exception e) {
+        //             return StatusCode(StatusCodes.Status500InternalServerError);
+        //         }
+        //     }
 
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        }
+        //     return StatusCode(StatusCodes.Status500InternalServerError);
+        // }
 
+
+        // Chỉ sửa trạng thái của hóa đơn 
         [HttpPut("{id}")]
         public ActionResult<HoaDon> UpdateHD([FromBody] HoaDonDto hddto, int id) {
             if(ModelState.IsValid) {
@@ -70,26 +72,28 @@ namespace StoreApi.Controllers
                     if(hd == null || hddto.Id != id) {
                         return NotFound();
                     }
-
+                    // hd.status = hddto.status;
                     // Mapping
-                    hd.LSPId = hddto.LSPId;
-                    hd.KHuser = hddto.KHuser;
-                    hd.NVuser = hddto.NVuser;
-                    hd.phone = hddto.phone;
-                    hd.address = hddto.address;
-                    hd.date_receice = hddto.date_receice;
-                    hd.date_order = hddto.date_order;
-                    hd.total = hddto.total;
-                    hd.status = 0;
+                    // Trạng thái gồm có
+                    //     -   Đang xử lý : 1
+                    //     -   Đang giao hàng: 2
+                    //     -   Đã giao hàng : 3
+                    //     -   Đã hủy đơn hàng
+                    if(hd.status < hddto.status) {
+                        hd.status = hddto.status;
+                    }
+                    else {
+                        return BadRequest(new { message = "Cập nhật trạng thái không thành công!" });
+                    }
 
                     var HD = this.HoaDonRepository.HoaDon_Update(hd);
-                    return Created("success", HD);
+                    return Ok(HD);
                 }
                 catch(Exception e) {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
+                    return BadRequest(e);
                 }
             }
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]

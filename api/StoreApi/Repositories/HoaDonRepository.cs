@@ -49,12 +49,11 @@ namespace StoreApi.Repositories
             
             if(!string.IsNullOrEmpty(search)) {
                 search = search.ToLower();
-                query = query.Where(m => m.NVuser.ToLower().Contains(search));
-                query = query.Where(m => m.KHuser.ToLower().Contains(search));
-                query = query.Where(m => m.address.ToLower().Contains(search));
+                query = query.Where(m => (m.NVuser.ToLower().Contains(search)) || 
+                    (m.KHuser.ToLower().Contains(search)) || (m.address.ToLower().Contains(search)));
             }
             
-            if(status >= 0) {
+            if(status > 0) {
                 query = query.Where(m => m.status == status);
             }
 

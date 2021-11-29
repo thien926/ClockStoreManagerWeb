@@ -31,6 +31,13 @@ namespace StoreApi.Repositories
             return context.ChiTietHDs.ToList();
         }
 
+        public IEnumerable<ChiTietHD> ChiTietHD_GetByBillId(int billId)
+        {
+            var query = context.ChiTietHDs.AsQueryable();
+            query = query.Where(m => m.billId == billId);
+            return query.ToList();
+        }
+
         public ChiTietHD ChiTietHD_Update(ChiTietHD CTHD)
         {
             context.ChiTietHDs.Update(CTHD);
