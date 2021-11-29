@@ -1,3 +1,6 @@
+using StoreApi.Models;
+using StoreApi.Services;
+
 namespace StoreApi.DTOs
 {
     public class ViewChiTietHDAdminDto

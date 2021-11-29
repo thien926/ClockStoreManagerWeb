@@ -44,37 +44,21 @@ namespace StoreApi.Repositories
             context.SaveChanges();
         }
 
-        public IEnumerable<HoaDon> HoaDon_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
+        public IEnumerable<HoaDon> HoaDon_FilterAdmin(string search, int status, int pageIndex, int pageSize, out int count) {
             var query = context.HoaDons.AsQueryable();
             
             if(!string.IsNullOrEmpty(search)) {
                 search = search.ToLower();
-                query = query.Where(m => m.name.ToLower().Contains(search));
+                query = query.Where(m => m.NVuser.ToLower().Contains(search));
+                query = query.Where(m => m.KHuser.ToLower().Contains(search));
+                query = query.Where(m => m.address.ToLower().Contains(search));
+            }
+            
+            if(status >= 0) {
+                query = query.Where(m => m.status == status);
             }
 
             count = query.Count();
-            if(!string.IsNullOrEmpty(sort)){
-                switch(sort){
-                    
-                    case "KHuser-asc": query = query.OrderBy(m => m.KHuser);
-                                    break;
-                    case "KHuser-desc": query = query.OrderByDescending(m => m.KHuser);
-                                    break;
-                    case "NVuser-asc": query = query.OrderBy(m => m.NVuser);
-                                    break;
-                    case "NVuser-desc": query = query.OrderByDescending(m => m.NVuser);
-                                    break;                
-                    case "total-asc": query = query.OrderBy(m => (long?)m.total);
-                                    break;
-                    case "total-desc": query = query.OrderByDescending(m => (long?)m.total);
-                                    break;
-                    case "status-asc": query = query.OrderBy(m => (int?)m.status);
-                                    break;
-                    case "status-desc": query = query.OrderByDescending(m => (int?)m.status);
-                                    break;                
-                    default: break;
-                }
-            }
 
             int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
             // if(pageIndex > TotalPages){

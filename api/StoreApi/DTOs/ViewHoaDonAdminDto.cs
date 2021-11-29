@@ -11,7 +11,7 @@ namespace StoreApi.DTOs
     {
         public PaginatedList<HoaDon> ListHD { get; set; }
         public string search { get; set;}
-        public string sort { get; set;}
+        public int status { get; set;}
         public int pageIndex{ get; set; }
 
         // Kích thước của 1 trang có bao nhiêu sản phẩm

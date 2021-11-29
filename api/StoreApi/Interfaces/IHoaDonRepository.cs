@@ -12,6 +12,6 @@ namespace StoreApi.Interfaces
         IEnumerable<HoaDon> HoaDon_GetAll();
         HoaDon HoaDon_Update(HoaDon hd); 
         void HoaDon_Delete(HoaDon hd); 
-        IEnumerable<HoaDon> HoaDon_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count);
+        IEnumerable<HoaDon> HoaDon_FilterAdmin(string search, int status, int pageIndex, int pageSize, out int count);
     }
 }

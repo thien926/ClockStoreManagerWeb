@@ -103,14 +103,14 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost("filter-admin")]
-        public ViewHoaDonAdminDto FilterAdmin(FilterDataAdminDto data) {
+        public ViewHoaDonAdminDto FilterAdmin(FilterHoaDonDto data) {
             int count;
-            var HoaDons = HoaDonRepository.HoaDon_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
+            var HoaDons = HoaDonRepository.HoaDon_FilterAdmin(data.search, data.status, data.pageIndex, pageSize, out count);
             var ListHD = new PaginatedList<HoaDon>(HoaDons, count, data.pageIndex, pageSize);
             ViewHoaDonAdminDto view = new ViewHoaDonAdminDto() {
                 ListHD = ListHD,
                 search = data.search,
-                sort = data.sort,
+                status = data.status,
                 pageIndex = data.pageIndex,
                 pageSize = this.pageSize,
                 count = count,
