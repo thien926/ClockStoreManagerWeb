@@ -8,7 +8,7 @@ namespace StoreApi.Models
 {
     public class HoaDon
     {
-        public int Id{get; set;}
+        public int Id {get; set;}
 
         [Required(ErrorMessage = "Mã khách hàng là bắt buộc")]
         [StringLength(maximumLength:25, MinimumLength = 3, ErrorMessage = "Mã khách hàng từ 3 đến 25 kí tự")]

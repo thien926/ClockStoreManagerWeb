@@ -20,10 +20,10 @@ namespace StoreApi.Repositories
             return hd;
         }
 
-        public void HoaDon_Delete(HoaDon hd)
+        public HoaDon HoaDon_GetById(int id)
         {
-            context.HoaDons.Remove(hd);
-            context.SaveChanges();
+            // context.HoaDons.
+            return context.HoaDons.FirstOrDefault(o => o.Id == id);
         }
 
         public IEnumerable<HoaDon> HoaDon_GetAll()
@@ -31,16 +31,44 @@ namespace StoreApi.Repositories
             return context.HoaDons.ToList();
         }
 
-        public HoaDon HoaDon_GetById(int id)
+        public HoaDon HoaDon_Update(HoaDon HD)
         {
-            return context.HoaDons.FirstOrDefault(m => m.Id == id);
+            context.HoaDons.Update(HD);
+            context.SaveChanges();
+            return HD;
         }
 
-        public HoaDon HoaDon_Update(HoaDon hd)
+        public void HoaDon_Delete(HoaDon HD)
         {
-            context.HoaDons.Update(hd);
+            context.HoaDons.Remove(HD);
             context.SaveChanges();
-            return hd;
+        }
+
+        public IEnumerable<HoaDon> HoaDon_FilterAdmin(string search, int status, int pageIndex, int pageSize, out int count) {
+            var query = context.HoaDons.AsQueryable();
+            
+            if(!string.IsNullOrEmpty(search)) {
+                search = search.ToLower();
+                query = query.Where(m => (m.NVuser.ToLower().Contains(search)) || 
+                    (m.KHuser.ToLower().Contains(search)) || (m.address.ToLower().Contains(search)));
+            }
+            
+            if(status > 0) {
+                query = query.Where(m => m.status == status);
+            }
+
+            count = query.Count();
+
+            int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            // if(pageIndex > TotalPages){
+            //     pageIndex = TotalPages;
+            // }
+            if(pageIndex < 1){
+                pageIndex = 1;
+            }
+
+            return query.Skip((pageIndex - 1) * pageSize)
+                        .Take(pageSize).ToList();
         }
     }
 }
