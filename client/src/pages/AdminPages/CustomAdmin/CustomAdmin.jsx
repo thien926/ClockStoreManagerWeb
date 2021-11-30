@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router'
+import { toast } from 'react-toastify'
 import AdminCustomControl from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomControl'
 import AdminCustomFormInfoAction from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomFormInfoAction'
 import AdminCustomItem from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomItem'
 import AdminCustomPaging from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomPaging'
-import { actGetCustomAdmin } from '../../../redux/actions/AdminCustomAction'
+import { ACT_CHANGE_STATUS_KHACHHANG_ADMIN_ERROR, ACT_OFF_STATUS_KHACHHANG_ADMIN_SUCCESS, ACT_ON_STATUS_KHACHHANG_ADMIN_SUCCESS } from '../../../constants/Message'
+import { actChangeStatusCustomAdmin, actGetCustomAdmin, actResetMessageCustomAdmin } from '../../../redux/actions/AdminCustomAction'
 
 function CustomAdmin() {
 
@@ -76,15 +78,39 @@ function CustomAdmin() {
     }, [search, sort, pageIndex, dispatch])
 
     useEffect(() => {
-        console.log(AdminCustomReducer.dataValue)
+        // console.log(AdminCustomReducer.dataValue)
         var result = null;
         if(AdminCustomReducer.dataValue.listKH && AdminCustomReducer.dataValue.listKH.length > 0) {
             result = AdminCustomReducer.dataValue.listKH.map((item, index) => {
-                return <AdminCustomItem key={index} custom={item} index={index} />
+                return <AdminCustomItem key={index} custom={item} index={index} submitChangeStatus={submitChangeStatus}/>
             })
         }
         setElmListCustoms(result);
     }, [AdminCustomReducer.dataValue])
+
+    // Hiên thông báo các sự kiện
+    useEffect(() => {
+        switch (AdminCustomReducer.message) {
+            case ACT_OFF_STATUS_KHACHHANG_ADMIN_SUCCESS:
+            case ACT_ON_STATUS_KHACHHANG_ADMIN_SUCCESS:
+                toast.success(AdminCustomReducer.message);
+                var filter = {
+                    search : search,
+                    sort: sort,
+                    pageIndex:pageIndex
+                }
+                // console.log(filter);
+                dispatch(actGetCustomAdmin(filter));
+                dispatch(actResetMessageCustomAdmin());
+                break;
+            case ACT_CHANGE_STATUS_KHACHHANG_ADMIN_ERROR : 
+                toast.error(AdminCustomReducer.message); 
+                dispatch(actResetMessageCustomAdmin());
+                break;
+            default:
+                break;
+        }
+    }, [AdminCustomReducer.message])
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
@@ -94,6 +120,11 @@ function CustomAdmin() {
     // đi đến URL khác khi sort
     const changeSort = (sortValue) => {
         navigate('/admin/custom?search=' + search + '&sort=' + sortValue + '&pageIndex=' + pageIndex);
+    }
+
+    const submitChangeStatus = (user) => {
+        // console.log(user);
+        dispatch(actChangeStatusCustomAdmin(user));
     }
 
     return (
@@ -113,7 +144,7 @@ function CustomAdmin() {
                             <th>Tài khoản</th>
                             <th>Tên</th>
                             <th>Số điện thoại</th>
-                            <th>Mail</th>
+                            <th>Thư điện tử</th>
                             <th>Địa chỉ</th>
                             <th>Giới tính</th>
                             <th>Ngày sinh</th>
@@ -129,7 +160,7 @@ function CustomAdmin() {
 
             <AdminCustomPaging dataValue={AdminCustomReducer.dataValue} />
 
-            <AdminCustomFormInfoAction />
+            {/* <AdminCustomFormInfoAction /> */}
 
         </div>
     )

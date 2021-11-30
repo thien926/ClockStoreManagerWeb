@@ -18,6 +18,17 @@ function AdminCustomItem(props) {
         )
     }
 
+    const showBtnStatus = () => {
+        if(custom.status === 1) {
+            return (
+                <button onClick={() => props.submitChangeStatus(custom.user)} type="button" className="btn btn-warning">Ẩn</button>
+            )
+        }
+        return (
+            <button onClick={() => props.submitChangeStatus(custom.user)} type="button" className="btn btn-info">Kích hoạt</button>
+        )
+    }
+
     return (
         <tr>
             <td>{index + 1}</td>
@@ -30,8 +41,9 @@ function AdminCustomItem(props) {
             <td>{custom.dateborn.split("T")[0]}</td>
             <td>{showStatus()}</td>
             <td>
-                <button type="button" className="btn btn-info">Sửa</button>
-                <button type="button" className="btn btn-warning ml-1">Xóa</button>
+                {/* <button type="button" className="btn btn-info">Sửa</button> */}
+                {showBtnStatus()}
+                {/* <button type="button" className="btn btn-warning ml-1">Sửa pass</button> */}
             </td>
 
         </tr>
