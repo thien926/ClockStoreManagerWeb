@@ -31,12 +31,12 @@ function AdminCustomControl(props) {
                     <option value="name-desc">Sắp xếp theo tên : Z-A</option>
                     <option value="user-asc">Sắp xếp theo tài khoản : A-Z</option>
                     <option value="user-desc">Sắp xếp theo tài khoản : Z-A</option>
-                    <option value="gender-asc">Sắp xếp theo giới tính : A-Z</option>
-                    <option value="gender-desc">Sắp xếp theo giới tính : Z-A</option>
+                    <option value="gender-asc">Sắp xếp theo giới tính : Nam-Nữ</option>
+                    <option value="gender-desc">Sắp xếp theo giới tính : Nữ-Nam</option>
                     <option value="dateborn-asc">Sắp xếp theo ngày sinh : Tăng dần</option>
                     <option value="dateborn-desc">Sắp xếp theo ngày sinh : Giảm dần</option>
-                    <option value="status-asc">Sắp xếp theo trạng thái : A-Z</option>
-                    <option value="status-desc">Sắp xếp theo trạng thái : Z-A</option>
+                    <option value="status-asc">Sắp xếp theo trạng thái : Ẩn-Kích hoạt</option>
+                    <option value="status-desc">Sắp xếp theo trạng thái : Kích hoạt-Ẩn</option>
                 </select>
             </div>
         </div>

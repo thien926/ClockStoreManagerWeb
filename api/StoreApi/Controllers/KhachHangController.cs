@@ -37,6 +37,27 @@ namespace StoreApi.Controllers
             return this.KhachHangRepository.KhachHang_GetByUser(user);
         }
 
+        // Admin Custom Page
+        [HttpPut("changeStatus/{user}")]
+        public ActionResult<KhachHang> ChangeStatus(string user)
+        {
+            var kh = KhachHangRepository.KhachHang_GetByUser(user);
+            
+            if(kh == null) {
+                return NotFound(new { message = "Không tìm thấy tài khoản khách hàng!" });
+            }
+
+            if(kh.status == 1) {
+                kh.status = 0;
+            }   
+            else {
+                kh.status = 1;
+            }
+
+            var res = KhachHangRepository.KhachHang_Update(kh);
+            return Ok(res);
+        }
+
         // Update User Page
         [HttpPut("updateInfoKH")]
         public ActionResult<KhachHang> UpdateInfoKH([FromBody] KhachHangInfoDto khdto)

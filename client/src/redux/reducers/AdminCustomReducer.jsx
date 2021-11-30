@@ -26,7 +26,7 @@
 //     message : ''
 // }
 
-import { GET_CUSTOM_ADMIN, RESET_MESSAGE_CUSTOM_ADMIN } from "../actions/AdminCustomAction";
+import { CHANGE_STATUS_CUSTOM_ADMIN, GET_CUSTOM_ADMIN, RESET_MESSAGE_CUSTOM_ADMIN } from "../actions/AdminCustomAction";
 
 const initialState = {
     dataValue: {},
@@ -44,6 +44,11 @@ const AdminCustomReducer = (state = initialState, action) => {
             return {
                 ...state,
                 dataValue: action.payload
+            }
+        case CHANGE_STATUS_CUSTOM_ADMIN:
+            return {
+                ...state,
+                message: action.payload
             }
 
         default:

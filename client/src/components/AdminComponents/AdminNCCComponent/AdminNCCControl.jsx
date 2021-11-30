@@ -21,7 +21,7 @@ function AdminNCCControl(props) {
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <form onSubmit={onSubmit} className="form-horizontal">
                     <div className="input-group">
-                        <input type="text" className="form-control" id="exampleInputAmount" placeholder="Tìm kiếm theo tên" value={search} onChange={(e) => setSearch(e.target.value)} />
+                        <input type="text" className="form-control" id="exampleInputAmount" placeholder="Tìm kiếm theo tên, số điện thoại" value={search} onChange={(e) => setSearch(e.target.value)} />
                         <span className="input-group-btn">
                             <button type="submit" className="btn btn-info ml-2" >Tìm kiếm</button>
                         </span>
