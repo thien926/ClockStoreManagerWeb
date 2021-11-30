@@ -31,6 +31,14 @@ export const ADD_NCC_ERROR = 'Thêm nhà cung cấp thất bại!';
 export const UPDATE_NCC_ERROR = 'Sửa nhà cung cấp thất bại!';
 export const DELETE_NCC_ERROR = 'Xóa nhà cung cấp thất bại!';
 
+// Quyền Admin 
+export const ADD_PERMISSION_SUCCESS = 'Thêm quyền thành công!';
+export const UPDATE_PERMISSION_SUCCESS = 'Sửa quyền thành công!';
+export const DELETE_PERMISSION_SUCCESS = 'Xóa quyền thành công!';
+export const ADD_PERMISSION_ERROR = 'Thêm quyền thất bại!';
+export const UPDATE_PERMISSION_ERROR = 'Sửa quyền thất bại!';
+export const DELETE_PERMISSION_ERROR = 'Xóa quyền thất bại!';
+
 // Thương hiệu Admin
 export const ADD_BRAND_SUCCESS = 'Thêm thương hiệu thành công!';
 export const UPDATE_BRAND_SUCCESS = 'Sửa thương hiệu thành công!';
