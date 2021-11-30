@@ -12,12 +12,14 @@ import HomePageReducer from './HomePageReducer'
 import ProductPageReducer from './ProductPageReducer'
 import UserKhachHangReducer from './UserKhachHangReducer'
 import AdminCustomReducer from './AdminCustomReducer'
+import AdminStaffReducer from './AdminStaffReducer'
 
 const appReducers = combineReducers({
     LoginAdminReducer : LoginAdminReducer,
     AdminProductReducer : AdminProductReducer,
     AdminProductTypeReducer,
     AdminCustomReducer,
+    AdminStaffReducer,
     AdminMachineReducer,
     AdminWireReducer,
     AdminNCCReducer,

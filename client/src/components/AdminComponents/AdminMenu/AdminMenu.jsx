@@ -22,7 +22,6 @@ function AdminMenu() {
                         <CustomLinkMobileMenuAdmin to='/admin/staff'>Nhân viên</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/ncc'>Nhà cung cấp</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/brand'>Thương hiệu</CustomLinkMobileMenuAdmin>
-                        
                         <CustomLinkMobileMenuAdmin to='/admin/products'>Sản phẩm</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/product-type'>Loại sản phẩm</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to="/admin/machine">Kiểu máy</CustomLinkMobileMenuAdmin>
