@@ -39,7 +39,7 @@ export const actGetPermissionAdmin = (data) => (dispatch) => {
 export const actAddPermissionAdmin = (data) => (dispatch) => {
     // console.log(data);
     axios.post(
-        `${API_URL}ncc`,
+        `${API_URL}quyen`,
         data,
         {
             headers : {

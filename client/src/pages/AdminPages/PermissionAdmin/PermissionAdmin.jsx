@@ -19,7 +19,7 @@ function PermissionAdmin() {
     const [elmListPermissions, setElmListPermissions] = useState(null);
 
     const [actionValue, setActionValue] = useState('');
-    const [formValue, setFormValue] = useState({id: null, name: ''});
+    const [formValue, setFormValue] = useState({id: null, name: '', details : ''});
 
     const location = useLocation();
     const dispatch = useDispatch();
@@ -143,7 +143,7 @@ function PermissionAdmin() {
     )
 
     const actionAdd = () => {
-        setFormValue({id: null, name:'', address:'', phone: '', fax:''});
+        setFormValue({id: null, name:'', details:''});
         setActionValue("add");
     }
 
