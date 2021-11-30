@@ -49,7 +49,7 @@ namespace StoreApi.Repositories
             
             if(!string.IsNullOrEmpty(search)) {
                 search = search.ToLower();
-                query = query.Where(m => m.name.ToLower().Contains(search));
+                query = query.Where(m => (m.name.ToLower().Contains(search)) || (m.details.Contains(search)));
             }
 
             count = query.Count();
@@ -58,6 +58,10 @@ namespace StoreApi.Repositories
                     case "name-asc": query = query.OrderBy(m => m.name);
                                     break;
                     case "name-desc": query = query.OrderByDescending(m => m.name);
+                                    break;
+                    case "id-asc": query = query.OrderBy(m => m.Id);
+                                    break;
+                    case "id-desc": query = query.OrderByDescending(m => m.Id);
                                     break;
                     default: break;
                 }

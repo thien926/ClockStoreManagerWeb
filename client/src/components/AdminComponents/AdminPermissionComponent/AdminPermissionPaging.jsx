@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-function AdminNCCPaging(props) {
+function AdminPermissionPaging(props) {
 
     const { dataValue } = props;
     // State phân trang
     const [previous, setPrevious] = useState(null);
     const [elmsPhanTrang, setElmsPhanTrang] = useState(null);
     const [next, setNext] = useState(null);
-    const [notFound, setNotFound] = useState('Không tìm thấy nhà cung cấp nào!');
+    const [notFound, setNotFound] = useState('Không tìm thấy quyền nào!');
 
     useEffect(() => {
         var result = null, pageIndex = dataValue.pageIndex;
@@ -96,7 +96,7 @@ function AdminNCCPaging(props) {
             }
         }
         
-        if (dataValue.listNCC && dataValue.listNCC.length > 0) {
+        if (dataValue.listQ && dataValue.listQ.length > 0) {
             setElmsPhanTrang(result);
             if(!result) {
                 setNext(null);
@@ -112,7 +112,7 @@ function AdminNCCPaging(props) {
             setElmsPhanTrang(null);
             setNext(null);
             setPrevious(null);
-            setNotFound('Không tìm thấy nhà cung cấp nào!');
+            setNotFound('Không tìm thấy quyền nào!');
         }
     }, [dataValue])
     return (
@@ -131,4 +131,4 @@ function AdminNCCPaging(props) {
     )
 }
 
-export default AdminNCCPaging
+export default AdminPermissionPaging

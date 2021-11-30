@@ -46,11 +46,11 @@ namespace StoreApi.Controllers
                     return Created("success", Q);
                 }
                 catch(Exception e) {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
+                    return BadRequest(e);
                 }
             }
 
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            return BadRequest();
         }
 
         [HttpPut("{id}")]
@@ -73,10 +73,10 @@ namespace StoreApi.Controllers
                     return Created("success", Q);
                 }
                 catch(Exception e) {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
+                    return BadRequest(e);
                 }
             }
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]
