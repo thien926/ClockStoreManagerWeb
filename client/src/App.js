@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Shop from './pages/ShopPages/Shop/Shop';
 import { Navigate, Route, Routes } from 'react-router';
