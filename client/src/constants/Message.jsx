@@ -64,6 +64,17 @@ export const ACT_KHACHHANG_NOTFOUND_ERROR = 'Không tìm thấy tài khoản kh�
 export const ACT_UPDATE_KHACHHANG_PASSWORD_ERROR = 'Sửa mật khẩu khách hàng thất bại!';
 
 // User Khách hàng cho Admin
-export const ACT_ON_STATUS_KHACHHANG_ADMIN_SUCCESS = 'Ẩn tài khoản khách hàng thành công!';
-export const ACT_OFF_STATUS_KHACHHANG_ADMIN_SUCCESS = 'Kích hoạt tài khoản khách hàng thành công!'
+export const ACT_ON_STATUS_KHACHHANG_ADMIN_SUCCESS = 'Kích hoạt tài khoản khách hàng thành công!';
+export const ACT_OFF_STATUS_KHACHHANG_ADMIN_SUCCESS = 'Ẩn tài khoản khách hàng thành công!'
 export const ACT_CHANGE_STATUS_KHACHHANG_ADMIN_ERROR = 'Thay đổi trạng thái tài khoản khách hàng thất bại!';
+
+// User Nhân viên cho Admin
+export const ADD_STAFF_ADMIN_SUCCESS = "Thêm nhân viên thành công!";
+export const UPDATE_PASS_STAFF_ADMIN_SUCCESS = "Sửa mật khẩu nhân viên thành công!";
+export const UPDATE_PERMISSION_STAFF_ADMIN_SUCCESS = "Sửa quyền nhân viên thành công!";
+export const ACT_ON_STATUS_STAFF_ADMIN_SUCCESS = 'Kích hoạt tài khoản nhân viên thành công!';
+export const ACT_OFF_STATUS_STAFF_ADMIN_SUCCESS = 'Ẩn tài khoản nhân viên thành công!'
+export const ACT_CHANGE_STATUS_STAFF_ADMIN_ERROR = 'Thay đổi trạng thái tài khoản nhân viên thất bại!';
+export const ADD_STAFF_ADMIN_ERROR = "Thêm nhân viên thất bại!";
+export const UPDATE_PASS_STAFF_ADMIN_ERROR = "Sửa mật khẩu nhân viên thất bại!";
+export const UPDATE_PERMISSION_STAFF_ADMIN_ERROR = "Sửa quyền nhân viên thất bại!";

@@ -46,6 +46,7 @@ export const actChangeStatusCustomAdmin = (user) => (dispatch) => {
             credentials : 'include'
         }
     ).then((res) => {
+        // console.log("status khách hàng: ", res.data.status);
         if(res.data.status === 1) {
             dispatch({
                 type : CHANGE_STATUS_CUSTOM_ADMIN,

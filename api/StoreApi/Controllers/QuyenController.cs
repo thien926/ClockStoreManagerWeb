@@ -22,8 +22,10 @@ namespace StoreApi.Controllers
             this.QuyenRepository = QuyenRepository;
         }
 
+        // NhanVien Page Admin
         [HttpGet]
         public IEnumerable<Quyen> GetAll() {
+            // Request.Headers.
             return this.QuyenRepository.Quyen_GetAll();
         }
 
@@ -32,6 +34,7 @@ namespace StoreApi.Controllers
             return this.QuyenRepository.Quyen_GetById(id);
         }
 
+        // Quyen Page Admin
         [HttpPost]
         public ActionResult<Quyen> AddQ(QuyenDto qdto) {
             if(ModelState.IsValid){
@@ -53,6 +56,7 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
+        // Quyen Page Admin
         [HttpPut("{id}")]
         public ActionResult<Quyen> UpdateQ([FromBody] QuyenDto qdto, int id) {
             if(ModelState.IsValid) {
@@ -79,6 +83,7 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
+        // QUyen Page Admin
         [HttpDelete("{id}")]
         public ActionResult DeleteQ(int id) {
             var SP = QuyenRepository.Quyen_GetById(id);
@@ -89,6 +94,7 @@ namespace StoreApi.Controllers
             return Ok(new { messgae = "Ok" });
         }
 
+        // Quyen Page Admin
         [HttpPost("filter-admin")]
         public ViewQuyenAdminDto FilterAdmin(FilterDataAdminDto data) {
             int count;

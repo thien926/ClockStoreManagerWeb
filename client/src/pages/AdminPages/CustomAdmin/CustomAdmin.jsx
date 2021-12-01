@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import AdminCustomControl from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomControl'
-import AdminCustomFormInfoAction from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomFormInfoAction'
+// import AdminCustomFormInfoAction from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomFormInfoAction'
 import AdminCustomItem from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomItem'
 import AdminCustomPaging from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomPaging'
 import { ACT_CHANGE_STATUS_KHACHHANG_ADMIN_ERROR, ACT_OFF_STATUS_KHACHHANG_ADMIN_SUCCESS, ACT_ON_STATUS_KHACHHANG_ADMIN_SUCCESS } from '../../../constants/Message'
@@ -149,7 +149,7 @@ function CustomAdmin() {
                             <th>Giới tính</th>
                             <th>Ngày sinh</th>
                             <th>Trạng thái</th>
-                            <th>Hành động</th>
+                            {/* <th>Hành động</th> */}
                         </tr>
                     </thead>
                     <tbody>
