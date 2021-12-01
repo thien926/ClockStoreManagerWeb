@@ -48,7 +48,7 @@ namespace StoreApi.Repositories
             
             if(!string.IsNullOrEmpty(search)) {
                 search = search.ToLower();
-                query = query.Where(m => m.name.ToLower().Contains(search));
+                query = query.Where(m => (m.name.ToLower().Contains(search)) || (m.phone.Contains(search)));
             }
 
             count = query.Count();

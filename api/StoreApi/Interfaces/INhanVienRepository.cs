@@ -12,5 +12,6 @@ namespace StoreApi.Interfaces
         NhanVien NhanVien_GetByUser(string user); 
         IEnumerable<NhanVien> NhanVien_GetAll();
         NhanVien NhanVien_Update(NhanVien NV); 
+        IEnumerable<NhanVien> NhanVien_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count);
     }
 }

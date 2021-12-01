@@ -8,7 +8,7 @@ function AdminNCCPaging(props) {
     const [previous, setPrevious] = useState(null);
     const [elmsPhanTrang, setElmsPhanTrang] = useState(null);
     const [next, setNext] = useState(null);
-    const [notFound, setNotFound] = useState('Không tìm thấy kiểu dây nào!');
+    const [notFound, setNotFound] = useState('Không tìm thấy nhà cung cấp nào!');
 
     useEffect(() => {
         var result = null, pageIndex = dataValue.pageIndex;

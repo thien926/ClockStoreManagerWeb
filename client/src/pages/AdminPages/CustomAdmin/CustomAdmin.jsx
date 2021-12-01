@@ -1,129 +1,166 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router'
+import { toast } from 'react-toastify'
+import AdminCustomControl from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomControl'
+// import AdminCustomFormInfoAction from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomFormInfoAction'
+import AdminCustomItem from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomItem'
+import AdminCustomPaging from '../../../components/AdminComponents/AdminCustomComponent/AdminCustomPaging'
+import { ACT_CHANGE_STATUS_KHACHHANG_ADMIN_ERROR, ACT_OFF_STATUS_KHACHHANG_ADMIN_SUCCESS, ACT_ON_STATUS_KHACHHANG_ADMIN_SUCCESS } from '../../../constants/Message'
+import { actChangeStatusCustomAdmin, actGetCustomAdmin, actResetMessageCustomAdmin } from '../../../redux/actions/AdminCustomAction'
 
 function CustomAdmin() {
+
+    const AdminCustomReducer = useSelector(state => state.AdminCustomReducer)
+
+    const [search, setSearch] = useState('');
+    const [sort, setSort] = useState('name-asc');
+    const [pageIndex, setPageIndex] = useState(1);
+    const [elmListCustoms, setElmListCustoms] = useState(null);
+
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const utf8_from_str = (s) => {
+        var temp = decodeURIComponent(s);
+        temp = temp.split("+");
+        temp = temp.join(" ");
+        return temp;
+    }
+
+    // Load sort, search, pageIndex
+    useEffect(() => {
+        // console.log("location: ", location);
+        var { search } = location;
+        if(search === "") {
+            setSort('name-asc');
+            setPageIndex(1);
+            setSearch('');
+        } 
+        else {
+            var dauHoi = search.split('?');
+            var dauVa = dauHoi[dauHoi.length-1].split('&');
+            var dauBang;
+            for(let i = 0; i < dauVa.length; ++i) {
+                dauBang = dauVa[i].split('=');
+                switch (dauBang[0]) {
+                    case "sort":
+                        setSort(dauBang[1]);
+                        break;
+                    case "pageIndex":
+                        var value = parseInt(dauBang[1]);
+                        if(value) {
+                            setPageIndex(value);
+                        }
+                        else {
+                            setPageIndex(1);
+                        }
+                        
+                        break;
+                    case "search":
+                        setSearch(utf8_from_str(dauBang[1]));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }, [location])
+
+    useEffect(() => {
+        var data = {
+            sort,
+            search,
+            pageIndex
+        }
+        dispatch(actGetCustomAdmin(data));
+    }, [search, sort, pageIndex, dispatch])
+
+    useEffect(() => {
+        // console.log(AdminCustomReducer.dataValue)
+        var result = null;
+        if(AdminCustomReducer.dataValue.listKH && AdminCustomReducer.dataValue.listKH.length > 0) {
+            result = AdminCustomReducer.dataValue.listKH.map((item, index) => {
+                return <AdminCustomItem key={index} custom={item} index={index} submitChangeStatus={submitChangeStatus}/>
+            })
+        }
+        setElmListCustoms(result);
+    }, [AdminCustomReducer.dataValue])
+
+    // Hiên thông báo các sự kiện
+    useEffect(() => {
+        switch (AdminCustomReducer.message) {
+            case ACT_OFF_STATUS_KHACHHANG_ADMIN_SUCCESS:
+            case ACT_ON_STATUS_KHACHHANG_ADMIN_SUCCESS:
+                toast.success(AdminCustomReducer.message);
+                var filter = {
+                    search : search,
+                    sort: sort,
+                    pageIndex:pageIndex
+                }
+                // console.log(filter);
+                dispatch(actGetCustomAdmin(filter));
+                dispatch(actResetMessageCustomAdmin());
+                break;
+            case ACT_CHANGE_STATUS_KHACHHANG_ADMIN_ERROR : 
+                toast.error(AdminCustomReducer.message); 
+                dispatch(actResetMessageCustomAdmin());
+                break;
+            default:
+                break;
+        }
+    }, [AdminCustomReducer.message])
+
+    // đi đến URL khác khi search
+    const changeSearch = (searchValue) => {
+        navigate('/admin/custom?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
+    }
+
+    // đi đến URL khác khi sort
+    const changeSort = (sortValue) => {
+        navigate('/admin/custom?search=' + search + '&sort=' + sortValue + '&pageIndex=' + pageIndex);
+    }
+
+    const submitChangeStatus = (user) => {
+        // console.log(user);
+        dispatch(actChangeStatusCustomAdmin(user));
+    }
+
     return (
         <div>
             <div>
                 <h3 className="text-center mt-2">Quản lý khách hàng</h3>
                 <hr />
             </div>
-            <div className="row">
-                <div className="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-                    <div className="input-group">
-                        <input type="text" className="form-control" id="exampleInputAmount" placeholder="Search" />
-                        <span className="input-group-btn">
-                            <button type="button" className="btn btn-info ml-2">Tìm kiếm</button>
-                        </span>
-                    </div>
-                </div>
-                <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                    <select name id="input" className="form-control" required="required">
-                        <option value="a">Sắp xếp theo tên : A-Z</option>
-                    </select>
-                </div>
-            </div>
+            
+            <AdminCustomControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort}/>
 
             <div className="row mt-3">
                 <table className="table table-hover ">
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Action</th>
+                            <th>Tài khoản</th>
+                            <th>Tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Thư điện tử</th>
+                            <th>Địa chỉ</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Trạng thái</th>
+                            {/* <th>Hành động</th> */}
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
-                        </tr>
+                        {elmListCustoms}
                     </tbody>
                 </table>
             </div>
 
-            <div className='class-phan-trang'>
-                <Link className='btn btn-default' to='1'><i className="fa fa-angle-double-left" aria-hidden="true" /></Link>
-                <Link className='btn btn-default' to='1'><i className="fa fa-angle-left" aria-hidden="true" /></Link>
+            <AdminCustomPaging dataValue={AdminCustomReducer.dataValue} />
 
-                <Link className='btn btn-info' to='1'>1</Link>
-                <Link className='btn btn-default' to='2'>2</Link>
-
-                <Link className='btn btn-default' to='1'><i className="fa fa-angle-right" aria-hidden="true" /></Link>
-                <Link className='btn btn-default' to='1'><i className="fa fa-angle-double-right" aria-hidden="true" /></Link>
-                
-            </div>
-
-            <div className="row mt-3 ml-3 mr-3">
-                <div>
-                    <h3 className="text-center mt-2">Sửa khách hàng</h3>
-                    <hr />
-                </div>
-                <table className="table table-hover ">
-                    <tbody>
-                        <tr>
-                            <td>Tên</td>
-                            <td>
-                                <input type="email" className="form-control" required="required" />
-                            </td>
-                        </tr>
-                        <tr>
-                        <td>Tên</td>
-                            <td>
-                                <input type="email" className="form-control" required="required" />
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div className="mb-3">
-                    <button type="button" className="btn btn-primary mr-2">Sửa</button>
-                    <button type="button" className="btn btn-danger mr-2">Hủy</button>
-                </div>
-            </div>
+            {/* <AdminCustomFormInfoAction /> */}
 
         </div>
     )
