@@ -7,6 +7,7 @@ export const RESET_MESSAGE_PERMISSION_ADMIN = 'RESET_MESSAGE_PERMISSION_ADMIN';
 export const ADD_PERMISSION_ADMIN = 'ADD_PERMISSION_ADMIN';
 export const UPDATE_PERMISSION_ADMIN = 'UPDATE_PERMISSION_ADMIN';
 export const DELETE_PERMISSION_ADMIN = 'DELETE_PERMISSION_ADMIN';
+export const GETALL_PERMISSION_ADMIN = 'GETALL_PERMISSION_ADMIN';
 
 export const actResetMessagePermissionAdmin = () => (dispatch) => {
     dispatch({
@@ -14,6 +15,27 @@ export const actResetMessagePermissionAdmin = () => (dispatch) => {
         payload: ''
     })
 }
+
+export const actGetAllPermissionAdmin = () => (dispatch) => {
+    axios.get(
+        `${API_URL}quyen`,
+        {
+            header : {
+                'Content-Type' : 'application/json'
+            },
+            withCredentials : true,
+            credentials : 'include'
+        }
+    ).then((res) => {
+        dispatch({
+            type : GETALL_PERMISSION_ADMIN,
+            payload : res.data
+        })
+    }).catch(error => {
+        console.log('actGetAllPermissionAdmin error: ', error);
+    })
+}
+
 
 export const actGetPermissionAdmin = (data) => (dispatch) => {
     axios.post(

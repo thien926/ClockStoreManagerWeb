@@ -19,11 +19,11 @@
 //     message : ''
 // }
 
-import { ADD_PERMISSION_ADMIN, DELETE_PERMISSION_ADMIN, GET_PERMISSION_ADMIN, RESET_MESSAGE_PERMISSION_ADMIN, UPDATE_PERMISSION_ADMIN } from "../actions/AdminPermissionAction";
+import { ADD_PERMISSION_ADMIN, DELETE_PERMISSION_ADMIN, GETALL_PERMISSION_ADMIN, GET_PERMISSION_ADMIN, RESET_MESSAGE_PERMISSION_ADMIN, UPDATE_PERMISSION_ADMIN } from "../actions/AdminPermissionAction";
 
 const initialState = {
-    dataValue : {},
-    message : ''
+    dataValue: {},
+    message: ''
 }
 
 const AdminPermissionReducer = (state = initialState, action) => {
@@ -31,12 +31,12 @@ const AdminPermissionReducer = (state = initialState, action) => {
         case RESET_MESSAGE_PERMISSION_ADMIN:
             return {
                 ...state,
-                message : action.payload
+                message: action.payload
             }
         case GET_PERMISSION_ADMIN:
             return {
                 ...state,
-                dataValue : action.payload
+                dataValue: action.payload
             }
         case ADD_PERMISSION_ADMIN:
             return {
@@ -53,6 +53,11 @@ const AdminPermissionReducer = (state = initialState, action) => {
                 ...state,
                 message: action.payload
             };
+        case GETALL_PERMISSION_ADMIN:
+            return {
+                ...state,
+                dataValue: action.payload
+            }
         default:
             return {
                 ...state

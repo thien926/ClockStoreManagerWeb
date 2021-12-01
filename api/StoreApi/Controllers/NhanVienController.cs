@@ -45,6 +45,88 @@ namespace StoreApi.Controllers
             return nhanVienRepository.NhanVien_GetAll();
         }
 
+        // NhanVien Page Admin
+        [HttpPost]
+        public ActionResult<NhanVien> AddNV(NhanVienDto nvdto)
+        {
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    NhanVien nv = new NhanVien();
+
+                    // Mapping
+                    nv.user = nvdto.user;
+                    nv.password = BCrypt.Net.BCrypt.HashPassword(nvdto.password);
+                    nv.name = nvdto.name;
+                    nv.phone = nvdto.phone;
+                    nv.quyenId = nvdto.quyenId;
+                    nv.address = nvdto.address;
+                    nv.gender = nvdto.gender;
+                    nv.dateborn = nvdto.dateborn;
+                    nv.status = 1;
+
+                    var NV = this.nhanVienRepository.NhanVien_Add(nv);
+                    return Created("success", NV);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e);
+                }
+            }
+
+            return BadRequest();
+        }
+
+        // Update staff Page
+        [HttpPut("updatePasswordNV")]
+        public ActionResult<NhanVien> UpdatePasswordNV([FromBody] NhanVienPasswordDto nvdto)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var nv = nhanVienRepository.NhanVien_GetByUser(nvdto.user);
+                    // Mapping và sửa thông tin
+                    // nv.user = nvdto.user;
+                    nv.password = BCrypt.Net.BCrypt.HashPassword(nvdto.password);
+
+                    var NV = this.nhanVienRepository.NhanVien_Update(nv);
+                    return Created("success", NV);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e);
+                }
+            }
+            return BadRequest();
+        }
+
+        // Update staff Page
+        [HttpPut("updatePermissionNV")]
+        public ActionResult<NhanVien> UpdatePermissionNV([FromBody] NhanVienPermissionDto nvdto)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var nv = nhanVienRepository.NhanVien_GetByUser(nvdto.user);
+                    // Mapping và sửa thông tin
+                    // nv.user = nvdto.user;
+                    nv.quyenId = nvdto.quyenId;
+
+                    var NV = this.nhanVienRepository.NhanVien_Update(nv);
+                    return Created("success", NV);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e);
+                }
+            }
+            return BadRequest();
+        }
+
         [HttpPost("login")]
         public ActionResult LoginAdmin(LoginAdminDto dto) {
             var user = nhanVienRepository.NhanVien_GetByUser(dto.user);
@@ -89,7 +171,7 @@ namespace StoreApi.Controllers
             });
         }
 
-        // Admin Custom Page
+        // Admin staff Page
         [HttpPut("changeStatus/{user}")]
         public ActionResult<NhanVien> ChangeStatus(string user)
         {

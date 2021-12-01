@@ -28,7 +28,7 @@
 //     message : ''
 // }
 
-import { CHANGE_STATUS_STAFF_ADMIN, GET_STAFF_ADMIN, RESET_MESSAGE_STAFF_ADMIN } from "../actions/AdminStaffAction"
+import { ADD_STAFF_ADMIN, CHANGE_STATUS_STAFF_ADMIN, GET_STAFF_ADMIN, RESET_MESSAGE_STAFF_ADMIN, UPDATE_PASSWORD_STAFF_ADMIN, UPDATE_PERMISSION_STAFF_ADMIN } from "../actions/AdminStaffAction"
 
 const initialState = {
     dataValue: {},
@@ -48,6 +48,21 @@ const AdminStaffReducer = (state = initialState, action) => {
                 dataValue: action.payload
             }
         case CHANGE_STATUS_STAFF_ADMIN:
+            return {
+                ...state,
+                message: action.payload
+            }
+        case UPDATE_PASSWORD_STAFF_ADMIN:
+            return {
+                ...state,
+                message: action.payload
+            }
+        case UPDATE_PERMISSION_STAFF_ADMIN:
+            return {
+                ...state,
+                message: action.payload
+            }
+        case ADD_STAFF_ADMIN:
             return {
                 ...state,
                 message: action.payload

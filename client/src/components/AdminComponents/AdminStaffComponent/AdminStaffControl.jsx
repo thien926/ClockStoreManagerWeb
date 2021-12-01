@@ -15,7 +15,7 @@ function AdminStaffControl(props) {
     return (
         <div className="row">
             <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <button type="button" className="btn btn-primary">Thêm nhân viên <i className="fa fa-plus-circle" aria-hidden="true" /></button>
+                <button onClick={() => props.setActionValue("add")} type="button" className="btn btn-primary">Thêm nhân viên <i className="fa fa-plus-circle" aria-hidden="true" /></button>
             </div>
             <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <form onSubmit={onSubmit} className="form-horizontal">
