@@ -53,7 +53,7 @@ function UserAdmin() {
                         </tr>
                         <tr>
                             <td className="font-weight-bold">Ngày sinh: </td>
-                            <td>{UserAdmin.dataValue.dateborn.split("T")[0]}</td>
+                            <td>{UserAdmin.dataValue.dateborn}</td>
                         </tr>
                         <tr>
                             <td className="font-weight-bold">Quyền: </td>
