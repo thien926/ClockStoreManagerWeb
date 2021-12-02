@@ -1,10 +1,25 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { actGetUser } from '../../../redux/actions/LoginAdminAction';
+import { toast } from 'react-toastify';
+import AdminUserFormInfo from '../../../components/AdminComponents/AdminUserComponent/AdminUserFormInfo';
+import AdminUserFormPassword from '../../../components/AdminComponents/AdminUserComponent/AdminUserFormPassword';
+import { ACT_LOGIN_PASSWORD_ERROR, UPDATE_INFO_USER_ADMIN_ERROR, UPDATE_INFO_USER_ADMIN_SUCCESS, UPDATE_PASS_USER_ADMIN_ERROR, UPDATE_PASS_USER_ADMIN_SUCCESS } from '../../../constants/Message';
+import { actGetUser, actResetMessageUserNhanVien, actUpdateInfoUserAdmin, actUpdatePasswordUserAdmin } from '../../../redux/actions/LoginAdminAction';
 
 function UserAdmin() {
 
     const UserAdmin = useSelector(state => state.LoginAdminReducer)
+
+    const [user, setUser] = useState('');
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [address, setAddress] = useState('');
+    const [gender, setGender] = useState('');
+    const [dateborn, setDateborn] = useState('');
+    const [quyen, setQuyen] = useState('');
+
+    const [actionValue, setActionValue] = useState('');
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -12,8 +27,70 @@ function UserAdmin() {
     }, [dispatch])
 
     useEffect(() => {
-        console.log("Current User Admin : ", UserAdmin);
-    }, [UserAdmin])
+        // console.log("Current User Admin : ", UserAdmin);
+        if (UserAdmin.dataValue.user) {
+            setUser(UserAdmin.dataValue.user);
+        }
+        if (UserAdmin.dataValue.name) {
+            setName(UserAdmin.dataValue.name);
+        }
+        if (UserAdmin.dataValue.phone) {
+            setPhone(UserAdmin.dataValue.phone);
+        }
+        if (UserAdmin.dataValue.address) {
+            setAddress(UserAdmin.dataValue.address);
+        }
+        if (UserAdmin.dataValue.gender) {
+            setGender(UserAdmin.dataValue.gender);
+        }
+        if (UserAdmin.dataValue.dateborn) {
+            setDateborn(UserAdmin.dataValue.dateborn.split("T")[0]);
+        }
+        if (UserAdmin.dataValue.quyen) {
+            setQuyen(UserAdmin.dataValue.quyen.id + " - " + UserAdmin.dataValue.quyen.name);
+        }
+    }, [UserAdmin.dataValue])
+
+    useEffect(() => {
+        switch (UserAdmin.message) {
+            case UPDATE_INFO_USER_ADMIN_SUCCESS:
+            case UPDATE_PASS_USER_ADMIN_SUCCESS:
+                toast.success(UserAdmin.message)
+                dispatch(actResetMessageUserNhanVien());
+                setActionValue('');
+                break;
+            case UPDATE_INFO_USER_ADMIN_ERROR:
+            case UPDATE_PASS_USER_ADMIN_ERROR:
+            case ACT_LOGIN_PASSWORD_ERROR:
+                toast.error(UserAdmin.message)
+                dispatch(actResetMessageUserNhanVien());
+                break;
+            default:
+                break;
+        }
+    }, [UserAdmin.message])
+
+    const showForm = useCallback(
+        () => {
+            switch (actionValue) {
+                case 'update-info':
+                    return <AdminUserFormInfo submitFormUpdateInfo={submitFormUpdateInfo} dataValue={UserAdmin.dataValue} setActionValue={setActionValue}/>
+                case 'update-pass':
+                    return <AdminUserFormPassword submitFormUpdatePassword={submitFormUpdatePassword} dataValue={UserAdmin.dataValue} setActionValue={setActionValue}/>
+                default:
+                    return null;
+            }
+        },
+        [actionValue],
+    )
+
+    const submitFormUpdateInfo = (data) => {
+        dispatch(actUpdateInfoUserAdmin(data));
+    }
+
+    const submitFormUpdatePassword = (data) => {
+        dispatch(actUpdatePasswordUserAdmin(data));
+    }
 
     return (
         <div>
@@ -22,10 +99,8 @@ function UserAdmin() {
                 <hr />
             </div>
             <div className="row">
-                <button type="button" className="btn btn-primary ml-2">Sửa tài khoản <i className="fa fa-plus-circle" aria-hidden="true" /></button>
-
-                <button type="button" className="btn btn-danger ml-2">Thay đổi mật khẩu <i className="fa fa-edit" aria-hidden="true" /></button>
-
+                <button onClick={() => setActionValue("update-info")} type="button" className="btn btn-primary ml-2">Sửa tài khoản <i className="fa fa-plus-circle" aria-hidden="true" /></button>
+                <button onClick={() => setActionValue("update-pass")} type="button" className="btn btn-danger ml-2">Thay đổi mật khẩu <i className="fa fa-edit" aria-hidden="true" /></button>
             </div>
 
             <div className="row mt-3">
@@ -33,64 +108,37 @@ function UserAdmin() {
                     <tbody>
                         <tr>
                             <td className="font-weight-bold">Tên tài khoản: </td>
-                            <td>{UserAdmin.dataValue.user}</td>
+                            <td>{user}</td>
                         </tr>
                         <tr>
                             <td className="font-weight-bold">Họ tên: </td>
-                            <td>{UserAdmin.dataValue.name}</td>
+                            <td>{name}</td>
                         </tr>
                         <tr>
                             <td className="font-weight-bold">Số điện thoại: </td>
-                            <td>{UserAdmin.dataValue.phone}</td>
+                            <td>{phone}</td>
                         </tr>
                         <tr>
                             <td className="font-weight-bold">Địa chỉ: </td>
-                            <td>{UserAdmin.dataValue.address}</td>
+                            <td>{address}</td>
                         </tr>
                         <tr>
                             <td className="font-weight-bold">Giới tính: </td>
-                            <td>{UserAdmin.dataValue.gender}</td>
+                            <td>{gender}</td>
                         </tr>
                         <tr>
                             <td className="font-weight-bold">Ngày sinh: </td>
-                            <td>{UserAdmin.dataValue.dateborn}</td>
+                            <td>{dateborn.split("T")[0]}</td>
                         </tr>
                         <tr>
                             <td className="font-weight-bold">Quyền: </td>
-                            <td>{UserAdmin.dataValue.quyen.id} - {UserAdmin.dataValue.quyen.name}</td>
+                            <td>{quyen}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-
-            <div className="row mt-3 ml-3 mr-3">
-                <div>
-                    <h3 className="text-center mt-2">Thêm quyền</h3>
-                    <hr />
-                </div>
-                <table className="table table-hover ">
-                    <tbody>
-                        <tr>
-                            <td>Tên</td>
-                            <td>
-                                <input type="email" className="form-control" required="required" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Tên</td>
-                            <td>
-                                <input type="email" className="form-control" required="required" />
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div className="mb-3">
-                <button type="button" className="btn btn-primary mr-2">Thêm</button>
-                <button type="button" className="btn btn-danger mr-2">Hủy</button>
-            </div>
-            </div>
+            {showForm()}
         </div>
 
     )
