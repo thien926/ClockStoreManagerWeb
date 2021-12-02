@@ -57,6 +57,7 @@ export const ACT_REGISTER_ERROR = 'Đăng ký thất bại!';
 export const ACT_LOGIN_ERROR = 'Đăng nhập thất bại!';
 export const ACT_LOGOUT_ERROR = 'Đăng xuất thất bại!';
 export const ACT_LOGIN_USER_ERROR = 'Tài khoản không tồn tại!';
+export const ACT_LOGIN_USER_STATUS_ERROR = 'Tài khoản đã bị khóa!';
 export const ACT_LOGIN_PASSWORD_ERROR = 'Mật khẩu không đúng!';
 export const ACT_UPDATE_KHACHHANG_INFO_ERROR = 'Sửa thông tin khách hàng thất bại!';
 export const ACT_KHACHHANG_NOT_LOGIN_ERROR = 'Khách hàng chưa đăng nhập tài khoản!';

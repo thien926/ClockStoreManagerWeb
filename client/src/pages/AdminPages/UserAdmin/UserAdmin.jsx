@@ -1,6 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { actGetUser } from '../../../redux/actions/LoginAdminAction';
 
 function UserAdmin() {
+
+    const UserAdmin = useSelector(state => state.LoginAdminReducer)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(actGetUser());
+    }, [dispatch])
+
+    useEffect(() => {
+        console.log("Current User Admin : ", UserAdmin);
+    }, [UserAdmin])
+
     return (
         <div>
             <div>
@@ -16,67 +30,41 @@ function UserAdmin() {
 
             <div className="row mt-3">
                 <table className="table table-hover ">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
                     <tbody>
                         <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
-
+                            <td className="font-weight-bold">Tên tài khoản: </td>
+                            <td>{UserAdmin.dataValue.user}</td>
                         </tr>
                         <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
+                            <td className="font-weight-bold">Họ tên: </td>
+                            <td>{UserAdmin.dataValue.name}</td>
                         </tr>
                         <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
+                            <td className="font-weight-bold">Số điện thoại: </td>
+                            <td>{UserAdmin.dataValue.phone}</td>
                         </tr>
                         <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
+                            <td className="font-weight-bold">Địa chỉ: </td>
+                            <td>{UserAdmin.dataValue.address}</td>
                         </tr>
                         <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
+                            <td className="font-weight-bold">Giới tính: </td>
+                            <td>{UserAdmin.dataValue.gender}</td>
+                        </tr>
+                        <tr>
+                            <td className="font-weight-bold">Ngày sinh: </td>
+                            <td>{UserAdmin.dataValue.dateborn}</td>
+                        </tr>
+                        <tr>
+                            <td className="font-weight-bold">Quyền: </td>
+                            <td>{UserAdmin.dataValue.quyen.id} - {UserAdmin.dataValue.quyen.name}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
 
-            <div className="row mt-3">
+            <div className="row mt-3 ml-3 mr-3">
                 <div>
                     <h3 className="text-center mt-2">Thêm quyền</h3>
                     <hr />
@@ -96,12 +84,12 @@ function UserAdmin() {
 
                             </td>
                         </tr>
-                        <tr>
-                            <td colSpan="2"><button type="submit" className="btn btn-primary mt-4 btn-submit-product-admin">Thêm</button></td>
-                        </tr>
-
                     </tbody>
                 </table>
+                <div className="mb-3">
+                <button type="button" className="btn btn-primary mr-2">Thêm</button>
+                <button type="button" className="btn btn-danger mr-2">Hủy</button>
+            </div>
             </div>
         </div>
 
