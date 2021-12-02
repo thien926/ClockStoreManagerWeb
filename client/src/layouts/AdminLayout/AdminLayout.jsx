@@ -7,6 +7,7 @@ function AdminLayout() {
     return (
         <div className='layout-admin'>
             <AdminMenu />
+
             <div className="content">
                 <Outlet />
             </div>

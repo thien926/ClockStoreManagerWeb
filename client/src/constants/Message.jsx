@@ -79,3 +79,7 @@ export const ACT_CHANGE_STATUS_STAFF_ADMIN_ERROR = 'Thay đổi trạng thái t�
 export const ADD_STAFF_ADMIN_ERROR = "Thêm nhân viên thất bại!";
 export const UPDATE_PASS_STAFF_ADMIN_ERROR = "Sửa mật khẩu nhân viên thất bại!";
 export const UPDATE_PERMISSION_STAFF_ADMIN_ERROR = "Sửa quyền nhân viên thất bại!";
+export const UPDATE_PASS_USER_ADMIN_SUCCESS = "Sửa mật khẩu tài khoản thành công!";
+export const UPDATE_INFO_USER_ADMIN_SUCCESS = "Sửa thông tin cá nhân thành công!";
+export const UPDATE_PASS_USER_ADMIN_ERROR = "Sửa mật khẩu tài khoản thất bại!";
+export const UPDATE_INFO_USER_ADMIN_ERROR = "Sửa thông tin cá nhân thất bại!";
