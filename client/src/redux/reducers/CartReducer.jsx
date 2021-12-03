@@ -51,7 +51,7 @@
 // }
 
 import { REMOVE_SP_FOR_CART_SUCCESS } from "../../constants/Message";
-import { ADD_ONE_SP_FOR_CART, LOAD_SP_FOR_CART, REMOVE_SP_FOR_CART, RESET_MESSAGE_CART, SUB_ONE_SP_FOR_CART, UPDATE_AMOUNT_SP_FOR_CART } from "../actions/CartAction";
+import { ADD_ONE_SP_FOR_CART, CHECKOUT_CART, LOAD_SP_FOR_CART, REMOVE_SP_FOR_CART, RESET_CART, RESET_MESSAGE_CART, SUB_ONE_SP_FOR_CART, UPDATE_AMOUNT_SP_FOR_CART } from "../actions/CartAction";
 
 
 const initialState = {
@@ -94,6 +94,16 @@ const CartReducer = (state = initialState, action) => {
                 ...state,
                 dataValue: (action.payload.message === REMOVE_SP_FOR_CART_SUCCESS) ? action.payload.data : state.dataValue,
                 message: action.payload.message
+            }
+        case CHECKOUT_CART:
+            return {
+                ...state,
+                message: action.payload
+            }
+        case RESET_CART:
+            return {
+                ...state,
+                dataValue: action.payload
             }
 
         default:

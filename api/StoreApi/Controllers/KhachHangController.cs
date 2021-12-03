@@ -18,6 +18,7 @@ namespace StoreApi.Controllers
         private int pageSize = 9;
         private int range = 9;
         private readonly IKhachHangRepository KhachHangRepository;
+        private readonly IHoaDonRepository hoaDonRepository;
         private readonly JwtKhachHangService jwtKhachHang;
         public KhachHangController(IKhachHangRepository KhachHangRepository, JwtKhachHangService jwtKhachHang)
         {

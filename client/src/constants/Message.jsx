@@ -91,3 +91,5 @@ export const REMOVE_SP_FOR_CART_SUCCESS = "Xóa sản phẩm khỏi giỏ thành
 export const REMOVE_SP_FOR_CART_ERROR = "Xóa sản phẩm khỏi giỏ thất bại!";
 export const SUB_ONE_SP_FOR_CART_SUCCESS = "Giảm số lượng sản phẩm trong giỏ thành công!";
 export const SUB_ONE_SP_FOR_CART_ERROR = "Giảm số lượng sản phẩm trong giỏ thất bại!";
+export const CHECKOUT_CART_SUCCESS = "Lập đơn hàng thành công!";
+export const CHECKOUT_CART_ERROR = "Lập đơn hàng thất bại!";

@@ -9,6 +9,7 @@ export const RESET_MESSAGE_USER_KHACHHANG = 'RESET_MESSAGE_USER_KHACHHANG'
 export const ACT_GET_CURRENT_USER_KHACHHANG = 'ACT_GET_CURRENT_USER_KHACHHANG'
 export const ACT_KHACHHANG_UPDATE_INFO = 'ACT_KHACHHANG_UPDATE_INFO';
 export const ACT_KHACHHANG_UPDATE_PASSWORD = 'ACT_KHACHHANG_UPDATE_PASSWORD';
+export const GET_BILL_BY_USERKH = 'GET_BILL_BY_USERKH';
 
 export const actResetMessageUserKhachHang = () => (dispatch) => {
     dispatch({
@@ -100,7 +101,7 @@ export const actGetCurrentUserKhachHang = (data) => (dispatch) => {
             credentials: 'include'
         }
     ).then((res) => {
-        console.log("CurrentUserKhachHang: ", res.data)
+        // console.log("CurrentUserKhachHang: ", res.data)
         dispatch({
             type: ACT_GET_CURRENT_USER_KHACHHANG,
             payload: {
@@ -239,5 +240,30 @@ export const actUpdatePasswordKhachHang = (data) => (dispatch) => {
             });
         }
 
+    })
+}
+
+export const actGetBillByUserKH = (pageIndex) => (dispatch) => {
+    axios.get(
+        `${API_URL}hoadon/getByUserKH/${pageIndex}`,
+        {
+            header: {
+                'Content-Type': 'application/json'
+            },
+            withCredentials: true,
+            credentials: 'include'
+        }
+    ).then((res) => {
+        // console.log("data: ", res.data);
+        dispatch({
+            type: GET_BILL_BY_USERKH,
+            payload: res.data
+        })
+    }).catch((error) => {
+        console.log("actGetBillByUserKH error: ", error);
+        dispatch({
+            type: GET_BILL_BY_USERKH,
+            payload: {}
+        });
     })
 }

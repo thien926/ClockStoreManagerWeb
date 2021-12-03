@@ -18,5 +18,6 @@ namespace StoreApi.Interfaces
         IEnumerable<SanPham> SanPham_GetByLSPId(int lspId, int pageSize);
         IEnumerable<SanPham> SanPham_ListCart(string list);
         IEnumerable<SanPham> SanPham_LoadByListIdSP(List<int> listId);
+        void SanPham_UpdateRand(List<SanPham> list);
     }
 }   

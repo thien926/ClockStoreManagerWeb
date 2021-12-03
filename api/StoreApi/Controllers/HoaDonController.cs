@@ -40,8 +40,8 @@ namespace StoreApi.Controllers
             return this.HoaDonRepository.HoaDon_GetById(id);
         }
 
-        [HttpGet("getByUserKH")]
-        public IEnumerable<HoaDon> GetByUserKH()
+        [HttpGet("getByUserKH/{pageIndex}")]
+        public ActionResult<ViewBillShopDto> GetByUserKH(int pageIndex)
         {
             // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
             var jwt = Request.Cookies["jwt-khachhang"];
@@ -51,8 +51,20 @@ namespace StoreApi.Controllers
             var token = jwtKhachHang.Verify(jwt);
             var user = token.Issuer;
 
-            var listHD = HoaDonRepository.HoaDon_GetByUserKH(user);
-            return listHD;
+            int count;
+
+            var HoaDons = HoaDonRepository.HoaDon_GetByUserKH(user, pageIndex, pageSize, out count);
+            
+            var ListHD = new PaginatedList<HoaDon>(HoaDons, count, pageIndex, pageSize);
+            ViewBillShopDto view = new ViewBillShopDto() {
+                ListHD = ListHD,
+                pageIndex = pageIndex,
+                pageSize = this.pageSize,
+                count = count,
+                range = this.range,
+                totalPage = ListHD.TotalPages
+            };
+            return view;
         }
 
         // [HttpPost]

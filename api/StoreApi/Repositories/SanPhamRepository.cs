@@ -38,6 +38,12 @@ namespace StoreApi.Repositories
             return SP;
         }
 
+        public void SanPham_UpdateRand(List<SanPham> list)
+        {
+            context.SanPhams.UpdateRange(list);
+            context.SaveChanges();
+        }
+
         public void SanPham_Delete(SanPham SP)
         {
             context.SanPhams.Remove(SP);

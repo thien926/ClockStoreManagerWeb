@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import CartItem from '../../../components/ShopComponents/CartComponent/CartItem'
-import { actRemoveSPForCart, actSubtractOneSPForCart, actUpdateAmountSPForCart } from '../../../redux/actions/CartAction'
+import { actCheckoutCart, actRemoveSPForCart, actSubtractOneSPForCart, actUpdateAmountSPForCart } from '../../../redux/actions/CartAction'
 
 function Cart() {
 
@@ -15,12 +15,18 @@ function Cart() {
     const [elmListItem, setelmListItem] = useState(null);
     const [address, setAddress] = useState('');
 
+    // var user = '';
+
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (UserKhachHangReducer.address) {
             setAddress(UserKhachHangReducer.address);
         }
+
+        // if (UserKhachHangReducer.user) {
+        //     user = UserKhachHangReducer.user;
+        // }
     }, [UserKhachHangReducer])
 
     useEffect(() => {
@@ -58,10 +64,14 @@ function Cart() {
             return;
         }
 
-        if(!UserKhachHangReducer.user) {
-            toast.error("Chưa đăng nhập!");
-            return;
+        var data = {
+            address : address,
+            donhang : localStorage.getItem("donhang")
         }
+
+        console.log(data);
+
+        dispatch(actCheckoutCart(data));
     }
 
     return (

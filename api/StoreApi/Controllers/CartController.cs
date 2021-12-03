@@ -73,7 +73,7 @@ namespace StoreApi.Controllers
                 var jwt = Request.Cookies["jwt-khachhang"];
                 if (jwt == null)
                 {
-                    return NotFound(new { messgae = "Khách hàng chưa đăng nhập tài khoản!" });
+                    return NotFound(new { message = "Khách hàng chưa đăng nhập tài khoản!" });
                 }
                 var token = jwtKhachHang.Verify(jwt);
                 var user = token.Issuer;
@@ -81,16 +81,16 @@ namespace StoreApi.Controllers
 
                 if (kh == null)
                 {
-                    return NotFound(new { messgae = "Không tìm thấy tài khoản khách hàng!" });
+                    return NotFound(new { message = "Không tìm thấy tài khoản khách hàng!" });
                 }
 
                 if (kh.status == 0)
                 {
-                    return NotFound(new { messgae = "Tài khoản khách hàng đã bị khóa!" });
+                    return NotFound(new { message = "Tài khoản khách hàng đã bị khóa!" });
                 }
 
-                List<int> listProduct_id = new List<int>();
-                List<int> listSoluong = new List<int>();
+                List<int> listProduct_id = new List<int>(); // lưu Id sản phẩm
+                List<int> listSoluong = new List<int>();    // lưu số lượng sản phẩm của giỏ hàng
 
                 var list = cart.donhang.Trim('&');
                 string[] arrlist = list.Split('&');
@@ -121,7 +121,9 @@ namespace StoreApi.Controllers
                     }
                 }
 
+                // load danh sách sản phẩm xem thử sản phẩm nào đã hết hàng
                 var sps = sanPhamRepository.SanPham_LoadByListIdSP(listProduct_id);
+
                 foreach (var q in sps)
                 {
                     // Kiểm tra kho còn sản phẩm ko
@@ -131,12 +133,11 @@ namespace StoreApi.Controllers
                             // Console.WriteLine(listProduct_id[i] + " " + listSoluong[i]);
                             if (q.amount < listSoluong[i])
                             {
-                                Console.WriteLine(q.amount + " " + listSoluong[i]);
-                                return BadRequest(new {messgae = "Sản phẩm trong kho đã hết!"});
+                                // Console.WriteLine("Sản phẩm "+ q.name +" trong kho không đủ!");
+                                return BadRequest(new {message = "Sản phẩm "+ q.name +" trong kho không đủ!"});
                             }
                             else
                             {
-                                q.amount = listSoluong[i];
                                 total += q.price * listSoluong[i];
                             }
                         }
@@ -146,40 +147,39 @@ namespace StoreApi.Controllers
 
                 HoaDon hd = new HoaDon();
                 hd.KHuser = kh.user;
-                //             hd.NVuser = hddto.NVuser;
                 hd.phone = kh.phone;
                 hd.address = cart.address;
-                //             hd.date_receice = hddto.date_receice;
                 hd.date_order = System.DateTime.Now;
                 hd.total = total;
                 hd.status = 1;
 
                 hd = hoaDonRepository.HoaDon_Add(hd);
-                // chiTietHDRepository.ChiTietHD_AddRangeWithListSP(sps, hd.Id);
-
                 List<ChiTietHD> listCTHD = new List<ChiTietHD>();
 
                 foreach (var item in sps)
                 {
-                    ChiTietHD newChiTietHD = new ChiTietHD();
-                    newChiTietHD.billId = hd.Id;
-                    newChiTietHD.productId = item.Id;
-                    newChiTietHD.name = item.name;
-                    newChiTietHD.amount = item.amount;
-                    newChiTietHD.price = item.price;
-                    newChiTietHD.img = item.img;
-                    listCTHD.Add(newChiTietHD);
+                    for(i = 0; i < listProduct_id.Count(); ++i) {
+                        if(item.Id == listProduct_id[i]) {
+                            ChiTietHD newChiTietHD = new ChiTietHD();
+                            newChiTietHD.billId = hd.Id;
+                            newChiTietHD.productId = item.Id;
+                            newChiTietHD.name = item.name;
+                            newChiTietHD.amount = listSoluong[i];
+                            newChiTietHD.price = item.price;
+                            newChiTietHD.img = item.img;
+                            listCTHD.Add(newChiTietHD);
+
+                            item.amount = item.amount - listSoluong[i];
+                        }
+                    }
                 }
-
                 chiTietHDRepository.ChiTietHD_AddRange(listCTHD);
-
-                // hd.chitietHDs = (ICollection<ChiTietHD>)chiTietHDRepository.ChiTietHD_AddRange(listCTHD);
-                // hd.chitietHDs = (ICollection<ChiTietHD>)chiTietHDRepository.ChiTietHD_GetByBillId(hd.Id);
-                return Ok();
+                sanPhamRepository.SanPham_UpdateRand((List<SanPham>)sps);
+                return Ok(new { message = "Thêm đơn hàng thành công!" });
             }
             catch (Exception e)
             {
-                return null;
+                return BadRequest(new {message = "Lỗi thêm đơn hàng!", error = e});
             }
         }
     }

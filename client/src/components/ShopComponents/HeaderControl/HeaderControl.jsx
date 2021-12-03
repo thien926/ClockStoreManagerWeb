@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { actLoadSPForCart, actRemoveSPForCart, actResetMessageCart } from '../../../redux/actions/CartAction';
+import { actLoadSPForCart, actRemoveSPForCart, actResetDataCart, actResetMessageCart } from '../../../redux/actions/CartAction';
 import { API_URL_IMG } from '../../../constants/Config';
-import { ADD_ONE_SP_FOR_CART_ERROR, ADD_ONE_SP_FOR_CART_SUCCESS, REMOVE_SP_FOR_CART_ERROR, REMOVE_SP_FOR_CART_SUCCESS, SUB_ONE_SP_FOR_CART_ERROR, SUB_ONE_SP_FOR_CART_SUCCESS } from '../../../constants/Message';
+import { ADD_ONE_SP_FOR_CART_ERROR, ADD_ONE_SP_FOR_CART_SUCCESS, CHECKOUT_CART_ERROR, CHECKOUT_CART_SUCCESS, REMOVE_SP_FOR_CART_ERROR, REMOVE_SP_FOR_CART_SUCCESS, SUB_ONE_SP_FOR_CART_ERROR, SUB_ONE_SP_FOR_CART_SUCCESS } from '../../../constants/Message';
 import { toast } from 'react-toastify';
 
 function HeaderControl() {
@@ -60,14 +60,24 @@ function HeaderControl() {
                 toast.success(CartReducer.message);
                 dispatch(actResetMessageCart())
                 break;
+            case CHECKOUT_CART_SUCCESS:
+                toast.success(CartReducer.message);
+                dispatch(actResetDataCart());
+                dispatch(actResetMessageCart())
+                break;
             case ADD_ONE_SP_FOR_CART_ERROR:
             case SUB_ONE_SP_FOR_CART_ERROR:
             case REMOVE_SP_FOR_CART_ERROR:
+            case CHECKOUT_CART_ERROR:
                 toast.error(CartReducer.message);
                 dispatch(actResetMessageCart())
                 break;
 
             default:
+                if (CartReducer.message) {
+                    toast.error(CartReducer.message);
+                    dispatch(actResetMessageCart())
+                }
                 break;
         }
     }, [CartReducer.message, dispatch])

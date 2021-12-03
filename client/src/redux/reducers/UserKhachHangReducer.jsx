@@ -11,14 +11,37 @@
 //         "status": 1,
 //         "hoadons": []
 //     },
+//     hoaDonValue: {
+//         "listHD": [
+//             {
+//                 "id": 5,
+//                 "kHuser": "thom",
+//                 "nVuser": null,
+//                 "phone": "0364117408",
+//                 "address": "An Lão",
+//                 "date_receice": null,
+//                 "date_order": "2021-12-03T16:10:00.2352113",
+//                 "total": 19160000,
+//                 "status": 1,
+//                 "kh": null,
+//                 "nv": null
+//             }
+//         ],
+//         "pageIndex": 1,
+//         "pageSize": 9,
+//         "count": 37,
+//         "range": 9,
+//         "totalPage": 5
+//     },
 //     message : ''
 // }
 
-import { ACT_GET_CURRENT_USER_KHACHHANG, ACT_KHACHHANG_LOGIN, ACT_KHACHHANG_LOGOUT, ACT_KHACHHANG_REGISTER, ACT_KHACHHANG_UPDATE_INFO, ACT_KHACHHANG_UPDATE_PASSWORD, RESET_MESSAGE_USER_KHACHHANG } from "../actions/UserKhachHangAction";
+import { ACT_GET_CURRENT_USER_KHACHHANG, ACT_KHACHHANG_LOGIN, ACT_KHACHHANG_LOGOUT, ACT_KHACHHANG_REGISTER, ACT_KHACHHANG_UPDATE_INFO, ACT_KHACHHANG_UPDATE_PASSWORD, GET_BILL_BY_USERKH, RESET_MESSAGE_USER_KHACHHANG } from "../actions/UserKhachHangAction";
 
 
 const initialState = {
     dataValue: {},
+    hoaDonValue: {},
     message: '',
 }
 
@@ -62,6 +85,11 @@ const UserKhachHangReducer = (state = initialState, action) => {
                 ...state,
                 dataValue: action.payload.khachhang ? action.payload.khachhang : state.dataValue,
                 message: action.payload.message
+            }
+        case GET_BILL_BY_USERKH:
+            return {
+                ...state,
+                hoaDonValue: action.payload
             }
         default:
             return {
