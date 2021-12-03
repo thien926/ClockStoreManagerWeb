@@ -1,8 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { ACT_LOGOUT_ERROR, ACT_LOGOUT_SUCCESS } from '../../../constants/Message'
+import { actGetUser, actLogoutAdmin, actResetMessageUserNhanVien } from '../../../redux/actions/LoginAdminAction'
 import CustomLinkAdmin from '../CustomLinkAdmin/CustomLinkAdmin'
 import { CustomLinkMobileMenuAdmin } from '../CustomLinkAdmin/CustomLinkAdmin'
 
 function AdminMenu() {
+    const UserAdmin = useSelector(state => state.LoginAdminReducer)
+    const [user, setUser] = useState('');
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(actGetUser());
+    }, [dispatch])
+
+    useEffect(() => {
+        // console.log("Current User Admin : ", UserAdmin);
+        if (UserAdmin.dataValue.name) {
+            setUser(UserAdmin.dataValue.name);
+        }
+    }, [UserAdmin.dataValue])
+
+    useEffect(() => {
+        switch (UserAdmin.message) {
+            case ACT_LOGOUT_SUCCESS:
+                toast.success(UserAdmin.message);
+                dispatch(actResetMessageUserNhanVien());
+                break;
+            case ACT_LOGOUT_ERROR:
+                toast.error(UserAdmin.message);
+                dispatch(actResetMessageUserNhanVien());
+                break;
+
+            default:
+                break;
+        }
+    }, [UserAdmin.message])
+
+    const submitLogout = () => {
+        dispatch(actLogoutAdmin());
+    }
+
     return (
         <div>
             <div id="accordianId" role="tablist" aria-multiselectable="true">
@@ -46,6 +86,12 @@ function AdminMenu() {
                 <CustomLinkAdmin to="/admin/permission">Quyền</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/bill">Hóa đơn</CustomLinkAdmin>
             </div>
+
+            <nav className="navbar navbar-inverse border-bottom">
+                <ul className="nav navbar-nav">
+                </ul>
+                <p className="navbar-text"><span>{user}</span> | <button onClick={submitLogout}>Đăng xuất</button></p>
+            </nav>
         </div>
     )
 }

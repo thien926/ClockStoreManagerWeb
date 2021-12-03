@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoreApi.DTOs
 {
-    public class LoginAdminDto
+    public class UserPasswordDto
     {
         [Required(ErrorMessage = "Tài khoản bắt buộc")]
         [StringLength(maximumLength:25, MinimumLength = 3, ErrorMessage = "Tài khoản từ 3 đến 25 kí tự")]
@@ -15,6 +15,13 @@ namespace StoreApi.DTOs
 
         [Required(ErrorMessage = "Mật khẩu là bắt buộc")]
         [StringLength(maximumLength:25, MinimumLength = 4, ErrorMessage = "Mật khẩu từ 4 đến 25 kí tự")]
-        public string password { get; set; }
+        public string oldPassword{get; set;}
+
+        [Required(ErrorMessage = "Mật khẩu là bắt buộc")]
+        [StringLength(maximumLength:25, MinimumLength = 4, ErrorMessage = "Mật khẩu từ 4 đến 25 kí tự")]
+        public string newPassword{get; set;}
+
+        [Compare(otherProperty:"newPassword", ErrorMessage ="Nhập lại mật khẩu không khớp với mật khẩu đã nhập")]
+        public string rePassword{get; set;}
     }
 }
