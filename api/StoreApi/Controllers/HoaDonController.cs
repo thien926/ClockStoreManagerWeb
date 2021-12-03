@@ -18,18 +18,41 @@ namespace StoreApi.Controllers
         private int pageSize = 9;
         private int range = 9;
         private readonly IHoaDonRepository HoaDonRepository;
-        public HoaDonController(IHoaDonRepository HoaDonRepository) {
+        private readonly IKhachHangRepository khachHangRepository;
+        private readonly JwtKhachHangService jwtKhachHang;
+        public HoaDonController(IHoaDonRepository HoaDonRepository, JwtKhachHangService jwtKhachHang,
+        IKhachHangRepository khachHangRepository)
+        {
             this.HoaDonRepository = HoaDonRepository;
+            this.jwtKhachHang = jwtKhachHang;
+            this.khachHangRepository = khachHangRepository;
         }
 
         [HttpGet]
-        public IEnumerable<HoaDon> GetAll() {
+        public IEnumerable<HoaDon> GetAll()
+        {
             return this.HoaDonRepository.HoaDon_GetAll();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<HoaDon> GetById(int id) {
+        public ActionResult<HoaDon> GetById(int id)
+        {
             return this.HoaDonRepository.HoaDon_GetById(id);
+        }
+
+        [HttpGet("getByUserKH")]
+        public IEnumerable<HoaDon> GetByUserKH()
+        {
+            // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
+            var jwt = Request.Cookies["jwt-khachhang"];
+            if (jwt == null) {
+                return null;
+            }
+            var token = jwtKhachHang.Verify(jwt);
+            var user = token.Issuer;
+
+            var listHD = HoaDonRepository.HoaDon_GetByUserKH(user);
+            return listHD;
         }
 
         // [HttpPost]
@@ -64,12 +87,16 @@ namespace StoreApi.Controllers
 
         // Chỉ sửa trạng thái của hóa đơn 
         [HttpPut("{id}")]
-        public ActionResult<HoaDon> UpdateHD([FromBody] HoaDonDto hddto, int id) {
-            if(ModelState.IsValid) {
-                try {
+        public ActionResult<HoaDon> UpdateHD([FromBody] HoaDonDto hddto, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
                     var hd = HoaDonRepository.HoaDon_GetById(id);
 
-                    if(hd == null || hddto.Id != id) {
+                    if (hd == null || hddto.Id != id)
+                    {
                         return NotFound();
                     }
                     // hd.status = hddto.status;
@@ -79,17 +106,20 @@ namespace StoreApi.Controllers
                     //     -   Đang giao hàng: 2
                     //     -   Đã giao hàng : 3
                     //     -   Đã hủy đơn hàng
-                    if(hd.status < hddto.status) {
+                    if (hd.status < hddto.status)
+                    {
                         hd.status = hddto.status;
                     }
-                    else {
+                    else
+                    {
                         return BadRequest(new { message = "Cập nhật trạng thái không thành công!" });
                     }
 
                     var HD = this.HoaDonRepository.HoaDon_Update(hd);
                     return Ok(HD);
                 }
-                catch(Exception e) {
+                catch (Exception e)
+                {
                     return BadRequest(e);
                 }
             }
@@ -97,9 +127,11 @@ namespace StoreApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteHD(int id) {
+        public ActionResult DeleteHD(int id)
+        {
             var HD = HoaDonRepository.HoaDon_GetById(id);
-            if(HD == null) {
+            if (HD == null)
+            {
                 return NotFound();
             }
             HoaDonRepository.HoaDon_Delete(HD);
@@ -107,11 +139,13 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost("filter-admin")]
-        public ViewHoaDonAdminDto FilterAdmin(FilterHoaDonDto data) {
+        public ViewHoaDonAdminDto FilterAdmin(FilterHoaDonDto data)
+        {
             int count;
             var HoaDons = HoaDonRepository.HoaDon_FilterAdmin(data.search, data.status, data.pageIndex, pageSize, out count);
             var ListHD = new PaginatedList<HoaDon>(HoaDons, count, data.pageIndex, pageSize);
-            ViewHoaDonAdminDto view = new ViewHoaDonAdminDto() {
+            ViewHoaDonAdminDto view = new ViewHoaDonAdminDto()
+            {
                 ListHD = ListHD,
                 search = data.search,
                 status = data.status,

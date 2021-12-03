@@ -14,6 +14,8 @@ import UserKhachHangReducer from './UserKhachHangReducer'
 import AdminCustomReducer from './AdminCustomReducer'
 import AdminStaffReducer from './AdminStaffReducer'
 import AdminPermissionReducer from './AdminPermissionReducer'
+import CartReducer from './CartReducer'
+
 
 const appReducers = combineReducers({
     LoginAdminReducer : LoginAdminReducer,
@@ -30,7 +32,8 @@ const appReducers = combineReducers({
     ShopPageReducer,
     HomePageReducer,
     ProductPageReducer,
-    UserKhachHangReducer
+    UserKhachHangReducer,
+    CartReducer
 })
 
 export default appReducers

@@ -157,5 +157,50 @@ namespace StoreApi.Repositories
             }
             return query.Take(pageSize).ToList();
         }
+
+        public IEnumerable<SanPham> SanPham_ListCart(string list) {
+            // Console.WriteLine(list);
+            var query = context.SanPhams.AsQueryable();
+            if(!string.IsNullOrEmpty(list)) {
+                List<int> listProduct_id = new List<int>();
+                List<int> listSoluong = new List<int>();
+                list = list.Trim('&');
+                string[] arrlist = list.Split('&');
+                string[] temp;
+                int i = 0;
+                for(i = 0; i < arrlist.Length-1; ++i) {
+                    if(!string.IsNullOrEmpty(arrlist[i])) {
+                        temp = arrlist[i].Split('-');
+                        if(!string.IsNullOrEmpty(temp[0])) {
+                            listProduct_id.Add(int.Parse(temp[0]));
+                            listSoluong.Add(int.Parse(temp[1]));
+                        }
+                    }
+                }
+
+                if(!string.IsNullOrEmpty(arrlist[i])) {
+                    temp = arrlist[i].Split('-');
+                    if(!string.IsNullOrEmpty(temp[0])) {
+                        listProduct_id.Add(int.Parse(temp[0]));
+                        listSoluong.Add(int.Parse(temp[1]));
+                    }
+                }
+
+                query = query.Where(m => listProduct_id.Contains(m.Id));
+                int index = 0;
+                foreach(var q in listProduct_id) {
+                    foreach(var qq in query) {
+                        if(q == qq.Id) {
+                            qq.amount = listSoluong[index];
+                        }
+                    }
+                    ++index;
+                }
+
+                return query.ToList();
+            }
+
+            return null;
+        }
     }
 }

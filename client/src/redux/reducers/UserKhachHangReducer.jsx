@@ -20,7 +20,6 @@ import { ACT_GET_CURRENT_USER_KHACHHANG, ACT_KHACHHANG_LOGIN, ACT_KHACHHANG_LOGO
 const initialState = {
     dataValue: {},
     message: '',
-    cart: {}
 }
 
 const UserKhachHangReducer = (state = initialState, action) => {

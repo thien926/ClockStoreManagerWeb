@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { API_URL_IMG } from '../../../constants/Config';
 
 function ProductDetail(props) {
     const { product } = props;
 
     const [amount, setAmount] = useState(1);
+    const dispatch = useDispatch();
 
     const changeAmount = (value) => {
         var format = /\D/g;
@@ -37,6 +39,12 @@ function ProductDetail(props) {
         }
         else {
             setAmount(value);
+        }
+    }
+
+    const submitAddSP = () => {
+        if(parseInt(amount)) {
+            props.submitAddSP(product.id, amount);
         }
     }
 
@@ -78,7 +86,7 @@ function ProductDetail(props) {
                                             <i className="fa fa-plus" />
                                         </button>
                                     </div>
-                                    <button className="primary-btn btn">
+                                    <button onClick={submitAddSP} className="primary-btn btn">
                                         Thêm sản phẩm
                                     </button>
                                     <ul className="pd-tags mt-4">

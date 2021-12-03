@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import ProductConnexion from "../../../components/ShopComponents/ProductPageComponent/ProductConnexion";
 import ProductDetail from "../../../components/ShopComponents/ProductPageComponent/ProductDetail";
+import { actAddOneSPForCart, actUpdateAmountSPForCart } from "../../../redux/actions/CartAction";
 import { actGetProductPage } from "../../../redux/actions/ProductPageAction";
 
 function Product() {
@@ -27,7 +28,7 @@ function Product() {
 
   useEffect(() => {
     if (ProductPageReducer.product) {
-      setElmProductDetail(<ProductDetail product={ProductPageReducer.product} />)
+      setElmProductDetail(<ProductDetail submitAddSP={submitAddSP} product={ProductPageReducer.product} />)
     }
     else {
       setElmProductDetail(null);
@@ -36,11 +37,19 @@ function Product() {
     var result = null;
     if (ProductPageReducer.listRelationship) {
       result = ProductPageReducer.listRelationship.map((product, index) => {
-        return <ProductConnexion key={index} product={product} />
+        return <ProductConnexion submitAddOneSPForCart={submitAddOneSPForCart} key={index} product={product} />
       })
     }
     setElemListConnexion(result);
   }, [ProductPageReducer])
+
+  const submitAddSP = (id, amount) => {
+    dispatch(actUpdateAmountSPForCart(id, amount));
+  }
+
+  const submitAddOneSPForCart = (id) => {
+    dispatch(actAddOneSPForCart(id));
+  }
 
   return (
     <div>

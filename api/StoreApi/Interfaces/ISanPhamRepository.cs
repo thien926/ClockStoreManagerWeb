@@ -16,6 +16,6 @@ namespace StoreApi.Interfaces
         IEnumerable<SanPham> SanPham_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count);
         IEnumerable<SanPham> SanPham_FilterProductShop(int lspId, int branchId, int machineId, int wireId, int priceFrom, int priceTo, string search, string sort, int pageIndex, int pageSize, out int count);
         IEnumerable<SanPham> SanPham_GetByLSPId(int lspId, int pageSize);
-
+        IEnumerable<SanPham> SanPham_ListCart(string list);
     }
 }   

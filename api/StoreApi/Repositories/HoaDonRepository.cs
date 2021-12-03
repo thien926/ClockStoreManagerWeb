@@ -26,6 +26,20 @@ namespace StoreApi.Repositories
             return context.HoaDons.FirstOrDefault(o => o.Id == id);
         }
 
+        public IEnumerable<HoaDon> HoaDon_GetByUserKH(string user)
+        {
+            var query = context.HoaDons.AsQueryable();
+            query = query.Where(m => m.KHuser == user);
+            return query.ToList();
+        }
+
+        public IEnumerable<HoaDon> HoaDon_GetByUserNV(string user)
+        {
+            var query = context.HoaDons.AsQueryable();
+            query = query.Where(m => m.NVuser == user);
+            return query.ToList();
+        }
+
         public IEnumerable<HoaDon> HoaDon_GetAll()
         {
             return context.HoaDons.ToList();
