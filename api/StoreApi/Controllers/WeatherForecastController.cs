@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using StoreApi.Interfaces;
+using StoreApi.Models;
 
 namespace StoreApi.Controllers
 {
@@ -17,10 +19,12 @@ namespace StoreApi.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ISanPhamRepository sanPhamRepository;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ISanPhamRepository sanPhamRepository)
         {
             _logger = logger;
+            this.sanPhamRepository = sanPhamRepository;
         }
 
         [HttpGet]
@@ -35,5 +39,19 @@ namespace StoreApi.Controllers
             })
             .ToArray();
         }
+
+        // [HttpGet("{id}")]
+        // public IEnumerable<SanPham> Post(int id) {
+        //     var ListID = new List<int>();
+        //     ListID.Add(1);
+        //     ListID.Add(2);
+        //     ListID.Add(3);
+        //     var sp = sanPhamRepository.GetQuery(ListID);
+        //     foreach (var item in sp)
+        //     {
+        //         item.amount = 2;
+        //     }
+        //     return sp;
+        // } 
     }
 }

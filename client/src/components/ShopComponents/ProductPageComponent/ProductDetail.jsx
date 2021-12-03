@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { API_URL_IMG } from '../../../constants/Config';
 
 function ProductDetail(props) {
@@ -40,6 +41,12 @@ function ProductDetail(props) {
         }
     }
 
+    const submitAddSP = () => {
+        if(parseInt(amount)) {
+            props.submitAddSP(product.id, amount);
+        }
+    }
+
     return (
         <section className="product-shop spad page-details">
             <div className="container">
@@ -78,7 +85,7 @@ function ProductDetail(props) {
                                             <i className="fa fa-plus" />
                                         </button>
                                     </div>
-                                    <button className="primary-btn btn">
+                                    <button onClick={submitAddSP} className="primary-btn btn">
                                         Thêm sản phẩm
                                     </button>
                                     <ul className="pd-tags mt-4">

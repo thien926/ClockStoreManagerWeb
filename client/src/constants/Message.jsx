@@ -83,3 +83,13 @@ export const UPDATE_PASS_USER_ADMIN_SUCCESS = "Sửa mật khẩu tài khoản t
 export const UPDATE_INFO_USER_ADMIN_SUCCESS = "Sửa thông tin cá nhân thành công!";
 export const UPDATE_PASS_USER_ADMIN_ERROR = "Sửa mật khẩu tài khoản thất bại!";
 export const UPDATE_INFO_USER_ADMIN_ERROR = "Sửa thông tin cá nhân thất bại!";
+
+// giỏ hàng
+export const ADD_ONE_SP_FOR_CART_SUCCESS = "Thêm sản phẩm vào giỏ thành công!";
+export const ADD_ONE_SP_FOR_CART_ERROR = "Thêm sản phẩm vào giỏ thất bại!";
+export const REMOVE_SP_FOR_CART_SUCCESS = "Xóa sản phẩm khỏi giỏ thành công!";
+export const REMOVE_SP_FOR_CART_ERROR = "Xóa sản phẩm khỏi giỏ thất bại!";
+export const SUB_ONE_SP_FOR_CART_SUCCESS = "Giảm số lượng sản phẩm trong giỏ thành công!";
+export const SUB_ONE_SP_FOR_CART_ERROR = "Giảm số lượng sản phẩm trong giỏ thất bại!";
+export const CHECKOUT_CART_SUCCESS = "Lập đơn hàng thành công!";
+export const CHECKOUT_CART_ERROR = "Lập đơn hàng thất bại!";
