@@ -25,6 +25,7 @@ import UserUpdateInfo from './components/ShopComponents/UserPageComponent/UserUp
 import UserUpdatePassword from './components/ShopComponents/UserPageComponent/UserUpdatePassword';
 import UserOrder from './components/ShopComponents/UserPageComponent/UserOrder';
 import Cart from './pages/ShopPages/Cart/Cart';
+import BillDetail from './pages/ShopPages/BillDetail/BillDetail';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/bill-detail/:Id' element={<BillDetail />} />
 
         <Route path='/user' element={<Navigate to="/user/detail" />} />
         <Route element={<User />}>

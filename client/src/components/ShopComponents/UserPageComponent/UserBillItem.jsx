@@ -38,6 +38,11 @@ function UserBillItem(props) {
         return '';
     }
 
+    const btnDetailBill = () => {
+        const newWindow = window.open(`/bill-detail/${item.id}`, '_blank', 'noopener,noreferrer');
+        if (newWindow) newWindow.opener = null
+    }
+
     return (
         <tr>
             <td>{item.id}</td>
@@ -45,10 +50,10 @@ function UserBillItem(props) {
             <td>{item.address}</td>
             <td>{showDateOrder()}</td>
             <td>{showDateReceive()}</td>
-            <td>{item.total}</td>
+            <td>{item.total.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</td>
             <td>{showStatus()}</td>
             <td>
-                <button type="button" className="btn btn-info">
+                <button onClick={btnDetailBill} type="button" className="btn btn-info">
                     <i className="fa fa-eye"></i>
                 </button>
             </td>

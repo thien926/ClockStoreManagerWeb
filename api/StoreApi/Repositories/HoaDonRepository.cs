@@ -26,6 +26,15 @@ namespace StoreApi.Repositories
             return context.HoaDons.FirstOrDefault(o => o.Id == id);
         }
 
+        public Boolean HoaDon_CheckUserKHAndId(int Id, string user)
+        {
+            var query = context.HoaDons.AsQueryable();
+            query = query.Where(m => (m.Id == Id) && (m.KHuser == user));
+            int count = query.Count();
+            
+            return count > 0;
+        }
+
         public IEnumerable<HoaDon> HoaDon_GetByUserKH(string user, int pageIndex, int pageSize, out int count)
         {
             var query = context.HoaDons.AsQueryable();

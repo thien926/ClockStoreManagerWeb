@@ -15,5 +15,6 @@ namespace StoreApi.Interfaces
         IEnumerable<HoaDon> HoaDon_FilterAdmin(string search, int status, int pageIndex, int pageSize, out int count);
         IEnumerable<HoaDon> HoaDon_GetByUserKH(string user, int pageIndex, int pageSize, out int count);
         IEnumerable<HoaDon> HoaDon_GetByUserNV(string user);
+        Boolean HoaDon_CheckUserKHAndId(int Id, string user);
     }
 }
