@@ -202,5 +202,16 @@ namespace StoreApi.Repositories
 
             return null;
         }
+
+        public IEnumerable<SanPham> SanPham_LoadByListIdSP(List<int> listId) {
+            // Console.WriteLine(list);
+            var query = context.SanPhams.AsQueryable();
+            if(listId.Count() > 0) {
+                query = query.Where(m => listId.Contains(m.Id));
+                return query.ToList();
+            }
+
+            return null;
+        }
     }
 }

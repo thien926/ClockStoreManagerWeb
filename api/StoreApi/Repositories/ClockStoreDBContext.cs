@@ -34,6 +34,8 @@ namespace StoreApi.Repositories
             modelBuilder.Entity<ChiTietHD>()
                .HasKey(c => new { c.billId, c.productId });
             
+            // modelBuilder.Entity<ChiTietHD>().Ignore(a => a.bill);
+            
             var cascadeFKs = modelBuilder.Model.GetEntityTypes()
                 .SelectMany(t => t.GetForeignKeys())
                 .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);

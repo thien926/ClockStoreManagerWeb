@@ -20,6 +20,29 @@ namespace StoreApi.Repositories
             return hd;
         }
 
+        public IEnumerable<ChiTietHD> ChiTietHD_AddRange(IEnumerable<ChiTietHD> list)
+        {
+            context.ChiTietHDs.AddRange(list);
+            context.SaveChanges();
+            return list;
+        }
+
+        // public void ChiTietHD_AddRangeWithListSP(IEnumerable<SanPham> list, int billId)
+        // {
+        //     foreach (var item in list)
+        //     {
+        //         ChiTietHD newChiTietHD = new ChiTietHD();
+        //         newChiTietHD.billId = billId;
+        //         newChiTietHD.productId = item.Id;
+        //         newChiTietHD.name = item.name;
+        //         newChiTietHD.amount = item.amount;
+        //         newChiTietHD.price = item.price;
+        //         newChiTietHD.img = item.img;
+        //         context.ChiTietHDs.Add(newChiTietHD);
+        //     }
+        //     context.SaveChanges();
+        // }
+
         // public ChiTietHD ChiTietHD_GetById(int id)
         // {
         //     // context.ChiTietHDs.

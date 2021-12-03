@@ -6,7 +6,6 @@ function ProductDetail(props) {
     const { product } = props;
 
     const [amount, setAmount] = useState(1);
-    const dispatch = useDispatch();
 
     const changeAmount = (value) => {
         var format = /\D/g;

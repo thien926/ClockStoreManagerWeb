@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { actLoadSPForCart, actRemoveSPForCart, actResetMessageCart } from '../../../redux/actions/CartAction';
 import { API_URL_IMG } from '../../../constants/Config';
-import { ADD_ONE_SP_FOR_CART_ERROR, ADD_ONE_SP_FOR_CART_SUCCESS, REMOVE_SP_FOR_CART_ERROR, REMOVE_SP_FOR_CART_SUCCESS } from '../../../constants/Message';
+import { ADD_ONE_SP_FOR_CART_ERROR, ADD_ONE_SP_FOR_CART_SUCCESS, REMOVE_SP_FOR_CART_ERROR, REMOVE_SP_FOR_CART_SUCCESS, SUB_ONE_SP_FOR_CART_ERROR, SUB_ONE_SP_FOR_CART_SUCCESS } from '../../../constants/Message';
 import { toast } from 'react-toastify';
 
 function HeaderControl() {
@@ -37,7 +37,7 @@ function HeaderControl() {
                         <td className="si-pic"><img src={`${API_URL_IMG}${item.img}`} /></td>
                         <td className="si-text">
                             <div className="product-selected">
-                                <p>{item.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})} x {item.amount}</p>
+                                <p>{item.price.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })} x {item.amount}</p>
                                 <h6>{item.name}</h6>
                             </div>
                         </td>
@@ -55,11 +55,13 @@ function HeaderControl() {
     useEffect(() => {
         switch (CartReducer.message) {
             case ADD_ONE_SP_FOR_CART_SUCCESS:
+            case SUB_ONE_SP_FOR_CART_SUCCESS:
             case REMOVE_SP_FOR_CART_SUCCESS:
                 toast.success(CartReducer.message);
                 dispatch(actResetMessageCart())
                 break;
             case ADD_ONE_SP_FOR_CART_ERROR:
+            case SUB_ONE_SP_FOR_CART_ERROR:
             case REMOVE_SP_FOR_CART_ERROR:
                 toast.error(CartReducer.message);
                 dispatch(actResetMessageCart())
@@ -98,10 +100,11 @@ function HeaderControl() {
             </div>
             <div className="col-lg-3 text-right col-md-3">
                 <ul className="nav-right">
-                    <li className="cart-icon"><a href="#">
-                        <i className="icon_bag_alt" />
-                        <span>{amount}</span>
-                    </a>
+                    <li className="cart-icon">
+                        <Link to='/cart'>
+                            <i className="icon_bag_alt" />
+                            <span>{amount}</span>
+                        </Link>
                         <div className="cart-hover">
                             <div className="select-items">
                                 <table>
@@ -136,14 +139,14 @@ function HeaderControl() {
                             </div>
                             <div className="select-total">
                                 <span>Tổng:</span>
-                                <h5>{total.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</h5>
+                                <h5>{total.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</h5>
                             </div>
                             <div className="select-button">
-                                <a href="#" className="primary-btn view-card">Xem chi tiết</a>
+                                <Link to='/cart' className="primary-btn view-card">Xem chi tiết</Link>
                             </div>
                         </div>
                     </li>
-                    <li className="cart-price">{total.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</li>
+                    <li className="cart-price">{total.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</li>
                 </ul>
             </div>
         </div>

@@ -1,9 +1,10 @@
 import axios from "axios"
 import { API_URL } from "../../constants/Config"
-import { ADD_ONE_SP_FOR_CART_ERROR, ADD_ONE_SP_FOR_CART_SUCCESS, REMOVE_SP_FOR_CART_ERROR, REMOVE_SP_FOR_CART_SUCCESS } from "../../constants/Message";
+import { ADD_ONE_SP_FOR_CART_ERROR, ADD_ONE_SP_FOR_CART_SUCCESS, REMOVE_SP_FOR_CART_ERROR, REMOVE_SP_FOR_CART_SUCCESS, SUB_ONE_SP_FOR_CART_ERROR, SUB_ONE_SP_FOR_CART_SUCCESS } from "../../constants/Message";
 
 export const LOAD_SP_FOR_CART = 'LOAD_SP_FOR_CART';
 export const ADD_ONE_SP_FOR_CART = 'ADD_ONE_SP_FOR_CART';
+export const SUB_ONE_SP_FOR_CART = 'SUB_ONE_SP_FOR_CART';
 export const REMOVE_SP_FOR_CART = 'REMOVE_SP_FOR_CART';
 export const RESET_MESSAGE_CART = 'RESET_MESSAGE_CART';
 export const UPDATE_AMOUNT_SP_FOR_CART = 'UPDATE_AMOUNT_SP_FOR_CART';
@@ -190,6 +191,52 @@ export const actAddOneSPForCart = (id) => (dispatch) => {
                 payload: {
                     data: null,
                     message: ADD_ONE_SP_FOR_CART_ERROR
+                }
+            })
+        })
+    }
+}
+
+export const actSubtractOneSPForCart = (id) => (dispatch) => {
+    let data = updateOneSPDonHang(id, -1); 
+
+    if (data) {
+        data = localStorage.getItem("donhang");
+        axios.get(
+            `${API_URL}cart/${data}`,
+            {
+                header: {
+                    'Content-Type': 'application/json'
+                },
+                withCredentials: true,
+                credentials: 'include'
+            }
+        ).then((res) => {
+            if (res) {
+                dispatch({
+                    type: SUB_ONE_SP_FOR_CART,
+                    payload: {
+                        data: res.data,
+                        message: SUB_ONE_SP_FOR_CART_SUCCESS
+                    }
+                })
+            }
+            else {
+                dispatch({
+                    type: SUB_ONE_SP_FOR_CART,
+                    payload: {
+                        data: null,
+                        message: SUB_ONE_SP_FOR_CART_ERROR
+                    }
+                })
+            }
+        }).catch((error) => {
+            console.log("actSubtractOneSPForCart error: ", error);
+            dispatch({
+                type: SUB_ONE_SP_FOR_CART,
+                payload: {
+                    data: null,
+                    message: SUB_ONE_SP_FOR_CART_ERROR
                 }
             })
         })
