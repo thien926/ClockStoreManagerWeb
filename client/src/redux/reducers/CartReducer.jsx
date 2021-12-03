@@ -50,6 +50,7 @@
 //     message : ""
 // }
 
+import { REMOVE_SP_FOR_CART_SUCCESS } from "../../constants/Message";
 import { ADD_ONE_SP_FOR_CART, LOAD_SP_FOR_CART, REMOVE_SP_FOR_CART, RESET_MESSAGE_CART, UPDATE_AMOUNT_SP_FOR_CART } from "../actions/CartAction";
 
 
@@ -85,7 +86,7 @@ const CartReducer = (state = initialState, action) => {
         case REMOVE_SP_FOR_CART:
             return {
                 ...state,
-                dataValue: (action.payload.data) ? action.payload.data : state.dataValue,
+                dataValue: (action.payload.message === REMOVE_SP_FOR_CART_SUCCESS) ? action.payload.data : state.dataValue,
                 message: action.payload.message
             }
 

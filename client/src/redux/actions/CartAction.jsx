@@ -247,26 +247,37 @@ export const actRemoveSPForCart = (id) => (dispatch) => {
 
     if (data) {
         data = localStorage.getItem("donhang");
-        axios.get(
-            `${API_URL}cart/${data}`,
-            {
-                header: {
-                    'Content-Type': 'application/json'
-                },
-                withCredentials: true,
-                credentials: 'include'
-            }
-        ).then((res) => {
-            if (res) {
-                dispatch({
-                    type: REMOVE_SP_FOR_CART,
-                    payload: {
-                        data: res.data,
-                        message: REMOVE_SP_FOR_CART_SUCCESS
-                    }
-                })
-            }
-            else {
+        if(data) {
+            axios.get(
+                `${API_URL}cart/${data}`,
+                {
+                    header: {
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true,
+                    credentials: 'include'
+                }
+            ).then((res) => {
+                if (res) {
+                    dispatch({
+                        type: REMOVE_SP_FOR_CART,
+                        payload: {
+                            data: res.data,
+                            message: REMOVE_SP_FOR_CART_SUCCESS
+                        }
+                    })
+                }
+                else {
+                    dispatch({
+                        type: REMOVE_SP_FOR_CART,
+                        payload: {
+                            data: null,
+                            message: REMOVE_SP_FOR_CART_ERROR
+                        }
+                    })
+                }
+            }).catch((error) => {
+                console.log("actRemoveSPForCart error: ", error);
                 dispatch({
                     type: REMOVE_SP_FOR_CART,
                     payload: {
@@ -274,16 +285,16 @@ export const actRemoveSPForCart = (id) => (dispatch) => {
                         message: REMOVE_SP_FOR_CART_ERROR
                     }
                 })
-            }
-        }).catch((error) => {
-            console.log("actRemoveSPForCart error: ", error);
+            })
+        }
+        else {
             dispatch({
                 type: REMOVE_SP_FOR_CART,
                 payload: {
                     data: null,
-                    message: REMOVE_SP_FOR_CART_ERROR
+                    message: REMOVE_SP_FOR_CART_SUCCESS
                 }
             })
-        })
+        }
     }
 }
