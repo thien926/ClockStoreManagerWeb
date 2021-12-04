@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Git\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj": {}
+    "D:\\student\\MVC\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj": {}
   },
   "projects": {
-    "G:\\Git\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj": {
+    "D:\\student\\MVC\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Git\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj",
+        "projectUniqueName": "D:\\student\\MVC\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj",
         "projectName": "StoreApi",
-        "projectPath": "G:\\Git\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj",
-        "packagesPath": "C:\\Users\\FPT SHOP\\.nuget\\packages\\",
-        "outputPath": "G:\\Git\\ClockStoreManagerWeb\\api\\StoreApi\\obj\\",
+        "projectPath": "D:\\student\\MVC\\ClockStoreManagerWeb\\api\\StoreApi\\StoreApi.csproj",
+        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+        "outputPath": "D:\\student\\MVC\\ClockStoreManagerWeb\\api\\StoreApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\FPT SHOP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -89,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
