@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom';
 import ProductItemHomePage from './ProductItemHomePage'
 
@@ -6,16 +6,19 @@ function LoaiSanPhamHomePage(props) {
 
     const {item} = props;
 
-    const showListSP = () => {
-        console.log('showListSP');
-        var result = null;
-
-        result = item.listSP.map((sp, index) => {
-            return <ProductItemHomePage sanpham={sp} key={index}/>
-        })
-
-        return result;
-    }
+    const showListSP = useCallback(
+        () => {
+            console.log('showListSP');
+            var result = null;
+    
+            result = item.listSP.map((sp, index) => {
+                return <ProductItemHomePage sanpham={sp} key={index}/>
+            })
+    
+            return result;
+        },
+        [item],
+    )
 
     return (
         <div className="product-list">

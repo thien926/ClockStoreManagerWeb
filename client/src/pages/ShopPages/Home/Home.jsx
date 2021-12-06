@@ -17,9 +17,9 @@ function Home() {
 
     useEffect(() => {
         var result = null;
-        if(HomePageReducer.length > 0) {
+        if (HomePageReducer.length > 0) {
             result = HomePageReducer.map((item, index) => {
-                return <LoaiSanPhamHomePage item={item} key={index}/>
+                return <LoaiSanPhamHomePage item={item} key={index} />
             })
         }
         setElements(result);

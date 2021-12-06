@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace StoreApi.Models
@@ -28,7 +29,9 @@ namespace StoreApi.Models
         [Required(ErrorMessage = "Hình ảnh là bắt buộc")]
         public string img { get; set; }
 
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public virtual HoaDon bill { get; set;}
+        
         public virtual SanPham product { get; set; }
     }
 }

@@ -26,6 +26,10 @@ import UserUpdatePassword from './components/ShopComponents/UserPageComponent/Us
 import UserOrder from './components/ShopComponents/UserPageComponent/UserOrder';
 import React from 'react'
 
+import Cart from './pages/ShopPages/Cart/Cart';
+import BillDetail from './pages/ShopPages/BillDetail/BillDetail';
+
+
 function App() {
   return (
     <Routes>
@@ -37,6 +41,8 @@ function App() {
         <Route path='/product/:productId' element={<Product />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/cart' element={<Cart />} />
+        <Route path='/bill-detail/:Id' element={<BillDetail />} />
 
         <Route path='/user' element={<Navigate to="/user/detail" />} />
         <Route element={<User />}>

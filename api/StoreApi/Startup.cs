@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,10 @@ namespace StoreApi
         {
 
             services.AddControllers();
+            
+//             services.AddControllers().AddJsonOptions(x =>
+//    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
 
             //Sửa chỗ này nè
             // cho phép 4200 truy cập 5001 
@@ -84,12 +89,12 @@ namespace StoreApi
             // sử dụng Cors để domain 4200 truy cập vào 5001
             // app.UseCors("CorsPolicy");
             app.UseCors(options => options
-                .WithOrigins(new []{"http://localhost:4200"})
+                .WithOrigins(new[] { "http://localhost:4200" })
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
             );
-            
+
             // dùng để truy cập wwwroot từ domain
             app.UseStaticFiles();
 
