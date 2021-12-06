@@ -24,6 +24,7 @@ import UserDetail from './components/ShopComponents/UserPageComponent/UserDetail
 import UserUpdateInfo from './components/ShopComponents/UserPageComponent/UserUpdateInfo';
 import UserUpdatePassword from './components/ShopComponents/UserPageComponent/UserUpdatePassword';
 import UserOrder from './components/ShopComponents/UserPageComponent/UserOrder';
+import React from 'react'
 
 function App() {
   return (
