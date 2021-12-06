@@ -7,7 +7,7 @@ import { actGetProductAdmin } from '../../../redux/actions/AdminProductAction';
 import './ProductsAdmin.css'
 import AdminProductItem from '../../../components/AdminComponents/AdminProductComponent/AdminProductItem'
 import AdminProductControl from '../../../components/AdminComponents/AdminProductComponent/AdminProductControl';
-import AdminProductFormAction from '../../../components/AdminComponents/AdminProductComponent/AdminProductFormAction';
+import AdminProductFormActionAdd from '../../../components/AdminComponents/AdminProductComponent/AdminProductFormActionAdd';
 
 
 function ProductsAdmin() {
@@ -205,7 +205,7 @@ function ProductsAdmin() {
                             <th>Mã thương hiệu</th>
                             <th>Mã dây</th>
                             <th>Mã máy</th>
-                            <th>Mã nhà cung cấp</th>
+                            {/* <th>Mã nhà cung cấp</th> */}
                             <th>Tên</th>
                             <th>Số lượng</th>
                             <th>Giá</th>
@@ -228,7 +228,7 @@ function ProductsAdmin() {
             </div>
 
             <div className="row mt-3 ml-3 mr-3">
-                <AdminProductFormAction />
+                <AdminProductFormActionAdd />
             </div>
 
         </div>

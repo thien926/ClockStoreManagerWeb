@@ -17,11 +17,11 @@
 //     message : ''
 // }
 
-import { ADD_WIRE_ADMIN, DELETE_WIRE_ADMIN, GET_WIRE_ADMIN, RESET_MESSAGE_WIRE_ADMIN, UPDATE_WIRE_ADMIN } from "../actions/AdminWireAction";
+import { ADD_WIRE_ADMIN, DELETE_WIRE_ADMIN, GET_ALL_WIRE_ADMIN, GET_WIRE_ADMIN, RESET_MESSAGE_WIRE_ADMIN, UPDATE_WIRE_ADMIN } from "../actions/AdminWireAction";
 
 const initialState = {
     dataValue: {},
-    message : ''
+    message: ''
 }
 
 
@@ -30,12 +30,17 @@ const AdminWireReducer = (state = initialState, action) => {
         case RESET_MESSAGE_WIRE_ADMIN:
             return {
                 ...state,
-                message : action.payload
+                message: action.payload
+            }
+        case GET_ALL_WIRE_ADMIN:
+            return {
+                ...state,
+                dataValue: action.payload
             }
         case GET_WIRE_ADMIN:
             return {
                 ...state,
-                dataValue : action.payload
+                dataValue: action.payload
             }
         case ADD_WIRE_ADMIN:
             return {

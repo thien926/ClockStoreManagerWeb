@@ -52,7 +52,7 @@ namespace StoreApi.Controllers
                     sp.brandId = spdto.brandId;
                     sp.wireId = spdto.wireId;
                     sp.machineId = spdto.machineId;
-                    sp.nccId = spdto.nccId;
+                    // sp.nccId = spdto.nccId;
                     sp.name = spdto.name;
                     sp.amount = spdto.amount;
                     sp.price = spdto.price;
@@ -86,7 +86,7 @@ namespace StoreApi.Controllers
                     sp.brandId = spdto.brandId;
                     sp.wireId = spdto.wireId;
                     sp.machineId = spdto.machineId;
-                    sp.nccId = spdto.nccId;
+                    // sp.nccId = spdto.nccId;
                     sp.name = spdto.name;
                     sp.amount = spdto.amount;
                     sp.price = spdto.price;

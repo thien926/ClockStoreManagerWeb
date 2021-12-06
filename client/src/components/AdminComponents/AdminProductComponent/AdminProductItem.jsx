@@ -33,7 +33,7 @@ function AdminProductItem(props) {
             <td>{product.brandId}</td>
             <td>{product.wireId}</td>
             <td>{product.machineId}</td>
-            <td>{product.nccId}</td>
+            {/* <td>{product.nccId}</td> */}
             <td>{product.name}</td>
             <td>{product.amount}</td>
             <td>{product.price}</td>

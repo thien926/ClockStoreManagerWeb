@@ -25,7 +25,8 @@ import {
     UPDATE_PRODUCT_TYPE_ADMIN,
     ADD_PRODUCT_TYPE_ADMIN,
     DELETE_PRODUCT_TYPE_ADMIN,
-    RESET_MESSAGE_LSP_ADMIN
+    RESET_MESSAGE_LSP_ADMIN,
+    GET_ALL_PRODUCT_TYPE_ADMIN
 } from "../actions/AdminProductTypeAction";
 
 const initialState = {
@@ -34,7 +35,7 @@ const initialState = {
 };
 
 const AdminProductTypeReducer = (state = initialState, action) => {       //action.type action.payload
-    
+
     switch (action.type) {
         case RESET_MESSAGE_LSP_ADMIN:
             return {
@@ -42,6 +43,11 @@ const AdminProductTypeReducer = (state = initialState, action) => {       //acti
                 message: action.payload
             }
         case GET_PRODUCT_TYPE_ADMIN:
+            return {
+                ...state,
+                dataValue: action.payload
+            }
+        case GET_ALL_PRODUCT_TYPE_ADMIN:
             return {
                 ...state,
                 dataValue: action.payload
