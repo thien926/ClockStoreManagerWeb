@@ -15,7 +15,7 @@ namespace StoreApi.Repositories
         public DbSet<KieuMay> KieuMays { get; set; }
         public DbSet<LoaiSanPham> LoaiSanPhams { get; set; }
         public DbSet<ThuongHieu> ThuongHieus { get; set; }
-        public DbSet<NCC> NCCs { get; set; }
+        // public DbSet<NCC> NCCs { get; set; }
         public DbSet<SanPham> SanPhams { get; set; }
         public DbSet<Quyen> Quyens { get; set; }
         public DbSet<NhanVien> NhanViens { get; set; }

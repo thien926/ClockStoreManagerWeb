@@ -23,6 +23,14 @@ export const ADD_WIRE_ERROR = 'Thêm kiểu dây thất bại!';
 export const UPDATE_WIRE_ERROR = 'Sửa kiểu dây thất bại!';
 export const DELETE_WIRE_ERROR = 'Xóa kiểu dây thất bại!';
 
+// Sản phẩm Admin
+export const ADD_PRODUCT_SUCCESS = 'Thêm sản phẩm thành công!';
+export const UPDATE_PRODUCT_SUCCESS = 'Sửa sản phẩm thành công!';
+export const DELETE_PRODUCT_SUCCESS = 'Xóa sản phẩm thành công!';
+export const ADD_PRODUCT_ERROR = 'Thêm sản phẩm thất bại!';
+export const UPDATE_PRODUCT_ERROR = 'Sửa sản phẩm thất bại!';
+export const DELETE_PRODUCT_ERROR = 'Xóa sản phẩm thất bại!';
+
 // Nhà cung cấp Admin 
 export const ADD_NCC_SUCCESS = 'Thêm nhà cung cấp thành công!';
 export const UPDATE_NCC_SUCCESS = 'Sửa nhà cung cấp thành công!';
