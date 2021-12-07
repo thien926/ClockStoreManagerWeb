@@ -48,6 +48,7 @@ namespace StoreApi.Models
         public int status { get; set; }
 
         public virtual Quyen quyen { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore]
         public ICollection<HoaDon> hoaDons { get; set; }
         public ICollection<PhieuNhap> phieuNhaps { get; set; }
         public NhanVien() {

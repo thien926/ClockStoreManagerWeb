@@ -5,6 +5,7 @@ import AdminProductTypeReducer from './AdminProductTypeReducer'
 import HeaderProductTypeReducer from "./HeaderProductTypeReducer";
 import AdminMachineReducer from "./AdminMachineReducer";
 import AdminWireReducer from "./AdminWireReducer";
+import AdminBillReducer from "./AdminBillReducer";
 import AdminBrandReducer from "./AdminBrandReducer";
 import ShopPageReducer from './ShopPageReducer'
 import HomePageReducer from './HomePageReducer'
@@ -27,6 +28,7 @@ const appReducers = combineReducers({
     AdminWireReducer,
     AdminPermissionReducer,
     AdminBrandReducer,
+    AdminBillReducer,
     HeaderProductTypeReducer,
     ShopPageReducer,
     HomePageReducer,

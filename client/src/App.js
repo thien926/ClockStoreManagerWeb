@@ -25,6 +25,8 @@ import UserUpdatePassword from './components/ShopComponents/UserPageComponent/Us
 import UserOrder from './components/ShopComponents/UserPageComponent/UserOrder';
 import Cart from './pages/ShopPages/Cart/Cart';
 import BillDetail from './pages/ShopPages/BillDetail/BillDetail';
+import BillAdmin from './pages/AdminPages/BillAdmin/BillAdmin';
+import BillDetailAdmin from './pages/AdminPages/BillDetailAdmin/BillDetailAdmin';
 
 function App() {
   return (
@@ -32,14 +34,12 @@ function App() {
       <Route path='/' exact element={<Navigate to="/home" />} />
       <Route element={<ShopLayout />}>
         <Route path='/home' element={<Home />} />
-        {/* <Route path='/shop' element={<Shop />} /> */}
         <Route path='/shop/:productTypeId' element={<Shop />} />
         <Route path='/product/:productId' element={<Product />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/bill-detail/:Id' element={<BillDetail />} />
-
         <Route path='/user' element={<Navigate to="/user/detail" />} />
         <Route element={<User />}>
           <Route path='/user/detail' element={<UserDetail />} />
@@ -57,9 +57,10 @@ function App() {
         <Route path='/admin/product-type' element={<ProductTypeAdmin />} />
         <Route path='/admin/machine' element={<MachineAdmin />} />
         <Route path='/admin/wire' element={<WireAdmin />} />
+        <Route path='/admin/bill' element={<BillAdmin />} />
         <Route path='/admin/permission' element={<PermissionAdmin />} />
-        
       </Route>
+      <Route path='/admin/bill-detail/:Id' element={<BillDetailAdmin />} />
       <Route path="*" element={<NoMatch />} />
       <Route path='/auth/login' element={<LoginAdminPage /> } />
       

@@ -31,6 +31,12 @@ export const ADD_PRODUCT_ERROR = 'Thêm sản phẩm thất bại!';
 export const UPDATE_PRODUCT_ERROR = 'Sửa sản phẩm thất bại!';
 export const DELETE_PRODUCT_ERROR = 'Xóa sản phẩm thất bại!';
 
+// Hóa đơn Admin
+export const UPDATE_BILL_STATUS_ERROR = 'Sửa trạng thái hóa đơn thất bại!';
+export const UPDATE_BILL_STATUS_SUCCESS = 'Sửa trạng thái hóa đơn thành công!';
+export const DELETE_BILL_ERROR = 'Xóa hóa đơn thất bại!';
+export const DELETE_BILL_SUCCESS = 'Xóa hóa đơn thành công!';
+
 // Nhà cung cấp Admin 
 export const ADD_NCC_SUCCESS = 'Thêm nhà cung cấp thành công!';
 export const UPDATE_NCC_SUCCESS = 'Sửa nhà cung cấp thành công!';
