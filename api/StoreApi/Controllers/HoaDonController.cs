@@ -19,13 +19,20 @@ namespace StoreApi.Controllers
         private int range = 9;
         private readonly IHoaDonRepository HoaDonRepository;
         private readonly IKhachHangRepository khachHangRepository;
+        private readonly INhanVienRepository nhanVienRepository;
         private readonly JwtKhachHangService jwtKhachHang;
+        private readonly JwtNhanVienService jwtNhanVien;
+        private readonly IQuyenRepository quyenRepository;
         public HoaDonController(IHoaDonRepository HoaDonRepository, JwtKhachHangService jwtKhachHang,
-        IKhachHangRepository khachHangRepository)
+        IKhachHangRepository khachHangRepository, JwtNhanVienService jwtNhanVien, INhanVienRepository nhanVienRepository,
+        IQuyenRepository quyenRepository)
         {
             this.HoaDonRepository = HoaDonRepository;
             this.jwtKhachHang = jwtKhachHang;
             this.khachHangRepository = khachHangRepository;
+            this.jwtNhanVien = jwtNhanVien;
+            this.nhanVienRepository = nhanVienRepository;
+            this.quyenRepository = quyenRepository;
         }
 
         [HttpGet]
@@ -105,30 +112,63 @@ namespace StoreApi.Controllers
             {
                 try
                 {
+                    // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
+                    var jwt = Request.Cookies["jwt-nhanvien"];
+                    if (jwt == null)
+                    {
+                        return NotFound(new { message = "Nhân viên chưa đăng nhập tài khoản!" });
+                    }
+                    var token = jwtNhanVien.Verify(jwt);
+                    var user = token.Issuer;
+                    var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+                    if (nv == null) {
+                        return NotFound(new { message = "Không tìm thấy tài khoản nhân viên đang đăng nhập!" });
+                    }
+
+                    if (nv.status == 0) {
+                        return NotFound(new { message = "Tài khoản nhân viên đang đăng nhập đã bị khóa!" });
+                    }
+
+                    var checkQuyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlHoaDon");
+
+                    if(!checkQuyen) {
+                        return BadRequest(new { message = "Tài khoản không có quyền sửa hóa đơn!" });
+                    }
+                    
                     var hd = HoaDonRepository.HoaDon_GetById(id);
 
                     if (hd == null || hddto.Id != id)
                     {
                         return NotFound();
                     }
+
+                    if(hd.NVuser != null && hd.NVuser != nv.user) {
+                        return BadRequest(new { message = "Hóa đơn thuộc quyền sửa đổi của nhân viên khác!" });
+                    }
+
                     // hd.status = hddto.status;
                     // Mapping
                     // Trạng thái gồm có
                     //     -   Đang xử lý : 1
                     //     -   Đang giao hàng: 2
                     //     -   Đã giao hàng : 3
-                    //     -   Đã hủy đơn hàng
+                    //     -   Đã hủy đơn hàng : 4
                     if (hd.status < hddto.status)
                     {
                         hd.status = hddto.status;
+                        if(hd.status == 3) {
+                            hd.date_receice = System.DateTime.Now;
+                        }
+                        hd.NVuser = nv.user;
                     }
                     else
                     {
-                        return BadRequest(new { message = "Cập nhật trạng thái không thành công!" });
+                        return BadRequest(new { message = "Cập nhật trạng thái hóa đơn không thành công!" });
                     }
 
                     var HD = this.HoaDonRepository.HoaDon_Update(hd);
-                    return Ok(HD);
+                    return Ok();
                 }
                 catch (Exception e)
                 {
@@ -138,14 +178,44 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
+        // Bill Page Admin
         [HttpDelete("{id}")]
         public ActionResult DeleteHD(int id)
         {
+            // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
+            var jwt = Request.Cookies["jwt-nhanvien"];
+            if (jwt == null)
+            {
+                return NotFound(new { message = "Nhân viên chưa đăng nhập tài khoản!" });
+            }
+            var token = jwtNhanVien.Verify(jwt);
+            var user = token.Issuer;
+            var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+            if (nv == null) {
+                return NotFound(new { message = "Không tìm thấy tài khoản nhân viên đang đăng nhập!" });
+            }
+
+            if (nv.status == 0) {
+                return NotFound(new { message = "Tài khoản nhân viên đang đăng nhập đã bị khóa!" });
+            }
+
+            var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlHoaDon");
+
+            if(!quyen) {
+                return BadRequest(new { message = "Tài khoản không có quyền xóa hóa đơn!" });
+            }
+            
             var HD = HoaDonRepository.HoaDon_GetById(id);
             if (HD == null)
             {
                 return NotFound();
             }
+
+            if(HD.status != 4) {
+                return BadRequest(new {message = "Hóa đơn phải ở trạng thái đã bị hủy mới được xóa!"});
+            }
+
             HoaDonRepository.HoaDon_Delete(HD);
             return Ok(new { messgae = "Ok" });
         }
