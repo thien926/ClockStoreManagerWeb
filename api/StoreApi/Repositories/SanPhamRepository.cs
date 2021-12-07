@@ -55,7 +55,13 @@ namespace StoreApi.Repositories
             
             if(!string.IsNullOrEmpty(search)) {
                 search = search.ToLower();
-                query = query.Where(m => m.name.ToLower().Contains(search));
+                int id = 0;
+                if(Int32.TryParse(search, out id)) {
+                    query = query.Where(m => (m.name.ToLower().Contains(search)) || m.Id == id);
+                }
+                else {
+                    query = query.Where(m => m.name.ToLower().Contains(search));
+                }
             }
 
             count = query.Count();
@@ -68,6 +74,14 @@ namespace StoreApi.Repositories
                     case "price-asc": query = query.OrderBy(m => (int?)m.price);
                                     break;
                     case "price-desc": query = query.OrderByDescending(m => (int?)m.price);
+                                    break;
+                    case "status-asc": query = query.OrderBy(m => m.status);
+                                    break;
+                    case "status-desc": query = query.OrderByDescending(m => m.status);
+                                    break;
+                    case "id-asc": query = query.OrderBy(m => m.Id);
+                                    break;
+                    case "id-desc": query = query.OrderByDescending(m => m.Id);
                                     break;
                     default: break;
                 }

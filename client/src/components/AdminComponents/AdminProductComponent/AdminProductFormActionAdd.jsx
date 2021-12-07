@@ -12,11 +12,11 @@ const initialFieldValues = {
     brandId: '',
     wireId: '',
     machineId: '',
-    nccId: '',
     name: '',
-    amount: 0,
+    price: 0,
     description: '',
-    img: defaultImgSrc,
+    img : '',
+    imgSrc: defaultImgSrc,
     imgFile: null
 }
 
@@ -27,11 +27,19 @@ function AdminProductFormActionAdd(props) {
     const AdminBrandReducer = useSelector(state => state.AdminBrandReducer);
     const AdminMachineReducer = useSelector(state => state.AdminMachineReducer);
 
+    const [values, setValues] = useState(initialFieldValues);
+    const [noteLSPId, setNoteLSPId] = useState('');
+    const [noteBrandId, setNoteBrandId] = useState('');
+    const [noteWireId, setNoteWireId] = useState('');
+    const [noteMachineId, setNoteMachineId] = useState('');
+    const [noteName, setNoteName] = useState('');
+    const [noteDescription, setNoteDescription] = useState('');
+    const [noteImg, setNoteImg] = useState('');
+
     const [elmListWire, setElmListWire] = useState(null);
     const [elmListProductType, setElmListProductType] = useState(null);
     const [elmListBrand, setElmListBrand] = useState(null);
     const [elmListMachine, setElmListMachine] = useState(null);
-    // const [elmListNCC, setElmListNCC] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -81,17 +89,9 @@ function AdminProductFormActionAdd(props) {
             })
             setElmListMachine(result);
         }
-
-        // if (AdminNCCReducer.dataValue && AdminNCCReducer.dataValue.length > 0) {
-        //     // console.log(AdminNCCReducer.dataValue);
-        //     result = AdminNCCReducer.dataValue.map((item, index) => {
-        //         return <option key={index} value={`${item.id}`}>{item.id} - {item.name}</option>
-        //     })
-        //     setElmListNCC(result);
-        // }
     }, [AdminWireReducer.dataValue, AdminProductTypeReducer.dataValue, AdminBrandReducer.dataValue, AdminMachineReducer.dataValue])
 
-    const [values, setValues] = useState(initialFieldValues);
+    
 
     const handleInputChange = (e) => {
         // console.log(values);
@@ -111,8 +111,8 @@ function AdminProductFormActionAdd(props) {
                 setValues({
                     ...values,
                     imgFile : imageFile,
-                    // img : imageFile.name
-                    img : x.target.result
+                    img : imageFile.name,
+                    imgSrc : x.target.result
                 })
             };
             reader.readAsDataURL(imageFile)
@@ -121,14 +121,83 @@ function AdminProductFormActionAdd(props) {
             setValues({
                 ...values,
                 imgFile : null,
-                img : defaultImgSrc
+                img : '',
+                imgSrc : defaultImgSrc
             })
         }
         console.log(values);
     }
 
-    const handleFormSubmit = () => {
+    const validate = () => {
+        setNoteLSPId('');
+        setNoteBrandId('');
+        setNoteWireId('');
+        setNoteMachineId('');
+        setNoteName('');
+        setNoteDescription('');
+        setNoteImg('');
 
+        let temp = true;
+        if(!values.lspId) {
+            setNoteLSPId("Loại sản phẩm là bắt buộc!");
+            temp = false;
+        } 
+
+        if(!values.brandId) {
+            setNoteBrandId("Thương hiệu là bắt buộc!");
+            temp = false;
+        } 
+
+        if(!values.wireId) {
+            setNoteWireId("Kiểu dây là bắt buộc!");
+            temp = false;
+        } 
+
+        if(!values.machineId) {
+            setNoteMachineId("Kiểu máy là bắt buộc!");
+            temp = false;
+        } 
+
+        if(!values.name) {
+            setNoteName("Tên sản phẩm là bắt buộc!");
+            temp = false;
+        }
+        else {
+            if(values.name.length < 3 || values.name.length > 200) {
+                setNoteName('Tên sản phẩm từ 3 đến 200 kí tự!');
+                temp = false;
+            }
+        }
+
+        if(!values.description) {
+            setNoteDescription("Mô tả là bắt buộc!");
+            temp = false;
+        } 
+
+        if(!values.imgSrc) {
+            setNoteImg("Hình ảnh là bắt buộc!");
+            temp = false;
+        } 
+
+        return temp;
+    }
+
+    const handleFormSubmit = () => {
+        // console.log(values);
+        if(validate()) {
+            const formData = new FormData();
+            formData.append('lspId', parseInt(values.lspId));
+            formData.append('brandId', parseInt(values.brandId));
+            formData.append('wireId', parseInt(values.wireId));
+            formData.append('machineId', parseInt(values.machineId));
+            formData.append('name', values.name);
+            formData.append('price', parseInt(values.price));
+            formData.append('description', values.description);
+            formData.append('img', values.img);
+            formData.append('imgFile', values.imgFile);
+            // console.log(formData);
+            props.submitActionAddForm(formData);
+        }
     }
 
     return (
@@ -147,6 +216,7 @@ function AdminProductFormActionAdd(props) {
                                 {elmListProductType}
                             </select>
                         </td>
+                        <td className="note-validate">{noteLSPId}</td>
                     </tr>
                     <tr>
                         <td>Mã thương hiệu</td>
@@ -157,6 +227,7 @@ function AdminProductFormActionAdd(props) {
                             </select>
                             {/* <input type="text" name="brandId" value={values.brandId} onChange={handleInputChange} className="form-control" required="required" /> */}
                         </td>
+                        <td className="note-validate">{noteBrandId}</td>
                     </tr>
                     <tr>
                         <td>Mã dây</td>
@@ -166,6 +237,7 @@ function AdminProductFormActionAdd(props) {
                                 {elmListWire}
                             </select>
                         </td>
+                        <td className="note-validate">{noteWireId}</td>
                     </tr>
                     <tr>
                         <td>Mã máy</td>
@@ -176,6 +248,7 @@ function AdminProductFormActionAdd(props) {
                             </select>
                             {/* <input type="text" name="machineId" value={values.machineId} onChange={handleInputChange} className="form-control" required="required" /> */}
                         </td>
+                        <td className="note-validate">{noteMachineId}</td>
                     </tr>
                     <tr>
                         <td>Tên</td>
@@ -183,13 +256,15 @@ function AdminProductFormActionAdd(props) {
                             <input type="text" name="name" value={values.name} onChange={handleInputChange} className="form-control" required="required" />
 
                         </td>
+                        <td className="note-validate">{noteName}</td>
                     </tr>
                     <tr>
-                        <td>Số lượng</td>
+                        <td>Giá</td>
                         <td>
-                            <input type="email" className="form-control" required="required" />
+                            <input name="price" value={values.price} onChange={handleInputChange} type="number" className="form-control" required="required" />
 
                         </td>
+                        <td className="note-validate"></td>
                     </tr>
                     <tr>
                         <td>Mô tả</td>
@@ -197,25 +272,27 @@ function AdminProductFormActionAdd(props) {
                             <textarea type="text" name="description" value={values.description} onChange={handleInputChange} className="form-control" required="required" />
 
                         </td>
+                        <td className="note-validate">{noteDescription}</td>
                     </tr>
                     <tr>
                         <td>Hình ảnh</td>
                         <td>
                             <input onChange={showPreview} type="file" accept="image/*" name="imgFile" className="form-control-file" required="required" />
                         </td>
+                        <td className="note-validate">{noteImg}</td>
                     </tr>
                     <tr>
                         <td></td>
                         <td>
-                            <img src={`${values.img}`} />
+                            <img src={`${values.imgSrc}`} />
                         </td>
                         
                     </tr>
                 </tbody>
             </table>
             <div className="mb-3">
-                <button type="button" className="btn btn-primary mr-2">Thêm</button>
-                <button type="button" className="btn btn-danger mr-2">Hủy</button>
+                <button onClick={handleFormSubmit} type="button" className="btn btn-primary mr-2">Thêm</button>
+                <button onClick={() => props.setActionValue('')} type="button" className="btn btn-danger mr-2">Hủy</button>
             </div>
         </div>
     )

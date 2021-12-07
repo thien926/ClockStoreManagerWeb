@@ -22,9 +22,6 @@ namespace StoreApi.Models
         [Required(ErrorMessage = "Kiểu máy là bắt Buộc")]
         public int machineId{ get; set; }
 
-        // [Required(ErrorMessage = "Tên nhà cung cấp là bắt Buộc")]
-        // public int nccId{ get; set; }
-
         [Required(ErrorMessage = "Tên Sản Phẩm là bắt Buộc")]
         [StringLength(maximumLength:200, MinimumLength = 3, ErrorMessage = "Tên Sản Phẩm từ 3 đến 200 kí tự")]
         public string name { get; set; }
