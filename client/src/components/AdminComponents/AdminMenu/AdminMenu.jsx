@@ -58,6 +58,7 @@ function AdminMenu() {
                     <div id="section1ContentId" className="collapse in" role="tabpanel" aria-labelledby="section1HeaderId">
 
                         <CustomLinkMobileMenuAdmin to='/admin/account'>Tài khoản</CustomLinkMobileMenuAdmin>
+                        <CustomLinkMobileMenuAdmin to='/admin/import-goods'>Nhập hàng</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/custom'>Khách hàng</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/staff'>Nhân viên</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/brand'>Thương hiệu</CustomLinkMobileMenuAdmin>
@@ -75,6 +76,7 @@ function AdminMenu() {
             <div className="sidebar">
                 <h3>Admin</h3>
                 <CustomLinkAdmin to='/admin/account'>Tài khoản</CustomLinkAdmin>
+                <CustomLinkAdmin to='/admin/import-goods'>Nhập hàng</CustomLinkAdmin>
                 <CustomLinkAdmin to='/admin/custom'>Khách hàng</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/staff">Nhân viên</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/brand">Thương hiệu</CustomLinkAdmin>
