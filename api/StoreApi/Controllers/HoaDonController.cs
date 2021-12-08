@@ -23,9 +23,11 @@ namespace StoreApi.Controllers
         private readonly JwtKhachHangService jwtKhachHang;
         private readonly JwtNhanVienService jwtNhanVien;
         private readonly IQuyenRepository quyenRepository;
+        private readonly IChiTietHDRepository chiTietHDRepository;
+        private readonly ISanPhamRepository sanPhamRepository;
         public HoaDonController(IHoaDonRepository HoaDonRepository, JwtKhachHangService jwtKhachHang,
         IKhachHangRepository khachHangRepository, JwtNhanVienService jwtNhanVien, INhanVienRepository nhanVienRepository,
-        IQuyenRepository quyenRepository)
+        IQuyenRepository quyenRepository, IChiTietHDRepository chiTietHDRepository, ISanPhamRepository sanPhamRepository)
         {
             this.HoaDonRepository = HoaDonRepository;
             this.jwtKhachHang = jwtKhachHang;
@@ -33,6 +35,8 @@ namespace StoreApi.Controllers
             this.jwtNhanVien = jwtNhanVien;
             this.nhanVienRepository = nhanVienRepository;
             this.quyenRepository = quyenRepository;
+            this.chiTietHDRepository = chiTietHDRepository;
+            this.sanPhamRepository = sanPhamRepository;
         }
 
         [HttpGet]
@@ -157,10 +161,35 @@ namespace StoreApi.Controllers
                     if (hd.status < hddto.status)
                     {
                         hd.status = hddto.status;
+                        hd.NVuser = nv.user;
                         if(hd.status == 3) {
                             hd.date_receice = System.DateTime.Now;
                         }
-                        hd.NVuser = nv.user;
+
+                        if(hd.status == 4) {
+                            var ctdh = chiTietHDRepository.ChiTietHD_GetByBillId(hd.Id);
+                            List<int> listProduct_id = new List<int>(); // lưu Id sản phẩm
+                            List<int> listSoluong = new List<int>();    // lưu số lượng sản phẩm 
+
+                            foreach (var item in ctdh)
+                            {
+                                listProduct_id.Add(item.productId);
+                                listSoluong.Add(item.amount);
+                            }
+
+                            var sps = sanPhamRepository.SanPham_LoadByListIdSP(listProduct_id);
+                            foreach (var item in sps)
+                            {
+                                for(int i = 0; i < listProduct_id.Count(); ++i) {
+                                    if(item.Id == listProduct_id[i]) {
+                                        item.amount = item.amount + listSoluong[i];
+                                    }
+                                }
+                            }
+
+                            sanPhamRepository.SanPham_UpdateRand((List<SanPham>)sps);
+                        }
+                        
                     }
                     else
                     {
