@@ -52,13 +52,13 @@ namespace StoreApi.Controllers
                     PhieuNhap pn = new PhieuNhap();
 
                     // Mapping
-                    pn.nccId = pndto.nccId;
+                    // pn.nccId = pndto.nccId;
                     pn.NVuser = pndto.NVuser;
                     pn.phone = pndto.phone;
                     pn.address = pndto.address;
                     pn.date_receice = pndto.date_receice;
                     pn.total = pndto.total;
-                    pn.status = 0;
+                    // pn.status = 0;
 
                     var PN = this.PhieuNhapRepository.PhieuNhap_Add(pn);
                     return Created("success", PN);
@@ -82,13 +82,13 @@ namespace StoreApi.Controllers
                     }
 
                     // Mapping
-                    pn.nccId = pndto.nccId;
+                    // pn.nccId = pndto.nccId;
                     pn.NVuser = pndto.NVuser;
                     pn.phone = pndto.phone;
                     pn.address = pndto.address;
                     pn.date_receice = pndto.date_receice;
                     pn.total = pndto.total;
-                    pn.status = 0;
+                    // pn.status = 0;
 
                     var PN = this.PhieuNhapRepository.PhieuNhap_Update(pn);
                     return Created("success", PN);

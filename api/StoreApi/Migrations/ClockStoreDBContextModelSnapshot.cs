@@ -285,6 +285,10 @@ namespace StoreApi.Migrations
                     b.Property<DateTime>("date_receice")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("mail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("nameNCC")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -293,6 +297,9 @@ namespace StoreApi.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
 
                     b.Property<long>("total")
                         .HasColumnType("bigint");
