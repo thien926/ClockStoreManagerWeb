@@ -37,6 +37,12 @@ export const UPDATE_BILL_STATUS_SUCCESS = 'Sửa trạng thái hóa đơn thành
 export const DELETE_BILL_ERROR = 'Xóa hóa đơn thất bại!';
 export const DELETE_BILL_SUCCESS = 'Xóa hóa đơn thành công!';
 
+// Phiếu nhập Admin
+export const UPDATE_COUPON_STATUS_ERROR = 'Sửa trạng thái phiếu nhập thất bại!';
+export const UPDATE_COUPON_STATUS_SUCCESS = 'Sửa trạng thái phiếu nhập thành công!';
+export const DELETE_COUPON_ERROR = 'Xóa phiếu nhập thất bại!';
+export const DELETE_COUPON_SUCCESS = 'Xóa phiếu nhập thành công!';
+
 // Nhà cung cấp Admin 
 export const ADD_NCC_SUCCESS = 'Thêm nhà cung cấp thành công!';
 export const UPDATE_NCC_SUCCESS = 'Sửa nhà cung cấp thành công!';

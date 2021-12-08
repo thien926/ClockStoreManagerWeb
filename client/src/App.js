@@ -27,6 +27,7 @@ import Cart from './pages/ShopPages/Cart/Cart';
 import BillDetail from './pages/ShopPages/BillDetail/BillDetail';
 import BillAdmin from './pages/AdminPages/BillAdmin/BillAdmin';
 import BillDetailAdmin from './pages/AdminPages/BillDetailAdmin/BillDetailAdmin';
+import CouponAdmin from './pages/AdminPages/CouponAdmin/CouponAdmin';
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
         <Route path='/admin/wire' element={<WireAdmin />} />
         <Route path='/admin/bill' element={<BillAdmin />} />
         <Route path='/admin/permission' element={<PermissionAdmin />} />
+        <Route path='/admin/coupon' element={<CouponAdmin />} />
       </Route>
       <Route path='/admin/bill-detail/:Id' element={<BillDetailAdmin />} />
       <Route path="*" element={<NoMatch />} />

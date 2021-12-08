@@ -205,9 +205,11 @@ namespace StoreApi.Migrations
                     NVuser = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     nameNCC = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     date_receice = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    total = table.Column<long>(type: "bigint", nullable: false)
+                    total = table.Column<long>(type: "bigint", nullable: false),
+                    status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
