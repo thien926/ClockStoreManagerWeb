@@ -108,7 +108,7 @@ namespace StoreApi.Controllers
         // }
 
 
-        // Chỉ sửa trạng thái của hóa đơn 
+        // Chỉ sửa trạng thái của hóa đơn Bill Page Admin
         [HttpPut("{id}")]
         public ActionResult<HoaDon> UpdateHD([FromBody] HoaDonDto hddto, int id)
         {
