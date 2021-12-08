@@ -32,7 +32,7 @@ namespace StoreApi.Models
         public string address { get; set; }
 
         [Required(ErrorMessage = "Giới tính là bắt buộc")]
-        [RegularExpression(pattern: "(Nam|Nữ)/g", ErrorMessage="Giới tính là Nam hoặc Nữ")]
+        [RegularExpression(pattern: "^(Nam|Nữ)$", ErrorMessage="Giới tính là Nam hoặc Nữ")]
         [StringLength(maximumLength:3, MinimumLength = 2, ErrorMessage = "Giới tính từ 2 đến 3 kí tự")]
         public String gender { get; set; }
 
@@ -44,10 +44,11 @@ namespace StoreApi.Models
         public int quyenId { get; set; }
 
         [Required(ErrorMessage = "Trạng thái hoạt động là bắt buộc")]
-        [RegularExpression(pattern: "(1|0)/g", ErrorMessage="Trạng thái là 1 hoặc 0")]
+        [RegularExpression(pattern: "^(1|0)$", ErrorMessage="Trạng thái là 1 hoặc 0")]
         public int status { get; set; }
 
         public virtual Quyen quyen { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore]
         public ICollection<HoaDon> hoaDons { get; set; }
         public ICollection<PhieuNhap> phieuNhaps { get; set; }
         public NhanVien() {

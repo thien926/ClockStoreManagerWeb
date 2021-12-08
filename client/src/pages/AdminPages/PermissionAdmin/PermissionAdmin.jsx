@@ -1,120 +1,213 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+import { actAddPermissionAdmin, actDeletePermissionAdmin, actGetPermissionAdmin, actResetMessagePermissionAdmin, actUpdatePermissionAdmin } from '../../../redux/actions/AdminPermissionAction';
+import AdminPermissionItem from '../../../components/AdminComponents/AdminPermissionComponent/AdminPermissionItem'
+import AdminPermissionFormAction from '../../../components/AdminComponents/AdminPermissionComponent/AdminPermissionFormAction'
+import AdminPermissionControl from '../../../components/AdminComponents/AdminPermissionComponent/AdminPermissionControl'
+import AdminPermissionPaging from '../../../components/AdminComponents/AdminPermissionComponent/AdminPermissionPaging'
+import { ADD_PERMISSION_ERROR, ADD_PERMISSION_SUCCESS, DELETE_PERMISSION_ERROR, DELETE_PERMISSION_SUCCESS, UPDATE_PERMISSION_ERROR, UPDATE_PERMISSION_SUCCESS } from '../../../constants/Message';
 
 function PermissionAdmin() {
+    
+    const AdminPermissionReducer = useSelector(state => state.AdminPermissionReducer)
+    
+    const [search, setSearch] = useState('');
+    const [sort, setSort] = useState('name-asc');
+    const [pageIndex, setPageIndex] = useState(1);
+    const [elmListPermissions, setElmListPermissions] = useState(null);
+
+    const [actionValue, setActionValue] = useState('');
+    const [formValue, setFormValue] = useState({id: null, name: '', details : ''});
+
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const utf8_from_str = (s) => {
+        var temp = decodeURIComponent(s);
+        temp = temp.split("+");
+        temp = temp.join(" ");
+        return temp;
+    }
+
+    // Load sort, search, pageIndex
+    useEffect(() => {
+        // console.log("location: ", location);
+        var { search } = location;
+        if(search === "") {
+            setSort('name-asc');
+            setPageIndex(1);
+            setSearch('');
+        } 
+        else {
+            var dauHoi = search.split('?');
+            var dauVa = dauHoi[dauHoi.length-1].split('&');
+            var dauBang;
+            for(let i = 0; i < dauVa.length; ++i) {
+                dauBang = dauVa[i].split('=');
+                switch (dauBang[0]) {
+                    case "sort":
+                        setSort(dauBang[1]);
+                        break;
+                    case "pageIndex":
+                        var value = parseInt(dauBang[1]);
+                        if(value) {
+                            setPageIndex(value);
+                        }
+                        else {
+                            setPageIndex(1);
+                        }
+                        
+                        break;
+                    case "search":
+                        setSearch(utf8_from_str(dauBang[1]));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }, [location])
+
+    useEffect(() => {
+        var data = {
+            sort,
+            search,
+            pageIndex
+        }
+        dispatch(actGetPermissionAdmin(data));
+    }, [search, sort, pageIndex, dispatch])
+
+    useEffect(() => {
+        // console.log(AdminPermissionReducer.dataValue)
+        var result = null;
+        if(AdminPermissionReducer.dataValue.listQ && AdminPermissionReducer.dataValue.listQ.length > 0) {
+            result = AdminPermissionReducer.dataValue.listQ.map((item, index) => {
+                return <AdminPermissionItem key={index} permission={item} index={index} actionUpdate={actionUpdate} actionDelete={actionDelete}/>
+            })
+        }
+        setElmListPermissions(result);
+    }, [AdminPermissionReducer.dataValue])
+
+    // Hiên thông báo các sự kiện
+    useEffect(() => {
+        switch (AdminPermissionReducer.message) {
+            case ADD_PERMISSION_SUCCESS:
+            case DELETE_PERMISSION_SUCCESS:
+            case UPDATE_PERMISSION_SUCCESS:
+                toast.success(AdminPermissionReducer.message);
+                var filter = {
+                    search : search,
+                    sort: sort,
+                    pageIndex:pageIndex
+                }
+                // console.log(filter);
+                dispatch(actGetPermissionAdmin(filter));
+                dispatch(actResetMessagePermissionAdmin());
+                break;
+            case ADD_PERMISSION_ERROR : 
+            case DELETE_PERMISSION_ERROR:
+            case UPDATE_PERMISSION_ERROR :
+                toast.error(AdminPermissionReducer.message); 
+                dispatch(actResetMessagePermissionAdmin());
+                break;
+            default:
+                break;
+        }
+    }, [AdminPermissionReducer.message])
+
+    // đi đến URL khác khi search
+    const changeSearch = (searchValue) => {
+        navigate('/admin/permission?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
+    }
+
+    // đi đến URL khác khi sort
+    const changeSort = (sortValue) => {
+        navigate('/admin/permission?search=' + search + '&sort=' + sortValue + '&pageIndex=' + pageIndex);
+    }
+
+    const showForm = useCallback(
+        () => {
+            switch (actionValue) {
+                case 'add':
+                case 'update':
+                    return <AdminPermissionFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
+            
+                default:
+                    return null;
+            }
+        },
+        [actionValue, formValue],
+    )
+
+    const actionAdd = () => {
+        setFormValue({id: null, name:'', details:''});
+        setActionValue("add");
+    }
+
+    const actionUpdate = (data) => {
+        setFormValue(data);
+        setActionValue("update");
+    }
+
+    const submitActionForm = (data, action) => {
+        switch (action) {
+            case 'add':
+                dispatch(actAddPermissionAdmin(data));
+                setActionValue('');
+                break;
+            case 'update':
+                dispatch(actUpdatePermissionAdmin(data, data.id))
+                setActionValue('');
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Thực hiện thao tác xóa
+    const actionDelete = (id) => {
+        var res = window.confirm("Bạn có chắc muốn xóa quyền có Id = " + id + " không?");
+        if(res) {
+            dispatch(actDeletePermissionAdmin(id));
+        }
+        else {
+            toast.error(DELETE_PERMISSION_ERROR);
+        }
+    }
+
     return (
         <div>
             <div>
                 <h3 className="text-center mt-2">Quản lý quyền</h3>
                 <hr />
             </div>
-            <div className="row">
-                <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <button type="button" className="btn btn-primary">Thêm quyền <i className="fa fa-plus-circle" aria-hidden="true" /></button>
-                </div>
-                <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <div className="input-group">
-                        <input type="text" className="form-control" id="exampleInputAmount" placeholder="Search" />
-                        <span className="input-group-btn">
-                            <button type="button" className="btn btn-info ml-2">Tìm kiếm</button>
-                        </span>
-                    </div>
-                </div>
-                <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <select name id="input" className="form-control" required="required">
-                        <option value="a">Sắp xếp theo tên : A-Z</option>
-                    </select>
-                </div>
-            </div>
+            
+            <AdminPermissionControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort} actionAdd={actionAdd}/>
 
             <div className="row mt-3">
                 <table className="table table-hover ">
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Action</th>
+                            <th>Id</th>
+                            <th>Tên</th>
+                            <th>Chi tiết quyền</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
-
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Iphone 6</td>
-                            <td>6000.0000đ</td>
-                            <td>
-                                <button type="button" className="btn btn-info">Sửa</button>
-                                <button type="button" className="btn btn-warning ml-1">Xóa</button>
-                            </td>
-                        </tr>
+                        {/* <AdminPermissionItem /> */}
+                        {elmListPermissions}
                     </tbody>
                 </table>
             </div>
 
+            <AdminPermissionPaging dataValue={AdminPermissionReducer.dataValue}/>
 
-            <div className="row mt-3">
-                <div>
-                    <h3 className="text-center mt-2">Thêm quyền</h3>
-                    <hr />
-                </div>
-                <table className="table table-hover ">
-                    <tbody>
-                        <tr>
-                            <td>Tên</td>
-                            <td>
-                                <input type="email" className="form-control" required="required" />
-                            </td>
-                        </tr>
-                        <tr>
-                        <td>Tên</td>
-                            <td>
-                                <input type="email" className="form-control" required="required" />
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colSpan="2"><button type="submit" className="btn btn-primary mt-4 btn-submit-product-admin">Thêm</button></td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
+            {showForm()}
 
         </div>
     )

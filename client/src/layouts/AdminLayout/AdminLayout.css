@@ -81,8 +81,9 @@ div.content {
   padding: 1px 16px;
   /* height: 100vh; */
   height: unset;
+  min-height: 100vh;
   width: fit-content;
-  min-height: 700px;
+  min-width: 80vw;
   background-color: #eef9fc;;
 }
 /* Phần media */
@@ -137,4 +138,12 @@ div.content {
 
 .class-phan-trang {
   text-align: center;
+}
+
+.layout-admin {
+  background-color: #eef9fc;
+}
+
+.note-validate {
+  color: red;
 }

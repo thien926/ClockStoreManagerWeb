@@ -221,35 +221,6 @@ namespace StoreApi.Migrations
                     b.ToTable("LoaiSanPhams");
                 });
 
-            modelBuilder.Entity("StoreApi.Models.NCC", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("fax")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("phone")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("NCCs");
-                });
-
             modelBuilder.Entity("StoreApi.Models.NhanVien", b =>
                 {
                     b.Property<string>("user")
@@ -314,16 +285,14 @@ namespace StoreApi.Migrations
                     b.Property<DateTime>("date_receice")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("nccId")
-                        .HasColumnType("int");
+                    b.Property<string>("nameNCC")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("phone")
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("status")
-                        .HasColumnType("int");
 
                     b.Property<long>("total")
                         .HasColumnType("bigint");
@@ -331,8 +300,6 @@ namespace StoreApi.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("NVuser");
-
-                    b.HasIndex("nccId");
 
                     b.ToTable("PhieuNhaps");
                 });
@@ -390,9 +357,6 @@ namespace StoreApi.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<int>("nccId")
-                        .HasColumnType("int");
-
                     b.Property<int>("price")
                         .HasColumnType("int");
 
@@ -409,8 +373,6 @@ namespace StoreApi.Migrations
                     b.HasIndex("brandId");
 
                     b.HasIndex("machineId");
-
-                    b.HasIndex("nccId");
 
                     b.HasIndex("wireId");
 
@@ -508,14 +470,6 @@ namespace StoreApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StoreApi.Models.NCC", "ncc")
-                        .WithMany("phieuNhaps")
-                        .HasForeignKey("nccId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ncc");
-
                     b.Navigation("NV");
                 });
 
@@ -539,12 +493,6 @@ namespace StoreApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StoreApi.Models.NCC", "ncc")
-                        .WithMany("SanPhams")
-                        .HasForeignKey("nccId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("StoreApi.Models.KieuDay", "wire")
                         .WithMany("SanPhams")
                         .HasForeignKey("wireId")
@@ -556,8 +504,6 @@ namespace StoreApi.Migrations
                     b.Navigation("LSP");
 
                     b.Navigation("machine");
-
-                    b.Navigation("ncc");
 
                     b.Navigation("wire");
                 });
@@ -584,13 +530,6 @@ namespace StoreApi.Migrations
 
             modelBuilder.Entity("StoreApi.Models.LoaiSanPham", b =>
                 {
-                    b.Navigation("SanPhams");
-                });
-
-            modelBuilder.Entity("StoreApi.Models.NCC", b =>
-                {
-                    b.Navigation("phieuNhaps");
-
                     b.Navigation("SanPhams");
                 });
 

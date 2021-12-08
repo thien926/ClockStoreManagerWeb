@@ -17,6 +17,7 @@ namespace StoreApi.Models
         [Required(ErrorMessage = "Chi tiết quyền bắt buộc")]
         public string details { get; set; }
 
+        [System.Text.Json.Serialization.JsonIgnore]
         public ICollection<NhanVien> NhanViens { get; set; }
 
         public Quyen() {

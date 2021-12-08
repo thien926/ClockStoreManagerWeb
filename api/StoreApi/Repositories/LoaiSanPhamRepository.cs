@@ -1,11 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using StoreApi.Interfaces;
+using StoreApi.Models;
+
 namespace StoreApi.Repositories
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using StoreApi.Interfaces;
-    using StoreApi.Models;
+    
     public class LoaiSanPhamRepository : ILoaiSanPhamRepository
     {
         private readonly ClockStoreDBContext context;
@@ -21,7 +23,6 @@ namespace StoreApi.Repositories
 
         public LoaiSanPham LoaiSanPham_GetById(int id)
         {
-            // context.LoaiSanPhams.
             return context.LoaiSanPhams.FirstOrDefault(o => o.Id == id);
         }
 
@@ -58,6 +59,10 @@ namespace StoreApi.Repositories
                                     break;
                     case "name-desc": query = query.OrderByDescending(m => m.name);
                                     break;
+                    case "id-asc": query = query.OrderBy(m => m.Id);
+                                    break;
+                    case "id-desc": query = query.OrderByDescending(m => m.Id);
+                                    break;
                     default: break;
                 }
             }
@@ -66,10 +71,11 @@ namespace StoreApi.Repositories
             // if(pageIndex > TotalPages){
             //     pageIndex = TotalPages;
             // }
+            
             if(pageIndex < 1){
                 pageIndex = 1;
             }
-
+            
             return query.Skip((pageIndex - 1) * pageSize)
                         .Take(pageSize).ToList();
         }

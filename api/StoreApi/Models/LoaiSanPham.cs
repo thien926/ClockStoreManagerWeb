@@ -16,6 +16,8 @@ namespace StoreApi.Models
 
         [Required(ErrorMessage = "Mô tả Loại Sản Phẩm là bắt Buộc")]
         public string description { get; set; }
+        
+        [System.Text.Json.Serialization.JsonIgnore]
         public ICollection<SanPham> SanPhams { get; set; }
         public LoaiSanPham() {
             SanPhams = new HashSet<SanPham>();

@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
-import { actGetProductAdmin } from '../../../redux/actions/AdminProductAction';
+import { actAddProductAdmin, actDeleteProductAdmin, actGetProductAdmin, actResetMessageProductAdmin, actUpdateProductAdmin } from '../../../redux/actions/AdminProductAction';
 import './ProductsAdmin.css'
 import AdminProductItem from '../../../components/AdminComponents/AdminProductComponent/AdminProductItem'
 import AdminProductControl from '../../../components/AdminComponents/AdminProductComponent/AdminProductControl';
+import AdminProductFormActionAdd from '../../../components/AdminComponents/AdminProductComponent/AdminProductFormActionAdd';
+import { ADD_PRODUCT_ERROR, ADD_PRODUCT_SUCCESS, DELETE_PRODUCT_ERROR, DELETE_PRODUCT_SUCCESS, UPDATE_PRODUCT_ERROR, UPDATE_PRODUCT_SUCCESS } from '../../../constants/Message';
+import { toast } from 'react-toastify';
+import AdminProductFormActionUpdate from '../../../components/AdminComponents/AdminProductComponent/AdminProductFormActionUpdate';
 
 
 function ProductsAdmin() {
@@ -17,12 +21,17 @@ function ProductsAdmin() {
     const [sort, setSort] = useState('name-asc');
     const [pageIndex, setPageIndex] = useState(1);
     const [search, setSearch] = useState('');
+
+    const [actionValue, setActionValue] = useState('');
+
+    // html list sản phẩm
     const [elmsListSP, setElmsListSP] = useState(null);
 
     // State phân trang
     const [previous, setPrevious] = useState(null);
     const [elmsPhanTrang, setElmsPhanTrang] = useState(null);
     const [next, setNext] = useState(null);
+    const [itemEdit, setItemEdit] = useState(null);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -30,14 +39,14 @@ function ProductsAdmin() {
     // Khi url thay đổi => sort, pageIndex thay đổi => setSort, setPageIndex
     useEffect(() => {
         var {search} = location;
-        if(search == "") {
+        if(search === "") {
             setSort('name-asc');
             setPageIndex(1);
             setSearch('');
         } 
         else {
             var dauHoi = search.split('?');
-            var dauVa = dauHoi[1].split('&');
+            var dauVa = dauHoi[dauHoi.length-1].split('&');
             var dauBang;
             for(let i = 0; i < dauVa.length; ++i) {
                 dauBang = dauVa[i].split('=');
@@ -74,7 +83,7 @@ function ProductsAdmin() {
             pageIndex: pageIndex
         }
         dispatch(actGetProductAdmin(data));
-    }, [search, sort, pageIndex]);
+    }, [search, sort, pageIndex, dispatch]);
 
     // khi sản phẩm thay đổi => show danh sách sản phẩm và phân trang
     useEffect(() => {
@@ -82,9 +91,9 @@ function ProductsAdmin() {
 
         // show danh sách sản phẩm
         var result = null;
-        if (AdminProductReducer.listSP) {
-            result = AdminProductReducer.listSP.map((product, index) => {
-                return <AdminProductItem key={index} index={index} product={product} />
+        if (AdminProductReducer.dataValue.listSP) {
+            result = AdminProductReducer.dataValue.listSP.map((product, index) => {
+                return <AdminProductItem key={index} index={index} product={product} actionDelete={actionDelete} setActionValue={setActionValue} setItemEdit={setItemEdit}/>
             });
         }
         setElmsListSP(result);
@@ -92,17 +101,17 @@ function ProductsAdmin() {
         // show phân trang
         result = null;
         var nextPage = null, previousPage = null;
-        if(AdminProductReducer.pageIndex) {
-            var totalPage = AdminProductReducer.totalPage;
+        if(AdminProductReducer.dataValue.pageIndex) {
+            var totalPage = AdminProductReducer.dataValue.totalPage;
             var pageMin, pageMax;
-            var range = AdminProductReducer.range, middle = totalPage/2;
+            var range = AdminProductReducer.dataValue.range, middle = totalPage/2;
             if (totalPage <= range) {
                 pageMin = 1;
                 pageMax = totalPage;
             } else {
                 if (pageIndex < middle) {
                     if (pageIndex > range) {
-                        if(range % 2 == 0) {
+                        if(range % 2 === 0) {
                             pageMin = pageIndex - Math.floor(range / 2);
                             pageMax = pageIndex + Math.floor(range / 2);
                         }
@@ -119,7 +128,7 @@ function ProductsAdmin() {
                         pageMin = totalPage - range;
                         pageMax = totalPage;
                     } else {
-                        if(range % 2 == 0) {
+                        if(range % 2 === 0) {
                             pageMin = pageIndex - Math.floor(range / 2);
                             pageMax = pageIndex + Math.floor(range / 2);
                         }
@@ -163,7 +172,7 @@ function ProductsAdmin() {
                 </>
             }
 
-            if(pageIndex != totalPage && totalPage != 0) {
+            if(pageIndex !== totalPage && totalPage !== 0) {
                 nextPage = <>
                     <Link className='btn btn-default' to={`?search=${search}&sort=${sort}&pageIndex=${pageIndex+1}`}><i className="fa fa-angle-right" aria-hidden="true" /></Link>
                     <Link className='btn btn-default' to={`?search=${search}&sort=${sort}&pageIndex=${totalPage}`}><i className="fa fa-angle-double-right" aria-hidden="true" /></Link>
@@ -174,7 +183,60 @@ function ProductsAdmin() {
         setElmsPhanTrang(result);
         setNext(nextPage);
         setPrevious(previousPage);
-    }, [AdminProductReducer])
+    }, [AdminProductReducer.dataValue])
+
+    // Hiên thông báo các sự kiện
+    useEffect(() => {
+        switch (AdminProductReducer.message) {
+            case ADD_PRODUCT_SUCCESS:
+            case DELETE_PRODUCT_SUCCESS:
+            case UPDATE_PRODUCT_SUCCESS:
+                toast.success(AdminProductReducer.message);
+                var filter = {
+                    search : search,
+                    sort: sort,
+                    pageIndex:pageIndex
+                }
+                // console.log(filter);
+                dispatch(actGetProductAdmin(filter));
+                dispatch(actResetMessageProductAdmin());
+                break;
+            case ADD_PRODUCT_ERROR: 
+            case DELETE_PRODUCT_ERROR:
+            case UPDATE_PRODUCT_ERROR:
+                toast.error(AdminProductReducer.message); 
+                dispatch(actResetMessageProductAdmin());
+                break;
+            default:
+                break;
+        }
+    }, [AdminProductReducer.message, dispatch])
+
+    const showForm = useCallback(
+        () => {
+            switch (actionValue) {
+                case 'add':
+                    return <AdminProductFormActionAdd setActionValue={setActionValue} submitActionAddForm={submitActionAddForm} />
+                case 'update':
+                    return <AdminProductFormActionUpdate submitActionUpdateForm={submitActionUpdateForm} setActionValue={setActionValue} itemEdit={itemEdit}/>
+            
+                default:
+                    return null;
+            }
+        },
+        [actionValue, itemEdit],
+    )
+
+    const submitActionAddForm = (data) => {
+        dispatch(actAddProductAdmin(data));
+        setActionValue('');
+    }
+
+    const submitActionUpdateForm = (data, id) => {
+        // console.log(data.lspId);
+        dispatch(actUpdateProductAdmin(data, id));
+        setActionValue('');
+    }
 
     const changeSort = (sortValue) => {
         navigate('/admin/products?search=' + search + '&sort=' + sortValue + '&pageIndex=' + pageIndex);
@@ -184,13 +246,25 @@ function ProductsAdmin() {
         navigate('/admin/products?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
     }
 
+    // Thực hiện thao tác xóa
+    const actionDelete = (id) => {
+        setActionValue('');
+        var res = window.confirm("Bạn có chắc muốn xóa sản phẩm có Id = " + id + " không?");
+        if(res) {
+            dispatch(actDeleteProductAdmin(id));
+        }
+        else {
+            toast.error(DELETE_PRODUCT_ERROR);
+        }
+    }
+
     return (
         <div>
             <div>
                 <h3 className="text-center mt-2">Quản lý sản phẩm</h3>
                 <hr />
             </div>
-            <AdminProductControl sort={sort} changeSort={changeSort} changeSearch={changeSearch}/>
+            <AdminProductControl setActionValue={setActionValue} sort={sort} changeSort={changeSort} changeSearch={changeSearch}/>
 
             <div className="row mt-3">
                 <table className="table table-hover ">
@@ -202,7 +276,7 @@ function ProductsAdmin() {
                             <th>Mã thương hiệu</th>
                             <th>Mã dây</th>
                             <th>Mã máy</th>
-                            <th>Mã nhà cung cấp</th>
+                            {/* <th>Mã nhà cung cấp</th> */}
                             <th>Tên</th>
                             <th>Số lượng</th>
                             <th>Giá</th>
@@ -225,7 +299,8 @@ function ProductsAdmin() {
             </div>
 
             <div className="row mt-3 ml-3 mr-3">
-                {/* <AdminProductFormAction /> */}
+                {/* <AdminProductFormActionAdd submitActionAddForm={submitActionAddForm} /> */}
+                {showForm()}
             </div>
 
         </div>
