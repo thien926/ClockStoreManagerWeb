@@ -149,6 +149,7 @@ function BillAdmin() {
 
     const submitUpdateBillStatus = (data, id) => {
         dispatch(actUpdateBillStatusAdmin(data, id));
+        setItemEdit('');
     }
 
     return (

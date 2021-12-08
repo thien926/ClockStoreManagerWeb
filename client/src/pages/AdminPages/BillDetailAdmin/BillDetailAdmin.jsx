@@ -66,6 +66,7 @@ function BillDetailAdmin() {
                                 <table>
                                     <thead>
                                         <tr>
+                                            <th>Id sản phẩm</th>
                                             <th>Hình ảnh</th>
                                             <th className="p-name">Tên sản phẩm</th>
                                             <th>Giá</th>
