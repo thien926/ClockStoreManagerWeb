@@ -114,7 +114,7 @@ function CustomAdmin() {
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
-        navigate('/admin/custom?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
+        navigate('/admin/custom?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + 1);
     }
 
     // đi đến URL khác khi sort

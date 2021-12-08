@@ -118,7 +118,7 @@ function BillAdmin() {
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
-        navigate('/admin/bill?search=' + searchValue + '&status=' + status + '&pageIndex=' + pageIndex);
+        navigate('/admin/bill?search=' + searchValue + '&status=' + status + '&pageIndex=' + 1);
     }
 
     // đi đến URL khác khi status
