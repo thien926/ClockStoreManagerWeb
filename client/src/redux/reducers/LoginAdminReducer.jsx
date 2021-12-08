@@ -21,11 +21,11 @@
 // }
 
 
-import { LOGIN_ADMIN, GET_USER, RESET_MESSAGE_USER_NHANVIEN } from "../actions/LoginAdminAction";
+import { LOGIN_ADMIN, GET_USER, RESET_MESSAGE_USER_NHANVIEN, UPDATE_INFO_USER_ADMIN, UPDATE_PASS_USER_ADMIN, LOGOUT_ADMIN } from "../actions/LoginAdminAction";
 
 const initialState = {
-    dataValue : {},
-    message : ""
+    dataValue: {},
+    message: ""
 }
 
 const LoginAdminReducer = (state = initialState, action) => {       //action.type action.payload
@@ -33,18 +33,36 @@ const LoginAdminReducer = (state = initialState, action) => {       //action.typ
         case RESET_MESSAGE_USER_NHANVIEN:
             return {
                 ...state,
-                message : action.payload
+                message: action.payload
             }
         case LOGIN_ADMIN:
             return {
                 ...state,
-                dataValue : action.payload.nhanvien,
-                message : action.payload.message
+                dataValue: action.payload.nhanvien,
+                message: action.payload.message
+            }
+        case LOGOUT_ADMIN:
+            return {
+                ...state,
+                dataValue: action.payload.nhanvien,
+                message: action.payload.message
             }
         case GET_USER:
             return {
                 ...state,
-                dataValue : action.payload
+                dataValue: action.payload
+            }
+        case UPDATE_INFO_USER_ADMIN:
+            return {
+                ...state,
+                dataValue: (action.payload.nhanvien !== null) ? action.payload.nhanvien : state.dataValue,
+                message: action.payload.message
+            }
+        case UPDATE_PASS_USER_ADMIN:
+            return {
+                ...state,
+                dataValue: (action.payload.nhanvien !== null) ? action.payload.nhanvien : state.dataValue,
+                message: action.payload.message
             }
         default:
             return {

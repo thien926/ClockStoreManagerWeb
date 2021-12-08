@@ -9,6 +9,7 @@ I.	Tạo đồ án
     8.  dotnet add package BCrypt.Net-Next
     9.  dotnet add package System.IdentityModel.Tokens.Jwt
     10. dotnet add package Microsoft.AspNetCore.Cors
+    11. dotnet add package Microsoft.AspNetCore.Mvc.NewtonsoftJson
  
 II. Cấu hình thư mục 
     1.  Tạo thư mục Models

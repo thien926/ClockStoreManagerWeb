@@ -2252,7 +2252,8 @@ ol {
 }
 
 .product-details .quantity .pro-qty {
-	width: 123px;
+	/* width: 123px; */
+	width: 90px;
 	height: 46px;
 	border: 2px solid #ebebeb;
 	padding: 0 15px;
@@ -2681,7 +2682,8 @@ ol {
 }
 
 .cart-table table tr td.qua-col .pro-qty {
-	width: 123px;
+	/* width: 123px; */
+	width: 90px;
 	height: 46px;
 	border: 2px solid #ebebeb;
 	padding: 0 15px;

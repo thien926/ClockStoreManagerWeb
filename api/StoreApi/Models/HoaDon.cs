@@ -39,6 +39,7 @@ namespace StoreApi.Models
         public int status { get; set;}
         public virtual KhachHang KH { get; set;}
         public virtual NhanVien NV { get; set; }
+        [System.Text.Json.Serialization.JsonIgnore]
         public ICollection<ChiTietHD> chitietHDs {get; set;}
 
         public HoaDon (){

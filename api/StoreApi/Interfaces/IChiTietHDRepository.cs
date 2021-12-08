@@ -14,5 +14,7 @@ namespace StoreApi.Interfaces
         ChiTietHD ChiTietHD_Update(ChiTietHD hd); 
         void ChiTietHD_Delete(ChiTietHD hd); 
         IEnumerable<ChiTietHD> ChiTietHD_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count);
+        IEnumerable<ChiTietHD> ChiTietHD_AddRange(IEnumerable<ChiTietHD> list);
+        // void ChiTietHD_AddRangeWithListSP(IEnumerable<SanPham> list, int billId);
     }
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import UserPageNav from '../../../components/ShopComponents/UserPageComponent/UserPageNav'
@@ -9,7 +9,6 @@ function User() {
 
     const UserKhachHangReducer = useSelector(state => state.UserKhachHangReducer)
     const navigate = useNavigate();
-
     useEffect(() => {
         if(isDisplayUser && !UserKhachHangReducer.dataValue.name) {
             navigate('/login');

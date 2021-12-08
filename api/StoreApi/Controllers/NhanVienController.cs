@@ -160,6 +160,7 @@ namespace StoreApi.Controllers
                     {
                         HttpOnly = true
                     });
+                    user.quyen = quyenRepository.Quyen_GetById(user.quyenId);
 
                     return Ok(user);
                 }
@@ -190,7 +191,7 @@ namespace StoreApi.Controllers
                     return BadRequest(new { message = "Tài khoản đã bị khóa!" });
                 }
 
-                var quyen = quyenRepository.Quyen_GetById(user.quyenId);
+                user.quyen = quyenRepository.Quyen_GetById(user.quyenId);
 
                 return Ok(user);
             }
@@ -294,7 +295,7 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
-        [HttpPost("logout")]
+        [HttpGet("logout")]
         public ActionResult LogoutAdmin()
         {
             Response.Cookies.Delete("jwt-nhanvien");

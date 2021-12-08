@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { ACT_LOGOUT_ERROR, ACT_LOGOUT_SUCCESS } from '../../../constants/Message'
@@ -77,6 +76,7 @@ function Header() {
                 break;
         }
     }, [UserKhachHangReducer.message, dispatch])
+    
 
     const clickLogout = () => {
         dispatch(actLogoutKhachHang());
@@ -154,10 +154,7 @@ function Header() {
                                 </ul>
                             </li> */}
                             <CustomLinkShop to='/home'>Trang chủ</CustomLinkShop>
-                            {/* <CustomLinkShop to='/shop/1'>Đồng hồ nam</CustomLinkShop>
-                            <CustomLinkShop to='/shop/2'>Đồng hồ nữ</CustomLinkShop>
-                            <CustomLinkShop to='/shop/3'>Đồng hồ để bàn</CustomLinkShop>
-                            <CustomLinkShop to='/shop/4'>Đồng hồ treo tường</CustomLinkShop> */}
+                            {/* <CustomLinkShop to='/shop/1'>Đồng hồ nam</CustomLinkShop> */}
                             {elmCustomLinks}
                         </ul>
                     </nav>
