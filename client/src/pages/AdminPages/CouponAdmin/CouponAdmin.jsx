@@ -7,7 +7,7 @@ import AdminCouponControl from '../../../components/AdminComponents/AdminCouponC
 import AdminCouponItem from '../../../components/AdminComponents/AdminCouponComponent/AdminCouponItem';
 import AdminCouponPaging from '../../../components/AdminComponents/AdminCouponComponent/AdminCouponPaging';
 import { DELETE_COUPON_ERROR } from '../../../constants/Message';
-import { actDeleteCouponAdmin, actGetCouponAdmin, actResetMessageCouponAdmin } from '../../../redux/actions/AdminCouponAction';
+import { actDeleteCouponAdmin, actGetCouponAdmin, actResetMessageCouponAdmin, actUpdateCouponStatusAdmin } from '../../../redux/actions/AdminCouponAction';
 
 function CouponAdmin() {
     const AdminCouponReducer = useSelector(state => state.AdminCouponReducer)
@@ -139,16 +139,16 @@ function CouponAdmin() {
     const showForm = useCallback(
         () => {
             if(itemEdit) {
-                return <AdmimCouponFormAction itemEdit={itemEdit} setItemEdit={setItemEdit} submitUpdateBillStatus={submitUpdateBillStatus}/>
+                return <AdmimCouponFormAction itemEdit={itemEdit} setItemEdit={setItemEdit} submitUpdateCouponStatus={submitUpdateCouponStatus}/>
             }
             return null;
         },
         [itemEdit],
     )
 
-    const submitUpdateBillStatus = (data, id) => {
-        // dispatch(actUpdateBillStatusAdmin(data, id));
-        // setItemEdit('');
+    const submitUpdateCouponStatus = (data, id) => {
+        dispatch(actUpdateCouponStatusAdmin(data, id));
+        setItemEdit('');
     }
 
     return (

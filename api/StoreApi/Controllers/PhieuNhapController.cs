@@ -21,12 +21,17 @@ namespace StoreApi.Controllers
         private readonly JwtNhanVienService jwtNhanVien;
         private readonly IQuyenRepository quyenRepository;
         private readonly INhanVienRepository nhanVienRepository;
+        private readonly IChiTietPNRepository chiTietPNRepository;
+        private readonly ISanPhamRepository sanPhamRepository;
         public PhieuNhapController(IPhieuNhapRepository PhieuNhapRepository, JwtNhanVienService jwtNhanVien,
-        IQuyenRepository quyenRepository, INhanVienRepository nhanVienRepository) {
+        IQuyenRepository quyenRepository, INhanVienRepository nhanVienRepository, IChiTietPNRepository chiTietPNRepository,
+        ISanPhamRepository sanPhamRepository) {
             this.PhieuNhapRepository = PhieuNhapRepository;
             this.quyenRepository = quyenRepository;
             this.nhanVienRepository = nhanVienRepository;
             this.jwtNhanVien = jwtNhanVien;
+            this.chiTietPNRepository = chiTietPNRepository;
+            this.sanPhamRepository = sanPhamRepository;
         }
 
         [HttpGet]
@@ -82,25 +87,74 @@ namespace StoreApi.Controllers
         public ActionResult<PhieuNhap> UpdatePN([FromBody] PhieuNhapDto pndto, int id) {
             if(ModelState.IsValid) {
                 try {
+                    // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
+                    var jwt = Request.Cookies["jwt-nhanvien"];
+                    if (jwt == null)
+                    {
+                        return NotFound(new { message = "Nhân viên chưa đăng nhập tài khoản!" });
+                    }
+                    var token = jwtNhanVien.Verify(jwt);
+                    var user = token.Issuer;
+                    var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+                    if (nv == null) {
+                        return NotFound(new { message = "Không tìm thấy tài khoản nhân viên đang đăng nhập!" });
+                    }
+
+                    if (nv.status == 0) {
+                        return NotFound(new { message = "Tài khoản nhân viên đang đăng nhập đã bị khóa!" });
+                    }
+
+                    var checkQuyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlPhieuNhap");
+
+                    if(!checkQuyen) {
+                        return BadRequest(new { message = "Tài khoản không có quyền sửa phiếu nhập!" });
+                    }
+
                     var pn = PhieuNhapRepository.PhieuNhap_GetById(id);
 
                     if(pn == null || pndto.Id != id) {
-                        return NotFound();
+                        return NotFound(new { message = "Không tìm thấy phiếu nhập cần sửa!" });
                     }
 
+                    // if(pn.NVuser != null && pn.NVuser != nv.user) {
+                    //     return BadRequest(new { message = "Phiếu nhập thuộc quyền sửa đổi của nhân viên khác!" });
+                    // }
+
                     // Mapping
-                    // pn.nccId = pndto.nccId;
-                    pn.status = 0;
 
                     if(pndto.status > pn.status) {
                         pn.status = pndto.status;
                         if(pn.status == 2) {
-                            
+                            var ctpn = chiTietPNRepository.ChiTietPN_GetByCouponId(pn.Id);
+                            List<int> listProduct_id = new List<int>(); // lưu Id sản phẩm
+                            List<int> listSoluong = new List<int>();    // lưu số lượng sản phẩm 
+
+                            foreach (var item in ctpn)
+                            {
+                                listProduct_id.Add(item.productId);
+                                listSoluong.Add(item.amount);
+                            }
+
+                            var sps = sanPhamRepository.SanPham_LoadByListIdSP(listProduct_id);
+                            foreach (var item in sps)
+                            {
+                                for(int i = 0; i < listProduct_id.Count(); ++i) {
+                                    if(item.Id == listProduct_id[i]) {
+                                        item.amount = item.amount - listSoluong[i];
+                                        break;
+                                    }
+                                }
+                            }
+                            sanPhamRepository.SanPham_UpdateRand((List<SanPham>)sps);
                         }
+                    }
+                    else {
+                        return BadRequest(new { message = "Cập nhật trạng thái phiếu nhập không thành công!" });
                     }
 
                     var PN = this.PhieuNhapRepository.PhieuNhap_Update(pn);
-                    return Created("success", PN);
+                    return Ok();
                 }
                 catch(Exception e) {
                     return BadRequest(e);

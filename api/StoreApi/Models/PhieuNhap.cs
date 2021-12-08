@@ -46,7 +46,7 @@ namespace StoreApi.Models
         public ICollection<ChiTietPN> chiTietPNs { get; set; }
         public PhieuNhap() {
             total = 0;
-            // status = 1;
+            status = 1;
             chiTietPNs = new HashSet<ChiTietPN>();
         }
     }
