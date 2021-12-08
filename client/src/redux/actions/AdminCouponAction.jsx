@@ -1,15 +1,15 @@
 import axios from "axios";
 import { API_URL } from "../../constants/Config";
-import { DELETE_BILL_ERROR, DELETE_BILL_SUCCESS, UPDATE_BILL_STATUS_ERROR, UPDATE_BILL_STATUS_SUCCESS } from "../../constants/Message";
+import { DELETE_COUPON_ERROR, DELETE_COUPON_SUCCESS, UPDATE_COUPON_STATUS_ERROR, UPDATE_COUPON_STATUS_SUCCESS } from "../../constants/Message";
 
-export const GET_BILL_ADMIN = 'GET_BILL_ADMIN';
-export const RESET_MESSAGE_BILL_ADMIN = 'RESET_MESSAGE_BILL_ADMIN';
-export const UPDATE_BILL_STATUS_ADMIN = 'UPDATE_BILL_STATUS_ADMIN';
-export const DELETE_BILL_ADMIN = 'DELETE_BILL_ADMIN';
+export const GET_COUPON_ADMIN = 'GET_COUPON_ADMIN';
+export const RESET_MESSAGE_COUPON_ADMIN = 'RESET_MESSAGE_COUPON_ADMIN';
+export const UPDATE_COUPON_STATUS_ADMIN = 'UPDATE_COUPON_STATUS_ADMIN';
+export const DELETE_COUPON_ADMIN = 'DELETE_COUPON_ADMIN';
 
-export const actResetMessageBillAdmin = () => (dispatch) => {
+export const actResetMessageCouponAdmin = () => (dispatch) => {
     dispatch({
-        type : RESET_MESSAGE_BILL_ADMIN,
+        type : RESET_MESSAGE_COUPON_ADMIN,
         payload: {
             type : '',
             value : ''
@@ -17,9 +17,9 @@ export const actResetMessageBillAdmin = () => (dispatch) => {
     })
 }
 
-export const actGetBillAdmin = (data) => (dispatch) => {
+export const actGetCouponAdmin = (data) => (dispatch) => {
     axios.post(
-        `${API_URL}hoadon/filter-admin`,
+        `${API_URL}phieunhap/filter-admin`,
         data,
         {
             header : {
@@ -30,17 +30,17 @@ export const actGetBillAdmin = (data) => (dispatch) => {
         }
     ).then((res) => {
         dispatch({
-            type : GET_BILL_ADMIN,
+            type : GET_COUPON_ADMIN,
             payload : res.data
         })
     }).catch(error => {
-        console.log('actGetBillAdmin error: ', error);
+        console.log('actGetCouponAdmin error: ', error);
     })
 }
 
-export const actUpdateBillStatusAdmin = (data, id) => (dispatch) => {
+export const actUpdateCouponStatusAdmin = (data, id) => (dispatch) => {
     axios.put(
-        `${API_URL}hoadon/${id}`,
+        `${API_URL}phieunhap/${id}`,
         data,
         {
             headers : {
@@ -51,19 +51,19 @@ export const actUpdateBillStatusAdmin = (data, id) => (dispatch) => {
         }
     ).then((res) => {
         dispatch({
-            type : UPDATE_BILL_STATUS_ADMIN,
+            type : UPDATE_COUPON_STATUS_ADMIN,
             payload : {
                 type : "success",
-                value : UPDATE_BILL_STATUS_SUCCESS
+                value : UPDATE_COUPON_STATUS_SUCCESS
             }
         });
     }).catch(error => {
 
         if (error.response.data.message) {
-            console.log('actUpdateBillStatusAdmin error: ', error.response.data.message);
+            console.log('actUpdateCouponStatusAdmin error: ', error.response.data.message);
 
             dispatch({
-                type: UPDATE_BILL_STATUS_ADMIN,
+                type: UPDATE_COUPON_STATUS_ADMIN,
                 payload: {
                     type: "error",
                     value: error.response.data.message
@@ -71,22 +71,22 @@ export const actUpdateBillStatusAdmin = (data, id) => (dispatch) => {
             });
         }
         else {
-            console.log('actUpdateBillStatusAdmin error: ', error);
+            console.log('actUpdateCouponStatusAdmin error: ', error);
 
             dispatch({
-                type: UPDATE_BILL_STATUS_ADMIN,
+                type: UPDATE_COUPON_STATUS_ADMIN,
                 payload: {
                     type: "error",
-                    value: UPDATE_BILL_STATUS_ERROR
+                    value: UPDATE_COUPON_STATUS_ERROR
                 }
             });
         }
     });
 }
 
-export const actDeleteBillAdmin = (id) => (dispatch) => {
+export const actDeleteCouponAdmin = (id) => (dispatch) => {
     axios.delete(
-        `${API_URL}hoadon/${id}`,
+        `${API_URL}phieunhap/${id}`,
         {
             headers : {
                 'Content-Type' : 'application/json'
@@ -96,18 +96,18 @@ export const actDeleteBillAdmin = (id) => (dispatch) => {
         }
     ).then((result) => {
         dispatch({
-            type : DELETE_BILL_ADMIN,
+            type : DELETE_COUPON_ADMIN,
             payload : {
                 type : "success",
-                value : DELETE_BILL_SUCCESS
+                value : DELETE_COUPON_SUCCESS
             }
         });
     }).catch(error => {
         if (error.response.data.message) {
-            console.log('actDeleteBillAdmin error: ', error.response.data.message);
+            console.log('actDeleteCouponAdmin error: ', error.response.data.message);
 
             dispatch({
-                type: DELETE_BILL_ADMIN,
+                type: DELETE_COUPON_ADMIN,
                 payload: {
                     type: "error",
                     value: error.response.data.message
@@ -115,13 +115,13 @@ export const actDeleteBillAdmin = (id) => (dispatch) => {
             });
         }
         else {
-            console.log('actDeleteBillAdmin error: ', error);
+            console.log('actDeleteCouponAdmin error: ', error);
 
             dispatch({
-                type: DELETE_BILL_ADMIN,
+                type: DELETE_COUPON_ADMIN,
                 payload: {
                     type: "error",
-                    value: DELETE_BILL_ERROR
+                    value: DELETE_COUPON_ERROR
                 }
             });
         }

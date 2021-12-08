@@ -44,24 +44,29 @@ namespace StoreApi.Repositories
             context.SaveChanges();
         }
 
-        public IEnumerable<PhieuNhap> PhieuNhap_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
+        public IEnumerable<PhieuNhap> PhieuNhap_FilterAdmin(string search, int status, int pageIndex, int pageSize, out int count) {
             var query = context.PhieuNhaps.AsQueryable();
             
             if(!string.IsNullOrEmpty(search)) {
                 search = search.ToLower();
-                query = query.Where(m => m.address.ToLower().Contains(search));
+                query = query.Where(m => m.NVuser.ToLower().Contains(search) || (m.mail.ToLower().Contains(search)) 
+                || (m.nameNCC.ToLower().Contains(search)) || (m.phone.Contains(search)));
+            }
+
+            if(status > 0) {
+                query = query.Where(m => m.status == status);
             }
 
             count = query.Count();
-            if(!string.IsNullOrEmpty(sort)){
-                switch(sort){
-                    case "address-asc": query = query.OrderBy(m => m.address);
-                                    break;
-                    case "address-desc": query = query.OrderByDescending(m => m.address);
-                                    break;
-                    default: break;
-                }
-            }
+            // if(!string.IsNullOrEmpty(sort)){
+            //     switch(sort){
+            //         case "address-asc": query = query.OrderBy(m => m.address);
+            //                         break;
+            //         case "address-desc": query = query.OrderByDescending(m => m.address);
+            //                         break;
+            //         default: break;
+            //     }
+            // }
 
             int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
             // if(pageIndex > TotalPages){

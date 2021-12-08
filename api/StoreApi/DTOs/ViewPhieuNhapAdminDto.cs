@@ -10,7 +10,7 @@ namespace StoreApi.DTOs
     public class ViewPhieuNhapAdminDto
     {
         public PaginatedList<PhieuNhap> ListPN { get; set; }
-        public string sort { get; set;}
+        public int status { get; set;}
         public string search { get; set;}
         public int pageIndex{ get; set; }
 
