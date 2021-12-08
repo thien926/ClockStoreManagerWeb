@@ -17,7 +17,7 @@ function AdmimCouponFormAction(props) {
             status
         }
 
-        props.submitUpdateBillStatus(data, itemEdit.id);
+        props.submitUpdateCouponStatus(data, itemEdit.id);
     }
 
     return (

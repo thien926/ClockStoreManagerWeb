@@ -17,6 +17,7 @@ import AdminPermissionReducer from './AdminPermissionReducer'
 import CartReducer from './CartReducer'
 import BillDetailReducer from './BillDetailReducer'
 import AdminCouponReducer from './AdminCouponReducer'
+import AdminCouponDetailReducer from './AdminCouponDetailReducer'
 
 
 const appReducers = combineReducers({
@@ -37,7 +38,8 @@ const appReducers = combineReducers({
     ProductPageReducer,
     UserKhachHangReducer,
     CartReducer,
-    BillDetailReducer
+    BillDetailReducer,
+    AdminCouponDetailReducer
 })
 
 export default appReducers

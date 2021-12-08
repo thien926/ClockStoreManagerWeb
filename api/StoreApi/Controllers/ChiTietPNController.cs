@@ -36,34 +36,11 @@ namespace StoreApi.Controllers
 
         [HttpGet]
         public IEnumerable<ChiTietPN> GetAll() {
-            
             return this.ChiTietPNRepository.ChiTietPN_GetAll();
         }
 
         [HttpGet("{couponId}")]
-        public IEnumerable<ChiTietPN> GetBycouponId(int couponId) {
-            // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
-            var jwt = Request.Cookies["jwt-khachhang"];
-            if(jwt == null) {
-                return null;
-            }
-            var token = jwtKhachHang.Verify(jwt);
-            var user = token.Issuer;
-            var kh = KhachHangRepository.KhachHang_GetByUser(user);
-
-            if (kh == null)
-            {
-                return null;
-            }
-            var temp = HoaDonRepository.HoaDon_CheckUserKHAndId(couponId, kh.user);
-            if(!temp) {
-                return null;
-            }
-            return this.ChiTietPNRepository.ChiTietPN_GetBycouponId(couponId);
-        }
-
-        [HttpGet("admin/{couponId}")]
-        public IEnumerable<ChiTietPN> GetBycouponIdAdmin(int couponId) {
+        public IEnumerable<ChiTietPN> GetByCouponId(int couponId) {
             // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
             var jwt = Request.Cookies["jwt-nhanvien"];
             if(jwt == null) {
@@ -73,12 +50,49 @@ namespace StoreApi.Controllers
             var user = token.Issuer;
             var nv = nhanVienRepository.NhanVien_GetByUser(user);
 
-            if (nv == null) {
+            if (nv == null || nv.status != 1) {
                 return null;
             }
             
-            return this.ChiTietPNRepository.ChiTietPN_GetBycouponId(couponId);
+            return this.ChiTietPNRepository.ChiTietPN_GetByCouponId(couponId);
+
+            
+            // var jwt = Request.Cookies["jwt-khachhang"];
+            // if(jwt == null) {
+            //     return null;
+            // }
+            // var token = jwtKhachHang.Verify(jwt);
+            // var user = token.Issuer;
+            // var kh = KhachHangRepository.KhachHang_GetByUser(user);
+
+            // if (kh == null)
+            // {
+            //     return null;
+            // }
+            // var temp = HoaDonRepository.HoaDon_CheckUserKHAndId(couponId, kh.user);
+            // if(!temp) {
+            //     return null;
+            // }
+            // return this.ChiTietPNRepository.ChiTietPN_GetBycouponId(couponId);
         }
+
+        // [HttpGet("admin/{couponId}")]
+        // public IEnumerable<ChiTietPN> GetBycouponIdAdmin(int couponId) {
+        //     // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
+        //     var jwt = Request.Cookies["jwt-nhanvien"];
+        //     if(jwt == null) {
+        //         return null;
+        //     }
+        //     var token = jwtNhanVien.Verify(jwt);
+        //     var user = token.Issuer;
+        //     var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+        //     if (nv == null) {
+        //         return null;
+        //     }
+            
+        //     return this.ChiTietPNRepository.ChiTietPN_GetBycouponId(couponId);
+        // }
 
         // [HttpGet("{id}")]
         // public ActionResult<ChiTietPN> GetById(int id) {

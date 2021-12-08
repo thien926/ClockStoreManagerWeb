@@ -10,7 +10,7 @@ namespace StoreApi.Interfaces
         ChiTietPN ChiTietPN_Add(ChiTietPN pn); 
         // ChiTietPN ChiTietPN_GetById(int id); 
         IEnumerable<ChiTietPN> ChiTietPN_GetAll();
-        IEnumerable<ChiTietPN> ChiTietPN_GetBycouponId(int couponId);
+        IEnumerable<ChiTietPN> ChiTietPN_GetByCouponId(int couponId);
         ChiTietPN ChiTietPN_Update(ChiTietPN pn); 
         void ChiTietPN_Delete(ChiTietPN pn); 
         IEnumerable<ChiTietPN> ChiTietPN_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count);

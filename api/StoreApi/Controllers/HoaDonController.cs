@@ -144,7 +144,7 @@ namespace StoreApi.Controllers
 
                     if (hd == null || hddto.Id != id)
                     {
-                        return NotFound();
+                        return NotFound(new { message = "Không tìm thấy hóa đơn cần sửa!" });
                     }
 
                     if(hd.NVuser != null && hd.NVuser != nv.user) {
@@ -160,8 +160,11 @@ namespace StoreApi.Controllers
                     //     -   Đã hủy đơn hàng : 4
                     if (hd.status < hddto.status)
                     {
+                        if(hd.status == 1) {
+                            hd.NVuser = nv.user;
+                        }
+
                         hd.status = hddto.status;
-                        hd.NVuser = nv.user;
                         if(hd.status == 3) {
                             hd.date_receice = System.DateTime.Now;
                         }

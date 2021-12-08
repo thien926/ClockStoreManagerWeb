@@ -54,7 +54,7 @@ namespace StoreApi.Repositories
             return context.ChiTietPNs.ToList();
         }
 
-        public IEnumerable<ChiTietPN> ChiTietPN_GetBycouponId(int couponId)
+        public IEnumerable<ChiTietPN> ChiTietPN_GetByCouponId(int couponId)
         {
             var query = context.ChiTietPNs.AsQueryable();
             query = query.Where(m => m.couponId == couponId);
