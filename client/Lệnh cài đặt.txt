@@ -11,3 +11,4 @@
 11. npm install react-dropdown  --save  : ko cài
 12. npm i @popperjs/core : ko cài
 13. npm install react-bootstrap --save
+14. npm install react-chartjs-2 chart.js --save
