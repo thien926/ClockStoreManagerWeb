@@ -6,16 +6,20 @@ import AdminImportGoodChoose from '../../../components/AdminComponents/AdminImpo
 import AdminImportGoodsControl from '../../../components/AdminComponents/AdminImportGoodsComponent/AdminImportGoodsControl'
 import AdminImportGoodsPaging from '../../../components/AdminComponents/AdminImportGoodsComponent/AdminImportGoodsPaging';
 import AdminImportProductLoadItem from '../../../components/AdminComponents/AdminImportGoodsComponent/AdminImportProductLoadItem';
-import { actCancelImportGoodAdmin, actChangeAmountPriceImportGoodAdmin, actGetDataActionImportGoodAdmin, actGetImportGoodsLoadAdmin, actRefreshMessageImportGoodAdmin, actRemoveDataAction } from '../../../redux/actions/AdminImportGoodsAction';
+import { actCancelImportGoodAdmin, actChangeAmountPriceImportGoodAdmin, actGetDataActionImportGoodAdmin, actGetImportGoodsLoadAdmin, actLapPhieuNapImportGoodAdmin, actRefreshMessageImportGoodAdmin, actRemoveDataAction } from '../../../redux/actions/AdminImportGoodsAction';
+import { actGetUser } from '../../../redux/actions/LoginAdminAction';
 import './ImportGoodsAdmin.css'
 
 function ImportGoodsAdmin() {
 
     const AdminImportGoodsReducer = useSelector(state => state.AdminImportGoodsReducer)
+    const UserAdmin = useSelector(state => state.LoginAdminReducer)
 
     const [search, setSearch] = useState('');
     const [typeSearch, setTypeSearch] = useState('');
     const [pageIndex, setPageIndex] = useState(1);
+    const [user, setUser] = useState('');
+    const [actionResetForm, setActionResetForm] = useState(false);
 
     const [elmProductLoad, setElmProductLoad] = useState(null);
     const [itemChoose, setItemChoose] = useState(null);
@@ -81,6 +85,7 @@ function ImportGoodsAdmin() {
 
     useEffect(() => {
         dispatch(actGetDataActionImportGoodAdmin());
+        dispatch(actGetUser());
     }, [dispatch])
 
     useEffect(() => {
@@ -92,13 +97,19 @@ function ImportGoodsAdmin() {
             })
         }
         setElmProductLoad(result);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [AdminImportGoodsReducer.dataLoad])
+
+        if (UserAdmin.dataValue.name) {
+            setUser(UserAdmin.dataValue.user);
+        }
+    
+    }, [AdminImportGoodsReducer.dataLoad, UserAdmin.dataValue.name])
 
     useEffect(() => {
         if(AdminImportGoodsReducer.message.type === 'success') {
             toast.success(AdminImportGoodsReducer.message.value);
+            setActionResetForm(true);
             dispatch(actRefreshMessageImportGoodAdmin())
+            
         }
         else if(AdminImportGoodsReducer.message.type === 'error') {
             toast.error(AdminImportGoodsReducer.message.value);
@@ -121,6 +132,10 @@ function ImportGoodsAdmin() {
 
     const submitBtnHuy = () => {
         dispatch(actCancelImportGoodAdmin());
+    }
+
+    const submitCreatePhieuNhap = (data) => {
+        dispatch(actLapPhieuNapImportGoodAdmin(data));
     }
 
     return (
@@ -154,7 +169,7 @@ function ImportGoodsAdmin() {
 
             <AdminImportGoodsPaging dataLoad={AdminImportGoodsReducer.dataLoad} />
 
-            <AdminImportGoodChoose submitBtnHuy={submitBtnHuy} changeDataAction={changeDataAction} deleteItemAction={deleteItemAction} itemChoose={itemChoose} dataAction={AdminImportGoodsReducer.dataAction} />
+            <AdminImportGoodChoose actionResetForm={actionResetForm} setActionResetForm={setActionResetForm} user={user} submitCreatePhieuNhap={submitCreatePhieuNhap} submitBtnHuy={submitBtnHuy} changeDataAction={changeDataAction} deleteItemAction={deleteItemAction} itemChoose={itemChoose} dataAction={AdminImportGoodsReducer.dataAction} />
 
         </div>
     )

@@ -32,12 +32,12 @@ function AdminImportGoodItem(props) {
                 <img className="img-responsive" src={`${API_URL_IMG}${item.img}`} />
             </td>
             <td>
-                <input value={amount} onChange={(e) => changeAmount(e.target.value)} type="text" className="form-control" defaultValue={0} required="required" />
+                <input value={amount} onChange={(e) => changeAmount(e.target.value)} type="text" className="form-control" required="required" />
             </td>
             <td>
-                <input value={price} onChange={(e) => changePrice(e.target.value)} type="text" className="form-control" defaultValue={0} required="required" />
+                <input value={price} onChange={(e) => changePrice(e.target.value)} type="text" className="form-control" required="required" />
             </td>
-            <td>{item.amount * item.price}</td>
+            <td>{(item.amount * item.price).toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</td>
             <td>
                 <button onClick={() => props.deleteItemAction(item.id)} type="button" className="btn btn-danger">Xóa</button>
             </td>

@@ -53,7 +53,7 @@
 //     }
 // }
 
-import { CANCEL_IMPORT_GOOD_ADMIN, CHANGE_DATA_ACTION_IMPORT_GOOD_ADMIN, CHOOSE_ITEM_IMPORT_GOOD_ADMIN, GET_DATA_ACTION_IMPORT_GOOD_ADMIN, GET_IMPORT_GOOD_ADMIN, REFRESH_MESSAGE_IMPORT_GOOD_ADMIN, REMOVE_DATA_ACTION_IMPORT_GOOD_ADMIN } from "../actions/AdminImportGoodsAction";
+import { CANCEL_IMPORT_GOOD_ADMIN, CHANGE_DATA_ACTION_IMPORT_GOOD_ADMIN, CHOOSE_ITEM_IMPORT_GOOD_ADMIN, CREATE_IMPORT_GOOD_ADMIN, GET_DATA_ACTION_IMPORT_GOOD_ADMIN, GET_IMPORT_GOOD_ADMIN, REFRESH_MESSAGE_IMPORT_GOOD_ADMIN, REMOVE_DATA_ACTION_IMPORT_GOOD_ADMIN } from "../actions/AdminImportGoodsAction";
 
 const initialState = {
     dataLoad: {},
@@ -88,6 +88,12 @@ const AdminImportGoodsReducer = (state = initialState, action) => {
                 message: action.payload.message
             };
         case REMOVE_DATA_ACTION_IMPORT_GOOD_ADMIN:
+            return {
+                ...state,
+                dataAction: (action.payload.dataAction ? action.payload.dataAction : state.dataAction),
+                message: action.payload.message
+            };
+        case CREATE_IMPORT_GOOD_ADMIN:
             return {
                 ...state,
                 dataAction: (action.payload.dataAction ? action.payload.dataAction : state.dataAction),
