@@ -243,7 +243,7 @@ function ProductsAdmin() {
     }
 
     const changeSearch = (searchValue) => {
-        navigate('/admin/products?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
+        navigate('/admin/products?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + 1);
     }
 
     // Thực hiện thao tác xóa

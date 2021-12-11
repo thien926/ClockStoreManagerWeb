@@ -117,7 +117,7 @@ function CouponAdmin() {
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
-        navigate('/admin/coupon?search=' + searchValue + '&status=' + status + '&pageIndex=' + pageIndex);
+        navigate('/admin/coupon?search=' + searchValue + '&status=' + status + '&pageIndex=' + 1);
     }
 
     // đi đến URL khác khi status
