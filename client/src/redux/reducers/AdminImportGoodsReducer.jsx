@@ -42,14 +42,18 @@
 //         "range": 9,
 //         "totalPage": 13
 //     },
-//     dataAction: {},
+//     dataAction: {
+//         listSP: [],
+//         amount: 0,
+//         total: 0
+//     },
 //     message: {
 //         type: '',
 //         value: ''
 //     }
 // }
 
-import { CHOOSE_ITEM_IMPORT_GOOD_ADMIN, GET_IMPORT_GOOD_ADMIN } from "../actions/AdminImportGoodsAction";
+import { CANCEL_IMPORT_GOOD_ADMIN, CHANGE_DATA_ACTION_IMPORT_GOOD_ADMIN, CHOOSE_ITEM_IMPORT_GOOD_ADMIN, GET_DATA_ACTION_IMPORT_GOOD_ADMIN, GET_IMPORT_GOOD_ADMIN, REFRESH_MESSAGE_IMPORT_GOOD_ADMIN, REMOVE_DATA_ACTION_IMPORT_GOOD_ADMIN } from "../actions/AdminImportGoodsAction";
 
 const initialState = {
     dataLoad: {},
@@ -62,7 +66,7 @@ const initialState = {
 
 const AdminImportGoodsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'RESET_MESSAGE_IMPORT_GOOD_ADMIN':
+        case REFRESH_MESSAGE_IMPORT_GOOD_ADMIN:
             return {
                 ...state,
                 message: action.payload
@@ -72,13 +76,34 @@ const AdminImportGoodsReducer = (state = initialState, action) => {
                 ...state,
                 dataLoad: action.payload
             }
+        case GET_DATA_ACTION_IMPORT_GOOD_ADMIN:
+            return {
+                ...state,
+                dataAction: action.payload
+            }
         case CHOOSE_ITEM_IMPORT_GOOD_ADMIN:
             return {
                 ...state,
                 dataAction: action.payload.dataAction,
-                message : action.payload.message
+                message: action.payload.message
             };
-        
+        case REMOVE_DATA_ACTION_IMPORT_GOOD_ADMIN:
+            return {
+                ...state,
+                dataAction: (action.payload.dataAction ? action.payload.dataAction : state.dataAction),
+                message: action.payload.message
+            };
+        case CANCEL_IMPORT_GOOD_ADMIN:
+            return {
+                ...state,
+                dataAction: action.payload
+            };
+        case CHANGE_DATA_ACTION_IMPORT_GOOD_ADMIN:
+            return {
+                ...state,
+                dataAction: action.payload
+            };
+
         default:
             return {
                 ...state

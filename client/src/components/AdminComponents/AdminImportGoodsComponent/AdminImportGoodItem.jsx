@@ -1,22 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { API_URL_IMG } from '../../../constants/Config';
 
-function AdminImportGoodItem() {
+function AdminImportGoodItem(props) {
+
+    const {item} = props;
+
+    const [amount, setAmount] = useState(item.amount)
+    const [price, setPrice] = useState(item.price)
+
+    const changePrice = (value) => {
+        value = parseInt(value)
+        if(value) {
+            setPrice(value);
+            props.changeDataAction(item.id, amount, value);
+        }
+    }
+
+    const changeAmount = (value) => {
+        value = parseInt(value)
+        if(value) {
+            setAmount(value);
+            props.changeDataAction(item.id, value, price);
+        }
+    }
+
     return (
         <tr>
-            <td>12</td>
-            <td>Đồng hồ để bàn chính hãng NAMKIN B945-1</td>
+            <td>{item.id}</td>
+            <td>{item.name}</td>
             <td className="col-md-1">
-                <img className="img-responsive" src="/image/sp1.jpg" />
+                <img className="img-responsive" src={`${API_URL_IMG}${item.img}`} />
             </td>
             <td>
-                <input type="number" className="form-control" defaultValue={0} required="required" />
+                <input value={amount} onChange={(e) => changeAmount(e.target.value)} type="text" className="form-control" defaultValue={0} required="required" />
             </td>
             <td>
-                <input type="number" className="form-control" defaultValue={0} required="required" />
+                <input value={price} onChange={(e) => changePrice(e.target.value)} type="text" className="form-control" defaultValue={0} required="required" />
             </td>
-            <td>12</td>
+            <td>{item.amount * item.price}</td>
             <td>
-                <button type="button" className="btn btn-danger">Xóa</button>
+                <button onClick={() => props.deleteItemAction(item.id)} type="button" className="btn btn-danger">Xóa</button>
             </td>
         </tr>
     )

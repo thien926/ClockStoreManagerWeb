@@ -16,7 +16,7 @@ function AdminImportProductLoadItem(props) {
                 <img className="img-responsive" src={`${API_URL_IMG + item.img}`} />
             </td>
             <td>
-                <button type="button" className="btn btn-info">Chọn</button>
+                <button onClick={() => props.setItemChoose(item)} type="button" className="btn btn-info">Chọn</button>
             </td>
         </tr>
     )

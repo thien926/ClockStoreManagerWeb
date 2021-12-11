@@ -1,7 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { actChooseProduct } from '../../../redux/actions/AdminImportGoodsAction';
 import AdminImportGoodItem from './AdminImportGoodItem'
 
-function AdminImportGoodChoose() {
+function AdminImportGoodChoose(props) {
+
+    const {itemChoose, dataAction} = props;
+    const [totalAmount, setTotalAmount] = useState(0)
+    const [totalPrice, setTotalPrice] = useState(0)
+
+    const [elmItems, setElmItems] = useState(null);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if(itemChoose) {
+            dispatch(actChooseProduct(itemChoose));
+        }
+    }, [dispatch, itemChoose])
+
+    useEffect(() => {
+        let result = null, amount = 0, price = 0;
+        if(dataAction.listSP && dataAction.listSP.length > 0) {
+            
+            result = dataAction.listSP.map((item, index) => {
+                amount += item.amount;
+                price += item.price * item.amount;
+                return <AdminImportGoodItem changeDataAction={props.changeDataAction} key={index} item={item} deleteItemAction={props.deleteItemAction}/>
+            })
+        }
+        setElmItems(result);
+        setTotalAmount(amount);
+        setTotalPrice(price);
+    }, [dataAction, props.changeDataAction, props.deleteItemAction])
+
     return (
         <div>
             <div className="row mb-2 text-center" style={{ fontSize: '150%', fontWeight: 'bold' }}>
@@ -60,28 +92,18 @@ function AdminImportGoodChoose() {
                         </tr>
                     </thead>
                     <tbody>
-                        <AdminImportGoodItem />
-                        {/* <AdminImportGoodItem />
-                        <AdminImportGoodItem />
-                        <AdminImportGoodItem />
-                        <AdminImportGoodItem />
-                        <AdminImportGoodItem />
-                        <AdminImportGoodItem />
-                        <AdminImportGoodItem />
-                        <AdminImportGoodItem />
-                        <AdminImportGoodItem />
-                        <AdminImportGoodItem />
-                        <AdminImportGoodItem /> */}
+                        {elmItems}
+                        {/* <AdminImportGoodItem /> */}
                     </tbody>
                 </table>
 
             </div>
-            <div className="row">
+            <div className="row mt-2">
                 <div className="col-lg-4 offset-lg-4">
                     <div className="proceed-checkout">
                         <ul>
-                            <li className="subtotal">Tổng sản phẩm <span>120</span></li>
-                            <li className="cart-total">Thành tiền <span>432432432</span></li>
+                            <li className="subtotal">Tổng sản phẩm <span>{totalAmount}</span></li>
+                            <li className="cart-total">Thành tiền <span>{totalPrice}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -89,7 +111,7 @@ function AdminImportGoodChoose() {
             <div className="row d-flex justify-content-center mt-3 mb-3">
                 
                 <button type="button" className="btn btn-primary">Lập phiếu nhập</button>
-                <button type="button" className="btn btn-danger ml-3">Hủy</button>
+                <button onClick={props.submitBtnHuy} type="button" className="btn btn-danger ml-3">Hủy</button>
                 
             </div>
         </div>

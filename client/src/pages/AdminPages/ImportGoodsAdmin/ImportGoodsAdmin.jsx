@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 import AdminImportGoodChoose from '../../../components/AdminComponents/AdminImportGoodsComponent/AdminImportGoodChoose';
 import AdminImportGoodsControl from '../../../components/AdminComponents/AdminImportGoodsComponent/AdminImportGoodsControl'
 import AdminImportGoodsPaging from '../../../components/AdminComponents/AdminImportGoodsComponent/AdminImportGoodsPaging';
 import AdminImportProductLoadItem from '../../../components/AdminComponents/AdminImportGoodsComponent/AdminImportProductLoadItem';
-import { actGetImportGoodsLoadAdmin } from '../../../redux/actions/AdminImportGoodsAction';
+import { actCancelImportGoodAdmin, actChangeAmountPriceImportGoodAdmin, actGetDataActionImportGoodAdmin, actGetImportGoodsLoadAdmin, actRefreshMessageImportGoodAdmin, actRemoveDataAction } from '../../../redux/actions/AdminImportGoodsAction';
 import './ImportGoodsAdmin.css'
 
 function ImportGoodsAdmin() {
@@ -17,6 +18,7 @@ function ImportGoodsAdmin() {
     const [pageIndex, setPageIndex] = useState(1);
 
     const [elmProductLoad, setElmProductLoad] = useState(null);
+    const [itemChoose, setItemChoose] = useState(null);
 
     const location = useLocation();
     const dispatch = useDispatch();
@@ -78,20 +80,47 @@ function ImportGoodsAdmin() {
     }, [search, typeSearch, pageIndex, dispatch])
 
     useEffect(() => {
+        dispatch(actGetDataActionImportGoodAdmin());
+    }, [dispatch])
+
+    useEffect(() => {
         // console.log()
         var result = null;
         if(AdminImportGoodsReducer.dataLoad.listSP && AdminImportGoodsReducer.dataLoad.listSP.length > 0) {
             result = AdminImportGoodsReducer.dataLoad.listSP.map((item, index) => {
-                return <AdminImportProductLoadItem key={index} item={item} index={index} />
+                return <AdminImportProductLoadItem setItemChoose={setItemChoose} key={index} item={item} index={index} />
             })
         }
         setElmProductLoad(result);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [AdminImportGoodsReducer.dataLoad])
 
+    useEffect(() => {
+        if(AdminImportGoodsReducer.message.type === 'success') {
+            toast.success(AdminImportGoodsReducer.message.value);
+            dispatch(actRefreshMessageImportGoodAdmin())
+        }
+        else if(AdminImportGoodsReducer.message.type === 'error') {
+            toast.error(AdminImportGoodsReducer.message.value);
+            dispatch(actRefreshMessageImportGoodAdmin())
+        }
+    }, [AdminImportGoodsReducer.message, dispatch])
+
     // đi đến URL khác khi search
     const changeSearch = (searchValue, typeSearchValue) => {
         navigate('/admin/import-goods?search=' + searchValue + '&typeSearch=' + typeSearchValue + '&pageIndex=' + 1);
+    }
+
+    const deleteItemAction = (id) => {
+        dispatch(actRemoveDataAction(id))
+    }
+
+    const changeDataAction = (id, amount, price) => {
+        dispatch(actChangeAmountPriceImportGoodAdmin(id, parseInt(amount), parseInt(price)));
+    }
+
+    const submitBtnHuy = () => {
+        dispatch(actCancelImportGoodAdmin());
     }
 
     return (
@@ -125,7 +154,7 @@ function ImportGoodsAdmin() {
 
             <AdminImportGoodsPaging dataLoad={AdminImportGoodsReducer.dataLoad} />
 
-            <AdminImportGoodChoose />
+            <AdminImportGoodChoose submitBtnHuy={submitBtnHuy} changeDataAction={changeDataAction} deleteItemAction={deleteItemAction} itemChoose={itemChoose} dataAction={AdminImportGoodsReducer.dataAction} />
 
         </div>
     )
