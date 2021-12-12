@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +33,10 @@ namespace StoreApi
         {
 
             services.AddControllers();
+            
+//             services.AddControllers().AddJsonOptions(x =>
+//    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
 
             //Sửa chỗ này nè
             // cho phép 4200 truy cập 5001 
@@ -52,6 +57,7 @@ namespace StoreApi
             //     x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
             services.AddScoped<JwtNhanVienService>();
             services.AddScoped<JwtKhachHangService>();
+            services.AddScoped<IPhieuNhapRepository, PhieuNhapRepository>();
             services.AddScoped<IKhachHangRepository, KhachHangRepository>();
             services.AddScoped<INhanVienRepository, NhanVienRepository>();
             services.AddScoped<ISanPhamRepository, SanPhamRepository>();
@@ -61,9 +67,9 @@ namespace StoreApi
             services.AddScoped<ILoaiSanPhamRepository, LoaiSanPhamRepository>();
             services.AddScoped<IHoaDonRepository, HoaDonRepository>();
             services.AddScoped<IChiTietHDRepository, ChiTietHDRepository>();
-            services.AddScoped<INCCRepository, NCCRepository>();
             services.AddScoped<IKieuDayRepository, KieuDayRepository>();
             services.AddScoped<IHoaDonRepository, HoaDonRepository>();
+            services.AddScoped<IChiTietPNRepository, ChiTietPNRepository>();
 
 
         }
@@ -84,12 +90,12 @@ namespace StoreApi
             // sử dụng Cors để domain 4200 truy cập vào 5001
             // app.UseCors("CorsPolicy");
             app.UseCors(options => options
-                .WithOrigins(new []{"http://localhost:4200"})
+                .WithOrigins(new[] { "http://localhost:4200" })
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
             );
-            
+
             // dùng để truy cập wwwroot từ domain
             app.UseStaticFiles();
 

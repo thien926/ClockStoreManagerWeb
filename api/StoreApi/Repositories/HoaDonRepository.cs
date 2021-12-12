@@ -26,6 +26,38 @@ namespace StoreApi.Repositories
             return context.HoaDons.FirstOrDefault(o => o.Id == id);
         }
 
+        public Boolean HoaDon_CheckUserKHAndId(int Id, string user)
+        {
+            var query = context.HoaDons.AsQueryable();
+            query = query.Where(m => (m.Id == Id) && (m.KHuser == user));
+            int count = query.Count();
+            
+            return count > 0;
+        }
+
+        public IEnumerable<HoaDon> HoaDon_GetByUserKH(string user, int pageIndex, int pageSize, out int count)
+        {
+            var query = context.HoaDons.AsQueryable();
+            query = query.Where(m => m.KHuser == user);
+
+            count = query.Count();
+            int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+            
+            if(pageIndex < 1){
+                pageIndex = 1;
+            }
+            query = query.OrderBy(m => m.status);
+            return query.Skip((pageIndex - 1) * pageSize)
+                        .Take(pageSize).ToList();
+        }
+
+        public IEnumerable<HoaDon> HoaDon_GetByUserNV(string user)
+        {
+            var query = context.HoaDons.AsQueryable();
+            query = query.Where(m => m.NVuser == user);
+            return query.ToList();
+        }
+
         public IEnumerable<HoaDon> HoaDon_GetAll()
         {
             return context.HoaDons.ToList();
@@ -69,6 +101,20 @@ namespace StoreApi.Repositories
 
             return query.Skip((pageIndex - 1) * pageSize)
                         .Take(pageSize).ToList();
+        }
+
+        public IEnumerable<HoaDon> HoaDon_FilterBeginEndInYear(int begin, int end) {
+            var query = context.HoaDons.AsQueryable();
+            query = query.Where(m => (m.date_order.Year >= begin) && (m.date_order.Year <= end));
+            query = query.OrderBy(m => m.date_order);
+            return query.ToList();
+        }
+
+        public IEnumerable<HoaDon> HoaDon_FilterBeginEndInMonth(int year, int begin, int end) {
+            var query = context.HoaDons.AsQueryable();
+            query = query.Where(m => (m.date_order.Year == year) && (m.date_order.Month >= begin) && (m.date_order.Month <= end));
+            query = query.OrderBy(m => m.date_order);
+            return query.ToList();
         }
     }
 }

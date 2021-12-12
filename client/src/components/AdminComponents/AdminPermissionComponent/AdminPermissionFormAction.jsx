@@ -14,7 +14,6 @@ function AdminPermissionFormAction(props) {
     const [HoaDon, setHoaDon] = useState('');
     const [KhachHang, setKhachHang] = useState('');
     const [PhieuNhap, setPhieuNhap] = useState('');
-    const [NCC, setNCC] = useState('');
     const [TaiKhoan, setTaiKhoan] = useState('');
     const [Quyen, setQuyen] = useState('');
     const [LoaiSanPham, setLoaiSanPham] = useState('');
@@ -39,7 +38,6 @@ function AdminPermissionFormAction(props) {
             setTaiKhoan('');
             setKhachHang('');
             setNhanVien('');
-            setNCC('');
             setThuongHieu('');
             setSanPham('');
             setLoaiSanPham('');
@@ -80,16 +78,6 @@ function AdminPermissionFormAction(props) {
             }
             else {
                 setNhanVien("");
-            }
-
-            if(formValue.details.search("xemNCC") >= 0) {
-                setNCC("xemNCC");
-            }
-            else if(formValue.details.search("qlNCC") >= 0) {
-                setNCC("qlNCC");
-            }
-            else {
-                setNCC("");
             }
 
             if(formValue.details.search("xemThuongHieu") >= 0) {
@@ -245,9 +233,6 @@ function AdminPermissionFormAction(props) {
         if(NhanVien !== "") {
             details += NhanVien + "-";
         }
-        if(NCC !== "") {
-            details += NCC + "-";
-        }
         if(ThuongHieu !== "") {
             details += ThuongHieu + "-";
         }
@@ -357,16 +342,6 @@ function AdminPermissionFormAction(props) {
                                 <option value="">Không có quyền</option>
                                 <option value="xemNhanVien">Chỉ xem</option>
                                 <option value="qlNhanVien">Xem và quản lý</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span className="ml-4">Quyền quản lý nhà cung cấp</span></td>
-                        <td>
-                            <select value={NCC} onChange={(e) => setNCC(e.target.value)} className="form-control" required="required">
-                                <option value="">Không có quyền</option>
-                                <option value="xemNCC">Chỉ xem</option>
-                                <option value="qlNCC">Xem và quản lý</option>
                             </select>
                         </td>
                     </tr>

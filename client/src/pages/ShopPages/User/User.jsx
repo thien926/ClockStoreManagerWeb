@@ -9,7 +9,6 @@ function User() {
 
     const UserKhachHangReducer = useSelector(state => state.UserKhachHangReducer)
     const navigate = useNavigate();
-
     useEffect(() => {
         if(isDisplayUser && !UserKhachHangReducer.dataValue.name) {
             navigate('/login');

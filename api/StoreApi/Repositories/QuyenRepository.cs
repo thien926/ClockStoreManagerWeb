@@ -44,6 +44,13 @@ namespace StoreApi.Repositories
             context.SaveChanges();
         }
 
+        public Boolean Quyen_CheckQuyenUser(int Id, string quyen) {
+            quyen = quyen.ToLower();
+            var res = context.Quyens.FirstOrDefault(m => ((m.Id == Id) && (m.details.Contains(quyen))));
+            
+            return (res != null);
+        }
+
         public IEnumerable<Quyen> Quyen_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
             var query = context.Quyens.AsQueryable();
             

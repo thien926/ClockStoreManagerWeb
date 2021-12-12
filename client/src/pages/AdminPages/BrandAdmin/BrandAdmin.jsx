@@ -119,7 +119,7 @@ function BrandAdmin() {
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
-        navigate('/admin/Brand?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
+        navigate('/admin/Brand?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + 1);
     }
 
     // đi đến URL khác khi sort

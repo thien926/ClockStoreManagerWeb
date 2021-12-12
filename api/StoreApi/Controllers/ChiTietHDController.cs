@@ -18,17 +18,65 @@ namespace StoreApi.Controllers
         private int pageSize = 9;
         private int range = 9;
         private readonly IChiTietHDRepository ChiTietHDRepository;
-        public ChiTietHDController(IChiTietHDRepository ChiTietHDRepository) {
+        private readonly JwtKhachHangService jwtKhachHang;
+        private readonly JwtNhanVienService jwtNhanVien;
+        private readonly INhanVienRepository nhanVienRepository;
+        private readonly IKhachHangRepository KhachHangRepository;
+        private readonly IHoaDonRepository HoaDonRepository;
+        public ChiTietHDController(IChiTietHDRepository ChiTietHDRepository, IKhachHangRepository KhachHangRepository,
+        JwtKhachHangService jwtKhachHang, IHoaDonRepository HoaDonRepository, JwtNhanVienService jwtNhanVien,
+        INhanVienRepository nhanVienRepository) {
             this.ChiTietHDRepository = ChiTietHDRepository;
+            this.KhachHangRepository = KhachHangRepository;
+            this.jwtKhachHang = jwtKhachHang;
+            this.HoaDonRepository = HoaDonRepository;
+            this.jwtNhanVien = jwtNhanVien;
+            this.nhanVienRepository = nhanVienRepository;
         }
 
         [HttpGet]
         public IEnumerable<ChiTietHD> GetAll() {
+            
             return this.ChiTietHDRepository.ChiTietHD_GetAll();
         }
 
         [HttpGet("{billId}")]
         public IEnumerable<ChiTietHD> GetByBillId(int billId) {
+            // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
+            var jwt = Request.Cookies["jwt-khachhang"];
+            if(jwt == null) {
+                return null;
+            }
+            var token = jwtKhachHang.Verify(jwt);
+            var user = token.Issuer;
+            var kh = KhachHangRepository.KhachHang_GetByUser(user);
+
+            if (kh == null)
+            {
+                return null;
+            }
+            var temp = HoaDonRepository.HoaDon_CheckUserKHAndId(billId, kh.user);
+            if(!temp) {
+                return null;
+            }
+            return this.ChiTietHDRepository.ChiTietHD_GetByBillId(billId);
+        }
+
+        [HttpGet("admin/{billId}")]
+        public IEnumerable<ChiTietHD> GetByBillIdAdmin(int billId) {
+            // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
+            var jwt = Request.Cookies["jwt-nhanvien"];
+            if(jwt == null) {
+                return null;
+            }
+            var token = jwtNhanVien.Verify(jwt);
+            var user = token.Issuer;
+            var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+            if (nv == null) {
+                return null;
+            }
+            
             return this.ChiTietHDRepository.ChiTietHD_GetByBillId(billId);
         }
 

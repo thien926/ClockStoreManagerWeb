@@ -4,6 +4,7 @@ import { ADD_WIRE_ERROR, ADD_WIRE_SUCCESS, DELETE_WIRE_ERROR, DELETE_WIRE_SUCCES
 
 
 export const GET_WIRE_ADMIN = 'GET_WIRE_ADMIN';
+export const GET_ALL_WIRE_ADMIN = 'GET_ALL_WIRE_ADMIN';
 export const RESET_MESSAGE_WIRE_ADMIN = 'RESET_MESSAGE_WIRE_ADMIN';
 export const ADD_WIRE_ADMIN = 'ADD_WIRE_ADMIN';
 export const UPDATE_WIRE_ADMIN = 'UPDATE_WIRE_ADMIN';
@@ -13,6 +14,26 @@ export const actResetMessageWireAdmin = () => (dispatch) => {
     dispatch({
         type : RESET_MESSAGE_WIRE_ADMIN,
         payload: ''
+    })
+}
+
+export const actGetAllWireAdmin = () => (dispatch) => {
+    axios.get(
+        `${API_URL}kieuday`,
+        {
+            header : {
+                'Content-Type' : 'application/json'
+            },
+            withCredentials : true,
+            credentials : 'include'
+        }
+    ).then((res) => {
+        dispatch({
+            type : GET_WIRE_ADMIN,
+            payload : res.data
+        })
+    }).catch(error => {
+        console.log('actGetAllWireAdmin error: ', error);
     })
 }
 

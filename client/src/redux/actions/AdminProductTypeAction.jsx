@@ -9,6 +9,7 @@ import { ADD_LSP_SUCCESS,
 } from '../../constants/Message';
 
 export const GET_PRODUCT_TYPE_ADMIN = 'GET_PRODUCT_TYPE_ADMIN'
+export const GET_ALL_PRODUCT_TYPE_ADMIN = 'GET_ALL_PRODUCT_TYPE_ADMIN'
 export const UPDATE_PRODUCT_TYPE_ADMIN = 'UPDATE_PRODUCT_TYPE_ADMIN';
 export const ADD_PRODUCT_TYPE_ADMIN = 'ADD_PRODUCT_TYPE_ADMIN';
 export const DELETE_PRODUCT_TYPE_ADMIN = 'DELETE_PRODUCT_TYPE_ADMIN';
@@ -18,6 +19,26 @@ export const actResetMessageLSPAdmin = () => (dispatch) => {
     dispatch({
         type : RESET_MESSAGE_LSP_ADMIN,
         payload : ''
+    })
+}
+
+export const actGetAllProductTypeAdmin = () => (dispatch) => {
+    axios.get(
+        `${API_URL}loaisanpham`,
+        {
+            header : {
+                'Content-Type' : 'application/json'
+            },
+            withCredentials : true,
+            credentials : 'include'
+        }
+    ).then((res) => {
+        dispatch({
+            type : GET_ALL_PRODUCT_TYPE_ADMIN,
+            payload : res.data
+        })
+    }).catch(error => {
+        console.log('actGetAllProductTypeAdmin error: ', error);
     })
 }
 

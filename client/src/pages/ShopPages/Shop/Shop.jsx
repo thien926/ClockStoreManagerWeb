@@ -162,7 +162,7 @@ function Shop(props) {
   }, [lspId, branchId, wireId, machineId, search, sort, pageIndex, priceFrom, priceTo, dispatch])
 
   useEffect(() => {
-    // console.log(ShopPageReducer.products);
+    console.log(ShopPageReducer.products);
     var result = null;
     if (ShopPageReducer.products.listSP && ShopPageReducer.products.listSP.length > 0) {
       result = ShopPageReducer.products.listSP.map((item, index) => {

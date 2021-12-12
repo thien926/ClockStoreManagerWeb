@@ -120,7 +120,7 @@ function PermissionAdmin() {
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
-        navigate('/admin/permission?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
+        navigate('/admin/permission?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + 1);
     }
 
     // đi đến URL khác khi sort

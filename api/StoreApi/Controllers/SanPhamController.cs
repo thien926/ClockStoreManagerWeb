@@ -1,3 +1,4 @@
+using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using StoreApi.DTOs;
 using StoreApi.Interfaces;
 using StoreApi.Models;
 using StoreApi.Services;
+using Microsoft.AspNetCore.Hosting;
 
 namespace StoreApi.Controllers
 {
@@ -22,13 +24,16 @@ namespace StoreApi.Controllers
         private readonly IThuongHieuRepository thuongHieuRepository;
         private readonly IKieuMayRepository kieuMayRepository;
         private readonly IKieuDayRepository kieuDayRepository;
+        private readonly IWebHostEnvironment hostEnvironment;
         public SanPhamController(ISanPhamRepository sanPhamRepository, ILoaiSanPhamRepository loaiSanPhamRepository,
-        IThuongHieuRepository thuongHieuRepository, IKieuMayRepository kieuMayRepository,IKieuDayRepository kieuDayRepository ) {
+        IThuongHieuRepository thuongHieuRepository, IKieuMayRepository kieuMayRepository,IKieuDayRepository kieuDayRepository,
+        IWebHostEnvironment hostEnvironment ) {
             this.sanPhamRepository = sanPhamRepository;
             this.loaiSanPhamRepository = loaiSanPhamRepository;
             this.thuongHieuRepository = thuongHieuRepository;
             this.kieuMayRepository = kieuMayRepository;
             this.kieuDayRepository = kieuDayRepository;
+            this.hostEnvironment = hostEnvironment;
         }
 
         [HttpGet]
@@ -41,8 +46,10 @@ namespace StoreApi.Controllers
             return this.sanPhamRepository.SanPham_GetById(id);
         }
 
+        // Product Page Admin
         [HttpPost]
-        public ActionResult<SanPham> AddSP(SanPhamDto spdto) {
+        public ActionResult<SanPham> AddSP([FromForm]SanPhamAddDto spdto) {
+            // Console.WriteLine(spdto.)
             if(ModelState.IsValid){
                 try {
                     SanPham sp = new SanPham();
@@ -52,27 +59,32 @@ namespace StoreApi.Controllers
                     sp.brandId = spdto.brandId;
                     sp.wireId = spdto.wireId;
                     sp.machineId = spdto.machineId;
-                    sp.nccId = spdto.nccId;
                     sp.name = spdto.name;
-                    sp.amount = spdto.amount;
-                    sp.price = spdto.price;
+                    sp.amount = 0;
                     sp.description = spdto.description;
-                    sp.img = spdto.img;
+                    sp.img = SaveImage(spdto.imgFile);
                     sp.status = 0;
+
+                    if(spdto.price >= 0) {
+                        sp.price = spdto.price;
+                    }
+                    else {
+                        sp.price = 0;
+                    }
 
                     var SP = this.sanPhamRepository.SanPham_Add(sp);
                     return Created("success", SP);
                 }
                 catch(Exception e) {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
+                    return BadRequest(e);
                 }
             }
 
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            return BadRequest();
         }
 
         [HttpPut("{id}")]
-        public ActionResult<SanPham> UpdateSP([FromBody] SanPhamDto spdto, int id) {
+        public ActionResult<SanPham> UpdateSP([FromForm] SanPhamDto spdto, int id) {
             if(ModelState.IsValid) {
                 try {
                     var sp = sanPhamRepository.SanPham_GetById(id);
@@ -86,22 +98,25 @@ namespace StoreApi.Controllers
                     sp.brandId = spdto.brandId;
                     sp.wireId = spdto.wireId;
                     sp.machineId = spdto.machineId;
-                    sp.nccId = spdto.nccId;
                     sp.name = spdto.name;
-                    sp.amount = spdto.amount;
+                    // sp.amount = spdto.amount;
                     sp.price = spdto.price;
                     sp.description = spdto.description;
-                    sp.img = spdto.img;
+                    // sp.img = spdto.img;
                     sp.status = spdto.status;
+
+                    if(spdto.imgFile != null) {
+                        sp.img = SaveImage(spdto.imgFile);
+                    }
 
                     var SP = this.sanPhamRepository.SanPham_Update(sp);
                     return Created("success", SP);
                 }
                 catch(Exception e) {
-                    return StatusCode(StatusCodes.Status500InternalServerError);
+                    return BadRequest(e);
                 }
             }
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            return BadRequest();
         }
 
         [HttpDelete("{id}")]
@@ -197,5 +212,16 @@ namespace StoreApi.Controllers
 
             return view;
         }
+
+        [NonAction]
+        public string SaveImage(IFormFile imageFile) {
+            string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
+            imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
+            var imagePath = Path.Combine(hostEnvironment.ContentRootPath, "wwwroot/image/", imageName);
+            using(var stream = new FileStream(imagePath, FileMode.Create)) {
+                imageFile.CopyTo(stream);
+            }
+            return "/image/" + imageName;
+        } 
     }
 }

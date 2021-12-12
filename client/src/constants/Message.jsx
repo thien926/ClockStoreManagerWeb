@@ -23,6 +23,32 @@ export const ADD_WIRE_ERROR = 'Thêm kiểu dây thất bại!';
 export const UPDATE_WIRE_ERROR = 'Sửa kiểu dây thất bại!';
 export const DELETE_WIRE_ERROR = 'Xóa kiểu dây thất bại!';
 
+// Sản phẩm Admin
+export const ADD_PRODUCT_SUCCESS = 'Thêm sản phẩm thành công!';
+export const UPDATE_PRODUCT_SUCCESS = 'Sửa sản phẩm thành công!';
+export const DELETE_PRODUCT_SUCCESS = 'Xóa sản phẩm thành công!';
+export const ADD_PRODUCT_ERROR = 'Thêm sản phẩm thất bại!';
+export const UPDATE_PRODUCT_ERROR = 'Sửa sản phẩm thất bại!';
+export const DELETE_PRODUCT_ERROR = 'Xóa sản phẩm thất bại!';
+
+// Hóa đơn Admin
+export const UPDATE_BILL_STATUS_ERROR = 'Sửa trạng thái hóa đơn thất bại!';
+export const UPDATE_BILL_STATUS_SUCCESS = 'Sửa trạng thái hóa đơn thành công!';
+export const DELETE_BILL_ERROR = 'Xóa hóa đơn thất bại!';
+export const DELETE_BILL_SUCCESS = 'Xóa hóa đơn thành công!';
+
+// Nhập hàng
+export const NHAP_HANG_ERROR = 'Nhập hàng thất bại!';
+export const NHAP_HANG_SUCCESS = 'Nhập hàng thành công!';
+export const NHAP_HANG_NOTSP_ERROR = 'Chưa có sản phẩm nào được nhập. Nhập hàng thất bại!';
+export const NHAP_HANG_NOT_AMOUNT_PRICE_ERROR = 'Giá hoặc số lượng của sản phẩm phải lớn hơn 0!';
+
+// Phiếu nhập Admin
+export const UPDATE_COUPON_STATUS_ERROR = 'Sửa trạng thái phiếu nhập thất bại!';
+export const UPDATE_COUPON_STATUS_SUCCESS = 'Sửa trạng thái phiếu nhập thành công!';
+export const DELETE_COUPON_ERROR = 'Xóa phiếu nhập thất bại!';
+export const DELETE_COUPON_SUCCESS = 'Xóa phiếu nhập thành công!';
+
 // Nhà cung cấp Admin 
 export const ADD_NCC_SUCCESS = 'Thêm nhà cung cấp thành công!';
 export const UPDATE_NCC_SUCCESS = 'Sửa nhà cung cấp thành công!';
@@ -83,3 +109,13 @@ export const UPDATE_PASS_USER_ADMIN_SUCCESS = "Sửa mật khẩu tài khoản t
 export const UPDATE_INFO_USER_ADMIN_SUCCESS = "Sửa thông tin cá nhân thành công!";
 export const UPDATE_PASS_USER_ADMIN_ERROR = "Sửa mật khẩu tài khoản thất bại!";
 export const UPDATE_INFO_USER_ADMIN_ERROR = "Sửa thông tin cá nhân thất bại!";
+
+// giỏ hàng
+export const ADD_ONE_SP_FOR_CART_SUCCESS = "Thêm sản phẩm vào giỏ thành công!";
+export const ADD_ONE_SP_FOR_CART_ERROR = "Thêm sản phẩm vào giỏ thất bại!";
+export const REMOVE_SP_FOR_CART_SUCCESS = "Xóa sản phẩm khỏi giỏ thành công!";
+export const REMOVE_SP_FOR_CART_ERROR = "Xóa sản phẩm khỏi giỏ thất bại!";
+export const SUB_ONE_SP_FOR_CART_SUCCESS = "Giảm số lượng sản phẩm trong giỏ thành công!";
+export const SUB_ONE_SP_FOR_CART_ERROR = "Giảm số lượng sản phẩm trong giỏ thất bại!";
+export const CHECKOUT_CART_SUCCESS = "Lập đơn hàng thành công!";
+export const CHECKOUT_CART_ERROR = "Lập đơn hàng thất bại!";

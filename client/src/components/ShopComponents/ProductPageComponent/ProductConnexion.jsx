@@ -13,7 +13,7 @@ function ProductConnexion(props) {
                     <img src={`${API_URL_IMG}${product.img}`} />
                     <ul>
                         <li className="w-icon active">
-                            <a href="#">
+                            <a onClick={() => props.submitAddOneSPForCart(product.id)}>
                                 <i className="icon_bag_alt" />
                             </a>
                         </li>

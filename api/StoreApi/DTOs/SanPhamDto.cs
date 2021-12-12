@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace StoreApi.DTOs
 {
@@ -22,15 +23,12 @@ namespace StoreApi.DTOs
         [Required(ErrorMessage = "Kiểu máy là bắt Buộc")]
         public int machineId{ get; set; }
 
-        [Required(ErrorMessage = "Tên nhà cung cấp là bắt Buộc")]
-        public int nccId{ get; set; }
-
         [Required(ErrorMessage = "Tên Sản Phẩm là bắt Buộc")]
         [StringLength(maximumLength:200, MinimumLength = 3, ErrorMessage = "Tên Sản Phẩm từ 3 đến 200 kí tự")]
         public string name { get; set; }
 
-        [Required(ErrorMessage = "Số lượng là bắt buộc")]
-        public int amount{ get; set; }
+        // [Required(ErrorMessage = "Số lượng là bắt buộc")]
+        // public int amount{ get; set; }
 
         [Required(ErrorMessage = "Giá là bắt buộc")]
         public int price{ get; set; }
@@ -43,5 +41,7 @@ namespace StoreApi.DTOs
 
         [Required(ErrorMessage = "Trạng thái là bắt buộc")]
         public int status { get; set; } 
+
+        public IFormFile imgFile { get; set; }
     }
 }

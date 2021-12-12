@@ -5,7 +5,7 @@ import AdminProductTypeReducer from './AdminProductTypeReducer'
 import HeaderProductTypeReducer from "./HeaderProductTypeReducer";
 import AdminMachineReducer from "./AdminMachineReducer";
 import AdminWireReducer from "./AdminWireReducer";
-import AdminNCCReducer from "./AdminNCCReducer";
+import AdminBillReducer from "./AdminBillReducer";
 import AdminBrandReducer from "./AdminBrandReducer";
 import ShopPageReducer from './ShopPageReducer'
 import HomePageReducer from './HomePageReducer'
@@ -14,6 +14,12 @@ import UserKhachHangReducer from './UserKhachHangReducer'
 import AdminCustomReducer from './AdminCustomReducer'
 import AdminStaffReducer from './AdminStaffReducer'
 import AdminPermissionReducer from './AdminPermissionReducer'
+import CartReducer from './CartReducer'
+import BillDetailReducer from './BillDetailReducer'
+import AdminCouponReducer from './AdminCouponReducer'
+import AdminCouponDetailReducer from './AdminCouponDetailReducer'
+import AdminImportGoodsReducer from './AdminImportGoodsReducer'
+import AdminStatisticalReducer from './AdminStatisticalReducer'
 
 const appReducers = combineReducers({
     LoginAdminReducer : LoginAdminReducer,
@@ -23,14 +29,20 @@ const appReducers = combineReducers({
     AdminStaffReducer,
     AdminMachineReducer,
     AdminWireReducer,
-    AdminNCCReducer,
     AdminPermissionReducer,
     AdminBrandReducer,
+    AdminBillReducer,
+    AdminCouponReducer,
     HeaderProductTypeReducer,
     ShopPageReducer,
     HomePageReducer,
     ProductPageReducer,
-    UserKhachHangReducer
+    UserKhachHangReducer,
+    CartReducer,
+    BillDetailReducer,
+    AdminCouponDetailReducer,
+    AdminImportGoodsReducer,
+    AdminStatisticalReducer
 })
 
 export default appReducers

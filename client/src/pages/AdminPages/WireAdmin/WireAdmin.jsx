@@ -120,7 +120,7 @@ function WireAdmin() {
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
-        navigate('/admin/wire?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
+        navigate('/admin/wire?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + 1);
     }
 
     // đi đến URL khác khi sort
