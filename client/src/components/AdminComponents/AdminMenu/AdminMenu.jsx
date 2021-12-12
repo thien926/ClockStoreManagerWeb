@@ -69,6 +69,7 @@ function AdminMenu() {
                         <CustomLinkMobileMenuAdmin to='/admin/permission'>Quyền</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/bill'>Hóa đơn</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/coupon'>Phiếu nhập</CustomLinkMobileMenuAdmin>
+                        <CustomLinkMobileMenuAdmin to='/admin/statistical'>Thống kê</CustomLinkMobileMenuAdmin>
                         
                     </div>
                 </div>
@@ -87,6 +88,7 @@ function AdminMenu() {
                 <CustomLinkAdmin to="/admin/permission">Quyền</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/bill">Hóa đơn</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/coupon">Phiếu nhập</CustomLinkAdmin>
+                <CustomLinkAdmin to="/admin/statistical">Thống kê</CustomLinkAdmin>
 
             </div>
 

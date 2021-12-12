@@ -19,6 +19,7 @@ import BillDetailReducer from './BillDetailReducer'
 import AdminCouponReducer from './AdminCouponReducer'
 import AdminCouponDetailReducer from './AdminCouponDetailReducer'
 import AdminImportGoodsReducer from './AdminImportGoodsReducer'
+import AdminStatisticalReducer from './AdminStatisticalReducer'
 
 const appReducers = combineReducers({
     LoginAdminReducer : LoginAdminReducer,
@@ -40,7 +41,8 @@ const appReducers = combineReducers({
     CartReducer,
     BillDetailReducer,
     AdminCouponDetailReducer,
-    AdminImportGoodsReducer
+    AdminImportGoodsReducer,
+    AdminStatisticalReducer
 })
 
 export default appReducers
