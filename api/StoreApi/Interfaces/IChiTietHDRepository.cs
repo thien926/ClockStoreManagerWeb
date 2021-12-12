@@ -16,5 +16,6 @@ namespace StoreApi.Interfaces
         IEnumerable<ChiTietHD> ChiTietHD_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count);
         IEnumerable<ChiTietHD> ChiTietHD_AddRange(IEnumerable<ChiTietHD> list);
         // void ChiTietHD_AddRangeWithListSP(IEnumerable<SanPham> list, int billId);
+        IEnumerable<ChiTietHD> ChiTietHD_GetByListBill(List<int> list);
     }
 }
