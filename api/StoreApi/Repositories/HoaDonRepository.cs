@@ -102,5 +102,19 @@ namespace StoreApi.Repositories
             return query.Skip((pageIndex - 1) * pageSize)
                         .Take(pageSize).ToList();
         }
+
+        public IEnumerable<HoaDon> HoaDon_DoanhThuInYear(int begin, int end) {
+            var query = context.HoaDons.AsQueryable();
+            query = query.Where(m => (m.date_order.Year >= begin) && (m.date_order.Year <= end));
+            
+            return query.ToList();
+        }
+
+        public IEnumerable<HoaDon> HoaDon_DoanhThuInMonth(int year, int begin, int end) {
+            var query = context.HoaDons.AsQueryable();
+            query = query.Where(m => (m.date_order.Year == year) && (m.date_order.Month >= begin) && (m.date_order.Month <= end));
+            
+            return query.ToList();
+        }
     }
 }
