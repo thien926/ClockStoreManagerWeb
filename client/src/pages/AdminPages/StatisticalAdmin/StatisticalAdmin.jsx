@@ -6,7 +6,7 @@ import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart } from 'react-chartjs-2'
 import { useCallback } from "react";
 import { useEffect } from "react";
-import { actDoanhThuMonthAdmin, actDoanhThuYearAdmin } from "../../../redux/actions/AdminStatisticalAction";
+import { actBillMonthAdmin, actBillYearAdmin, actDoanhThuMonthAdmin, actDoanhThuYearAdmin, actProductMonthAdmin, actProductYearAdmin } from "../../../redux/actions/AdminStatisticalAction";
 
 const initialChartData = {
     labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
@@ -101,7 +101,7 @@ function StatisticalAdmin() {
         //     default:
         //         break;
         // }
-        if(AdminStatisticalReducer.labels) {
+        if (AdminStatisticalReducer.labels) {
             setElmContentPie(<Chart
                 type="pie"
                 data={AdminStatisticalReducer}
@@ -115,7 +115,7 @@ function StatisticalAdmin() {
                 data={AdminStatisticalReducer}
             />);
         }
-        
+
     }, [AdminStatisticalReducer])
 
     const submitLoc = (data) => {
@@ -126,6 +126,18 @@ function StatisticalAdmin() {
                 break;
             case 'doanhthu-month':
                 dispatch(actDoanhThuMonthAdmin(data))
+                break;
+            case 'bill-year':
+                dispatch(actBillYearAdmin(data))
+                break;
+            case 'bill-month':
+                dispatch(actBillMonthAdmin(data))
+                break;
+            case 'product-year':
+                dispatch(actProductYearAdmin(data))
+                break;
+            case 'product-month':
+                dispatch(actProductMonthAdmin(data))
                 break;
             default:
                 break;

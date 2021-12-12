@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoreApi.DTOs
 {
-    public class FilterDoanhThuTheoNamDto
+    public class FilterBeginEndTheoNamDto
     {
         [Required(ErrorMessage = "Năm bắt đầu là bắt buộc")]
         public int begin { get; set; }

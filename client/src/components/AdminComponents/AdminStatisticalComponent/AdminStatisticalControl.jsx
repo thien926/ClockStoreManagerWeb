@@ -14,20 +14,20 @@ function AdminStatisticalControl(props) {
 
     const submitLocDoanhThuYear = () => {
         var begin = parseInt(yearBegin)
-        if(!begin) {
+        if (!begin) {
             toast.error("Năm bắt đầu lọc là bắt buộc và là chữ số.");
             return;
         }
 
         var end = parseInt(yearEnd);
-        if(!end) {
+        if (!end) {
             toast.error("Năm kết thúc lọc là bắt buộc và là chữ số.");
             return;
         }
 
         var data = {
             begin: begin,
-            end : end
+            end: end
         }
 
         props.submitLoc(data);
@@ -35,20 +35,20 @@ function AdminStatisticalControl(props) {
 
     const submitDoanhThuMonth = () => {
         var year = parseInt(txtYear);
-        
-        if(!year) {
+
+        if (!year) {
             toast.error("Năm là bắt buộc và là chữ số.");
             return;
         }
 
         var begin = parseInt(monthBegin)
-        if(!begin) {
+        if (!begin) {
             toast.error("Tháng bắt đầu lọc là bắt buộc và là chữ số.");
             return;
         }
 
         var end = parseInt(monthEnd);
-        if(!end) {
+        if (!end) {
             toast.error("Tháng kết thúc lọc là bắt buộc và là chữ số.");
             return;
         }
@@ -56,7 +56,7 @@ function AdminStatisticalControl(props) {
         var data = {
             year: year,
             begin: begin,
-            end : end
+            end: end
         }
 
         props.submitLoc(data);
@@ -65,6 +65,11 @@ function AdminStatisticalControl(props) {
     useEffect(() => {
         switch (props.selectOption) {
             case "doanhthu-year":
+            case "bill-year":
+            case "product-year":
+                setTxtYear("");
+                setMonthBegin("");
+                setMonthEnd("");
                 setElmControl(<div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                     <div className="input-group">
                         <input value={yearBegin} onChange={(e) => setYearBegin(e.target.value)} type="text" className="form-control" placeholder='Năm băt đầu' />
@@ -74,6 +79,8 @@ function AdminStatisticalControl(props) {
                 </div>)
                 break;
             case "doanhthu-month":
+            case "bill-month":
+            case "product-month":
                 setYearBegin("");
                 setYearEnd("");
                 setElmControl(<div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -99,7 +106,8 @@ function AdminStatisticalControl(props) {
                     <option value="doanhthu-month">Thống kê doanh thu theo tháng</option>
                     <option value="bill-year">Thống kê đơn hàng theo năm</option>
                     <option value="bill-month">Thống kê đơn hàng theo tháng</option>
-                    <option value="product">Thống kê sản phẩm bán ra</option>
+                    <option value="product-year">Thống kê sản phẩm bán ra theo năm</option>
+                    <option value="product-month">Thống kê sản phẩm bán ra theo tháng</option>
                 </select>
             </div>
 

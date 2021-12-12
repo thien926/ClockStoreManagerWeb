@@ -108,5 +108,13 @@ namespace StoreApi.Repositories
             return query.Skip((pageIndex - 1) * pageSize)
                         .Take(pageSize).ToList();
         }
+
+        public IEnumerable<ChiTietHD> ChiTietHD_GetByListBill(List<int> list)
+        {
+            var query = context.ChiTietHDs.AsQueryable();
+            query = query.Where(m => list.Contains(m.billId));
+            query = query.OrderByDescending(m => m.amount);
+            return query.Take(12).ToList();
+        }
     }
 }

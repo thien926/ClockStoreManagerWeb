@@ -35,7 +35,7 @@
 //     ]
 // }
 
-import { DOANH_THU_IN_YEAR_THONG_KE, DOANH_THU_IN_MONTH_THONG_KE } from "../actions/AdminStatisticalAction";
+import { DOANH_THU_IN_YEAR_THONG_KE, DOANH_THU_IN_MONTH_THONG_KE, BILL_IN_YEAR_THONG_KE, BILL_IN_MONTH_THONG_KE, PRODUCT_IN_YEAR_THONG_KE, PRODUCT_IN_MONTH_THONG_KE } from "../actions/AdminStatisticalAction";
 
 const initialState = {};
 
@@ -44,6 +44,14 @@ const AdminStatisticalReducer = (state = initialState, action) => {
         case DOANH_THU_IN_YEAR_THONG_KE:
             return action.payload;
         case DOANH_THU_IN_MONTH_THONG_KE:
+            return action.payload;
+        case BILL_IN_YEAR_THONG_KE:
+            return action.payload;
+        case BILL_IN_MONTH_THONG_KE:
+            return action.payload;
+        case PRODUCT_IN_YEAR_THONG_KE:
+            return action.payload;
+        case PRODUCT_IN_MONTH_THONG_KE:
             return action.payload;
         default:
             return {
