@@ -42,6 +42,7 @@ export const actGetStaffAdmin = (data) => (dispatch) => {
 export const actChangeStatusStaffAdmin = (user) => (dispatch) => {
     axios.put(
         `${API_URL}nhanvien/changeStatus/${user}`,
+        user,
         {
             header : {
                 'Content-Type' : 'application/json'

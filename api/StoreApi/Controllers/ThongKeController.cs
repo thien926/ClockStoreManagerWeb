@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StoreApi.DTOs;
 using StoreApi.Interfaces;
+using StoreApi.Services;
 
 namespace StoreApi.Controllers
 {
@@ -14,14 +15,47 @@ namespace StoreApi.Controllers
     {
         private readonly IHoaDonRepository hoaDonRepository;
         private readonly IChiTietHDRepository chiTietHDRepository;
-        public ThongKeController(IHoaDonRepository hoaDonRepository, IChiTietHDRepository chiTietHDRepository) {
+        private readonly INhanVienRepository nhanVienRepository;
+        private readonly JwtNhanVienService jwtNhanVien;
+        private readonly IQuyenRepository quyenRepository;
+        public ThongKeController(IHoaDonRepository hoaDonRepository, IChiTietHDRepository chiTietHDRepository, INhanVienRepository nhanVienRepository,
+        JwtNhanVienService jwtNhanVien, IQuyenRepository quyenRepository)
+        {
             this.hoaDonRepository = hoaDonRepository;
             this.chiTietHDRepository = chiTietHDRepository;
+            this.nhanVienRepository = nhanVienRepository;
+            this.jwtNhanVien = jwtNhanVien;
+            this.quyenRepository = quyenRepository;
         }
 
         [HttpPost("doanhthu-year")]
-        public Array DoanhThuYear(FilterBeginEndTheoNamDto dto) {
-            if(ModelState.IsValid) {
+        public Array DoanhThuYear(FilterBeginEndTheoNamDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                // Phần xác thực tài khoản nhân viên
+                var jwt = Request.Cookies["jwt-nhanvien"];
+                if (jwt == null)
+                {
+                    return null;
+                }
+                var token = jwtNhanVien.Verify(jwt);
+                var user = token.Issuer;
+                var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+                if (nv == null || nv.status == 0)
+                {
+                    return null;
+                }
+
+                var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "ThongKe");
+
+                // Kiểm tra nhân viên có quyền thống kê ko
+                if (!quyen)
+                {
+                    return null;
+                }
+
                 var listHD = hoaDonRepository.HoaDon_FilterBeginEndInYear(dto.begin, dto.end);
                 long val = 0;
                 int year = 0;
@@ -29,10 +63,12 @@ namespace StoreApi.Controllers
                 foreach (var item in listHD)
                 {
                     year = item.date_order.Year;
-                    if(res.TryGetValue(year, out val)) {
+                    if (res.TryGetValue(year, out val))
+                    {
                         res[year] = val + item.total;
                     }
-                    else {
+                    else
+                    {
                         res.Add(year, item.total);
                     }
                 }
@@ -43,8 +79,33 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost("doanhthu-month")]
-        public Array DoanhThuMonth(FilterBeginEndTheoThangDto dto) {
-            if(ModelState.IsValid) {
+        public Array DoanhThuMonth(FilterBeginEndTheoThangDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                // Phần xác thực tài khoản nhân viên
+                var jwt = Request.Cookies["jwt-nhanvien"];
+                if (jwt == null)
+                {
+                    return null;
+                }
+                var token = jwtNhanVien.Verify(jwt);
+                var user = token.Issuer;
+                var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+                if (nv == null || nv.status == 0)
+                {
+                    return null;
+                }
+
+                var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "ThongKe");
+
+                // Kiểm tra nhân viên có quyền thống kê ko
+                if (!quyen)
+                {
+                    return null;
+                }
+
                 var listHD = hoaDonRepository.HoaDon_FilterBeginEndInMonth(dto.year, dto.begin, dto.end);
                 long val = 0;
                 int month = 0;
@@ -52,10 +113,12 @@ namespace StoreApi.Controllers
                 foreach (var item in listHD)
                 {
                     month = item.date_order.Month;
-                    if(res.TryGetValue(month, out val)) {
+                    if (res.TryGetValue(month, out val))
+                    {
                         res[month] = val + item.total;
                     }
-                    else {
+                    else
+                    {
                         res.Add(month, item.total);
                     }
                 }
@@ -66,8 +129,33 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost("bill-year")]
-        public Array DonHangYear(FilterBeginEndTheoNamDto dto) {
-            if(ModelState.IsValid) {
+        public Array DonHangYear(FilterBeginEndTheoNamDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                // Phần xác thực tài khoản nhân viên
+                var jwt = Request.Cookies["jwt-nhanvien"];
+                if (jwt == null)
+                {
+                    return null;
+                }
+                var token = jwtNhanVien.Verify(jwt);
+                var user = token.Issuer;
+                var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+                if (nv == null || nv.status == 0)
+                {
+                    return null;
+                }
+
+                var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "ThongKe");
+
+                // Kiểm tra nhân viên có quyền thống kê ko
+                if (!quyen)
+                {
+                    return null;
+                }
+
                 var listHD = hoaDonRepository.HoaDon_FilterBeginEndInYear(dto.begin, dto.end);
                 int val = 0;
                 int year = 0;
@@ -75,10 +163,12 @@ namespace StoreApi.Controllers
                 foreach (var item in listHD)
                 {
                     year = item.date_order.Year;
-                    if(res.TryGetValue(year, out val)) {
+                    if (res.TryGetValue(year, out val))
+                    {
                         res[year] = val + 1;
                     }
-                    else {
+                    else
+                    {
                         res.Add(year, 1);
                     }
                 }
@@ -89,8 +179,33 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost("bill-month")]
-        public Array DonHangMonth(FilterBeginEndTheoThangDto dto) {
-            if(ModelState.IsValid) {
+        public Array DonHangMonth(FilterBeginEndTheoThangDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                // Phần xác thực tài khoản nhân viên
+                var jwt = Request.Cookies["jwt-nhanvien"];
+                if (jwt == null)
+                {
+                    return null;
+                }
+                var token = jwtNhanVien.Verify(jwt);
+                var user = token.Issuer;
+                var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+                if (nv == null || nv.status == 0)
+                {
+                    return null;
+                }
+
+                var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "ThongKe");
+
+                // Kiểm tra nhân viên có quyền thống kê ko
+                if (!quyen)
+                {
+                    return null;
+                }
+
                 var listHD = hoaDonRepository.HoaDon_FilterBeginEndInMonth(dto.year, dto.begin, dto.end);
                 int val = 0;
                 int month = 0;
@@ -98,10 +213,12 @@ namespace StoreApi.Controllers
                 foreach (var item in listHD)
                 {
                     month = item.date_order.Month;
-                    if(res.TryGetValue(month, out val)) {
+                    if (res.TryGetValue(month, out val))
+                    {
                         res[month] = val + 1;
                     }
-                    else {
+                    else
+                    {
                         res.Add(month, 1);
                     }
                 }
@@ -112,10 +229,35 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost("product-year")]
-        public Array ProductYear(FilterBeginEndTheoNamDto dto) {
-            if(ModelState.IsValid) {
+        public Array ProductYear(FilterBeginEndTheoNamDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                // Phần xác thực tài khoản nhân viên
+                var jwt = Request.Cookies["jwt-nhanvien"];
+                if (jwt == null)
+                {
+                    return null;
+                }
+                var token = jwtNhanVien.Verify(jwt);
+                var user = token.Issuer;
+                var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+                if (nv == null || nv.status == 0)
+                {
+                    return null;
+                }
+
+                var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "ThongKe");
+
+                // Kiểm tra nhân viên có quyền thống kê ko
+                if (!quyen)
+                {
+                    return null;
+                }
+
                 var listHD = hoaDonRepository.HoaDon_FilterBeginEndInYear(dto.begin, dto.end);
-                
+
                 List<int> listBillId = new List<int>();
                 foreach (var item in listHD)
                 {
@@ -130,10 +272,12 @@ namespace StoreApi.Controllers
                 foreach (var item in listCTHD)
                 {
                     key = item.productId + "-" + item.name;
-                    if(res.TryGetValue(key, out val)) {
+                    if (res.TryGetValue(key, out val))
+                    {
                         res[key] = val + item.amount;
                     }
-                    else {
+                    else
+                    {
                         res.Add(key, item.amount);
                     }
                 }
@@ -144,10 +288,35 @@ namespace StoreApi.Controllers
         }
 
         [HttpPost("product-month")]
-        public Array ProductMonth(FilterBeginEndTheoThangDto dto) {
-            if(ModelState.IsValid) {
-                var listHD = hoaDonRepository.HoaDon_FilterBeginEndInMonth(dto.year, dto.begin, dto.end);
+        public Array ProductMonth(FilterBeginEndTheoThangDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                // Phần xác thực tài khoản nhân viên
+                var jwt = Request.Cookies["jwt-nhanvien"];
+                if (jwt == null)
+                {
+                    return null;
+                }
+                var token = jwtNhanVien.Verify(jwt);
+                var user = token.Issuer;
+                var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+                if (nv == null || nv.status == 0)
+                {
+                    return null;
+                }
+
+                var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "ThongKe");
+
+                // Kiểm tra nhân viên có quyền thống kê ko
+                if (!quyen)
+                {
+                    return null;
+                }
                 
+                var listHD = hoaDonRepository.HoaDon_FilterBeginEndInMonth(dto.year, dto.begin, dto.end);
+
                 List<int> listBillId = new List<int>();
                 foreach (var item in listHD)
                 {
@@ -162,10 +331,12 @@ namespace StoreApi.Controllers
                 foreach (var item in listCTHD)
                 {
                     key = item.productId + "-" + item.name;
-                    if(res.TryGetValue(key, out val)) {
+                    if (res.TryGetValue(key, out val))
+                    {
                         res[key] = val + item.amount;
                     }
-                    else {
+                    else
+                    {
                         res.Add(key, item.amount);
                     }
                 }

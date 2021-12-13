@@ -60,6 +60,7 @@ namespace StoreApi.Controllers
         {
             // Phần xác thực tài khoản khách hàng 
             var jwt = Request.Cookies["jwt-khachhang"];
+            
             if (jwt == null) {
                 return null;
             }
@@ -259,6 +260,7 @@ namespace StoreApi.Controllers
             var user = token.Issuer;
             var nv = nhanVienRepository.NhanVien_GetByUser(user);
 
+            // Không tìm thấy nhân viên hoặc tài khoản bị khóa thì trả về null
             if (nv == null || nv.status == 0) {
                 return null;
             }

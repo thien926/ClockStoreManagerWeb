@@ -31,6 +31,10 @@ function Login() {
                 dispatch(actResetMessageUserKhachHang())
                 break;
             default:
+                if(UserKhachHangReducer.message) {
+                    toast.error(UserKhachHangReducer.message);
+                    dispatch(actResetMessageUserKhachHang())
+                }
                 break;
         }
 

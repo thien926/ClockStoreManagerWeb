@@ -247,11 +247,11 @@ export const actGetBillByUserKH = (pageIndex) => (dispatch) => {
     axios.get(
         `${API_URL}hoadon/getByUserKH/${pageIndex}`,
         {
-            header: {
-                'Content-Type': 'application/json'
+            headers : {
+                'Content-Type' : 'application/json'
             },
             withCredentials: true,
-            credentials: 'include'
+            credentials: 'include',
         }
     ).then((res) => {
         // console.log("data: ", res.data);

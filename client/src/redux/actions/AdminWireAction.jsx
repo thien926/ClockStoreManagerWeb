@@ -59,7 +59,7 @@ export const actGetWireAdmin = (data) => (dispatch) => {
 }
 
 export const actAddWireAdmin = (data) => (dispatch) => {
-    console.log(data);
+    // console.log(data);
     axios.post(
         `${API_URL}kieuday`,
         data,

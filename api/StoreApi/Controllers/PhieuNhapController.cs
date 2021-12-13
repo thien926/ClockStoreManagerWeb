@@ -34,15 +34,15 @@ namespace StoreApi.Controllers
             this.sanPhamRepository = sanPhamRepository;
         }
 
-        [HttpGet]
-        public IEnumerable<PhieuNhap> GetAll() {
-            return this.PhieuNhapRepository.PhieuNhap_GetAll();
-        }
+        // [HttpGet]
+        // public IEnumerable<PhieuNhap> GetAll() {
+        //     return this.PhieuNhapRepository.PhieuNhap_GetAll();
+        // }
 
-        [HttpGet("{id}")]
-        public ActionResult<PhieuNhap> GetById(int id) {
-            return this.PhieuNhapRepository.PhieuNhap_GetById(id);
-        }
+        // [HttpGet("{id}")]
+        // public ActionResult<PhieuNhap> GetById(int id) {
+        //     return this.PhieuNhapRepository.PhieuNhap_GetById(id);
+        // }
 
         // [HttpPost]
         // public ActionResult<PhieuNhap> AddPN(PhieuNhapDto pndto) {
@@ -83,6 +83,7 @@ namespace StoreApi.Controllers
         //     return StatusCode(StatusCodes.Status500InternalServerError);
         // }
 
+        // Phieu Nhap Page - Admin
         [HttpPut("{id}")]
         public ActionResult<PhieuNhap> UpdatePN([FromBody] PhieuNhapDto pndto, int id) {
             if(ModelState.IsValid) {
@@ -162,7 +163,8 @@ namespace StoreApi.Controllers
             }
             return BadRequest();
         }
-
+        
+        // Phieu Nhap Page -  Admin
         [HttpDelete("{id}")]
         public ActionResult DeletePN(int id) {
             try{
@@ -206,8 +208,33 @@ namespace StoreApi.Controllers
                 return BadRequest(e);
             }
         }
+
+        // PhieuNhap - Admin
         [HttpPost("filter-admin")]
         public ViewPhieuNhapAdminDto FilterAdmin(FilterPhieuNhapDto data) {
+            // Phần xác thực tài khoản nhân viên
+            var jwt = Request.Cookies["jwt-nhanvien"];
+            if (jwt == null)
+            {
+                return null;
+            }
+            var token = jwtNhanVien.Verify(jwt);
+            var user = token.Issuer;
+            var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+            if (nv == null || nv.status == 0)
+            {
+                return null;
+            }
+
+            var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "PhieuNhap");
+
+            // Kiểm tra nhân viên có quyền xem kiểu dây không
+            if (!quyen)
+            {
+                return null;
+            }
+
             int count;
             var PhieuNhaps = PhieuNhapRepository.PhieuNhap_FilterAdmin(data.search, data.status, data.pageIndex, pageSize, out count);
             var ListPN = new PaginatedList<PhieuNhap>(PhieuNhaps, count, data.pageIndex, pageSize);
