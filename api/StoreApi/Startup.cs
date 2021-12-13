@@ -57,6 +57,7 @@ namespace StoreApi
             //     x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve);
             services.AddScoped<JwtNhanVienService>();
             services.AddScoped<JwtKhachHangService>();
+            services.AddScoped<IPhieuNhapRepository, PhieuNhapRepository>();
             services.AddScoped<IKhachHangRepository, KhachHangRepository>();
             services.AddScoped<INhanVienRepository, NhanVienRepository>();
             services.AddScoped<ISanPhamRepository, SanPhamRepository>();
@@ -66,9 +67,9 @@ namespace StoreApi
             services.AddScoped<ILoaiSanPhamRepository, LoaiSanPhamRepository>();
             services.AddScoped<IHoaDonRepository, HoaDonRepository>();
             services.AddScoped<IChiTietHDRepository, ChiTietHDRepository>();
-            services.AddScoped<INCCRepository, NCCRepository>();
             services.AddScoped<IKieuDayRepository, KieuDayRepository>();
             services.AddScoped<IHoaDonRepository, HoaDonRepository>();
+            services.AddScoped<IChiTietPNRepository, ChiTietPNRepository>();
 
 
         }

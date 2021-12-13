@@ -58,9 +58,9 @@ function AdminMenu() {
                     <div id="section1ContentId" className="collapse in" role="tabpanel" aria-labelledby="section1HeaderId">
 
                         <CustomLinkMobileMenuAdmin to='/admin/account'>Tài khoản</CustomLinkMobileMenuAdmin>
+                        <CustomLinkMobileMenuAdmin to='/admin/import-goods'>Nhập hàng</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/custom'>Khách hàng</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/staff'>Nhân viên</CustomLinkMobileMenuAdmin>
-                        <CustomLinkMobileMenuAdmin to='/admin/ncc'>Nhà cung cấp</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/brand'>Thương hiệu</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/products'>Sản phẩm</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/product-type'>Loại sản phẩm</CustomLinkMobileMenuAdmin>
@@ -68,16 +68,18 @@ function AdminMenu() {
                         <CustomLinkMobileMenuAdmin to="/admin/wire">Kiểu dây</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/permission'>Quyền</CustomLinkMobileMenuAdmin>
                         <CustomLinkMobileMenuAdmin to='/admin/bill'>Hóa đơn</CustomLinkMobileMenuAdmin>
-
+                        <CustomLinkMobileMenuAdmin to='/admin/coupon'>Phiếu nhập</CustomLinkMobileMenuAdmin>
+                        <CustomLinkMobileMenuAdmin to='/admin/statistical'>Thống kê</CustomLinkMobileMenuAdmin>
+                        
                     </div>
                 </div>
             </div>
             <div className="sidebar">
                 <h3>Admin</h3>
                 <CustomLinkAdmin to='/admin/account'>Tài khoản</CustomLinkAdmin>
+                <CustomLinkAdmin to='/admin/import-goods'>Nhập hàng</CustomLinkAdmin>
                 <CustomLinkAdmin to='/admin/custom'>Khách hàng</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/staff">Nhân viên</CustomLinkAdmin>
-                <CustomLinkAdmin to="/admin/ncc">Nhà cung cấp</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/brand">Thương hiệu</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/products">Sản phẩm</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/product-type">Loại sản phẩm</CustomLinkAdmin>
@@ -85,6 +87,9 @@ function AdminMenu() {
                 <CustomLinkAdmin to="/admin/wire">Kiểu dây</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/permission">Quyền</CustomLinkAdmin>
                 <CustomLinkAdmin to="/admin/bill">Hóa đơn</CustomLinkAdmin>
+                <CustomLinkAdmin to="/admin/coupon">Phiếu nhập</CustomLinkAdmin>
+                <CustomLinkAdmin to="/admin/statistical">Thống kê</CustomLinkAdmin>
+
             </div>
 
             <nav className="navbar navbar-inverse border-bottom">

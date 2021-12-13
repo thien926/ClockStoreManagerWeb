@@ -118,7 +118,7 @@ function MachineAdmin() {
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
-        navigate('/admin/machine?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + pageIndex);
+        navigate('/admin/machine?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + 1);
     }
 
     // đi đến URL khác khi sort

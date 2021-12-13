@@ -8,3 +8,7 @@
 8.  npm install js-cookie --save
 9.  npm i react-router-dom @types/react-router-dom
 10. npm i --save lodash
+11. npm install react-dropdown  --save  : ko cài
+12. npm i @popperjs/core : ko cài
+13. npm install react-bootstrap --save
+14. npm install react-chartjs-2 chart.js --save

@@ -6,6 +6,7 @@ function BillDetailItem(props) {
 
     return (
         <tr>
+            
             <td className="cart-pic first-row"><img src={`${API_URL_IMG}${item.img}`} /></td>
             <td className="cart-title first-row">
                 <h5>{item.name}</h5>

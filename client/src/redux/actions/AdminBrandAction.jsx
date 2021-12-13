@@ -7,11 +7,33 @@ export const RESET_MESSAGE_BRAND_ADMIN = 'RESET_MESSAGE_BRAND_ADMIN';
 export const ADD_BRAND_ADMIN = 'ADD_BRAND_ADMIN';
 export const UPDATE_BRAND_ADMIN = 'UPDATE_BRAND_ADMIN';
 export const DELETE_BRAND_ADMIN = 'DELETE_BRAND_ADMIN';
+export const GET_ALL_BRAND_ADMIN = 'GET_ALL_BRAND_ADMIN';
+
 
 export const actResetMessageBrandAdmin = () => (dispatch) => {
     dispatch({
         type : RESET_MESSAGE_BRAND_ADMIN,
         payload: ''
+    })
+}
+
+export const actGetAllBrandAdmin = () => (dispatch) => {
+    axios.get(
+        `${API_URL}thuonghieu`,
+        {
+            header : {
+                'Content-Type' : 'application/json'
+            },
+            withCredentials : true,
+            credentials : 'include'
+        }
+    ).then((res) => {
+        dispatch({
+            type : GET_ALL_BRAND_ADMIN,
+            payload : res.data
+        })
+    }).catch(error => {
+        console.log('actGetAllBrandAdmin error: ', error);
     })
 }
 

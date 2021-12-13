@@ -22,3 +22,23 @@ export const actGetBillDetail = (id) => (dispatch) => {
         console.log('actGetBillDetail error: ', error);
     })
 }
+
+export const actGetBillDetailAdmin = (id) => (dispatch) => {
+    axios.get(
+        `${API_URL}chitiethd/admin/${id}`,
+        {
+            header : {
+                'Content-Type' : 'application/json'
+            },
+            withCredentials : true,
+            credentials : 'include'
+        }
+    ).then((res) => {
+        dispatch({
+            type : GET_DETAIL_BILL,
+            payload : res.data
+        })
+    }).catch(error => {
+        console.log('actGetBillDetailAdmin error: ', error);
+    })
+}

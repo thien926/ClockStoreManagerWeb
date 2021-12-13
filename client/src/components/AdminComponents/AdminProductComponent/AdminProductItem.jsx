@@ -7,22 +7,25 @@ function AdminProductItem(props) {
     const { index, product } = props;
 
     const showStatus = () => {
-        if(product.status == 1) {
+        if(product.status === 1) {
             return (
-                <span className="label label-success">
+                <span className="btn btn-success" style={{cursor: 'auto'}}>
                     Kích hoạt
                 </span>
             )
         }
         return (
-            <span className="label label-danger">
+            <span className="btn btn-danger" style={{cursor: 'auto'}}>
                 Ẩn
             </span>
         )
     }
 
-    const handleDeleteClick = () => {
+    const handleUpdateClick = () => {
         // alert()
+        
+        props.setItemEdit(product);
+        props.setActionValue('update');
     }
 
     return (
@@ -33,7 +36,7 @@ function AdminProductItem(props) {
             <td>{product.brandId}</td>
             <td>{product.wireId}</td>
             <td>{product.machineId}</td>
-            <td>{product.nccId}</td>
+            {/* <td>{product.nccId}</td> */}
             <td>{product.name}</td>
             <td>{product.amount}</td>
             <td>{product.price}</td>
@@ -45,8 +48,8 @@ function AdminProductItem(props) {
                 {showStatus()}
             </td>
             <td>
-                <button type="button" className="btn btn-info">Sửa</button>
-                <button type="button" className="btn btn-warning ml-1">Xóa</button>
+                <button onClick={handleUpdateClick} type="button" className="btn btn-info">Sửa</button>
+                <button onClick={() => props.actionDelete(product.id)} type="button" className="btn btn-warning ml-1">Xóa</button>
             </td>
         </tr>
     )

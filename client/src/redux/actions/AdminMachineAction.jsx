@@ -7,11 +7,33 @@ export const RESET_MESSAGE_MACHINE_ADMIN = 'RESET_MESSAGE_MACHINE_ADMIN';
 export const ADD_MACHINE_ADMIN = 'ADD_MACHINE_ADMIN';
 export const UPDATE_MACHINE_ADMIN = 'UPDATE_MACHINE_ADMIN';
 export const DELETE_MACHINE_ADMIN = 'DELETE_MACHINE_ADMIN';
+export const GET_ALL_MACHINE_ADMIN = 'GET_ALL_MACHINE_ADMIN';
+
 
 export const actResetMessageMachineAdmin = () => (dispatch) => {
     dispatch({
         type : RESET_MESSAGE_MACHINE_ADMIN,
         payload: ''
+    })
+}
+
+export const actGetAllMachineAdmin = () => (dispatch) => {
+    axios.get(
+        `${API_URL}kieumay`,
+        {
+            header : {
+                'Content-Type' : 'application/json'
+            },
+            withCredentials : true,
+            credentials : 'include'
+        }
+    ).then((res) => {
+        dispatch({
+            type : GET_ALL_MACHINE_ADMIN,
+            payload : res.data
+        })
+    }).catch(error => {
+        console.log('actGetAllMachineAdmin error: ', error);
     })
 }
 

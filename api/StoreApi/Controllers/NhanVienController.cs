@@ -181,6 +181,10 @@ namespace StoreApi.Controllers
             {
                 var jwt = Request.Cookies["jwt-nhanvien"];
 
+                if(jwt == null) {
+                    return Unauthorized();
+                }
+
                 var token = jwtNhanVien.Verify(jwt);
 
                 string userId = token.Issuer;

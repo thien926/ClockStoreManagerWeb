@@ -14,5 +14,6 @@ namespace StoreApi.Interfaces
         Quyen Quyen_Update(Quyen NV); 
         void Quyen_Delete(Quyen NV); 
         IEnumerable<Quyen> Quyen_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count);
+        Boolean Quyen_CheckQuyenUser(int Id, string quyen);
     }
 }

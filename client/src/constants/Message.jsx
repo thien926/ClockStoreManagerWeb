@@ -23,6 +23,32 @@ export const ADD_WIRE_ERROR = 'Thêm kiểu dây thất bại!';
 export const UPDATE_WIRE_ERROR = 'Sửa kiểu dây thất bại!';
 export const DELETE_WIRE_ERROR = 'Xóa kiểu dây thất bại!';
 
+// Sản phẩm Admin
+export const ADD_PRODUCT_SUCCESS = 'Thêm sản phẩm thành công!';
+export const UPDATE_PRODUCT_SUCCESS = 'Sửa sản phẩm thành công!';
+export const DELETE_PRODUCT_SUCCESS = 'Xóa sản phẩm thành công!';
+export const ADD_PRODUCT_ERROR = 'Thêm sản phẩm thất bại!';
+export const UPDATE_PRODUCT_ERROR = 'Sửa sản phẩm thất bại!';
+export const DELETE_PRODUCT_ERROR = 'Xóa sản phẩm thất bại!';
+
+// Hóa đơn Admin
+export const UPDATE_BILL_STATUS_ERROR = 'Sửa trạng thái hóa đơn thất bại!';
+export const UPDATE_BILL_STATUS_SUCCESS = 'Sửa trạng thái hóa đơn thành công!';
+export const DELETE_BILL_ERROR = 'Xóa hóa đơn thất bại!';
+export const DELETE_BILL_SUCCESS = 'Xóa hóa đơn thành công!';
+
+// Nhập hàng
+export const NHAP_HANG_ERROR = 'Nhập hàng thất bại!';
+export const NHAP_HANG_SUCCESS = 'Nhập hàng thành công!';
+export const NHAP_HANG_NOTSP_ERROR = 'Chưa có sản phẩm nào được nhập. Nhập hàng thất bại!';
+export const NHAP_HANG_NOT_AMOUNT_PRICE_ERROR = 'Giá hoặc số lượng của sản phẩm phải lớn hơn 0!';
+
+// Phiếu nhập Admin
+export const UPDATE_COUPON_STATUS_ERROR = 'Sửa trạng thái phiếu nhập thất bại!';
+export const UPDATE_COUPON_STATUS_SUCCESS = 'Sửa trạng thái phiếu nhập thành công!';
+export const DELETE_COUPON_ERROR = 'Xóa phiếu nhập thất bại!';
+export const DELETE_COUPON_SUCCESS = 'Xóa phiếu nhập thành công!';
+
 // Nhà cung cấp Admin 
 export const ADD_NCC_SUCCESS = 'Thêm nhà cung cấp thành công!';
 export const UPDATE_NCC_SUCCESS = 'Sửa nhà cung cấp thành công!';
