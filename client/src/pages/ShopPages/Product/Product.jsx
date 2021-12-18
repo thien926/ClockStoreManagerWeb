@@ -12,6 +12,7 @@ function Product() {
 
   const [elmProductDetail, setElmProductDetail] = useState(null);
   const [elemListConnexion, setElemListConnexion] = useState(null)
+  const [titleSPLienQuan, settitleSPLienQuan] = useState('');
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,7 +32,7 @@ function Product() {
       setElmProductDetail(<ProductDetail submitAddSP={submitAddSP} product={ProductPageReducer.product} />)
     }
     else {
-      setElmProductDetail(null);
+      setElmProductDetail(<p class="text-center">Không có sản phẩm hiển thị.</p>);
     }
 
     var result = null;
@@ -41,6 +42,12 @@ function Product() {
       })
     }
     setElemListConnexion(result);
+    if(result != null) {
+      settitleSPLienQuan('Sản phẩm liên quan');
+    }
+    else {
+      settitleSPLienQuan('');
+    }
   }, [ProductPageReducer])
 
   const submitAddSP = (id, amount) => {
@@ -76,7 +83,7 @@ function Product() {
           <div className="row">
             <div className="col-lg-12">
               <div className="section-title">
-                <h2>Sản phẩm liên quan</h2>
+                <h2>{titleSPLienQuan}</h2>
               </div>
             </div>
           </div>

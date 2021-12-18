@@ -44,7 +44,7 @@ namespace StoreApi.Repositories
             context.SaveChanges();
         }
 
-        public IEnumerable<PhieuNhap> PhieuNhap_FilterAdmin(string search, int status, int pageIndex, int pageSize, out int count) {
+        public IEnumerable<PhieuNhap> PhieuNhap_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
             var query = context.PhieuNhaps.AsQueryable();
             
             if(!string.IsNullOrEmpty(search)) {
@@ -53,8 +53,19 @@ namespace StoreApi.Repositories
                 || (m.nameNCC.ToLower().Contains(search)) || (m.phone.Contains(search)));
             }
 
-            if(status > 0) {
-                query = query.Where(m => m.status == status);
+            // if(status > 0) {
+            //     query = query.Where(m => m.status == status);
+            // }
+
+            if(!string.IsNullOrEmpty(sort)){
+                switch(sort){
+                    case "date-asc": query = query.OrderBy(m => m.date_receice);
+                                    break;
+                    case "date-desc": query = query.OrderByDescending(m => m.date_receice);
+                                    break;
+                    default: query = query.OrderByDescending(m => m.date_receice);
+                            break;
+                }
             }
 
             count = query.Count();

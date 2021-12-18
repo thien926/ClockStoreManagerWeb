@@ -48,6 +48,7 @@ namespace StoreApi.Models
         [RegularExpression(pattern: "^(1|0)$", ErrorMessage="Trạng thái là 1 hoặc 0")]
         public int status{get; set;}
         
+        [System.Text.Json.Serialization.JsonIgnore]
         public ICollection<HoaDon> hoadons {get; set;}
 
         public KhachHang()

@@ -10,16 +10,16 @@ import AdminPermissionPaging from '../../../components/AdminComponents/AdminPerm
 import { ADD_PERMISSION_ERROR, ADD_PERMISSION_SUCCESS, DELETE_PERMISSION_ERROR, DELETE_PERMISSION_SUCCESS, UPDATE_PERMISSION_ERROR, UPDATE_PERMISSION_SUCCESS } from '../../../constants/Message';
 
 function PermissionAdmin() {
-    
+
     const AdminPermissionReducer = useSelector(state => state.AdminPermissionReducer)
-    
+
     const [search, setSearch] = useState('');
     const [sort, setSort] = useState('name-asc');
     const [pageIndex, setPageIndex] = useState(1);
     const [elmListPermissions, setElmListPermissions] = useState(null);
 
     const [actionValue, setActionValue] = useState('');
-    const [formValue, setFormValue] = useState({id: null, name: '', details : ''});
+    const [formValue, setFormValue] = useState({ id: null, name: '', details: '' });
 
     const location = useLocation();
     const dispatch = useDispatch();
@@ -36,16 +36,16 @@ function PermissionAdmin() {
     useEffect(() => {
         // console.log("location: ", location);
         var { search } = location;
-        if(search === "") {
+        if (search === "") {
             setSort('name-asc');
             setPageIndex(1);
             setSearch('');
-        } 
+        }
         else {
             var dauHoi = search.split('?');
-            var dauVa = dauHoi[dauHoi.length-1].split('&');
+            var dauVa = dauHoi[dauHoi.length - 1].split('&');
             var dauBang;
-            for(let i = 0; i < dauVa.length; ++i) {
+            for (let i = 0; i < dauVa.length; ++i) {
                 dauBang = dauVa[i].split('=');
                 switch (dauBang[0]) {
                     case "sort":
@@ -53,13 +53,13 @@ function PermissionAdmin() {
                         break;
                     case "pageIndex":
                         var value = parseInt(dauBang[1]);
-                        if(value) {
+                        if (value) {
                             setPageIndex(value);
                         }
                         else {
                             setPageIndex(1);
                         }
-                        
+
                         break;
                     case "search":
                         setSearch(utf8_from_str(dauBang[1]));
@@ -83,9 +83,9 @@ function PermissionAdmin() {
     useEffect(() => {
         // console.log(AdminPermissionReducer.dataValue)
         var result = null;
-        if(AdminPermissionReducer.dataValue.listQ && AdminPermissionReducer.dataValue.listQ.length > 0) {
+        if (AdminPermissionReducer.dataValue.listQ && AdminPermissionReducer.dataValue.listQ.length > 0) {
             result = AdminPermissionReducer.dataValue.listQ.map((item, index) => {
-                return <AdminPermissionItem key={index} permission={item} index={index} actionUpdate={actionUpdate} actionDelete={actionDelete}/>
+                return <AdminPermissionItem key={index} permission={item} index={index} actionUpdate={actionUpdate} actionDelete={actionDelete} />
             })
         }
         setElmListPermissions(result);
@@ -99,21 +99,25 @@ function PermissionAdmin() {
             case UPDATE_PERMISSION_SUCCESS:
                 toast.success(AdminPermissionReducer.message);
                 var filter = {
-                    search : search,
+                    search: search,
                     sort: sort,
-                    pageIndex:pageIndex
+                    pageIndex: pageIndex
                 }
                 // console.log(filter);
                 dispatch(actGetPermissionAdmin(filter));
                 dispatch(actResetMessagePermissionAdmin());
                 break;
-            case ADD_PERMISSION_ERROR : 
+            case ADD_PERMISSION_ERROR:
             case DELETE_PERMISSION_ERROR:
-            case UPDATE_PERMISSION_ERROR :
-                toast.error(AdminPermissionReducer.message); 
+            case UPDATE_PERMISSION_ERROR:
+                toast.error(AdminPermissionReducer.message);
                 dispatch(actResetMessagePermissionAdmin());
                 break;
             default:
+                if (AdminPermissionReducer.message) {
+                    toast.error(AdminPermissionReducer.message);
+                    dispatch(actResetMessagePermissionAdmin());
+                }
                 break;
         }
     }, [AdminPermissionReducer.message])
@@ -133,8 +137,8 @@ function PermissionAdmin() {
             switch (actionValue) {
                 case 'add':
                 case 'update':
-                    return <AdminPermissionFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
-            
+                    return <AdminPermissionFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm} />
+
                 default:
                     return null;
             }
@@ -143,7 +147,7 @@ function PermissionAdmin() {
     )
 
     const actionAdd = () => {
-        setFormValue({id: null, name:'', details:''});
+        setFormValue({ id: null, name: '', details: '' });
         setActionValue("add");
     }
 
@@ -170,7 +174,7 @@ function PermissionAdmin() {
     // Thực hiện thao tác xóa
     const actionDelete = (id) => {
         var res = window.confirm("Bạn có chắc muốn xóa quyền có Id = " + id + " không?");
-        if(res) {
+        if (res) {
             dispatch(actDeletePermissionAdmin(id));
         }
         else {
@@ -184,8 +188,8 @@ function PermissionAdmin() {
                 <h3 className="text-center mt-2">Quản lý quyền</h3>
                 <hr />
             </div>
-            
-            <AdminPermissionControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort} actionAdd={actionAdd}/>
+
+            <AdminPermissionControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort} actionAdd={actionAdd} />
 
             <div className="row mt-3">
                 <table className="table table-hover ">
@@ -205,7 +209,7 @@ function PermissionAdmin() {
                 </table>
             </div>
 
-            <AdminPermissionPaging dataValue={AdminPermissionReducer.dataValue}/>
+            <AdminPermissionPaging dataValue={AdminPermissionReducer.dataValue} />
 
             {showForm()}
 

@@ -1,22 +1,20 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
-import AdmimCouponFormAction from '../../../components/AdminComponents/AdminCouponComponent/AdmimCouponFormAction';
 import AdminCouponControl from '../../../components/AdminComponents/AdminCouponComponent/AdminCouponControl';
 import AdminCouponItem from '../../../components/AdminComponents/AdminCouponComponent/AdminCouponItem';
 import AdminCouponPaging from '../../../components/AdminComponents/AdminCouponComponent/AdminCouponPaging';
-import { DELETE_COUPON_ERROR } from '../../../constants/Message';
-import { actDeleteCouponAdmin, actGetCouponAdmin, actResetMessageCouponAdmin, actUpdateCouponStatusAdmin } from '../../../redux/actions/AdminCouponAction';
+import { actGetCouponAdmin, actResetMessageCouponAdmin } from '../../../redux/actions/AdminCouponAction';
 
 function CouponAdmin() {
     const AdminCouponReducer = useSelector(state => state.AdminCouponReducer)
 
     const [search, setSearch] = useState('');
-    const [status, setStatus] = useState(0);
+    const [sort, setSort] = useState(0);
     const [pageIndex, setPageIndex] = useState(1);
     const [elmListBills, setElmListBills] = useState(null);
-    const [itemEdit, setItemEdit] = useState('');
+    // const [itemEdit, setItemEdit] = useState('');
 
     const location = useLocation();
     const dispatch = useDispatch();
@@ -34,7 +32,7 @@ function CouponAdmin() {
         // console.log("location: ", location);
         var { search } = location;
         if(search === "") {
-            setStatus(0);
+            setSort('date-desc');
             setPageIndex(1);
             setSearch('');
         } 
@@ -45,14 +43,8 @@ function CouponAdmin() {
             for(let i = 0; i < dauVa.length; ++i) {
                 dauBang = dauVa[i].split('=');
                 switch (dauBang[0]) {
-                    case "status":
-                        value = parseInt(dauBang[1]);
-                        if(value) {
-                            setStatus(value);
-                        }
-                        else {
-                            setStatus(0);
-                        }
+                    case "sort":
+                        setSort(dauBang[1]);
                         break;
                     case "pageIndex":
                         value = parseInt(dauBang[1]);
@@ -76,19 +68,19 @@ function CouponAdmin() {
 
     useEffect(() => {
         var data = {
-            status,
+            sort,
             search,
             pageIndex
         }
         dispatch(actGetCouponAdmin(data));
-    }, [search, status, pageIndex, dispatch])
+    }, [search, sort, pageIndex, dispatch])
 
     useEffect(() => {
         // console.log()
         var result = null;
         if(AdminCouponReducer.dataValue.listPN && AdminCouponReducer.dataValue.listPN.length > 0) {
             result = AdminCouponReducer.dataValue.listPN.map((item, index) => {
-                return <AdminCouponItem key={index} coupon={item} index={index} actionDelete={actionDelete} setItemEdit={setItemEdit}/>
+                return <AdminCouponItem key={index} coupon={item} index={index} />
             })
         }
         setElmListBills(result);
@@ -101,7 +93,7 @@ function CouponAdmin() {
                 toast.success(AdminCouponReducer.message.value);
                 var filter = {
                     search : search,
-                    status: status,
+                    sort: sort,
                     pageIndex:pageIndex
                 }
                 // console.log(filter);
@@ -117,39 +109,39 @@ function CouponAdmin() {
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
-        navigate('/admin/coupon?search=' + searchValue + '&status=' + status + '&pageIndex=' + 1);
+        navigate('/admin/coupon?search=' + searchValue + '&sort=' + sort + '&pageIndex=' + 1);
     }
 
-    // đi đến URL khác khi status
-    const changeStatus = (statusValue) => {
-        navigate('/admin/coupon?search=' + search + '&status=' + statusValue + '&pageIndex=' + pageIndex);
+    // đi đến URL khác khi sort
+    const changeSort = (sortValue) => {
+        navigate('/admin/coupon?search=' + search + '&sort=' + sortValue + '&pageIndex=' + pageIndex);
     }
 
     // Thực hiện thao tác xóa
-    const actionDelete = (id) => {
-        var res = window.confirm("Bạn có chắc muốn xóa phiếu nhập có Id = " + id + " không?");
-        if(res) {
-            dispatch(actDeleteCouponAdmin(id));
-        }
-        else {
-            toast.error(DELETE_COUPON_ERROR);
-        }
-    }
+    // const actionDelete = (id) => {
+    //     var res = window.confirm("Bạn có chắc muốn xóa phiếu nhập có Id = " + id + " không?");
+    //     if(res) {
+    //         dispatch(actDeleteCouponAdmin(id));
+    //     }
+    //     else {
+    //         toast.error(DELETE_COUPON_ERROR);
+    //     }
+    // }
 
-    const showForm = useCallback(
-        () => {
-            if(itemEdit) {
-                return <AdmimCouponFormAction itemEdit={itemEdit} setItemEdit={setItemEdit} submitUpdateCouponStatus={submitUpdateCouponStatus}/>
-            }
-            return null;
-        },
-        [itemEdit],
-    )
+    // const showForm = useCallback(
+    //     () => {
+    //         if(itemEdit) {
+    //             return <AdmimCouponFormAction itemEdit={itemEdit} setItemEdit={setItemEdit} submitUpdateCouponStatus={submitUpdateCouponStatus}/>
+    //         }
+    //         return null;
+    //     },
+    //     [itemEdit],
+    // )
 
-    const submitUpdateCouponStatus = (data, id) => {
-        dispatch(actUpdateCouponStatusAdmin(data, id));
-        setItemEdit('');
-    }
+    // const submitUpdateCouponStatus = (data, id) => {
+    //     dispatch(actUpdateCouponStatusAdmin(data, id));
+    //     setItemEdit('');
+    // }
 
     return (
         <div>
@@ -158,7 +150,7 @@ function CouponAdmin() {
                 <hr />
             </div>
             
-            <AdminCouponControl search={search} status={status} changeSearch={changeSearch} changeStatus={changeStatus} />
+            <AdminCouponControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort} />
             
             <div className="row mt-3">
                 <table className="table table-hover ">
@@ -173,7 +165,7 @@ function CouponAdmin() {
                             <th>Địa chỉ</th>
                             <th>Ngày nhận</th>
                             <th>Tổng</th>
-                            <th>Trạng thái</th>
+                            {/* <th>Trạng thái</th> */}
                             <th>Hành động</th>
                         </tr>
                     </thead>
@@ -186,7 +178,7 @@ function CouponAdmin() {
 
             <AdminCouponPaging dataValue={AdminCouponReducer.dataValue}/>
 
-            {showForm()}
+            {/* {showForm()} */}
 
         </div>
     )

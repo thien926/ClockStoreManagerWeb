@@ -34,12 +34,15 @@ namespace StoreApi.Controllers
             this.nhanVienRepository = nhanVienRepository;
         }
 
-        [HttpGet]
-        public IEnumerable<ChiTietHD> GetAll() {
+        // Client ko gọi api này nên bỏ
+        // [HttpGet]
+        // public IEnumerable<ChiTietHD> GetAll() {
             
-            return this.ChiTietHDRepository.ChiTietHD_GetAll();
-        }
+        //     return this.ChiTietHDRepository.ChiTietHD_GetAll();
+        // }
 
+        // User Page
+        // Xem chi tiết hóa đơn của khách hàng
         [HttpGet("{billId}")]
         public IEnumerable<ChiTietHD> GetByBillId(int billId) {
             // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
@@ -51,10 +54,13 @@ namespace StoreApi.Controllers
             var user = token.Issuer;
             var kh = KhachHangRepository.KhachHang_GetByUser(user);
 
-            if (kh == null)
+            // Nếu không tìm thấy tài khoản khách hàng hoặc tài khoản bị khóa thì trả về null
+            if (kh == null || kh.status == 0)
             {
                 return null;
             }
+
+            // Kiểm tra hóa đơn này phải của khách hàng đang đăng nhập ko
             var temp = HoaDonRepository.HoaDon_CheckUserKHAndId(billId, kh.user);
             if(!temp) {
                 return null;
@@ -62,9 +68,11 @@ namespace StoreApi.Controllers
             return this.ChiTietHDRepository.ChiTietHD_GetByBillId(billId);
         }
 
+        // HoaDon Page - Admin 
+        // Nhân viên không bị khóa tài khoản có quyền xem chi tiết hóa đơn
         [HttpGet("admin/{billId}")]
         public IEnumerable<ChiTietHD> GetByBillIdAdmin(int billId) {
-            // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
+            // Phần xác thực tài khoản khách hàng 
             var jwt = Request.Cookies["jwt-nhanvien"];
             if(jwt == null) {
                 return null;
@@ -73,102 +81,12 @@ namespace StoreApi.Controllers
             var user = token.Issuer;
             var nv = nhanVienRepository.NhanVien_GetByUser(user);
 
-            if (nv == null) {
+            // Không tìm thấy nhân viên hoặc tài khoản nhân viên bị khóa thì trả về null
+            if (nv == null || nv.status == 0) {
                 return null;
             }
             
             return this.ChiTietHDRepository.ChiTietHD_GetByBillId(billId);
         }
-
-        // [HttpGet("{id}")]
-        // public ActionResult<ChiTietHD> GetById(int id) {
-        //     return this.ChiTietHDRepository.ChiTietHD_GetById(id);
-        // }
-
-        // [HttpPost]
-        // public ActionResult<ChiTietHD> AddCTHD(ChiTietHDDto cthddto) {
-
-        //     if(ModelState.IsValid){
-        //         try {
-        //             ChiTietHD cthd = new ChiTietHD();
-
-        //             // Mapping
-        //             // cthd.LSPId = hddto.LSPId;
-        //             cthd.billId = hddto.billId;
-        //             cthd.productId = hddto.productId;
-        //             cthd.name  = hddto.name ;
-        //             cthd.ammount = hddto.ammount;
-        //             cthd.price = hddto.price;
-        //             cthd.img = hddto.img;
-
-        //             var CTHD = this.ChiTietHDRepository.ChiTietHD_Add(cthd);
-        //             return Created("success", CTHD);
-        //         }
-        //         catch(Exception e) {
-        //             return StatusCode(StatusCodes.Status500InternalServerError);
-        //         }
-        //     }
-
-        //     return StatusCode(StatusCodes.Status500InternalServerError);
-        // }
-
-        // [HttpPut("{id}")]
-        // public ActionResult<ChiTietHD> UpdateCTHD([FromBody] ChiTietHDDto hddto, int id) {
-        //     if(ModelState.IsValid) {
-        //         try {
-        //             var hd = ChiTietHDRepository.ChiTietHD_GetById(id);
-
-        //             if(hd == null || hddto.Id != id) {
-        //                 return NotFound();
-        //             }
-
-        //             // Mapping
-        //             hd.LSPId = hddto.LSPId;
-        //             hd.KHuser = hddto.KHuser;
-        //             hd.NVuser = hddto.NVuser;
-        //             hd.phone = hddto.phone;
-        //             hd.address = hddto.address;
-        //             hd.date_receice = hddto.date_receice;
-        //             hd.date_order = hddto.date_order;
-        //             hd.total = hddto.total;
-        //             hd.status = 0;
-
-        //             var HD = this.ChiTietHDRepository.ChiTietHD_Update(hd);
-        //             return Created("success", HD);
-        //         }
-        //         catch(Exception e) {
-        //             return StatusCode(StatusCodes.Status500InternalServerError);
-        //         }
-        //     }
-        //     return StatusCode(StatusCodes.Status500InternalServerError);
-        // }
-
-        // [HttpDelete("{id}")]
-        // public ActionResult DeleteSP(int id) {
-        //     var HD = ChiTietHDRepository.ChiTietHD_GetById(id);
-        //     if(HD == null) {
-        //         return NotFound();
-        //     }
-        //     ChiTietHDRepository.ChiTietHD_Delete(HD);
-        //     return Ok(new { messgae = "Ok" });
-        // }
-
-        // [HttpPost("filter-admin")]
-        // public ViewChiTietHDAdminDto FilterAdmin(FilterDataAdminDto data) {
-        //     int count;
-        //     var ChiTietHDs = ChiTietHDRepository.ChiTietHD_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
-        //     var ListCTHD = new PaginatedList<ChiTietHD>(ChiTietHDs, count, data.pageIndex, pageSize);
-        //     ViewChiTietHDAdminDto view = new ViewChiTietHDAdminDto() {
-        //         ListCTHD = ListCTHD,
-        //         search = data.search,
-        //         sort = data.sort,
-        //         pageIndex = data.pageIndex,
-        //         pageSize = this.pageSize,
-        //         count = count,
-        //         range = this.range,
-        //         totalPage = ListCTHD.TotalPages
-        //     };
-        //     return view;
-        // }
     }
 }

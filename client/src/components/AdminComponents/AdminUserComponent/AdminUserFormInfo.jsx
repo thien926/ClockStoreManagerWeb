@@ -20,20 +20,23 @@ function AdminUserFormInfo(props) {
     const [noteDateBorn, setNoteDateBorn] = useState('');
 
     useEffect(() => {
-        setUser(dataValue.user)
-        setPhone(dataValue.phone)
-        setName(dataValue.name)
-        setAddress(dataValue.address)
-        setGender(dataValue.gender)
-        setDateBorn(dataValue.dateborn)
 
-        if (dataValue.gender === "Nam") {
-            setGenderNam(true);
-            setGenderNu(false);
-        }
-        else {
-            setGenderNam(false);
-            setGenderNu(true);
+        if (dataValue.quyen && dataValue.quyen.details.search("TaiKhoan") >= 0) {
+            setUser(dataValue.user)
+            setPhone(dataValue.phone)
+            setName(dataValue.name)
+            setAddress(dataValue.address)
+            setGender(dataValue.gender)
+            setDateBorn(dataValue.dateborn)
+
+            if (dataValue.gender === "Nam") {
+                setGenderNam(true);
+                setGenderNu(false);
+            }
+            else {
+                setGenderNam(false);
+                setGenderNu(true);
+            }
         }
     }, [dataValue])
 

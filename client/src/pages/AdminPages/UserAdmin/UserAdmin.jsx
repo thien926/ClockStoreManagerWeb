@@ -28,27 +28,30 @@ function UserAdmin() {
 
     useEffect(() => {
         // console.log("Current User Admin : ", UserAdmin);
-        if (UserAdmin.dataValue.user) {
-            setUser(UserAdmin.dataValue.user);
+        if(UserAdmin.dataValue.quyen && UserAdmin.dataValue.quyen.details.search("TaiKhoan") >= 0) {
+            if (UserAdmin.dataValue.user) {
+                setUser(UserAdmin.dataValue.user);
+            }
+            if (UserAdmin.dataValue.name) {
+                setName(UserAdmin.dataValue.name);
+            }
+            if (UserAdmin.dataValue.phone) {
+                setPhone(UserAdmin.dataValue.phone);
+            }
+            if (UserAdmin.dataValue.address) {
+                setAddress(UserAdmin.dataValue.address);
+            }
+            if (UserAdmin.dataValue.gender) {
+                setGender(UserAdmin.dataValue.gender);
+            }
+            if (UserAdmin.dataValue.dateborn) {
+                setDateborn(UserAdmin.dataValue.dateborn.split("T")[0]);
+            }
+            if (UserAdmin.dataValue.quyen) {
+                setQuyen(UserAdmin.dataValue.quyen.id + " - " + UserAdmin.dataValue.quyen.name);
+            }
         }
-        if (UserAdmin.dataValue.name) {
-            setName(UserAdmin.dataValue.name);
-        }
-        if (UserAdmin.dataValue.phone) {
-            setPhone(UserAdmin.dataValue.phone);
-        }
-        if (UserAdmin.dataValue.address) {
-            setAddress(UserAdmin.dataValue.address);
-        }
-        if (UserAdmin.dataValue.gender) {
-            setGender(UserAdmin.dataValue.gender);
-        }
-        if (UserAdmin.dataValue.dateborn) {
-            setDateborn(UserAdmin.dataValue.dateborn.split("T")[0]);
-        }
-        if (UserAdmin.dataValue.quyen) {
-            setQuyen(UserAdmin.dataValue.quyen.id + " - " + UserAdmin.dataValue.quyen.name);
-        }
+        
     }, [UserAdmin.dataValue])
 
     useEffect(() => {
@@ -66,9 +69,13 @@ function UserAdmin() {
                 dispatch(actResetMessageUserNhanVien());
                 break;
             default:
+                if(UserAdmin.message) {
+                    toast.error(UserAdmin.message)
+                    dispatch(actResetMessageUserNhanVien());
+                }
                 break;
         }
-    }, [UserAdmin.message])
+    }, [UserAdmin.message, dispatch])
 
     const showForm = useCallback(
         () => {

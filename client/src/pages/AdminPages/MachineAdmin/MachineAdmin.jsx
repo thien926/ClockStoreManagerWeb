@@ -10,7 +10,7 @@ import { ADD_MACHINE_ERROR, ADD_MACHINE_SUCCESS, DELETE_MACHINE_ERROR, DELETE_MA
 import { actAddMachineAdmin, actDeleteMachineAdmin, actGetMachineAdmin, actResetMessageMachineAdmin, actUpdateMachineAdmin } from '../../../redux/actions/AdminMachineAction'
 
 function MachineAdmin() {
-    
+
     const AdminMachineReducer = useSelector(state => state.AdminMachineReducer)
 
     const [search, setSearch] = useState('');
@@ -19,7 +19,7 @@ function MachineAdmin() {
     const [elmListMachines, setElmListMachines] = useState(null);
 
     const [actionValue, setActionValue] = useState('');
-    const [formValue, setFormValue] = useState({id: null, name: ''});
+    const [formValue, setFormValue] = useState({ id: null, name: '' });
 
     const location = useLocation();
     const dispatch = useDispatch();
@@ -36,16 +36,16 @@ function MachineAdmin() {
     useEffect(() => {
         // console.log("location: ", location);
         var { search } = location;
-        if(search === "") {
+        if (search === "") {
             setSort('name-asc');
             setPageIndex(1);
             setSearch('');
-        } 
+        }
         else {
             var dauHoi = search.split('?');
-            var dauVa = dauHoi[dauHoi.length-1].split('&');
+            var dauVa = dauHoi[dauHoi.length - 1].split('&');
             var dauBang;
-            for(let i = 0; i < dauVa.length; ++i) {
+            for (let i = 0; i < dauVa.length; ++i) {
                 dauBang = dauVa[i].split('=');
                 switch (dauBang[0]) {
                     case "sort":
@@ -53,13 +53,13 @@ function MachineAdmin() {
                         break;
                     case "pageIndex":
                         var value = parseInt(dauBang[1]);
-                        if(value) {
+                        if (value) {
                             setPageIndex(value);
                         }
                         else {
                             setPageIndex(1);
                         }
-                        
+
                         break;
                     case "search":
                         setSearch(utf8_from_str(dauBang[1]));
@@ -82,9 +82,9 @@ function MachineAdmin() {
 
     useEffect(() => {
         var result = null;
-        if(AdminMachineReducer.dataValue.listKM && AdminMachineReducer.dataValue.listKM.length > 0) {
+        if (AdminMachineReducer.dataValue.listKM && AdminMachineReducer.dataValue.listKM.length > 0) {
             result = AdminMachineReducer.dataValue.listKM.map((item, index) => {
-                return <AdminMachineItem key={index} machine={item} index={index} actionUpdate={actionUpdate} actionDelete={actionDelete}/>
+                return <AdminMachineItem key={index} machine={item} index={index} actionUpdate={actionUpdate} actionDelete={actionDelete} />
             })
         }
         setElmListMachines(result);
@@ -98,20 +98,24 @@ function MachineAdmin() {
             case UPDATE_MACHINE_SUCCESS:
                 toast.success(AdminMachineReducer.message);
                 var filter = {
-                    search : search,
+                    search: search,
                     sort: sort,
-                    pageIndex:pageIndex
+                    pageIndex: pageIndex
                 }
                 dispatch(actGetMachineAdmin(filter));
                 dispatch(actResetMessageMachineAdmin());
                 break;
-            case ADD_MACHINE_ERROR : 
+            case ADD_MACHINE_ERROR:
             case DELETE_MACHINE_ERROR:
-            case UPDATE_MACHINE_ERROR :
-                toast.error(AdminMachineReducer.message); 
+            case UPDATE_MACHINE_ERROR:
+                toast.error(AdminMachineReducer.message);
                 dispatch(actResetMessageMachineAdmin());
                 break;
             default:
+                if (AdminMachineReducer.message) {
+                    toast.error(AdminMachineReducer.message);
+                    dispatch(actResetMessageMachineAdmin());
+                }
                 break;
         }
     }, [AdminMachineReducer.message])
@@ -131,8 +135,8 @@ function MachineAdmin() {
             switch (actionValue) {
                 case 'add':
                 case 'update':
-                    return <AdminMachineFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
-            
+                    return <AdminMachineFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm} />
+
                 default:
                     return null;
             }
@@ -141,7 +145,7 @@ function MachineAdmin() {
     )
 
     const actionAdd = () => {
-        setFormValue({id: null, name:''});
+        setFormValue({ id: null, name: '' });
         setActionValue("add");
     }
 
@@ -168,7 +172,7 @@ function MachineAdmin() {
     // Thực hiện thao tác xóa
     const actionDelete = (id) => {
         var res = window.confirm("Bạn có chắc muốn xóa kiểu máy có Id = " + id + " không?");
-        if(res) {
+        if (res) {
             dispatch(actDeleteMachineAdmin(id));
         }
         else {
@@ -182,8 +186,8 @@ function MachineAdmin() {
                 <h3 className="text-center mt-2">Quản lý kiểu máy</h3>
                 <hr />
             </div>
-            
-            <AdminMachineControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort} actionAdd={actionAdd}/>
+
+            <AdminMachineControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort} actionAdd={actionAdd} />
 
             <div className="row mt-3">
                 <table className="table table-hover ">
@@ -202,7 +206,7 @@ function MachineAdmin() {
                 </table>
             </div>
 
-            <AdminMachinePaging dataValue={AdminMachineReducer.dataValue}/>
+            <AdminMachinePaging dataValue={AdminMachineReducer.dataValue} />
 
             {showForm()}
 

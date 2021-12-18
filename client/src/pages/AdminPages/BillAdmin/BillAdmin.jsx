@@ -155,7 +155,7 @@ function BillAdmin() {
     return (
         <div>
             <div>
-                <h3 className="text-center mt-2">Quản lý hóa đơn</h3>
+                <h3 className="text-center mt-2">Quản lý đơn hàng</h3>
                 <hr />
             </div>
             

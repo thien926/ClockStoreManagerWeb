@@ -234,6 +234,7 @@ function AdminProductFormActionUpdate(props) {
             formData.append('description', values.description);
             formData.append('img', values.img);
             formData.append('imgFile', values.imgFile);
+            formData.append('status', values.status);
             // console.log(formData);
 
             props.submitActionUpdateForm(formData, parseInt(values.id));

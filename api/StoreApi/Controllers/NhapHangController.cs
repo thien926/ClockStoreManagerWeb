@@ -25,10 +25,11 @@ namespace StoreApi.Controllers
         private readonly INhanVienRepository nhanVienRepository;
         private readonly IPhieuNhapRepository phieuNhapRepository;
         private readonly IChiTietPNRepository chiTietPNRepository;
+        private readonly IQuyenRepository quyenRepository;
         public NhapHangController(ISanPhamRepository sanPhamRepository, IKieuDayRepository kieuDayRepository,
         IKieuMayRepository kieuMayRepository, ILoaiSanPhamRepository loaiSanPhamRepository, IThuongHieuRepository thuongHieuRepository,
         JwtNhanVienService jwtNhanVienService, INhanVienRepository nhanVienRepository, IPhieuNhapRepository phieuNhapRepository,
-        IChiTietPNRepository chiTietPNRepository)
+        IChiTietPNRepository chiTietPNRepository, IQuyenRepository quyenRepository)
         {
             this.sanPhamRepository = sanPhamRepository;
             this.kieuDayRepository = kieuDayRepository;
@@ -39,35 +40,52 @@ namespace StoreApi.Controllers
             this.nhanVienRepository = nhanVienRepository;
             this.phieuNhapRepository = phieuNhapRepository;
             this.chiTietPNRepository = chiTietPNRepository;
+            this.quyenRepository = quyenRepository;
         }
 
-        [HttpGet]
-        public IEnumerable<SanPham> GetAll()
-        {
-            var kds = kieuDayRepository.KieuDay_GetAll();
-            var kms = kieuMayRepository.KieuMay_GetAll();
-            var ths = thuongHieuRepository.ThuongHieu_GetAll();
-            var lsps = loaiSanPhamRepository.LoaiSanPham_GetAll();
-            return this.sanPhamRepository.SanPham_GetAll(); ;
-            // var sps = this.sanPhamRepository.SanPham_GetAll();
-
-            // var res = new List<SanPham>();
-
-            // foreach (var item in sps)
-            // {
-            //     if(item.brand.name.Contains("KASSAW")) {
-            //         res.Add(item);
-            //     }
-            // }
-
-            // return res;
-        }
+        // [HttpGet]
+        // public IEnumerable<SanPham> GetAll()
+        // {
+        //     var kds = kieuDayRepository.KieuDay_GetAll();
+        //     var kms = kieuMayRepository.KieuMay_GetAll();
+        //     var ths = thuongHieuRepository.ThuongHieu_GetAll();
+        //     var lsps = loaiSanPhamRepository.LoaiSanPham_GetAll();
+        //     return this.sanPhamRepository.SanPham_GetAll();
+        // }
 
 
 
         [HttpPost("filter-admin")]
         public ViewLoadProductNhapHangAdminDto FilterAdmin(FilterLoadSanPhamNhapHangDto data)
         {
+            // Phần xác thực tài khoản nhân viên
+            var jwt = Request.Cookies["jwt-nhanvien"];
+            if (jwt == null)
+            {
+                return null;
+            }
+            var token = jwtNhanVienService.Verify(jwt);
+            var user = token.Issuer;
+            var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+            if (nv == null)
+            {
+                return null;
+            }
+
+            if (nv.status == 0)
+            {
+                return null;
+            }
+
+            var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "NhapHang");
+
+            // Kiểm tra nhân viên có quyền thêm loại sản phẩm không
+            if (!quyen)
+            {
+                return null;
+            }
+
             var kds = kieuDayRepository.KieuDay_GetAll();
             var kms = kieuMayRepository.KieuMay_GetAll();
             var ths = thuongHieuRepository.ThuongHieu_GetAll();
@@ -223,11 +241,23 @@ namespace StoreApi.Controllers
                         return NotFound(new { messgae = "Không tìm thấy tài khoản nhân viên!" });
                     }
 
+                    if (user.status == 0)
+                    {
+                        return NotFound(new { messgae = "Tài khoản đã bị khóa!" });
+                    }
+
                     if (user.user != data.user)
                     {
                         return BadRequest(
                             new { message = "Tên tài khoản đăng nhập không khớp với tên tài khoản cần nhập hàng!" }
                         );
+                    }
+                    var quyen = quyenRepository.Quyen_CheckQuyenUser(user.quyenId, "qlNhapHang");
+
+                    // Kiểm tra nhân viên có quyền thêm loại sản phẩm không
+                    if (!quyen)
+                    {
+                        return null;
                     }
 
                     List<int> listProduct_id = new List<int>(); // lưu Id sản phẩm
@@ -250,7 +280,8 @@ namespace StoreApi.Controllers
                                 amount = int.Parse(temp[1]);
                                 price = int.Parse(temp[2]);
 
-                                if(amount == 0 || price == 0) {
+                                if (amount == 0 || price == 0)
+                                {
                                     return BadRequest(new { message = "Giá và số lượng của sản phẩm phải khác 0!" });
                                 }
 
@@ -271,7 +302,8 @@ namespace StoreApi.Controllers
                             amount = int.Parse(temp[1]);
                             price = int.Parse(temp[2]);
 
-                            if(amount == 0 || price == 0) {
+                            if (amount == 0 || price == 0)
+                            {
                                 return BadRequest(new { message = "Giá và số lượng của sản phẩm phải khác 0!" });
                             }
 
@@ -294,7 +326,7 @@ namespace StoreApi.Controllers
                     pn.address = data.address;
                     pn.date_receice = System.DateTime.Now;
                     pn.total = total;
-                    pn.status = 1;
+                    // pn.status = 1;
 
                     pn = phieuNhapRepository.PhieuNhap_Add(pn);
                     List<ChiTietPN> listCTPN = new List<ChiTietPN>();
@@ -324,10 +356,10 @@ namespace StoreApi.Controllers
                 }
                 catch (Exception e)
                 {
-                    return BadRequest(new {message = "Lỗi nhập hàng!", error = e});
+                    return BadRequest(new { message = "Lỗi nhập hàng!", error = e });
                 }
             }
-            return BadRequest(new {message = "Tham số truyền vào không chính xác!"});
+            return BadRequest(new { message = "Tham số truyền vào không chính xác!" });
         }
     }
 }
