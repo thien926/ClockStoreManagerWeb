@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import AdminCouponControl from '../../../components/AdminComponents/AdminCouponComponent/AdminCouponControl';
 import AdminCouponItem from '../../../components/AdminComponents/AdminCouponComponent/AdminCouponItem';
 import AdminCouponPaging from '../../../components/AdminComponents/AdminCouponComponent/AdminCouponPaging';
-import { actGetCouponAdmin, actResetMessageCouponAdmin, actUpdateCouponStatusAdmin } from '../../../redux/actions/AdminCouponAction';
+import { actGetCouponAdmin, actResetMessageCouponAdmin } from '../../../redux/actions/AdminCouponAction';
 
 function CouponAdmin() {
     const AdminCouponReducer = useSelector(state => state.AdminCouponReducer)
