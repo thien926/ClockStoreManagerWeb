@@ -54,7 +54,7 @@ namespace StoreApi.Controllers
         // }
 
         // User Page 
-        // Hiển thị danh sách hóa đơn của tài khoản khách hàng
+        // Hiển thị danh sách đơn hàng của tài khoản khách hàng
         [HttpGet("getByUserKH/{pageIndex}")]
         public ActionResult<ViewBillShopDto> GetByUserKH(int pageIndex)
         {
@@ -69,7 +69,7 @@ namespace StoreApi.Controllers
             var kh = khachHangRepository.KhachHang_GetByUser(user);
 
             // Không tìm thấy khách hàng hoặc tài khoản bị khóa => return null
-            // Tài khoản bị khóa thì không có quyền xem danh sách hóa đơn của tài khoản
+            // Tài khoản bị khóa thì không có quyền xem danh sách đơn hàng của tài khoản
             if(kh == null || kh.status == 0) {
                 return null;
             }
@@ -90,8 +90,8 @@ namespace StoreApi.Controllers
             return view;
         }
 
-        // Hóa đơn Page - Admin
-        // Chỉ có quyền sửa trạng thái của hóa đơn
+        // đơn hàng Page - Admin
+        // Chỉ có quyền sửa trạng thái của đơn hàng
         [HttpPut("{id}")]
         public ActionResult<DonHang> UpdateHD([FromBody] DonHangDto hddto, int id)
         {
@@ -117,25 +117,25 @@ namespace StoreApi.Controllers
                         return NotFound(new { message = "Tài khoản nhân viên đang đăng nhập đã bị khóa!" });
                     }
 
-                    // Kiểm tra nhân viên có quyền sửa hóa đơn không
+                    // Kiểm tra nhân viên có quyền sửa đơn hàng không
                     var checkQuyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlDonHang");
 
                     if(!checkQuyen) {
-                        return BadRequest(new { message = "Tài khoản không có quyền sửa hóa đơn!" });
+                        return BadRequest(new { message = "Tài khoản không có quyền sửa đơn hàng!" });
                     }
                     
                     var hd = DonHangRepository.DonHang_GetById(id);
 
                     if (hd == null || hddto.Id != id)
                     {
-                        return NotFound(new { message = "Không tìm thấy hóa đơn cần sửa!" });
+                        return NotFound(new { message = "Không tìm thấy đơn hàng cần sửa!" });
                     }
 
-                    // Hóa đơn chưa được nhân viên nào xử lý và hóa đơn thuộc quyền xử lý của nhân viên
+                    // đơn hàng chưa được nhân viên nào xử lý và đơn hàng thuộc quyền xử lý của nhân viên
                     // đó thì nhân viên đó mới được xử lý
-                    if(hd.NVuser != null && hd.NVuser != nv.user) {
-                        return BadRequest(new { message = "Hóa đơn thuộc quyền sửa đổi của nhân viên khác!" });
-                    }
+                    // if(hd.NVuser != null && hd.NVuser != nv.user) {
+                    //     return BadRequest(new { message = "đơn hàng thuộc quyền sửa đổi của nhân viên khác!" });
+                    // }
 
                     // hd.status = hddto.status;
                     // Mapping
@@ -186,7 +186,7 @@ namespace StoreApi.Controllers
                     }
                     else
                     {
-                        return BadRequest(new { message = "Cập nhật trạng thái hóa đơn không thành công!" });
+                        return BadRequest(new { message = "Cập nhật trạng thái đơn hàng không thành công!" });
                     }
 
                     var HD = this.DonHangRepository.DonHang_Update(hd);
@@ -200,8 +200,8 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
-        // Hóa đơn Page - Admin
-        // Xóa hóa đơn
+        // đơn hàng Page - Admin
+        // Xóa đơn hàng
         [HttpDelete("{id}")]
         public ActionResult DeleteHD(int id)
         {
@@ -227,7 +227,7 @@ namespace StoreApi.Controllers
 
             // Kiểm tra nhân viên có quyền xóa không
             if(!quyen) {
-                return BadRequest(new { message = "Tài khoản không có quyền xóa hóa đơn!" });
+                return BadRequest(new { message = "Tài khoản không có quyền xóa đơn hàng!" });
             }
             
             var HD = DonHangRepository.DonHang_GetById(id);
@@ -238,15 +238,15 @@ namespace StoreApi.Controllers
 
             // Đơn hàng ở trạng thái bị hủy thì mới được xóa
             if(HD.status != 4) {
-                return BadRequest(new {message = "Hóa đơn phải ở trạng thái đã bị hủy mới được xóa!"});
+                return BadRequest(new {message = "Đơn hàng phải ở trạng thái đã bị hủy mới được xóa!"});
             }
 
             DonHangRepository.DonHang_Delete(HD);
             return Ok(new { messgae = "Ok" });
         }
 
-        // Hóa đơn Page - Admin
-        // Load danh sách hóa đơn
+        // đơn hàng Page - Admin
+        // Load danh sách đơn hàng
         [HttpPost("filter-admin")]
         public ViewDonHangAdminDto FilterAdmin(FilterDonHangDto data)
         {

@@ -123,7 +123,7 @@ function BillAdmin() {
 
     // đi đến URL khác khi status
     const changeStatus = (statusValue) => {
-        navigate('/admin/bill?search=' + search + '&status=' + statusValue + '&pageIndex=' + pageIndex);
+        navigate('/admin/bill?search=' + search + '&status=' + statusValue + '&pageIndex=' + 1);
     }
 
     // Thực hiện thao tác xóa
