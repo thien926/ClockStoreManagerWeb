@@ -7,75 +7,75 @@ using StoreApi.Models;
 
 namespace StoreApi.Repositories
 {
-    public class ChiTietHDRepository : IChiTietHDRepository
+    public class ChiTietDHRepository : IChiTietDHRepository
     {
         private readonly ClockStoreDBContext context;
-        public ChiTietHDRepository(ClockStoreDBContext context) {
+        public ChiTietDHRepository(ClockStoreDBContext context) {
             this.context = context;
         }
-        public ChiTietHD ChiTietHD_Add(ChiTietHD hd)
+        public ChiTietDH ChiTietDH_Add(ChiTietDH hd)
         {
-            context.ChiTietHDs.Add(hd);
+            context.ChiTietDHs.Add(hd);
             context.SaveChanges();
             return hd;
         }
 
-        public IEnumerable<ChiTietHD> ChiTietHD_AddRange(IEnumerable<ChiTietHD> list)
+        public IEnumerable<ChiTietDH> ChiTietDH_AddRange(IEnumerable<ChiTietDH> list)
         {
-            context.ChiTietHDs.AddRange(list);
+            context.ChiTietDHs.AddRange(list);
             context.SaveChanges();
             return list;
         }
 
-        // public void ChiTietHD_AddRangeWithListSP(IEnumerable<SanPham> list, int billId)
+        // public void ChiTietDH_AddRangeWithListSP(IEnumerable<SanPham> list, int billId)
         // {
         //     foreach (var item in list)
         //     {
-        //         ChiTietHD newChiTietHD = new ChiTietHD();
-        //         newChiTietHD.billId = billId;
-        //         newChiTietHD.productId = item.Id;
-        //         newChiTietHD.name = item.name;
-        //         newChiTietHD.amount = item.amount;
-        //         newChiTietHD.price = item.price;
-        //         newChiTietHD.img = item.img;
-        //         context.ChiTietHDs.Add(newChiTietHD);
+        //         ChiTietDH newChiTietDH = new ChiTietDH();
+        //         newChiTietDH.billId = billId;
+        //         newChiTietDH.productId = item.Id;
+        //         newChiTietDH.name = item.name;
+        //         newChiTietDH.amount = item.amount;
+        //         newChiTietDH.price = item.price;
+        //         newChiTietDH.img = item.img;
+        //         context.ChiTietDHs.Add(newChiTietDH);
         //     }
         //     context.SaveChanges();
         // }
 
-        // public ChiTietHD ChiTietHD_GetById(int id)
+        // public ChiTietDH ChiTietDH_GetById(int id)
         // {
-        //     // context.ChiTietHDs.
-        //     return context.ChiTietHDs.FirstOrDefault(o => o.Id == id);
+        //     // context.ChiTietDHs.
+        //     return context.ChiTietDHs.FirstOrDefault(o => o.Id == id);
         // }
 
-        public IEnumerable<ChiTietHD> ChiTietHD_GetAll()
+        public IEnumerable<ChiTietDH> ChiTietDH_GetAll()
         {
-            return context.ChiTietHDs.ToList();
+            return context.ChiTietDHs.ToList();
         }
 
-        public IEnumerable<ChiTietHD> ChiTietHD_GetByBillId(int billId)
+        public IEnumerable<ChiTietDH> ChiTietDH_GetByBillId(int billId)
         {
-            var query = context.ChiTietHDs.AsQueryable();
+            var query = context.ChiTietDHs.AsQueryable();
             query = query.Where(m => m.billId == billId);
             return query.ToList();
         }
 
-        public ChiTietHD ChiTietHD_Update(ChiTietHD CTHD)
+        public ChiTietDH ChiTietDH_Update(ChiTietDH CTHD)
         {
-            context.ChiTietHDs.Update(CTHD);
+            context.ChiTietDHs.Update(CTHD);
             context.SaveChanges();
             return CTHD;
         }
 
-        public void ChiTietHD_Delete(ChiTietHD CTHD)
+        public void ChiTietDH_Delete(ChiTietDH CTHD)
         {
-            context.ChiTietHDs.Remove(CTHD);
+            context.ChiTietDHs.Remove(CTHD);
             context.SaveChanges();
         }
 
-        public IEnumerable<ChiTietHD> ChiTietHD_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
-            var query = context.ChiTietHDs.AsQueryable();
+        public IEnumerable<ChiTietDH> ChiTietDH_FilterAdmin(string search, string sort, int pageIndex, int pageSize, out int count) {
+            var query = context.ChiTietDHs.AsQueryable();
             
             if(!string.IsNullOrEmpty(search)) {
                 search = search.ToLower();
@@ -109,9 +109,9 @@ namespace StoreApi.Repositories
                         .Take(pageSize).ToList();
         }
 
-        public IEnumerable<ChiTietHD> ChiTietHD_GetByListBill(List<int> list)
+        public IEnumerable<ChiTietDH> ChiTietDH_GetByListBill(List<int> list)
         {
-            var query = context.ChiTietHDs.AsQueryable();
+            var query = context.ChiTietDHs.AsQueryable();
             query = query.Where(m => list.Contains(m.billId));
             query = query.OrderByDescending(m => m.amount);
             return query.Take(12).ToList();

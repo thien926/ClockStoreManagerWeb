@@ -5,7 +5,7 @@ export const GET_DETAIL_BILL = 'GET_DETAIL_BILL';
 
 export const actGetBillDetail = (id) => (dispatch) => {
     axios.get(
-        `${API_URL}chitiethd/${id}`,
+        `${API_URL}chitietdh/${id}`,
         {
             header : {
                 'Content-Type' : 'application/json'
@@ -25,7 +25,7 @@ export const actGetBillDetail = (id) => (dispatch) => {
 
 export const actGetBillDetailAdmin = (id) => (dispatch) => {
     axios.get(
-        `${API_URL}chitiethd/admin/${id}`,
+        `${API_URL}chitietdh/admin/${id}`,
         {
             header : {
                 'Content-Type' : 'application/json'

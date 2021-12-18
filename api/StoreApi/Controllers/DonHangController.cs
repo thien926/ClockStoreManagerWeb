@@ -13,44 +13,44 @@ namespace StoreApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class HoaDonController : ControllerBase
+    public class DonHangController : ControllerBase
     {
         private int pageSize = 9;
         private int range = 9;
-        private readonly IHoaDonRepository HoaDonRepository;
+        private readonly IDonHangRepository DonHangRepository;
         private readonly IKhachHangRepository khachHangRepository;
         private readonly INhanVienRepository nhanVienRepository;
         private readonly JwtKhachHangService jwtKhachHang;
         private readonly JwtNhanVienService jwtNhanVien;
         private readonly IQuyenRepository quyenRepository;
-        private readonly IChiTietHDRepository chiTietHDRepository;
+        private readonly IChiTietDHRepository chiTietDHRepository;
         private readonly ISanPhamRepository sanPhamRepository;
-        public HoaDonController(IHoaDonRepository HoaDonRepository, JwtKhachHangService jwtKhachHang,
+        public DonHangController(IDonHangRepository DonHangRepository, JwtKhachHangService jwtKhachHang,
         IKhachHangRepository khachHangRepository, JwtNhanVienService jwtNhanVien, INhanVienRepository nhanVienRepository,
-        IQuyenRepository quyenRepository, IChiTietHDRepository chiTietHDRepository, ISanPhamRepository sanPhamRepository)
+        IQuyenRepository quyenRepository, IChiTietDHRepository chiTietDHRepository, ISanPhamRepository sanPhamRepository)
         {
-            this.HoaDonRepository = HoaDonRepository;
+            this.DonHangRepository = DonHangRepository;
             this.jwtKhachHang = jwtKhachHang;
             this.khachHangRepository = khachHangRepository;
             this.jwtNhanVien = jwtNhanVien;
             this.nhanVienRepository = nhanVienRepository;
             this.quyenRepository = quyenRepository;
-            this.chiTietHDRepository = chiTietHDRepository;
+            this.chiTietDHRepository = chiTietDHRepository;
             this.sanPhamRepository = sanPhamRepository;
         }
 
         // Client ko gọi api này nên bỏ
         // [HttpGet]
-        // public IEnumerable<HoaDon> GetAll()
+        // public IEnumerable<DonHang> GetAll()
         // {
-        //     return this.HoaDonRepository.HoaDon_GetAll();
+        //     return this.DonHangRepository.DonHang_GetAll();
         // }
         
         // Client ko gọi api này nên bỏ
         // [HttpGet("{id}")]
-        // public ActionResult<HoaDon> GetById(int id)
+        // public ActionResult<DonHang> GetById(int id)
         // {
-        //     return this.HoaDonRepository.HoaDon_GetById(id);
+        //     return this.DonHangRepository.DonHang_GetById(id);
         // }
 
         // User Page 
@@ -76,9 +76,9 @@ namespace StoreApi.Controllers
 
             int count;
 
-            var HoaDons = HoaDonRepository.HoaDon_GetByUserKH(user, pageIndex, pageSize, out count);
+            var DonHangs = DonHangRepository.DonHang_GetByUserKH(user, pageIndex, pageSize, out count);
             
-            var ListHD = new PaginatedList<HoaDon>(HoaDons, count, pageIndex, pageSize);
+            var ListHD = new PaginatedList<DonHang>(DonHangs, count, pageIndex, pageSize);
             ViewBillShopDto view = new ViewBillShopDto() {
                 ListHD = ListHD,
                 pageIndex = pageIndex,
@@ -93,7 +93,7 @@ namespace StoreApi.Controllers
         // Hóa đơn Page - Admin
         // Chỉ có quyền sửa trạng thái của hóa đơn
         [HttpPut("{id}")]
-        public ActionResult<HoaDon> UpdateHD([FromBody] HoaDonDto hddto, int id)
+        public ActionResult<DonHang> UpdateHD([FromBody] DonHangDto hddto, int id)
         {
             if (ModelState.IsValid)
             {
@@ -118,13 +118,13 @@ namespace StoreApi.Controllers
                     }
 
                     // Kiểm tra nhân viên có quyền sửa hóa đơn không
-                    var checkQuyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlHoaDon");
+                    var checkQuyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlDonHang");
 
                     if(!checkQuyen) {
                         return BadRequest(new { message = "Tài khoản không có quyền sửa hóa đơn!" });
                     }
                     
-                    var hd = HoaDonRepository.HoaDon_GetById(id);
+                    var hd = DonHangRepository.DonHang_GetById(id);
 
                     if (hd == null || hddto.Id != id)
                     {
@@ -158,7 +158,7 @@ namespace StoreApi.Controllers
                         }
 
                         if(hd.status == 4) {
-                            var ctdh = chiTietHDRepository.ChiTietHD_GetByBillId(hd.Id);
+                            var ctdh = chiTietDHRepository.ChiTietDH_GetByBillId(hd.Id);
                             List<int> listProduct_id = new List<int>(); // lưu Id sản phẩm
                             List<int> listSoluong = new List<int>();    // lưu số lượng sản phẩm 
 
@@ -189,7 +189,7 @@ namespace StoreApi.Controllers
                         return BadRequest(new { message = "Cập nhật trạng thái hóa đơn không thành công!" });
                     }
 
-                    var HD = this.HoaDonRepository.HoaDon_Update(hd);
+                    var HD = this.DonHangRepository.DonHang_Update(hd);
                     return Ok();
                 }
                 catch (Exception e)
@@ -223,14 +223,14 @@ namespace StoreApi.Controllers
                 return NotFound(new { message = "Tài khoản nhân viên đang đăng nhập đã bị khóa!" });
             }
 
-            var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlHoaDon");
+            var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlDonHang");
 
             // Kiểm tra nhân viên có quyền xóa không
             if(!quyen) {
                 return BadRequest(new { message = "Tài khoản không có quyền xóa hóa đơn!" });
             }
             
-            var HD = HoaDonRepository.HoaDon_GetById(id);
+            var HD = DonHangRepository.DonHang_GetById(id);
             if (HD == null)
             {
                 return NotFound();
@@ -241,14 +241,14 @@ namespace StoreApi.Controllers
                 return BadRequest(new {message = "Hóa đơn phải ở trạng thái đã bị hủy mới được xóa!"});
             }
 
-            HoaDonRepository.HoaDon_Delete(HD);
+            DonHangRepository.DonHang_Delete(HD);
             return Ok(new { messgae = "Ok" });
         }
 
         // Hóa đơn Page - Admin
         // Load danh sách hóa đơn
         [HttpPost("filter-admin")]
-        public ViewHoaDonAdminDto FilterAdmin(FilterHoaDonDto data)
+        public ViewDonHangAdminDto FilterAdmin(FilterDonHangDto data)
         {
             // Phần xác thực tài khoản nhân viên
             var jwt = Request.Cookies["jwt-nhanvien"];
@@ -265,15 +265,15 @@ namespace StoreApi.Controllers
                 return null;
             }
 
-            var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "HoaDon");
+            var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "DonHang");
             if(!quyen) {
                 return null;
             }
 
             int count;
-            var HoaDons = HoaDonRepository.HoaDon_FilterAdmin(data.search, data.status, data.pageIndex, pageSize, out count);
-            var ListHD = new PaginatedList<HoaDon>(HoaDons, count, data.pageIndex, pageSize);
-            ViewHoaDonAdminDto view = new ViewHoaDonAdminDto()
+            var DonHangs = DonHangRepository.DonHang_FilterAdmin(data.search, data.status, data.pageIndex, pageSize, out count);
+            var ListHD = new PaginatedList<DonHang>(DonHangs, count, data.pageIndex, pageSize);
+            ViewDonHangAdminDto view = new ViewDonHangAdminDto()
             {
                 ListHD = ListHD,
                 search = data.search,
@@ -288,11 +288,11 @@ namespace StoreApi.Controllers
         }
 
         // [HttpPost]
-        // public ActionResult<HoaDon> AddHD(HoaDonDto hddto) {
+        // public ActionResult<DonHang> AddHD(DonHangDto hddto) {
 
         //     if(ModelState.IsValid){
         //         try {
-        //             HoaDon hd = new HoaDon();
+        //             DonHang hd = new DonHang();
 
         //             // Mapping
         //             // hd.LSPId = hddto.LSPId;
@@ -305,7 +305,7 @@ namespace StoreApi.Controllers
         //             hd.total = hddto.total;
         //             hd.status = 0;
 
-        //             var HD = this.HoaDonRepository.HoaDon_Add(hd);
+        //             var HD = this.DonHangRepository.DonHang_Add(hd);
         //             return Created("success", HD);
         //         }
         //         catch(Exception e) {

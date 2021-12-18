@@ -19,7 +19,7 @@ export const actResetMessageBillAdmin = () => (dispatch) => {
 
 export const actGetBillAdmin = (data) => (dispatch) => {
     axios.post(
-        `${API_URL}hoadon/filter-admin`,
+        `${API_URL}donhang/filter-admin`,
         data,
         {
             header : {
@@ -40,7 +40,7 @@ export const actGetBillAdmin = (data) => (dispatch) => {
 
 export const actUpdateBillStatusAdmin = (data, id) => (dispatch) => {
     axios.put(
-        `${API_URL}hoadon/${id}`,
+        `${API_URL}donhang/${id}`,
         data,
         {
             headers : {
@@ -86,7 +86,7 @@ export const actUpdateBillStatusAdmin = (data, id) => (dispatch) => {
 
 export const actDeleteBillAdmin = (id) => (dispatch) => {
     axios.delete(
-        `${API_URL}hoadon/${id}`,
+        `${API_URL}donhang/${id}`,
         {
             headers : {
                 'Content-Type' : 'application/json'

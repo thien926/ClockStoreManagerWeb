@@ -13,16 +13,16 @@ namespace StoreApi.Controllers
     [Route("api/[controller]")]
     public class ThongKeController : ControllerBase
     {
-        private readonly IHoaDonRepository hoaDonRepository;
-        private readonly IChiTietHDRepository chiTietHDRepository;
+        private readonly IDonHangRepository DonHangRepository;
+        private readonly IChiTietDHRepository chiTietDHRepository;
         private readonly INhanVienRepository nhanVienRepository;
         private readonly JwtNhanVienService jwtNhanVien;
         private readonly IQuyenRepository quyenRepository;
-        public ThongKeController(IHoaDonRepository hoaDonRepository, IChiTietHDRepository chiTietHDRepository, INhanVienRepository nhanVienRepository,
+        public ThongKeController(IDonHangRepository DonHangRepository, IChiTietDHRepository chiTietDHRepository, INhanVienRepository nhanVienRepository,
         JwtNhanVienService jwtNhanVien, IQuyenRepository quyenRepository)
         {
-            this.hoaDonRepository = hoaDonRepository;
-            this.chiTietHDRepository = chiTietHDRepository;
+            this.DonHangRepository = DonHangRepository;
+            this.chiTietDHRepository = chiTietDHRepository;
             this.nhanVienRepository = nhanVienRepository;
             this.jwtNhanVien = jwtNhanVien;
             this.quyenRepository = quyenRepository;
@@ -56,10 +56,15 @@ namespace StoreApi.Controllers
                     return null;
                 }
 
-                var listHD = hoaDonRepository.HoaDon_FilterBeginEndInYear(dto.begin, dto.end);
+                var listHD = DonHangRepository.DonHang_FilterBeginEndInYear(dto.begin, dto.end);
                 long val = 0;
                 int year = 0;
                 IDictionary<int, long> res = new Dictionary<int, long>();
+
+                for(int i = dto.begin; i <= dto.end; ++i) {
+                    res.Add(i, 0);
+                }
+
                 foreach (var item in listHD)
                 {
                     year = item.date_order.Year;
@@ -106,10 +111,15 @@ namespace StoreApi.Controllers
                     return null;
                 }
 
-                var listHD = hoaDonRepository.HoaDon_FilterBeginEndInMonth(dto.year, dto.begin, dto.end);
+                var listHD = DonHangRepository.DonHang_FilterBeginEndInMonth(dto.year, dto.begin, dto.end);
                 long val = 0;
                 int month = 0;
                 IDictionary<int, long> res = new Dictionary<int, long>();
+
+                for(int i = dto.begin; i <= dto.end; ++i) {
+                    res.Add(i, 0);
+                }
+
                 foreach (var item in listHD)
                 {
                     month = item.date_order.Month;
@@ -156,10 +166,15 @@ namespace StoreApi.Controllers
                     return null;
                 }
 
-                var listHD = hoaDonRepository.HoaDon_FilterBeginEndInYear(dto.begin, dto.end);
+                var listHD = DonHangRepository.DonHang_FilterBeginEndInYear(dto.begin, dto.end);
                 int val = 0;
                 int year = 0;
                 IDictionary<int, int> res = new Dictionary<int, int>();
+
+                for(int i = dto.begin; i <= dto.end; ++i) {
+                    res.Add(i, 0);
+                }
+
                 foreach (var item in listHD)
                 {
                     year = item.date_order.Year;
@@ -206,10 +221,15 @@ namespace StoreApi.Controllers
                     return null;
                 }
 
-                var listHD = hoaDonRepository.HoaDon_FilterBeginEndInMonth(dto.year, dto.begin, dto.end);
+                var listHD = DonHangRepository.DonHang_FilterBeginEndInMonth(dto.year, dto.begin, dto.end);
                 int val = 0;
                 int month = 0;
                 IDictionary<int, int> res = new Dictionary<int, int>();
+
+                for(int i = dto.begin; i <= dto.end; ++i) {
+                    res.Add(i, 0);
+                }
+
                 foreach (var item in listHD)
                 {
                     month = item.date_order.Month;
@@ -256,7 +276,7 @@ namespace StoreApi.Controllers
                     return null;
                 }
 
-                var listHD = hoaDonRepository.HoaDon_FilterBeginEndInYear(dto.begin, dto.end);
+                var listHD = DonHangRepository.DonHang_FilterBeginEndInYear(dto.begin, dto.end);
 
                 List<int> listBillId = new List<int>();
                 foreach (var item in listHD)
@@ -264,9 +284,10 @@ namespace StoreApi.Controllers
                     listBillId.Add(item.Id);
                 }
 
-                var listCTHD = chiTietHDRepository.ChiTietHD_GetByListBill(listBillId);
+                var listCTHD = chiTietDHRepository.ChiTietDH_GetByListBill(listBillId);
 
                 IDictionary<string, int> res = new Dictionary<string, int>();
+
                 int val = 0;
                 string key = "";
                 foreach (var item in listCTHD)
@@ -315,7 +336,7 @@ namespace StoreApi.Controllers
                     return null;
                 }
                 
-                var listHD = hoaDonRepository.HoaDon_FilterBeginEndInMonth(dto.year, dto.begin, dto.end);
+                var listHD = DonHangRepository.DonHang_FilterBeginEndInMonth(dto.year, dto.begin, dto.end);
 
                 List<int> listBillId = new List<int>();
                 foreach (var item in listHD)
@@ -323,7 +344,7 @@ namespace StoreApi.Controllers
                     listBillId.Add(item.Id);
                 }
 
-                var listCTHD = chiTietHDRepository.ChiTietHD_GetByListBill(listBillId);
+                var listCTHD = chiTietDHRepository.ChiTietDH_GetByListBill(listBillId);
 
                 IDictionary<string, int> res = new Dictionary<string, int>();
                 int val = 0;

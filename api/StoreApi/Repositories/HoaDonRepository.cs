@@ -7,37 +7,37 @@ using StoreApi.Models;
 
 namespace StoreApi.Repositories
 {
-    public class HoaDonRepository : IHoaDonRepository
+    public class DonHangRepository : IDonHangRepository
     {
         private readonly ClockStoreDBContext context;
-        public HoaDonRepository(ClockStoreDBContext context) {
+        public DonHangRepository(ClockStoreDBContext context) {
             this.context = context;
         }
-        public HoaDon HoaDon_Add(HoaDon hd)
+        public DonHang DonHang_Add(DonHang hd)
         {
-            context.HoaDons.Add(hd);
+            context.DonHangs.Add(hd);
             context.SaveChanges();
             return hd;
         }
 
-        public HoaDon HoaDon_GetById(int id)
+        public DonHang DonHang_GetById(int id)
         {
-            // context.HoaDons.
-            return context.HoaDons.FirstOrDefault(o => o.Id == id);
+            // context.DonHangs.
+            return context.DonHangs.FirstOrDefault(o => o.Id == id);
         }
 
-        public Boolean HoaDon_CheckUserKHAndId(int Id, string user)
+        public Boolean DonHang_CheckUserKHAndId(int Id, string user)
         {
-            var query = context.HoaDons.AsQueryable();
+            var query = context.DonHangs.AsQueryable();
             query = query.Where(m => (m.Id == Id) && (m.KHuser == user));
             int count = query.Count();
             
             return count > 0;
         }
 
-        public IEnumerable<HoaDon> HoaDon_GetByUserKH(string user, int pageIndex, int pageSize, out int count)
+        public IEnumerable<DonHang> DonHang_GetByUserKH(string user, int pageIndex, int pageSize, out int count)
         {
-            var query = context.HoaDons.AsQueryable();
+            var query = context.DonHangs.AsQueryable();
             query = query.Where(m => m.KHuser == user);
 
             count = query.Count();
@@ -51,33 +51,33 @@ namespace StoreApi.Repositories
                         .Take(pageSize).ToList();
         }
 
-        public IEnumerable<HoaDon> HoaDon_GetByUserNV(string user)
+        public IEnumerable<DonHang> DonHang_GetByUserNV(string user)
         {
-            var query = context.HoaDons.AsQueryable();
+            var query = context.DonHangs.AsQueryable();
             query = query.Where(m => m.NVuser == user);
             return query.ToList();
         }
 
-        public IEnumerable<HoaDon> HoaDon_GetAll()
+        public IEnumerable<DonHang> DonHang_GetAll()
         {
-            return context.HoaDons.ToList();
+            return context.DonHangs.ToList();
         }
 
-        public HoaDon HoaDon_Update(HoaDon HD)
+        public DonHang DonHang_Update(DonHang HD)
         {
-            context.HoaDons.Update(HD);
+            context.DonHangs.Update(HD);
             context.SaveChanges();
             return HD;
         }
 
-        public void HoaDon_Delete(HoaDon HD)
+        public void DonHang_Delete(DonHang HD)
         {
-            context.HoaDons.Remove(HD);
+            context.DonHangs.Remove(HD);
             context.SaveChanges();
         }
 
-        public IEnumerable<HoaDon> HoaDon_FilterAdmin(string search, int status, int pageIndex, int pageSize, out int count) {
-            var query = context.HoaDons.AsQueryable();
+        public IEnumerable<DonHang> DonHang_FilterAdmin(string search, int status, int pageIndex, int pageSize, out int count) {
+            var query = context.DonHangs.AsQueryable();
             
             if(!string.IsNullOrEmpty(search)) {
                 search = search.ToLower();
@@ -103,15 +103,15 @@ namespace StoreApi.Repositories
                         .Take(pageSize).ToList();
         }
 
-        public IEnumerable<HoaDon> HoaDon_FilterBeginEndInYear(int begin, int end) {
-            var query = context.HoaDons.AsQueryable();
+        public IEnumerable<DonHang> DonHang_FilterBeginEndInYear(int begin, int end) {
+            var query = context.DonHangs.AsQueryable();
             query = query.Where(m => (m.date_order.Year >= begin) && (m.date_order.Year <= end));
             query = query.OrderBy(m => m.date_order);
             return query.ToList();
         }
 
-        public IEnumerable<HoaDon> HoaDon_FilterBeginEndInMonth(int year, int begin, int end) {
-            var query = context.HoaDons.AsQueryable();
+        public IEnumerable<DonHang> DonHang_FilterBeginEndInMonth(int year, int begin, int end) {
+            var query = context.DonHangs.AsQueryable();
             query = query.Where(m => (m.date_order.Year == year) && (m.date_order.Month >= begin) && (m.date_order.Month <= end));
             query = query.OrderBy(m => m.date_order);
             return query.ToList();

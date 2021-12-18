@@ -13,38 +13,38 @@ namespace StoreApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ChiTietHDController : ControllerBase
+    public class ChiTietDHController : ControllerBase
     {
         private int pageSize = 9;
         private int range = 9;
-        private readonly IChiTietHDRepository ChiTietHDRepository;
+        private readonly IChiTietDHRepository ChiTietDHRepository;
         private readonly JwtKhachHangService jwtKhachHang;
         private readonly JwtNhanVienService jwtNhanVien;
         private readonly INhanVienRepository nhanVienRepository;
         private readonly IKhachHangRepository KhachHangRepository;
-        private readonly IHoaDonRepository HoaDonRepository;
-        public ChiTietHDController(IChiTietHDRepository ChiTietHDRepository, IKhachHangRepository KhachHangRepository,
-        JwtKhachHangService jwtKhachHang, IHoaDonRepository HoaDonRepository, JwtNhanVienService jwtNhanVien,
+        private readonly IDonHangRepository DonHangRepository;
+        public ChiTietDHController(IChiTietDHRepository ChiTietDHRepository, IKhachHangRepository KhachHangRepository,
+        JwtKhachHangService jwtKhachHang, IDonHangRepository DonHangRepository, JwtNhanVienService jwtNhanVien,
         INhanVienRepository nhanVienRepository) {
-            this.ChiTietHDRepository = ChiTietHDRepository;
+            this.ChiTietDHRepository = ChiTietDHRepository;
             this.KhachHangRepository = KhachHangRepository;
             this.jwtKhachHang = jwtKhachHang;
-            this.HoaDonRepository = HoaDonRepository;
+            this.DonHangRepository = DonHangRepository;
             this.jwtNhanVien = jwtNhanVien;
             this.nhanVienRepository = nhanVienRepository;
         }
 
         // Client ko gọi api này nên bỏ
         // [HttpGet]
-        // public IEnumerable<ChiTietHD> GetAll() {
+        // public IEnumerable<ChiTietDH> GetAll() {
             
-        //     return this.ChiTietHDRepository.ChiTietHD_GetAll();
+        //     return this.ChiTietDHRepository.ChiTietDH_GetAll();
         // }
 
         // User Page
         // Xem chi tiết hóa đơn của khách hàng
         [HttpGet("{billId}")]
-        public IEnumerable<ChiTietHD> GetByBillId(int billId) {
+        public IEnumerable<ChiTietDH> GetByBillId(int billId) {
             // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
             var jwt = Request.Cookies["jwt-khachhang"];
             if(jwt == null) {
@@ -61,17 +61,17 @@ namespace StoreApi.Controllers
             }
 
             // Kiểm tra hóa đơn này phải của khách hàng đang đăng nhập ko
-            var temp = HoaDonRepository.HoaDon_CheckUserKHAndId(billId, kh.user);
+            var temp = DonHangRepository.DonHang_CheckUserKHAndId(billId, kh.user);
             if(!temp) {
                 return null;
             }
-            return this.ChiTietHDRepository.ChiTietHD_GetByBillId(billId);
+            return this.ChiTietDHRepository.ChiTietDH_GetByBillId(billId);
         }
 
-        // HoaDon Page - Admin 
+        // DonHang Page - Admin 
         // Nhân viên không bị khóa tài khoản có quyền xem chi tiết hóa đơn
         [HttpGet("admin/{billId}")]
-        public IEnumerable<ChiTietHD> GetByBillIdAdmin(int billId) {
+        public IEnumerable<ChiTietDH> GetByBillIdAdmin(int billId) {
             // Phần xác thực tài khoản khách hàng 
             var jwt = Request.Cookies["jwt-nhanvien"];
             if(jwt == null) {
@@ -86,7 +86,7 @@ namespace StoreApi.Controllers
                 return null;
             }
             
-            return this.ChiTietHDRepository.ChiTietHD_GetByBillId(billId);
+            return this.ChiTietDHRepository.ChiTietDH_GetByBillId(billId);
         }
     }
 }

@@ -128,7 +128,7 @@ function BillAdmin() {
 
     // Thực hiện thao tác xóa
     const actionDelete = (id) => {
-        var res = window.confirm("Bạn có chắc muốn xóa hóa đơn có Id = " + id + " không?");
+        var res = window.confirm("Bạn có chắc muốn xóa đơn hàng có Id = " + id + " không?");
         if(res) {
             dispatch(actDeleteBillAdmin(id));
         }

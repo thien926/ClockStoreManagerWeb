@@ -11,7 +11,7 @@ function AdminPermissionFormAction(props) {
     const [NhanVien, setNhanVien] = useState('');
     const [NhapHang, setNhapHang] = useState('');
     const [SanPham, setSanPham] = useState('');
-    const [HoaDon, setHoaDon] = useState('');
+    const [DonHang, setDonHang] = useState('');
     const [KhachHang, setKhachHang] = useState('');
     const [PhieuNhap, setPhieuNhap] = useState('');
     const [TaiKhoan, setTaiKhoan] = useState('');
@@ -44,7 +44,7 @@ function AdminPermissionFormAction(props) {
             setKieuDay('');
             setKieuMay('');
             setQuyen('');
-            setHoaDon('');
+            setDonHang('');
             setNhapHang('');
             setPhieuNhap('');
             setThongKe('');
@@ -140,14 +140,14 @@ function AdminPermissionFormAction(props) {
                 setQuyen("");
             }
 
-            if(formValue.details.search("xemHoaDon") >= 0) {
-                setHoaDon("xemHoaDon");
+            if(formValue.details.search("xemDonHang") >= 0) {
+                setDonHang("xemDonHang");
             }
-            else if(formValue.details.search("qlHoaDon") >= 0) {
-                setHoaDon("qlHoaDon");
+            else if(formValue.details.search("qlDonHang") >= 0) {
+                setDonHang("qlDonHang");
             }
             else {
-                setHoaDon("");
+                setDonHang("");
             }
 
             if(formValue.details.search("xemNhapHang") >= 0) {
@@ -251,8 +251,8 @@ function AdminPermissionFormAction(props) {
         if(Quyen !== "") {
             details += Quyen + "-";
         }
-        if(HoaDon !== "") {
-            details += HoaDon + "-";
+        if(DonHang !== "") {
+            details += DonHang + "-";
         }
         if(NhapHang !== "") {
             details += NhapHang + "-";
@@ -406,12 +406,12 @@ function AdminPermissionFormAction(props) {
                         </td>
                     </tr>
                     <tr>
-                        <td><span className="ml-4">Quyền quản lý hóa đơn</span></td>
+                        <td><span className="ml-4">Quyền quản lý đơn hàng</span></td>
                         <td>
-                            <select value={HoaDon} onChange={(e) => setHoaDon(e.target.value)} className="form-control" required="required">
+                            <select value={DonHang} onChange={(e) => setDonHang(e.target.value)} className="form-control" required="required">
                                 <option value="">Không có quyền</option>
-                                <option value="xemHoaDon">Chỉ xem</option>
-                                <option value="qlHoaDon">Xem và quản lý</option>
+                                <option value="xemDonHang">Chỉ xem</option>
+                                <option value="qlDonHang">Xem và quản lý</option>
                             </select>
                         </td>
                     </tr>

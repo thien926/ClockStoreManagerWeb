@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace StoreApi.DTOs
 {
-    public class HoaDonDto
+    public class DonHangDto
     {
         public int Id { get; set; }
 

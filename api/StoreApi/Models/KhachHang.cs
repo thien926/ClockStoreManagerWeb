@@ -49,12 +49,12 @@ namespace StoreApi.Models
         public int status{get; set;}
         
         [System.Text.Json.Serialization.JsonIgnore]
-        public ICollection<HoaDon> hoadons {get; set;}
+        public ICollection<DonHang> hoadons {get; set;}
 
         public KhachHang()
         {
             status = 1;
-            this.hoadons = new HashSet<HoaDon>();
+            this.hoadons = new HashSet<DonHang>();
         }
     }
 }
