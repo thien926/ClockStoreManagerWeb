@@ -76,11 +76,26 @@ export const actAddMachineAdmin = (data) => (dispatch) => {
         })
         // return res.data;
     }).catch(error => {
-        console.log('actAddMachineAdmin - error: ', error);
-        dispatch({
-            type : ADD_MACHINE_ADMIN,
-            payload : ADD_MACHINE_ERROR
-        })
+        // console.log('actAddMachineAdmin - error: ', error);
+        // dispatch({
+        //     type : ADD_MACHINE_ADMIN,
+        //     payload : ADD_MACHINE_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actAddMachineAdmin error: ', error.response.data.message);
+            dispatch({
+                type: ADD_MACHINE_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actAddMachineAdmin error: ', error);
+            dispatch({
+                type: ADD_MACHINE_ADMIN,
+                payload: ADD_MACHINE_ERROR
+            });
+        }
     });
 }
 
@@ -101,11 +116,26 @@ export const actUpdateMachineAdmin = (data, id) => (dispatch) => {
             payload : UPDATE_MACHINE_SUCCESS
         })
     }).catch(error => {
-        console.log("actUpdateMachineAdmin error: ", error);
-        dispatch({
-            type : UPDATE_MACHINE_ADMIN,
-            payload : UPDATE_MACHINE_ERROR
-        })
+        // console.log("actUpdateMachineAdmin error: ", error);
+        // dispatch({
+        //     type : UPDATE_MACHINE_ADMIN,
+        //     payload : UPDATE_MACHINE_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actUpdateMachineAdmin error: ', error.response.data.message);
+            dispatch({
+                type: UPDATE_MACHINE_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actUpdateMachineAdmin error: ', error);
+            dispatch({
+                type: UPDATE_MACHINE_ADMIN,
+                payload: UPDATE_MACHINE_ERROR
+            });
+        }
     });
 }
 
@@ -125,10 +155,25 @@ export const actDeleteMachineAdmin = (id) => (dispatch) => {
             payload : DELETE_MACHINE_SUCCESS
         });
     }).catch(error => {
-        console.log("actDeleteMachine error: ", error);
-        dispatch({
-            type: DELETE_MACHINE_ADMIN,
-            payload: DELETE_MACHINE_ERROR
-        })
+        // console.log("actDeleteMachine error: ", error);
+        // dispatch({
+        //     type: DELETE_MACHINE_ADMIN,
+        //     payload: DELETE_MACHINE_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actDeleteMachine error: ', error.response.data.message);
+            dispatch({
+                type: DELETE_MACHINE_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actDeleteMachine error: ', error);
+            dispatch({
+                type: DELETE_MACHINE_ADMIN,
+                payload: DELETE_MACHINE_ERROR
+            });
+        }
     })
 }

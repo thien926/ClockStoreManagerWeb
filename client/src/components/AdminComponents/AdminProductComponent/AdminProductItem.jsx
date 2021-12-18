@@ -39,7 +39,7 @@ function AdminProductItem(props) {
             {/* <td>{product.nccId}</td> */}
             <td>{product.name}</td>
             <td>{product.amount}</td>
-            <td>{product.price}</td>
+            <td>{product.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</td>
             <td>{product.description}</td>
             <td>
                 <img src={`${API_URL_IMG + product.img}`} />

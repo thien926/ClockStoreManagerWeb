@@ -291,6 +291,10 @@ namespace StoreApi.Controllers
             {
                 var jwt = Request.Cookies["jwt-khachhang"];
 
+                if(jwt == null) {
+                    return Unauthorized();
+                }
+
                 var token = jwtKhachHang.Verify(jwt);
 
                 var userId = token.Issuer;

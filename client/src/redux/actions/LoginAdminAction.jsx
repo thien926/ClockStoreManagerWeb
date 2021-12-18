@@ -112,6 +112,10 @@ export const actGetUser = () => (dispatch) => {
             });
         }).catch((error) => {
             console.log(error);
+            dispatch({
+                type: GET_USER,
+                payload: {}
+            });
         })
 }
 
@@ -181,7 +185,6 @@ export const actUpdatePasswordUserAdmin = (data) => (dispatch) => {
         }).catch((error) => {
             if (error.response.data.message) {
                 console.log('actUpdatePasswordUserAdmin error: ', error.response.data.message);
-
                 dispatch({
                     type: UPDATE_PASS_USER_ADMIN,
                     payload: {
@@ -192,7 +195,6 @@ export const actUpdatePasswordUserAdmin = (data) => (dispatch) => {
             }
             else {
                 console.log('actUpdatePasswordUserAdmin error: ', error);
-
                 dispatch({
                     type: UPDATE_PASS_USER_ADMIN,
                     payload: {

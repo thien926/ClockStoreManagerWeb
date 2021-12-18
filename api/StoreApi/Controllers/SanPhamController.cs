@@ -338,20 +338,26 @@ namespace StoreApi.Controllers
             int pageSize = 4;
 
             var sanpham = this.sanPhamRepository.SanPham_GetById(id);
-            var LSP = loaiSanPhamRepository.LoaiSanPham_GetById(sanpham.LSPId);
-            var TH = thuongHieuRepository.ThuongHieu_GetById(sanpham.brandId);
-            var KM = kieuMayRepository.KieuMay_GetById(sanpham.machineId);
-            var KD = kieuDayRepository.KieuDay_GetById(sanpham.wireId);
 
-            var spLienQuan = sanPhamRepository.SanPham_GetByLSPId(sanpham.LSPId, pageSize);
+            if(sanpham != null && sanpham.status != 0) {
+                var LSP = loaiSanPhamRepository.LoaiSanPham_GetById(sanpham.LSPId);
+                var TH = thuongHieuRepository.ThuongHieu_GetById(sanpham.brandId);
+                var KM = kieuMayRepository.KieuMay_GetById(sanpham.machineId);
+                var KD = kieuDayRepository.KieuDay_GetById(sanpham.wireId);
 
-            var view = new ViewProductPageDto();
-            view.product = sanpham;
-            view.ListRelationship = spLienQuan;
+                var spLienQuan = sanPhamRepository.SanPham_GetByLSPId(sanpham.LSPId, pageSize);
 
-            return view;
+                var view = new ViewProductPageDto();
+                view.product = sanpham;
+                view.ListRelationship = spLienQuan;
+
+                return view;
+            }
+
+            return null;
         }
 
+        // Lưu ảnh khi thêm sửa sản phẩm
         [NonAction]
         public string SaveImage(IFormFile imageFile)
         {

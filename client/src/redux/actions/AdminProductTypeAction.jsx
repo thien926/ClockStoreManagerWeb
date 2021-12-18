@@ -80,13 +80,27 @@ export const actAddProductTypeAdmin = (data) => (dispatch) => {
             type : ADD_PRODUCT_TYPE_ADMIN,
             payload : ADD_LSP_SUCCESS
         })
-        // return res.data;
     }).catch(error => {
-        console.log('actAddProductTypeAdmin - error: ', error);
-        dispatch({
-            type : ADD_PRODUCT_TYPE_ADMIN,
-            payload : ADD_LSP_ERROR
-        })
+        // console.log('actAddProductTypeAdmin - error: ', error);
+        // dispatch({
+        //     type : ADD_PRODUCT_TYPE_ADMIN,
+        //     payload : ADD_LSP_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actAddProductTypeAdmin error: ', error.response.data.message);
+            dispatch({
+                type: ADD_PRODUCT_TYPE_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actAddProductTypeAdmin error: ', error);
+            dispatch({
+                type: ADD_PRODUCT_TYPE_ADMIN,
+                payload: ADD_LSP_ERROR
+            });
+        }
     });
 }
 
@@ -107,11 +121,26 @@ export const actUpdateProductTypeAdmin = (data, id) => (dispatch) => {
             payload : UPDATE_LSP_SUCCESS
         })
     }).catch(error => {
-        console.log("actUpdateProductTypeAdmin error: ", error);
-        dispatch({
-            type : UPDATE_PRODUCT_TYPE_ADMIN,
-            payload : UPDATE_LSP_ERROR
-        })
+        // console.log("actUpdateProductTypeAdmin error: ", error);
+        // dispatch({
+        //     type : UPDATE_PRODUCT_TYPE_ADMIN,
+        //     payload : UPDATE_LSP_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actUpdateProductTypeAdmin error: ', error.response.data.message);
+            dispatch({
+                type: UPDATE_PRODUCT_TYPE_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actUpdateProductTypeAdmin error: ', error);
+            dispatch({
+                type: UPDATE_PRODUCT_TYPE_ADMIN,
+                payload: UPDATE_LSP_ERROR
+            });
+        }
     });
 }
 
@@ -131,10 +160,25 @@ export const actDeleteProductType = (id) => (dispatch) => {
             payload : DELETE_LSP_SUCCESS
         });
     }).catch(error => {
-        console.log("actDeleteProductType error: ", error);
-        dispatch({
-            type: DELETE_PRODUCT_TYPE_ADMIN,
-            payload: DELETE_LSP_ERROR
-        })
+        // console.log("actDeleteProductType error: ", error);
+        // dispatch({
+        //     type: DELETE_PRODUCT_TYPE_ADMIN,
+        //     payload: DELETE_LSP_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actDeleteProductType error: ', error.response.data.message);
+            dispatch({
+                type: DELETE_PRODUCT_TYPE_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actDeleteProductType error: ', error);
+            dispatch({
+                type: DELETE_PRODUCT_TYPE_ADMIN,
+                payload: DELETE_LSP_ERROR
+            });
+        }
     })
 }

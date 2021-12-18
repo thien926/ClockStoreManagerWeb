@@ -113,9 +113,13 @@ function BrandAdmin() {
                 dispatch(actResetMessageBrandAdmin());
                 break;
             default:
+                if(AdminBrandReducer.message) {
+                    toast.error(AdminBrandReducer.message); 
+                    dispatch(actResetMessageBrandAdmin());
+                }
                 break;
         }
-    }, [AdminBrandReducer.message])
+    }, [AdminBrandReducer.message, dispatch])
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {
