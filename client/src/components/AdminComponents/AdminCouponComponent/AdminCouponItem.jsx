@@ -12,16 +12,16 @@ function AdminCouponItem(props) {
     //     props.actionUpdate(data);
     // }
 
-    const showStatus = () => {
-        switch (coupon.status) {
-            case 1:
-                return 'Đã hoàn thành';
-            case 2:
-                return 'Đã hủy';
-            default:
-                return '';
-        }
-    }
+    // const showStatus = () => {
+    //     switch (coupon.status) {
+    //         case 1:
+    //             return 'Đã hoàn thành';
+    //         case 2:
+    //             return 'Đã hủy';
+    //         default:
+    //             return '';
+    //     }
+    // }
 
     const showDate = (value) => {
         if(value) {
@@ -49,10 +49,9 @@ function AdminCouponItem(props) {
             <td>{coupon.address}</td>
             <td>{showDate(coupon.date_receice)}</td>
             <td>{coupon.total.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</td>
-            <td>{showStatus()}</td>
             <td>
-                <button onClick={() => props.setItemEdit(coupon)} type="button" className="btn btn-info">Sửa</button>
-                <button onClick={() => props.actionDelete(coupon.id)} type="button" className="btn btn-warning ml-1">Xóa</button>
+                {/* <button onClick={() => props.setItemEdit(coupon)} type="button" className="btn btn-info">Sửa</button>
+                <button onClick={() => props.actionDelete(coupon.id)} type="button" className="btn btn-warning ml-1">Xóa</button> */}
                 <button onClick={btnDetailCoupon} className="btn btn-success">Xem</button>
             </td>
         </tr>

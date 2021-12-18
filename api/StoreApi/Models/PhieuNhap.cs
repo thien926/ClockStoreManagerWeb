@@ -37,8 +37,8 @@ namespace StoreApi.Models
         [Required(ErrorMessage = "Tổng là bắt buộc")]
         public long total { get; set;}
 
-        [Required(ErrorMessage = "Trạng thái là bắt buộc")]
-        public int status { get; set;}
+        // [Required(ErrorMessage = "Trạng thái là bắt buộc")]
+        // public int status { get; set;}
 
         public virtual NhanVien NV { get; set; }
 
@@ -46,7 +46,7 @@ namespace StoreApi.Models
         public ICollection<ChiTietPN> chiTietPNs { get; set; }
         public PhieuNhap() {
             total = 0;
-            status = 1;
+            // status = 1;
             chiTietPNs = new HashSet<ChiTietPN>();
         }
     }

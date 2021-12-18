@@ -298,9 +298,6 @@ namespace StoreApi.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int>("status")
-                        .HasColumnType("int");
-
                     b.Property<long>("total")
                         .HasColumnType("bigint");
 

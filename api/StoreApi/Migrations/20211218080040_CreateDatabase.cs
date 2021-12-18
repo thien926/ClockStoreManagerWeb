@@ -208,8 +208,7 @@ namespace StoreApi.Migrations
                     mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     date_receice = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    total = table.Column<long>(type: "bigint", nullable: false),
-                    status = table.Column<int>(type: "int", nullable: false)
+                    total = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {

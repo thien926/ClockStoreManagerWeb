@@ -12,7 +12,7 @@ function AdminCouponPaging(props) {
 
     useEffect(() => {
         var result = null, pageIndex = dataValue.pageIndex;
-        var search = dataValue.search, status = dataValue.status;
+        var search = dataValue.search, sort = dataValue.sort;
         var nextPage = null, previousPage = null;
         if (dataValue.pageIndex) {
             var totalPage = dataValue.totalPage;
@@ -71,22 +71,22 @@ function AdminCouponPaging(props) {
             }
             result = array.map((element, index) => {
                 if (pageIndex === element) {
-                    return <Link key={index} className='btn btn-info' to={`?search=${search}&status=${status}&pageIndex=${pageIndex}`}>{element}</Link>
+                    return <Link key={index} className='btn btn-info' to={`?search=${search}&sort=${sort}&pageIndex=${pageIndex}`}>{element}</Link>
                 }
-                return <Link key={index} className='btn btn-default' to={`?search=${search}&status=${status}&pageIndex=${element}`}>{element}</Link>
+                return <Link key={index} className='btn btn-default' to={`?search=${search}&sort=${sort}&pageIndex=${element}`}>{element}</Link>
             });
 
             if (pageIndex !== 1) {
                 previousPage = <>
-                    <Link className='btn btn-default' to={`?search=${search}&status=${status}&pageIndex=1`}><i className="fa fa-angle-double-left" aria-hidden="true" /></Link>
-                    <Link className='btn btn-default' to={`?search=${search}&status=${status}&pageIndex=${pageIndex - 1}`}><i className="fa fa-angle-left" aria-hidden="true" /></Link>
+                    <Link className='btn btn-default' to={`?search=${search}&sort=${sort}&pageIndex=1`}><i className="fa fa-angle-double-left" aria-hidden="true" /></Link>
+                    <Link className='btn btn-default' to={`?search=${search}&sort=${sort}&pageIndex=${pageIndex - 1}`}><i className="fa fa-angle-left" aria-hidden="true" /></Link>
                 </>
             }
 
             if (pageIndex !== totalPage && totalPage !== 0) {
                 nextPage = <>
-                    <Link className='btn btn-default' to={`?search=${search}&status=${status}&pageIndex=${pageIndex + 1}`}><i className="fa fa-angle-right" aria-hidden="true" /></Link>
-                    <Link className='btn btn-default' to={`?search=${search}&status=${status}&pageIndex=${totalPage}`}><i className="fa fa-angle-double-right" aria-hidden="true" /></Link>
+                    <Link className='btn btn-default' to={`?search=${search}&sort=${sort}&pageIndex=${pageIndex + 1}`}><i className="fa fa-angle-right" aria-hidden="true" /></Link>
+                    <Link className='btn btn-default' to={`?search=${search}&sort=${sort}&pageIndex=${totalPage}`}><i className="fa fa-angle-double-right" aria-hidden="true" /></Link>
 
                 </>;
             }
