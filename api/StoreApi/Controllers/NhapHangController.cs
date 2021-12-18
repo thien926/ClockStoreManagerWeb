@@ -326,7 +326,7 @@ namespace StoreApi.Controllers
                     pn.address = data.address;
                     pn.date_receice = System.DateTime.Now;
                     pn.total = total;
-                    pn.status = 1;
+                    // pn.status = 1;
 
                     pn = phieuNhapRepository.PhieuNhap_Add(pn);
                     List<ChiTietPN> listCTPN = new List<ChiTietPN>();

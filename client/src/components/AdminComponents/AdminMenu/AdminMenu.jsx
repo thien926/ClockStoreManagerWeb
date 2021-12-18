@@ -149,8 +149,8 @@ function AdminMenu() {
                     }
 
                     if(UserAdmin.dataValue.quyen.details.search("HoaDon") >= 0){
-                        setElmLinkMobileBill(<CustomLinkMobileMenuAdmin to='/admin/bill'>Hóa đơn</CustomLinkMobileMenuAdmin>)
-                        setElmLinkBill(<CustomLinkAdmin to="/admin/bill">Hóa đơn</CustomLinkAdmin>)
+                        setElmLinkMobileBill(<CustomLinkMobileMenuAdmin to='/admin/bill'>Đơn hàng</CustomLinkMobileMenuAdmin>)
+                        setElmLinkBill(<CustomLinkAdmin to="/admin/bill">Đơn hàng</CustomLinkAdmin>)
                     }
                     else {
                         setElmLinkMobileBill(null)

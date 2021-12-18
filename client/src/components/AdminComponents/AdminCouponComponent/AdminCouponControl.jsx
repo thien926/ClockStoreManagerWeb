@@ -26,10 +26,9 @@ function AdminCouponControl(props) {
                 </form>
             </div>
             <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5">
-                <select className="form-control" required="required" value={props.status} onChange={(e) => props.changeStatus(e.target.value)} >
-                    <option value={0}>Trạng thái: Tất cả</option>
-                    <option value={1}>Trạng thái: Đã hoàn thành</option>
-                    <option value={2}>Trạng thái: Đã hủy</option>
+                <select className="form-control" required="required" value={props.sort} onChange={(e) => props.changeSort(e.target.value)} >
+                    <option value="date-desc">Ngày nhận : Giảm dần</option>
+                    <option value="date-asc">Ngày nhận : Tăng dần</option>
                 </select>
             </div>
         </div>

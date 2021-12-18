@@ -10,7 +10,7 @@ using StoreApi.Repositories;
 namespace StoreApi.Migrations
 {
     [DbContext(typeof(ClockStoreDBContext))]
-    [Migration("20211208034012_CreateDatabase")]
+    [Migration("20211218080040_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -299,9 +299,6 @@ namespace StoreApi.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("status")
-                        .HasColumnType("int");
 
                     b.Property<long>("total")
                         .HasColumnType("bigint");
