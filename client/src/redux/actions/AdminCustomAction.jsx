@@ -38,12 +38,13 @@ export const actGetCustomAdmin = (data) => (dispatch) => {
 export const actChangeStatusCustomAdmin = (user) => (dispatch) => {
     axios.put(
         `${API_URL}khachhang/changeStatus/${user}`,
+        user,
         {
-            header : {
+            headers : {
                 'Content-Type' : 'application/json'
             },
-            withCredentials : true,
-            credentials : 'include'
+            withCredentials: true,
+            credentials: 'include',
         }
     ).then((res) => {
         // console.log("status khách hàng: ", res.data.status);
@@ -61,10 +62,27 @@ export const actChangeStatusCustomAdmin = (user) => (dispatch) => {
         }
         
     }).catch(error => {
-        console.log('actChangeStatusCustomAdmin error: ', error);
-        dispatch({
-            type : CHANGE_STATUS_CUSTOM_ADMIN,
-            payload : ACT_CHANGE_STATUS_KHACHHANG_ADMIN_ERROR
-        })
+        // console.log('actChangeStatusCustomAdmin error: ', error);
+        // dispatch({
+        //     type : CHANGE_STATUS_CUSTOM_ADMIN,
+        //     payload : ACT_CHANGE_STATUS_KHACHHANG_ADMIN_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actChangeStatusCustomAdmin error: ', error.response.data.message);
+
+            dispatch({
+                type: CHANGE_STATUS_CUSTOM_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actChangeStatusCustomAdmin error: ', error);
+
+            dispatch({
+                type: CHANGE_STATUS_CUSTOM_ADMIN,
+                payload: ACT_CHANGE_STATUS_KHACHHANG_ADMIN_ERROR
+            });
+        }
     })
 }

@@ -108,6 +108,10 @@ function CustomAdmin() {
                 dispatch(actResetMessageCustomAdmin());
                 break;
             default:
+                if(AdminCustomReducer.message) {
+                    toast.error(AdminCustomReducer.message); 
+                    dispatch(actResetMessageCustomAdmin());
+                }
                 break;
         }
     }, [AdminCustomReducer.message])

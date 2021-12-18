@@ -131,6 +131,10 @@ function ProductTypeAdmin() {
                 dispatch(actResetMessageLSPAdmin());
                 break;
             default:
+                if(productTypeReducer.message) {
+                    toast.error(productTypeReducer.message); 
+                    dispatch(actResetMessageLSPAdmin());
+                }
                 break;
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps

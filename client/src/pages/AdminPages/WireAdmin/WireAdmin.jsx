@@ -18,7 +18,7 @@ function WireAdmin() {
     const [elmListWires, setElmListWires] = useState(null);
 
     const [actionValue, setActionValue] = useState('');
-    const [formValue, setFormValue] = useState({id: null, name: ''});
+    const [formValue, setFormValue] = useState({ id: null, name: '' });
 
     const location = useLocation();
     const dispatch = useDispatch();
@@ -35,16 +35,16 @@ function WireAdmin() {
     useEffect(() => {
         // console.log("location: ", location);
         var { search } = location;
-        if(search === "") {
+        if (search === "") {
             setSort('name-asc');
             setPageIndex(1);
             setSearch('');
-        } 
+        }
         else {
             var dauHoi = search.split('?');
-            var dauVa = dauHoi[dauHoi.length-1].split('&');
+            var dauVa = dauHoi[dauHoi.length - 1].split('&');
             var dauBang;
-            for(let i = 0; i < dauVa.length; ++i) {
+            for (let i = 0; i < dauVa.length; ++i) {
                 dauBang = dauVa[i].split('=');
                 switch (dauBang[0]) {
                     case "sort":
@@ -52,13 +52,13 @@ function WireAdmin() {
                         break;
                     case "pageIndex":
                         var value = parseInt(dauBang[1]);
-                        if(value) {
+                        if (value) {
                             setPageIndex(value);
                         }
                         else {
                             setPageIndex(1);
                         }
-                        
+
                         break;
                     case "search":
                         setSearch(utf8_from_str(dauBang[1]));
@@ -82,13 +82,13 @@ function WireAdmin() {
     useEffect(() => {
         // console.log()
         var result = null;
-        if(AdminWireReducer.dataValue.listKD && AdminWireReducer.dataValue.listKD.length > 0) {
+        if (AdminWireReducer.dataValue.listKD && AdminWireReducer.dataValue.listKD.length > 0) {
             result = AdminWireReducer.dataValue.listKD.map((item, index) => {
-                return <AdminWireItem key={index} wire={item} index={index} actionUpdate={actionUpdate} actionDelete={actionDelete}/>
+                return <AdminWireItem key={index} wire={item} index={index} actionUpdate={actionUpdate} actionDelete={actionDelete} />
             })
         }
         setElmListWires(result);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [AdminWireReducer.dataValue])
 
     // Hiên thông báo các sự kiện
@@ -99,21 +99,25 @@ function WireAdmin() {
             case UPDATE_WIRE_SUCCESS:
                 toast.success(AdminWireReducer.message);
                 var filter = {
-                    search : search,
+                    search: search,
                     sort: sort,
-                    pageIndex:pageIndex
+                    pageIndex: pageIndex
                 }
                 // console.log(filter);
                 dispatch(actGetWireAdmin(filter));
                 dispatch(actResetMessageWireAdmin());
                 break;
-            case ADD_WIRE_ERROR : 
+            case ADD_WIRE_ERROR:
             case DELETE_WIRE_ERROR:
-            case UPDATE_WIRE_ERROR :
-                toast.error(AdminWireReducer.message); 
+            case UPDATE_WIRE_ERROR:
+                toast.error(AdminWireReducer.message);
                 dispatch(actResetMessageWireAdmin());
                 break;
             default:
+                if (AdminWireReducer.message) {
+                    toast.error(AdminWireReducer.message);
+                    dispatch(actResetMessageWireAdmin());
+                }
                 break;
         }
     }, [AdminWireReducer.message])
@@ -133,8 +137,8 @@ function WireAdmin() {
             switch (actionValue) {
                 case 'add':
                 case 'update':
-                    return <AdminWireFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm}/>
-            
+                    return <AdminWireFormAction formValue={formValue} setActionValue={setActionValue} submitActionForm={submitActionForm} />
+
                 default:
                     return null;
             }
@@ -143,7 +147,7 @@ function WireAdmin() {
     )
 
     const actionAdd = () => {
-        setFormValue({id: null, name:''});
+        setFormValue({ id: null, name: '' });
         setActionValue("add");
     }
 
@@ -170,7 +174,7 @@ function WireAdmin() {
     // Thực hiện thao tác xóa
     const actionDelete = (id) => {
         var res = window.confirm("Bạn có chắc muốn xóa kiểu dây có Id = " + id + " không?");
-        if(res) {
+        if (res) {
             dispatch(actDeleteWireAdmin(id));
         }
         else {
@@ -184,8 +188,8 @@ function WireAdmin() {
                 <h3 className="text-center mt-2">Quản lý kiểu dây</h3>
                 <hr />
             </div>
-            
-            <AdminWireControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort} actionAdd={actionAdd}/>
+
+            <AdminWireControl search={search} sort={sort} changeSearch={changeSearch} changeSort={changeSort} actionAdd={actionAdd} />
 
             <div className="row mt-3">
                 <table className="table table-hover ">
@@ -204,7 +208,7 @@ function WireAdmin() {
                 </table>
             </div>
 
-            <AdminWirePaging dataValue={AdminWireReducer.dataValue}/>
+            <AdminWirePaging dataValue={AdminWireReducer.dataValue} />
 
             {showForm()}
 

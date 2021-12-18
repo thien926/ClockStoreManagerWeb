@@ -55,13 +55,21 @@ export const actAddProductAdmin = (data) => (dispatch) => {
             type : ADD_PRODUCT_ADMIN,
             payload : ADD_PRODUCT_SUCCESS
         })
-        // return res.data;
     }).catch(error => {
-        console.log('actAddProductAdmin - error: ', error);
-        dispatch({
-            type : ADD_PRODUCT_ADMIN,
-            payload : ADD_PRODUCT_ERROR
-        })
+        if (error.response.data.message) {
+            console.log('actDeleteProductAdmin error: ', error.response.data.message);
+            dispatch({
+                type: ADD_PRODUCT_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actDeleteProductAdmin error: ', error);
+            dispatch({
+                type: ADD_PRODUCT_ADMIN,
+                payload: ADD_PRODUCT_ERROR
+            });
+        }
     });
 }
 
@@ -81,11 +89,20 @@ export const actDeleteProductAdmin = (id) => (dispatch) => {
             payload : DELETE_PRODUCT_SUCCESS
         });
     }).catch(error => {
-        console.log("actDeleteProductAdmin error: ", error);
-        dispatch({
-            type: DELETE_PRODUCT_ADMIN,
-            payload: DELETE_PRODUCT_ERROR
-        })
+        if (error.response.data.message) {
+            console.log('actDeleteProductAdmin error: ', error.response.data.message);
+            dispatch({
+                type: DELETE_PRODUCT_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actDeleteProductAdmin error: ', error);
+            dispatch({
+                type: DELETE_PRODUCT_ADMIN,
+                payload: DELETE_PRODUCT_ERROR
+            });
+        }
     })
 }
 
@@ -106,10 +123,19 @@ export const actUpdateProductAdmin = (data, id) => (dispatch) => {
             payload : UPDATE_PRODUCT_SUCCESS
         })
     }).catch(error => {
-        console.log("actUpdateProductAdmin error: ", error);
-        dispatch({
-            type : UPDATE_PRODUCT_ADMIN,
-            payload : UPDATE_PRODUCT_ERROR
-        })
+        if (error.response.data.message) {
+            console.log('actUpdateProductAdmin error: ', error.response.data.message);
+            dispatch({
+                type: UPDATE_PRODUCT_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actUpdateProductAdmin error: ', error);
+            dispatch({
+                type: UPDATE_PRODUCT_ADMIN,
+                payload: UPDATE_PRODUCT_ERROR
+            });
+        }
     });
 }

@@ -20,38 +20,75 @@ namespace StoreApi.Controllers
         private readonly IKhachHangRepository KhachHangRepository;
         private readonly IHoaDonRepository hoaDonRepository;
         private readonly JwtKhachHangService jwtKhachHang;
-        public KhachHangController(IKhachHangRepository KhachHangRepository, JwtKhachHangService jwtKhachHang)
+        private readonly INhanVienRepository nhanVienRepository;
+        private readonly JwtNhanVienService jwtNhanVien; 
+        private readonly IQuyenRepository quyenRepository;
+        public KhachHangController(IKhachHangRepository KhachHangRepository, JwtKhachHangService jwtKhachHang,
+        INhanVienRepository nhanVienRepository, JwtNhanVienService jwtNhanVien, IQuyenRepository quyenRepository)
         {
             this.KhachHangRepository = KhachHangRepository;
             this.jwtKhachHang = jwtKhachHang;
+            this.nhanVienRepository = nhanVienRepository;
+            this.jwtNhanVien = jwtNhanVien;
+            this.quyenRepository = quyenRepository;
         }
 
-        [HttpGet]
-        public IEnumerable<KhachHang> GetAll()
-        {
-            return this.KhachHangRepository.KhachHang_GetAll();
-        }
+        // Bỏ do client ko gọi api này
+        // [HttpGet]
+        // public IEnumerable<KhachHang> GetAll()
+        // {
+        //     return this.KhachHangRepository.KhachHang_GetAll();
+        // }
 
-        [HttpGet("{user}")]
-        public ActionResult<KhachHang> GetByUser(String user)
-        {
-            return this.KhachHangRepository.KhachHang_GetByUser(user);
-        }
+        // Bỏ do client ko gọi api này
+        // [HttpGet("{user}")]
+        // public ActionResult<KhachHang> GetByUser(String user)
+        // {
+        //     return this.KhachHangRepository.KhachHang_GetByUser(user);
+        // }
 
-        // Admin Custom Page
+        // Khách Hàng Page - Admin
         [HttpPut("changeStatus/{user}")]
         public ActionResult<KhachHang> ChangeStatus(string user)
         {
+            var jwt = Request.Cookies["jwt-nhanvien"];
+
+            if (jwt == null)
+            {
+                Console.WriteLine("Nhân viên null");
+                return NotFound(new { message = "Nhân viên chưa đăng nhập tài khoản!" });
+            }
+            
+            var token = jwtNhanVien.Verify(jwt);
+            string userId = token.Issuer;
+
+            var nv= nhanVienRepository.NhanVien_GetByUser(userId);
+
+            if (nv== null)
+            {
+                
+                return NotFound(new { messgae = "Không tìm thấy tài khoản nhân viên!" });
+            }
+
+            var checkQuyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlKhachHang");
+            // Kiểm tra nhân viên có quyền thay đổi trạng thái khách hàng không
+            if(!checkQuyen) {
+                return BadRequest(new { message = "Tài khoản không có quyền thay đổi trạng thái khách hàng!" });
+            }
+
             var kh = KhachHangRepository.KhachHang_GetByUser(user);
             
-            if(kh == null) {
+            if (kh == null)
+            {
                 return NotFound(new { message = "Không tìm thấy tài khoản khách hàng!" });
             }
 
-            if(kh.status == 1) {
+            if (kh.status == 1)
+            {
                 kh.status = 0;
-            }   
-            else {
+            }
+            else
+            {
                 kh.status = 1;
             }
 
@@ -59,7 +96,8 @@ namespace StoreApi.Controllers
             return Ok(res);
         }
 
-        // Update User Page
+        // Khách hàng Page
+        // Thay đổi thông tin khách hàng
         [HttpPut("updateInfoKH")]
         public ActionResult<KhachHang> UpdateInfoKH([FromBody] KhachHangInfoDto khdto)
         {
@@ -69,8 +107,9 @@ namespace StoreApi.Controllers
                 {
                     // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
                     var jwt = Request.Cookies["jwt-khachhang"];
-                    if(jwt == null) {
-                        return NotFound(new { messgae = "Khách hàng chưa đăng nhập tài khoản!"});
+                    if (jwt == null)
+                    {
+                        return NotFound(new { messgae = "Khách hàng chưa đăng nhập tài khoản!" });
                     }
                     var token = jwtKhachHang.Verify(jwt);
                     var user = token.Issuer;
@@ -78,7 +117,11 @@ namespace StoreApi.Controllers
 
                     if (kh == null || khdto.user != user)
                     {
-                        return NotFound(new { messgae = "Không tìm thấy tài khoản khách hàng!"});
+                        return NotFound(new { messgae = "Không tìm thấy tài khoản khách hàng!" });
+                    }
+
+                    if(kh.status == 0) {
+                        return NotFound(new { messgae = "Tài khoản đã bị khóa!" });
                     }
 
                     // Mapping và sửa thông tin
@@ -101,7 +144,8 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
-        // Update User Page
+        // Khách hàng Page 
+        // Thay đổi pass khách hàng
         [HttpPut("updatePasswordKH")]
         public ActionResult<KhachHang> UpdatePasswordKH([FromBody] KhachHangPasswordDto khdto)
         {
@@ -111,8 +155,9 @@ namespace StoreApi.Controllers
                 {
                     // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
                     var jwt = Request.Cookies["jwt-khachhang"];
-                    if(jwt == null) {
-                        return NotFound(new { messgae = "Khách hàng chưa đăng nhập tài khoản!"});
+                    if (jwt == null)
+                    {
+                        return NotFound(new { messgae = "Khách hàng chưa đăng nhập tài khoản!" });
                     }
                     var token = jwtKhachHang.Verify(jwt);
                     var user = token.Issuer;
@@ -120,7 +165,11 @@ namespace StoreApi.Controllers
 
                     if (kh == null || khdto.user != user)
                     {
-                        return NotFound(new { messgae = "Không tìm thấy tài khoản khách hàng!"});
+                        return NotFound(new { messgae = "Không tìm thấy tài khoản khách hàng!" });
+                    }
+
+                    if(kh.status == 0) {
+                        return NotFound(new { messgae = "Tài khoản đã bị khóa!" });
                     }
 
                     if (!BCrypt.Net.BCrypt.Verify(khdto.oldPassword, kh.password))
@@ -143,21 +192,22 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
-        [HttpDelete("{user}")]
-        public ActionResult DeleteKH(String user)
-        {
-            var KH = KhachHangRepository.KhachHang_GetByUser(user);
-            if (KH == null)
-            {
-                return NotFound();
-            }
-            KhachHangRepository.KhachHang_Delete(KH);
-            return Ok(new { messgae = "Ok" });
-        }
+        // client ko gọi api này
+        // [HttpDelete("{user}")]
+        // public ActionResult DeleteKH(String user)
+        // {
+        //     var KH = KhachHangRepository.KhachHang_GetByUser(user);
+        //     if (KH == null)
+        //     {
+        //         return NotFound();
+        //     }
+        //     KhachHangRepository.KhachHang_Delete(KH);
+        //     return Ok(new { messgae = "Ok" });
+        // }
 
         // ====================
 
-        // register page
+        // Register Page
         [HttpPost]
         public ActionResult<KhachHang> AddKH(KhachHangDto khdto)
         {
@@ -191,7 +241,7 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
-        // login page
+        // Login Page
         [HttpPost("login")]
         public ActionResult<KhachHang> Login(LoginShopDto khdto)
         {
@@ -205,6 +255,10 @@ namespace StoreApi.Controllers
                     if (kh == null)
                     {
                         return NotFound(new { message = "Tài khoản không tồn tại!" });
+                    }
+
+                    if(kh.status == 0) {
+                        return NotFound(new { message = "Tài khoản đã bị khóa!" });
                     }
 
                     if (!BCrypt.Net.BCrypt.Verify(khdto.password, kh.password))
@@ -237,20 +291,27 @@ namespace StoreApi.Controllers
             {
                 var jwt = Request.Cookies["jwt-khachhang"];
 
+                if(jwt == null) {
+                    return Unauthorized();
+                }
+
                 var token = jwtKhachHang.Verify(jwt);
 
                 var userId = token.Issuer;
                 var user = KhachHangRepository.KhachHang_GetByUser(userId);
+                if(user.status == 0) {
+                    return Unauthorized();
+                }
                 // Console.WriteLine(user.name);
                 return Ok(user);
             }
             catch (Exception e)
             {
-                return Unauthorized();
+                return Unauthorized(e);
             }
         }
 
-        // logout shop
+        // Đăng xuất tài khoản khách hàng
         [HttpGet("logout")]
         public ActionResult Logout()
         {
@@ -259,9 +320,34 @@ namespace StoreApi.Controllers
             return Ok();
         }
 
+        // Khách hàng Page - Admin
+        // Xem danh sách khách hàng 
         [HttpPost("filter-admin")]
         public ViewKhachHangAdminDto FilterAdmin(FilterDataAdminDto data)
         {
+            var jwt = Request.Cookies["jwt-nhanvien"];
+
+            if (jwt == null)
+            {
+                return null;
+            }
+            
+            var token = jwtNhanVien.Verify(jwt);
+            string userId = token.Issuer;
+
+            var nv= nhanVienRepository.NhanVien_GetByUser(userId);
+
+            if ( nv== null || nv.status == 0)
+            {
+                return null;
+            }
+
+            var checkQuyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "KhachHang");
+            // Kiểm tra nhân viên có quyền thay đổi trạng thái khách hàng không
+            if(!checkQuyen) {
+                return null;
+            }
+
             int count;
             var KhachHangs = KhachHangRepository.KhachHang_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
             var ListKH = new PaginatedList<KhachHang>(KhachHangs, count, data.pageIndex, pageSize);

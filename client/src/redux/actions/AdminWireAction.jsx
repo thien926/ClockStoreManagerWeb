@@ -59,7 +59,7 @@ export const actGetWireAdmin = (data) => (dispatch) => {
 }
 
 export const actAddWireAdmin = (data) => (dispatch) => {
-    console.log(data);
+    // console.log(data);
     axios.post(
         `${API_URL}kieuday`,
         data,
@@ -77,11 +77,21 @@ export const actAddWireAdmin = (data) => (dispatch) => {
         })
         // return res.data;
     }).catch(error => {
-        console.log('actAddWireAdmin - error: ', error);
-        dispatch({
-            type : ADD_WIRE_ADMIN,
-            payload : ADD_WIRE_ERROR
-        })
+
+        if (error.response.data.message) {
+            console.log('actAddWireAdmin error: ', error.response.data.message);
+            dispatch({
+                type: ADD_WIRE_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actAddWireAdmin error: ', error);
+            dispatch({
+                type: ADD_WIRE_ADMIN,
+                payload: ADD_WIRE_ERROR
+            });
+        }
     });
 }
 
@@ -102,11 +112,26 @@ export const actUpdateWireAdmin = (data, id) => (dispatch) => {
             payload : UPDATE_WIRE_SUCCESS
         })
     }).catch(error => {
-        console.log("actUpdateWireAdmin error: ", error);
-        dispatch({
-            type : UPDATE_WIRE_ADMIN,
-            payload : UPDATE_WIRE_ERROR
-        })
+        // console.log("actUpdateWireAdmin error: ", error);
+        // dispatch({
+        //     type : UPDATE_WIRE_ADMIN,
+        //     payload : UPDATE_WIRE_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actUpdateWireAdmin error: ', error.response.data.message);
+            dispatch({
+                type: UPDATE_WIRE_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actUpdateWireAdmin error: ', error);
+            dispatch({
+                type: UPDATE_WIRE_ADMIN,
+                payload: UPDATE_WIRE_ERROR
+            });
+        }
     });
 }
 
@@ -126,10 +151,25 @@ export const actDeleteWireAdmin = (id) => (dispatch) => {
             payload : DELETE_WIRE_SUCCESS
         });
     }).catch(error => {
-        console.log("actDeleteWireAdmin error: ", error);
-        dispatch({
-            type: DELETE_WIRE_ADMIN,
-            payload: DELETE_WIRE_ERROR
-        })
+        // console.log("actDeleteWireAdmin error: ", error);
+        // dispatch({
+        //     type: DELETE_WIRE_ADMIN,
+        //     payload: DELETE_WIRE_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actDeleteWireAdmin error: ', error.response.data.message);
+            dispatch({
+                type: DELETE_WIRE_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actDeleteWireAdmin error: ', error);
+            dispatch({
+                type: DELETE_WIRE_ADMIN,
+                payload: DELETE_WIRE_ERROR
+            });
+        }
     })
 }

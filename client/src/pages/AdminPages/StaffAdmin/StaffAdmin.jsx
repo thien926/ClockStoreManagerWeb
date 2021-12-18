@@ -124,9 +124,13 @@ function StaffAdmin() {
                 dispatch(actResetMessageStaffAdmin());
                 break;
             default:
+                if(AdminStaffReducer.message) {
+                    toast.error(AdminStaffReducer.message);
+                    dispatch(actResetMessageStaffAdmin());
+                }
                 break;
         }
-    }, [AdminStaffReducer.message])
+    }, [AdminStaffReducer.message, dispatch])
 
     // đi đến URL khác khi search
     const changeSearch = (searchValue) => {

@@ -27,29 +27,30 @@ namespace StoreApi.Controllers
             this.quyenRepository = quyenRepository;
         }
 
-        [HttpGet]
-        public IEnumerable<NhanVien> GetAll()
-        {
-            // try {
-            //     var jwt = Request.Cookies["jwt-nhanvien"];
-            //     var token = jwtNhanVien.Verify(jwt);
-            //     string userId = token.Issuer;
-            //     var user = nhanVienRepository.NhanVien_GetByUser(userId);
+        // [HttpGet]
+        // public IEnumerable<NhanVien> GetAll()
+        // {
+        //     // try {
+        //     //     var jwt = Request.Cookies["jwt-nhanvien"];
+        //     //     var token = jwtNhanVien.Verify(jwt);
+        //     //     string userId = token.Issuer;
+        //     //     var user = nhanVienRepository.NhanVien_GetByUser(userId);
 
-            //     // quyenRepository.getById(user.quyenId)
+        //     //     // quyenRepository.getById(user.quyenId)
 
-            //     if(user == null) {
-            //         return null;
-            //     }
-            //     return nhanVienRepository.NhanVien_GetAll();
-            // }
-            // catch(Exception e) {
-            //     return null;
-            // }
-            return nhanVienRepository.NhanVien_GetAll();
-        }
+        //     //     if(user == null) {
+        //     //         return null;
+        //     //     }
+        //     //     return nhanVienRepository.NhanVien_GetAll();
+        //     // }
+        //     // catch(Exception e) {
+        //     //     return null;
+        //     // }
+        //     return nhanVienRepository.NhanVien_GetAll();
+        // }
 
-        // NhanVien Page Admin
+        // NhanVien Page - Admin
+        // Thêm nhân viên
         [HttpPost]
         public ActionResult<NhanVien> AddNV(NhanVienDto nvdto)
         {
@@ -58,20 +59,48 @@ namespace StoreApi.Controllers
             {
                 try
                 {
-                    NhanVien nv = new NhanVien();
+                    // Phần xác thực tài khoản nhân viên
+                    var jwt = Request.Cookies["jwt-nhanvien"];
+                    if (jwt == null)
+                    {
+                        return NotFound(new { message = "Nhân viên chưa đăng nhập tài khoản!" });
+                    }
+                    var token = jwtNhanVien.Verify(jwt);
+                    var user = token.Issuer;
+                    var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+                    if (nv == null)
+                    {
+                        return NotFound(new { message = "Không tìm thấy tài khoản nhân viên đang đăng nhập!" });
+                    }
+
+                    if (nv.status == 0)
+                    {
+                        return NotFound(new { message = "Tài khoản nhân viên đang đăng nhập đã bị khóa!" });
+                    }
+
+                    var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlNhanVien");
+
+                    // Kiểm tra nhân viên có quyền thêm nhân viên không
+                    if (!quyen)
+                    {
+                        return BadRequest(new { message = "Tài khoản không có quyền thêm nhân viên!" });
+                    }
+
+                    NhanVien nvupdate = new NhanVien();
 
                     // Mapping
-                    nv.user = nvdto.user;
-                    nv.password = BCrypt.Net.BCrypt.HashPassword(nvdto.password);
-                    nv.name = nvdto.name;
-                    nv.phone = nvdto.phone;
-                    nv.quyenId = nvdto.quyenId;
-                    nv.address = nvdto.address;
-                    nv.gender = nvdto.gender;
-                    nv.dateborn = nvdto.dateborn;
-                    nv.status = 1;
+                    nvupdate.user = nvdto.user;
+                    nvupdate.password = BCrypt.Net.BCrypt.HashPassword(nvdto.password);
+                    nvupdate.name = nvdto.name;
+                    nvupdate.phone = nvdto.phone;
+                    nvupdate.quyenId = nvdto.quyenId;
+                    nvupdate.address = nvdto.address;
+                    nvupdate.gender = nvdto.gender;
+                    nvupdate.dateborn = nvdto.dateborn;
+                    nvupdate.status = 1;
 
-                    var NV = this.nhanVienRepository.NhanVien_Add(nv);
+                    var NV = this.nhanVienRepository.NhanVien_Add(nvupdate);
                     return Created("success", NV);
                 }
                 catch (Exception e)
@@ -83,7 +112,8 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
-        // Update staff Page
+        // Nhân viên Page - Admin 
+        // Sửa mật khẩu nhân viên
         [HttpPut("updatePasswordNV")]
         public ActionResult<NhanVien> UpdatePasswordNV([FromBody] NhanVienPasswordDto nvdto)
         {
@@ -91,12 +121,40 @@ namespace StoreApi.Controllers
             {
                 try
                 {
-                    var nv = nhanVienRepository.NhanVien_GetByUser(nvdto.user);
-                    // Mapping và sửa thông tin
-                    // nv.user = nvdto.user;
-                    nv.password = BCrypt.Net.BCrypt.HashPassword(nvdto.password);
+                    // Phần xác thực tài khoản nhân viên
+                    var jwt = Request.Cookies["jwt-nhanvien"];
+                    if (jwt == null)
+                    {
+                        return NotFound(new { message = "Nhân viên chưa đăng nhập tài khoản!" });
+                    }
+                    var token = jwtNhanVien.Verify(jwt);
+                    var user = token.Issuer;
+                    var nv = nhanVienRepository.NhanVien_GetByUser(user);
 
-                    var NV = this.nhanVienRepository.NhanVien_Update(nv);
+                    if (nv == null)
+                    {
+                        return NotFound(new { message = "Không tìm thấy tài khoản nhân viên đang đăng nhập!" });
+                    }
+
+                    if (nv.status == 0)
+                    {
+                        return NotFound(new { message = "Tài khoản nhân viên đang đăng nhập đã bị khóa!" });
+                    }
+
+                    var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlNhanVien");
+
+                    // Kiểm tra nhân viên có quyền sửa mật khẩu nhân viên không
+                    if (!quyen)
+                    {
+                        return BadRequest(new { message = "Tài khoản không có quyền sửa mật khẩu nhân viên!" });
+                    }
+
+                    var nvupdate = nhanVienRepository.NhanVien_GetByUser(nvdto.user);
+                    // Mapping và sửa thông tin
+                    // nvupdate.user = nvdto.user;
+                    nvupdate.password = BCrypt.Net.BCrypt.HashPassword(nvdto.password);
+
+                    var NV = this.nhanVienRepository.NhanVien_Update(nvupdate);
                     return Created("success", NV);
                 }
                 catch (Exception e)
@@ -107,7 +165,7 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
-        // Update staff Page
+        // Nhân viên Page -  Admin
         [HttpPut("updatePermissionNV")]
         public ActionResult<NhanVien> UpdatePermissionNV([FromBody] NhanVienPermissionDto nvdto)
         {
@@ -115,12 +173,40 @@ namespace StoreApi.Controllers
             {
                 try
                 {
-                    var nv = nhanVienRepository.NhanVien_GetByUser(nvdto.user);
-                    // Mapping và sửa thông tin
-                    // nv.user = nvdto.user;
-                    nv.quyenId = nvdto.quyenId;
+                    // Phần xác thực tài khoản nhân viên
+                    var jwt = Request.Cookies["jwt-nhanvien"];
+                    if (jwt == null)
+                    {
+                        return NotFound(new { message = "Nhân viên chưa đăng nhập tài khoản!" });
+                    }
+                    var token = jwtNhanVien.Verify(jwt);
+                    var user = token.Issuer;
+                    var nv = nhanVienRepository.NhanVien_GetByUser(user);
 
-                    var NV = this.nhanVienRepository.NhanVien_Update(nv);
+                    if (nv == null)
+                    {
+                        return NotFound(new { message = "Không tìm thấy tài khoản nhân viên đang đăng nhập!" });
+                    }
+
+                    if (nv.status == 0)
+                    {
+                        return NotFound(new { message = "Tài khoản nhân viên đang đăng nhập đã bị khóa!" });
+                    }
+
+                    var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlNhanVien");
+
+                    // Kiểm tra nhân viên có quyền sửa quyền nhân viên không
+                    if (!quyen)
+                    {
+                        return BadRequest(new { message = "Tài khoản không có quyền sửa quyền nhân viên!" });
+                    }
+
+                    var nvupdate = nhanVienRepository.NhanVien_GetByUser(nvdto.user);
+                    // Mapping và sửa thông tin
+                    // nvupdate.user = nvdto.user;
+                    nvupdate.quyenId = nvdto.quyenId;
+
+                    var NV = this.nhanVienRepository.NhanVien_Update(nvupdate);
                     return Created("success", NV);
                 }
                 catch (Exception e)
@@ -131,6 +217,7 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
+        // Login Admin Page -  Admin
         [HttpPost("login")]
         public ActionResult LoginAdmin(LoginAdminDto dto)
         {
@@ -173,7 +260,7 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
-        // Get current user admin
+        // Get Current User -  Admin
         [HttpGet("user")]
         public ActionResult UserAdmin()
         {
@@ -181,7 +268,8 @@ namespace StoreApi.Controllers
             {
                 var jwt = Request.Cookies["jwt-nhanvien"];
 
-                if(jwt == null) {
+                if (jwt == null)
+                {
                     return Unauthorized();
                 }
 
@@ -205,7 +293,7 @@ namespace StoreApi.Controllers
             }
         }
 
-        // Update user admin Page
+        // Tài Khoản Page - Admin
         [HttpPut("updateInfoUserNV")]
         public ActionResult<NhanVien> UpdateInfoUserNV([FromBody] UserInfoAdminDto nvdto)
         {
@@ -215,8 +303,9 @@ namespace StoreApi.Controllers
                 {
                     var jwt = Request.Cookies["jwt-nhanvien"];
 
-                    if(jwt == null) {
-                        return NotFound(new { messgae = "Nhân viên chưa đăng nhập tài khoản!"});
+                    if (jwt == null)
+                    {
+                        return NotFound(new { messgae = "Nhân viên chưa đăng nhập tài khoản!" });
                     }
 
                     var token = jwtNhanVien.Verify(jwt);
@@ -224,11 +313,26 @@ namespace StoreApi.Controllers
 
                     var user = nhanVienRepository.NhanVien_GetByUser(userId);
 
-                    if (user == null) {
-                        return NotFound(new { messgae = "Không tìm thấy tài khoản nhân viên!"});
+                    if (user == null)
+                    {
+                        return NotFound(new { messgae = "Không tìm thấy tài khoản nhân viên!" });
                     }
 
-                    if(user.user != nvdto.user) {
+                    if (user.status != 1)
+                    {
+                        return NotFound(new { messgae = "Tài khoản đã bị khóa!" });
+                    }
+
+                    var quyen = quyenRepository.Quyen_CheckQuyenUser(user.quyenId, "qlTaiKhoan");
+
+                    // Kiểm tra nhân viên có quyền tự sửa thông tin không
+                    if (!quyen)
+                    {
+                        return BadRequest(new { message = "Tài khoản không có quyền tự sửa thông tin!" });
+                    }
+
+                    if (user.user != nvdto.user)
+                    {
                         return BadRequest(
                             new { message = "Tên tài khoản đăng nhập không khớp với tên tài khoản cần sửa!" }
                         );
@@ -253,6 +357,7 @@ namespace StoreApi.Controllers
             return BadRequest();
         }
 
+        // Tài khoản Page -  Admin
         [HttpPut("updatePasswordUserNV")]
         public ActionResult<KhachHang> UpdatePasswordUserNV([FromBody] UserPasswordDto nvdto)
         {
@@ -262,19 +367,35 @@ namespace StoreApi.Controllers
                 {
                     // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
                     var jwt = Request.Cookies["jwt-nhanvien"];
-                    if(jwt == null) {
-                        return NotFound(new { messgae = "Nhân viên chưa đăng nhập tài khoản!"});
+                    if (jwt == null)
+                    {
+                        return NotFound(new { messgae = "Nhân viên chưa đăng nhập tài khoản!" });
                     }
-                    
+
                     var token = jwtNhanVien.Verify(jwt);
                     var userId = token.Issuer;
                     var user = nhanVienRepository.NhanVien_GetByUser(userId);
 
-                    if (user == null) {
-                        return NotFound(new { messgae = "Không tìm thấy tài khoản nhân viên!"});
+                    if (user == null)
+                    {
+                        return NotFound(new { messgae = "Không tìm thấy tài khoản nhân viên!" });
                     }
 
-                    if(user.user != nvdto.user) {
+                    if (user.status != 1)
+                    {
+                        return NotFound(new { messgae = "Tài khoản đã bị khóa!" });
+                    }
+
+                    var quyen = quyenRepository.Quyen_CheckQuyenUser(user.quyenId, "qlTaiKhoan");
+
+                    // Kiểm tra nhân viên có quyền tự sửa thông tin không
+                    if (!quyen)
+                    {
+                        return BadRequest(new { message = "Tài khoản không có quyền tự sửa thông tin!" });
+                    }
+
+                    if (user.user != nvdto.user)
+                    {
                         return BadRequest(
                             new { message = "Tên tài khoản đăng nhập không khớp với tên tài khoản cần sửa!" }
                         );
@@ -309,27 +430,55 @@ namespace StoreApi.Controllers
             });
         }
 
-        // Admin staff Page
+        // Nhân viên Page - Admin
         [HttpPut("changeStatus/{user}")]
         public ActionResult<NhanVien> ChangeStatus(string user)
         {
-            var nv = nhanVienRepository.NhanVien_GetByUser(user);
+            // Phần xác thực tài khoản nhân viên
+            var jwt = Request.Cookies["jwt-nhanvien"];
+            if (jwt == null)
+            {
+                return NotFound(new { message = "Nhân viên chưa đăng nhập tài khoản!" });
+            }
+            var token = jwtNhanVien.Verify(jwt);
+            var userId = token.Issuer;
+            var nv = nhanVienRepository.NhanVien_GetByUser(userId);
 
             if (nv == null)
+            {
+                return NotFound(new { message = "Không tìm thấy tài khoản nhân viên đang đăng nhập!" });
+            }
+
+            if (nv.status == 0)
+            {
+                return NotFound(new { message = "Tài khoản nhân viên đang đăng nhập đã bị khóa!" });
+            }
+
+            var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "qlNhanVien");
+
+            // Kiểm tra nhân viên có quyền sửa quyền nhân viên không
+            if (!quyen)
+            {
+                return BadRequest(new { message = "Tài khoản không có quyền sửa quyền nhân viên!" });
+            }
+
+            var nvupdate = nhanVienRepository.NhanVien_GetByUser(user);
+
+            if (nvupdate == null)
             {
                 return NotFound(new { message = "Không tìm thấy tài khoản nhân viên!" });
             }
 
-            if (nv.status == 1)
+            if (nvupdate.status == 1)
             {
-                nv.status = 0;
+                nvupdate.status = 0;
             }
             else
             {
-                nv.status = 1;
+                nvupdate.status = 1;
             }
 
-            var res = nhanVienRepository.NhanVien_Update(nv);
+            var res = nhanVienRepository.NhanVien_Update(nvupdate);
             return Ok(res);
         }
 
@@ -337,6 +486,29 @@ namespace StoreApi.Controllers
         [HttpPost("filter-admin")]
         public ViewNhanVienAdminDto FilterAdmin(FilterDataAdminDto data)
         {
+            // Phần xác thực tài khoản nhân viên
+            var jwt = Request.Cookies["jwt-nhanvien"];
+            if (jwt == null)
+            {
+                return null;
+            }
+            var token = jwtNhanVien.Verify(jwt);
+            var user = token.Issuer;
+            var nv = nhanVienRepository.NhanVien_GetByUser(user);
+
+            if (nv == null || nv.status == 0)
+            {
+                return null;
+            }
+
+            var quyen = quyenRepository.Quyen_CheckQuyenUser(nv.quyenId, "NhanVien");
+
+            // Kiểm tra nhân viên có quyền xem kiểu dây không
+            if (!quyen)
+            {
+                return null;
+            }
+
             int count;
             var nhanViens = nhanVienRepository.NhanVien_FilterAdmin(data.search, data.sort, data.pageIndex, pageSize, out count);
             var ListNV = new PaginatedList<NhanVien>(nhanViens, count, data.pageIndex, pageSize);

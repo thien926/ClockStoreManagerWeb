@@ -75,13 +75,27 @@ export const actAddPermissionAdmin = (data) => (dispatch) => {
             type : ADD_PERMISSION_ADMIN,
             payload : ADD_PERMISSION_SUCCESS
         })
-        // return res.data;
     }).catch(error => {
-        console.log('actAddPermissionAdmin - error: ', error);
-        dispatch({
-            type : ADD_PERMISSION_ADMIN,
-            payload : ADD_PERMISSION_ERROR
-        })
+        // console.log('actAddPermissionAdmin - error: ', error);
+        // dispatch({
+        //     type : ADD_PERMISSION_ADMIN,
+        //     payload : ADD_PERMISSION_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actAddPermissionAdmin error: ', error.response.data.message);
+            dispatch({
+                type: ADD_PERMISSION_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actAddPermissionAdmin error: ', error);
+            dispatch({
+                type: ADD_PERMISSION_ADMIN,
+                payload: ADD_PERMISSION_ERROR
+            });
+        }
     });
 }
 
@@ -102,11 +116,26 @@ export const actUpdatePermissionAdmin = (data, id) => (dispatch) => {
             payload : UPDATE_PERMISSION_SUCCESS
         })
     }).catch(error => {
-        console.log("actUpdatePermissionAdmin error: ", error);
-        dispatch({
-            type : UPDATE_PERMISSION_ADMIN,
-            payload : UPDATE_PERMISSION_ERROR
-        })
+        // console.log("actUpdatePermissionAdmin error: ", error);
+        // dispatch({
+        //     type : UPDATE_PERMISSION_ADMIN,
+        //     payload : UPDATE_PERMISSION_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actUpdatePermissionAdmin error: ', error.response.data.message);
+            dispatch({
+                type: UPDATE_PERMISSION_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actUpdatePermissionAdmin error: ', error);
+            dispatch({
+                type: UPDATE_PERMISSION_ADMIN,
+                payload: UPDATE_PERMISSION_ERROR
+            });
+        }
     });
 }
 
@@ -126,10 +155,25 @@ export const actDeletePermissionAdmin = (id) => (dispatch) => {
             payload : DELETE_PERMISSION_SUCCESS
         });
     }).catch(error => {
-        console.log("actDeletePermissionAdmin error: ", error);
-        dispatch({
-            type: DELETE_PERMISSION_ADMIN,
-            payload: DELETE_PERMISSION_ERROR
-        })
+        // console.log("actDeletePermissionAdmin error: ", error);
+        // dispatch({
+        //     type: DELETE_PERMISSION_ADMIN,
+        //     payload: DELETE_PERMISSION_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actDeletePermissionAdmin error: ', error.response.data.message);
+            dispatch({
+                type: DELETE_PERMISSION_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actDeletePermissionAdmin error: ', error);
+            dispatch({
+                type: DELETE_PERMISSION_ADMIN,
+                payload: DELETE_PERMISSION_ERROR
+            });
+        }
     })
 }

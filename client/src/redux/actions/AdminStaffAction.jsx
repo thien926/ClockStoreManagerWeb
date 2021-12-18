@@ -42,6 +42,7 @@ export const actGetStaffAdmin = (data) => (dispatch) => {
 export const actChangeStatusStaffAdmin = (user) => (dispatch) => {
     axios.put(
         `${API_URL}nhanvien/changeStatus/${user}`,
+        user,
         {
             header : {
                 'Content-Type' : 'application/json'
@@ -65,11 +66,28 @@ export const actChangeStatusStaffAdmin = (user) => (dispatch) => {
         }
         
     }).catch(error => {
-        console.log('actChangeStatusStaffAdmin error: ', error);
-        dispatch({
-            type : CHANGE_STATUS_STAFF_ADMIN,
-            payload : ACT_CHANGE_STATUS_STAFF_ADMIN_ERROR
-        })
+        // console.log('actChangeStatusStaffAdmin error: ', error);
+        // dispatch({
+        //     type : CHANGE_STATUS_STAFF_ADMIN,
+        //     payload : ACT_CHANGE_STATUS_STAFF_ADMIN_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actChangeStatusStaffAdmin error: ', error.response.data.message);
+
+            dispatch({
+                type: CHANGE_STATUS_STAFF_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actChangeStatusStaffAdmin error: ', error);
+
+            dispatch({
+                type: CHANGE_STATUS_STAFF_ADMIN,
+                payload: ACT_CHANGE_STATUS_STAFF_ADMIN_ERROR
+            });
+        }
     })
 }
 
@@ -90,13 +108,29 @@ export const actAddStaffAdmin = (data) => (dispatch) => {
             type : ADD_STAFF_ADMIN,
             payload : ADD_STAFF_ADMIN_SUCCESS
         })
-        // return res.data;
     }).catch(error => {
-        console.log('actAddStaffAdmin - error: ', error);
-        dispatch({
-            type : ADD_STAFF_ADMIN,
-            payload : ADD_STAFF_ADMIN_ERROR
-        })
+        // console.log('actAddStaffAdmin - error: ', error);
+        // dispatch({
+        //     type : ADD_STAFF_ADMIN,
+        //     payload : ADD_STAFF_ADMIN_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actAddStaffAdmin error: ', error.response.data.message);
+
+            dispatch({
+                type: ADD_STAFF_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actAddStaffAdmin error: ', error);
+
+            dispatch({
+                type: ADD_STAFF_ADMIN,
+                payload: ADD_STAFF_ADMIN_ERROR
+            });
+        }
     });
 }
 
@@ -118,11 +152,28 @@ export const actUpdatePasswordStaffAdmin = (data) => (dispatch) => {
         })
         
     }).catch(error => {
-        console.log('actUpdatePasswordStaffAdmin error: ', error);
-        dispatch({
-            type : UPDATE_PASSWORD_STAFF_ADMIN,
-            payload : UPDATE_PASS_STAFF_ADMIN_ERROR
-        })
+        // console.log('actUpdatePasswordStaffAdmin error: ', error);
+        // dispatch({
+        //     type : UPDATE_PASSWORD_STAFF_ADMIN,
+        //     payload : UPDATE_PASS_STAFF_ADMIN_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actUpdatePasswordStaffAdmin error: ', error.response.data.message);
+
+            dispatch({
+                type: UPDATE_PASSWORD_STAFF_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actUpdatePasswordStaffAdmin error: ', error);
+
+            dispatch({
+                type: UPDATE_PASSWORD_STAFF_ADMIN,
+                payload: UPDATE_PASS_STAFF_ADMIN_ERROR
+            });
+        }
     })
 }
 
@@ -144,10 +195,27 @@ export const actUpdatePermissionStaffAdmin = (data) => (dispatch) => {
         })
         
     }).catch(error => {
-        console.log('actUpdatePermissionStaffAdmin error: ', error);
-        dispatch({
-            type : UPDATE_PERMISSION_STAFF_ADMIN,
-            payload : UPDATE_PERMISSION_STAFF_ADMIN_ERROR
-        })
+        // console.log('actUpdatePermissionStaffAdmin error: ', error);
+        // dispatch({
+        //     type : UPDATE_PERMISSION_STAFF_ADMIN,
+        //     payload : UPDATE_PERMISSION_STAFF_ADMIN_ERROR
+        // })
+
+        if (error.response.data.message) {
+            console.log('actUpdatePermissionStaffAdmin error: ', error.response.data.message);
+
+            dispatch({
+                type: UPDATE_PERMISSION_STAFF_ADMIN,
+                payload: error.response.data.message
+            });
+        }
+        else {
+            console.log('actUpdatePermissionStaffAdmin error: ', error);
+
+            dispatch({
+                type: UPDATE_PERMISSION_STAFF_ADMIN,
+                payload: UPDATE_PERMISSION_STAFF_ADMIN_ERROR
+            });
+        }
     })
 }

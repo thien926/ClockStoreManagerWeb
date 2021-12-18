@@ -30,10 +30,10 @@ namespace StoreApi.Controllers
             this.chiTietHDRepository = chiTietHDRepository;
         }
 
+        // Load sản phẩm của đơn hàng cho Cart
         [HttpGet("{donhang}")]
         public ActionResult<ViewCartDto> LoadSPForCart(string donhang)
         {
-
             try
             {
                 if (!Regex.IsMatch(donhang, @"^(\d{1,}-\d{1,}&){1,}$"))
@@ -41,9 +41,12 @@ namespace StoreApi.Controllers
                     return null;
                 };
 
+                // load sản phẩm
                 var sps = sanPhamRepository.SanPham_ListCart(donhang);
                 long total = 0;
                 int amount = 0;
+
+                // tính tổng giá và tổng số lượng sản phẩm
                 foreach (var item in sps)
                 {
                     total += item.price * item.amount;
@@ -63,10 +66,10 @@ namespace StoreApi.Controllers
             }
         }
 
+        // Thực hiện thanh toán cho Cart
         [HttpPost("checkoutcart")]
         public ActionResult<HoaDon> CheckoutCart(CartDto cart)
         {
-
             try
             {
                 // Phần xác thực tài khoản khách hàng để thực hiện thao tác sửa thông tin khách hàng
@@ -89,15 +92,14 @@ namespace StoreApi.Controllers
                     return NotFound(new { message = "Tài khoản khách hàng đã bị khóa!" });
                 }
 
-                List<int> listProduct_id = new List<int>(); // lưu Id sản phẩm
-                List<int> listSoluong = new List<int>();    // lưu số lượng sản phẩm của giỏ hàng
-
                 var list = cart.donhang.Trim('&');
                 string[] arrlist = list.Split('&');
                 string[] temp;
                 int i = 0;
                 long total = 0;
 
+                List<int> listProduct_id = new List<int>(); // lưu Id sản phẩm
+                List<int> listSoluong = new List<int>();    // lưu số lượng sản phẩm của giỏ hàng
                 for (i = 0; i < arrlist.Length - 1; ++i)
                 {
                     if (!string.IsNullOrEmpty(arrlist[i]))
@@ -145,6 +147,7 @@ namespace StoreApi.Controllers
                     }
                 }
 
+                // Tạo hóa đơn và lưu hóa đơn
                 HoaDon hd = new HoaDon();
                 hd.KHuser = kh.user;
                 hd.phone = kh.phone;
@@ -156,6 +159,7 @@ namespace StoreApi.Controllers
                 hd = hoaDonRepository.HoaDon_Add(hd);
                 List<ChiTietHD> listCTHD = new List<ChiTietHD>();
 
+                // Tạo chi tiết và lưu chi tiết hóa đơn
                 foreach (var item in sps)
                 {
                     for(i = 0; i < listProduct_id.Count(); ++i) {
@@ -168,12 +172,15 @@ namespace StoreApi.Controllers
                             newChiTietHD.price = item.price;
                             newChiTietHD.img = item.img;
                             listCTHD.Add(newChiTietHD);
-
+                            
+                            // Update lại số lượng của sản phẩm sau khi thêm hóa đơn
                             item.amount = item.amount - listSoluong[i];
                         }
                     }
                 }
                 chiTietHDRepository.ChiTietHD_AddRange(listCTHD);
+
+                // Update lại sản phẩm và lưu vào database
                 sanPhamRepository.SanPham_UpdateRand((List<SanPham>)sps);
                 return Ok(new { message = "Thêm đơn hàng thành công!" });
             }
