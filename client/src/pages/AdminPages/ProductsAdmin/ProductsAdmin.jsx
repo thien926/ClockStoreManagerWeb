@@ -186,7 +186,31 @@ function ProductsAdmin() {
                     
                 </>;
             }
+
+            if(totalPage === 1) {
+                result = null;
+            }
         }
+
+        // if (AdminProductReducer.dataValue.listSP && AdminProductReducer.dataValue.listSP.length > 0) {
+        //     setElmsPhanTrang(result);
+        //     if(!result) {
+        //         setNext(null);
+        //         setPrevious(null);
+        //     }
+        //     else {
+        //         setNext(nextPage);
+        //         setPrevious(previousPage);
+        //     }
+        //     // setNotFound(null);
+        // }
+        // else {
+        //     setElmsPhanTrang(null);
+        //     setNext(null);
+        //     setPrevious(null);
+        //     // setNotFound('Không tìm thấy quyền nào!');
+        // }
+
         setElmsPhanTrang(result);
         setNext(nextPage);
         setPrevious(previousPage);
