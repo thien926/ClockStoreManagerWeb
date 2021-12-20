@@ -186,6 +186,7 @@ function AdminMenu() {
     }, [UserAdmin.dataValue, navigate])
 
     useEffect(() => {
+        console.log(UserAdmin.message)
         switch (UserAdmin.message) {
             case ACT_LOGOUT_SUCCESS:
                 toast.success(UserAdmin.message);
@@ -199,7 +200,7 @@ function AdminMenu() {
             default:
                 break;
         }
-    }, [UserAdmin.message])
+    }, [UserAdmin.message, dispatch])
 
     const submitLogout = () => {
         dispatch(actLogoutAdmin());

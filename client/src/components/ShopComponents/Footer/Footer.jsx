@@ -1,29 +1,30 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Footer() {
     return (
         <footer className="footer-section">
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-3">
+                    <div className="col-lg-4">
                         <div className="footer-left">
                             <div className="footer-logo">
                                 <a href="#"><img src="img/footer-logo.png" /></a>
                             </div>
                             <ul>
-                                <li>Address: 60-49 Road 11378 New York</li>
-                                <li>Phone: +65 11.188.888</li>
-                                <li>Email: hello.colorlib@gmail.com</li>
+                                <li>Địa chỉ: 273 An Dương Vương, phường 3, quận 5, TP.HCM</li>
+                                <li>Số điện thoại: +84 36.411.7408</li>
+                                <li>Thư điện tử: tructruong.070202@gmail.com</li>
                             </ul>
                             <div className="footer-social">
-                                <a href="#"><i className="fa fa-facebook" /></a>
+                                <a href="https://www.facebook.com/thien926/"><i className="fa fa-facebook" /></a>
                                 <a href="#"><i className="fa fa-instagram" /></a>
                                 <a href="#"><i className="fa fa-twitter" /></a>
                                 <a href="#"><i className="fa fa-pinterest" /></a>
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-2 offset-lg-1">
+                    {/* <div className="col-lg-2 offset-lg-1">
                         <div className="footer-widget">
                             <h5>Information</h5>
                             <ul>
@@ -33,46 +34,29 @@ function Footer() {
                                 <li><a href="#">Serivius</a></li>
                             </ul>
                         </div>
-                    </div>
-                    <div className="col-lg-2">
+                    </div> */}
+                    <div className="col-lg-3">
                         <div className="footer-widget">
-                            <h5>My Account</h5>
+                            <h5>Tài khoản của tôi</h5>
                             <ul>
-                                <li><a href="#">My Account</a></li>
-                                <li><a href="#">Contact</a></li>
-                                <li><a href="#">Shopping Cart</a></li>
-                                <li><a href="#">Shop</a></li>
+                                <li><Link to="/user">Tài khoản của tôi</Link></li>
+                                <li><Link to="/cart">Giỏ hàng</Link></li>
                             </ul>
                         </div>
                     </div>
                     <div className="col-lg-4">
                         <div className="newslatter-item">
-                            <h5>Join Our Newsletter Now</h5>
-                            <p>Get E-mail updates about our latest shop and special offers.</p>
+                            <h5>Tham gia với chúng tôi</h5>
+                            <p>Nhận thông tin cập nhật qua E-mail về sản phẩm mới nhất của chúng tôi.</p>
                             <form action="#" className="subscribe-form">
                                 <input type="text" placeholder="Enter Your Mail" />
-                                <button type="button">Subscribe</button>
+                                <button type="button">Đăng ký</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="copyright-reserved">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="copyright-text">
-                                {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
-                                Copyright © All rights reserved | This template is made with <i className="fa fa-heart-o" aria-hidden="true" /> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                                {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
-                            </div>
-                            <div className="payment-pic">
-                                <img src="img/payment-method.png" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </footer>
     )
 }

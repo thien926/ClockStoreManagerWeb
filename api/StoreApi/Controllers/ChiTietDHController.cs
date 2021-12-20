@@ -15,8 +15,8 @@ namespace StoreApi.Controllers
     [Route("api/[controller]")]
     public class ChiTietDHController : ControllerBase
     {
-        private int pageSize = 9;
-        private int range = 9;
+        // private int pageSize = 9;
+        // private int range = 9;
         private readonly IChiTietDHRepository ChiTietDHRepository;
         private readonly JwtKhachHangService jwtKhachHang;
         private readonly JwtNhanVienService jwtNhanVien;

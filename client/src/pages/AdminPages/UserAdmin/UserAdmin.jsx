@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
 import AdminUserFormInfo from '../../../components/AdminComponents/AdminUserComponent/AdminUserFormInfo';
 import AdminUserFormPassword from '../../../components/AdminComponents/AdminUserComponent/AdminUserFormPassword';
-import { ACT_LOGIN_PASSWORD_ERROR, UPDATE_INFO_USER_ADMIN_ERROR, UPDATE_INFO_USER_ADMIN_SUCCESS, UPDATE_PASS_USER_ADMIN_ERROR, UPDATE_PASS_USER_ADMIN_SUCCESS } from '../../../constants/Message';
+import { ACT_LOGIN_PASSWORD_ERROR, ACT_LOGOUT_ERROR, ACT_LOGOUT_SUCCESS, UPDATE_INFO_USER_ADMIN_ERROR, UPDATE_INFO_USER_ADMIN_SUCCESS, UPDATE_PASS_USER_ADMIN_ERROR, UPDATE_PASS_USER_ADMIN_SUCCESS } from '../../../constants/Message';
 import { actGetUser, actResetMessageUserNhanVien, actUpdateInfoUserAdmin, actUpdatePasswordUserAdmin } from '../../../redux/actions/LoginAdminAction';
 
 function UserAdmin() {
@@ -69,7 +69,7 @@ function UserAdmin() {
                 dispatch(actResetMessageUserNhanVien());
                 break;
             default:
-                if(UserAdmin.message) {
+                if(UserAdmin.message && UserAdmin.message !== ACT_LOGOUT_SUCCESS && UserAdmin.message !== ACT_LOGOUT_ERROR ) {
                     toast.error(UserAdmin.message)
                     dispatch(actResetMessageUserNhanVien());
                 }

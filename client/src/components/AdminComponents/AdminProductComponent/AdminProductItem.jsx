@@ -42,7 +42,7 @@ function AdminProductItem(props) {
             <td>{product.price.toLocaleString('it-IT', {style : 'currency', currency : 'VND'})}</td>
             <td>{product.description}</td>
             <td>
-                <img src={`${API_URL_IMG + product.img}`} />
+                <img src={`${API_URL_IMG + product.img}`} alt="product"/>
             </td>
             <td>
                 {showStatus()}

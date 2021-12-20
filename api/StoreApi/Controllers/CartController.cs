@@ -60,7 +60,7 @@ namespace StoreApi.Controllers
 
                 return res;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

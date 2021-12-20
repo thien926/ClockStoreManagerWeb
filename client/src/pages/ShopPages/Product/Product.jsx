@@ -48,6 +48,7 @@ function Product() {
     else {
       settitleSPLienQuan('');
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ProductPageReducer])
 
   const submitAddSP = (id, amount) => {

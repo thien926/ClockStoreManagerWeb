@@ -50,12 +50,12 @@ export const DELETE_COUPON_ERROR = 'Xóa phiếu nhập thất bại!';
 export const DELETE_COUPON_SUCCESS = 'Xóa phiếu nhập thành công!';
 
 // Nhà cung cấp Admin 
-export const ADD_NCC_SUCCESS = 'Thêm nhà cung cấp thành công!';
-export const UPDATE_NCC_SUCCESS = 'Sửa nhà cung cấp thành công!';
-export const DELETE_NCC_SUCCESS = 'Xóa nhà cung cấp thành công!';
-export const ADD_NCC_ERROR = 'Thêm nhà cung cấp thất bại!';
-export const UPDATE_NCC_ERROR = 'Sửa nhà cung cấp thất bại!';
-export const DELETE_NCC_ERROR = 'Xóa nhà cung cấp thất bại!';
+// export const ADD_NCC_SUCCESS = 'Thêm nhà cung cấp thành công!';
+// export const UPDATE_NCC_SUCCESS = 'Sửa nhà cung cấp thành công!';
+// export const DELETE_NCC_SUCCESS = 'Xóa nhà cung cấp thành công!';
+// export const ADD_NCC_ERROR = 'Thêm nhà cung cấp thất bại!';
+// export const UPDATE_NCC_ERROR = 'Sửa nhà cung cấp thất bại!';
+// export const DELETE_NCC_ERROR = 'Xóa nhà cung cấp thất bại!';
 
 // Quyền Admin 
 export const ADD_PERMISSION_SUCCESS = 'Thêm quyền thành công!';
