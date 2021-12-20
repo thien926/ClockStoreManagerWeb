@@ -4,64 +4,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import AdminStatisticalControl from "../../../components/AdminComponents/AdminStatisticalComponent/AdminStatisticalControl";
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart } from 'react-chartjs-2'
-import { useCallback } from "react";
 import { useEffect } from "react";
 import { actBillMonthAdmin, actBillYearAdmin, actDoanhThuMonthAdmin, actDoanhThuYearAdmin, actProductMonthAdmin, actProductYearAdmin } from "../../../redux/actions/AdminStatisticalAction";
 
-const initialChartData = {
-    labels: ['Boston', 'Worcester', 'Springfield', 'Lowell', 'Cambridge', 'New Bedford'],
-    datasets: [
-        {
-            label: 'Population',
-            data: [
-                10000,
-                181045,
-                153060,
-                106519,
-                105162,
-                95072
-            ],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.6)',
-                'rgba(54, 162, 235, 0.6)',
-                'rgba(255, 206, 86, 0.6)',
-                'rgba(75, 192, 192, 0.6)',
-                'rgba(153, 102, 255, 0.6)',
-                'rgba(255, 159, 64, 0.6)',
-                'rgba(140, 99, 132, 0.6)'
-            ]
-        }
-    ]
-}
-
-const initialChartData1 = {
-    labels: ['Boston', 'Worcester', 'Springfield', 'Lowell'],
-    datasets: [
-        {
-            label: 'Population',
-            data: [
-                10000,
-                181045,
-                153060,
-                106519,
-            ],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.6)',
-                'rgba(54, 162, 235, 0.6)',
-                'rgba(255, 206, 86, 0.6)',
-                'rgba(75, 192, 192, 0.6)',
-                'rgba(140, 99, 132, 0.6)'
-            ]
-        }
-    ]
-}
 
 function StatisticalAdmin() {
 
     const AdminStatisticalReducer = useSelector(state => state.AdminStatisticalReducer);
 
     const [title, setTitle] = useState("Thống kê");
-    const [data, setData] = useState(initialChartData)
     const [elmContentPie, setElmContentPie] = useState(null)
     const [elmContentBar, setElmContentBar] = useState(null)
     const [elmContentLine, setElmContentLine] = useState(null)
@@ -72,7 +23,7 @@ function StatisticalAdmin() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(actDoanhThuYearAdmin({ begin: 1900, end: new Date().getFullYear() }));
+        dispatch(actDoanhThuYearAdmin({ begin: (new Date().getFullYear())-12, end: new Date().getFullYear() }));
     }, [dispatch])
 
     useEffect(() => {

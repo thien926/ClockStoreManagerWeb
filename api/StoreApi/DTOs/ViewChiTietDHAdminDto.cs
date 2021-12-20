@@ -3,9 +3,9 @@ using StoreApi.Services;
 
 namespace StoreApi.DTOs
 {
-    public class ViewChiTietHDAdminDto
+    public class ViewChiTietDHAdminDto
     {
-        public PaginatedList<ChiTietHD> ListCTHD { get; set; }
+        public PaginatedList<ChiTietDH> ListCTHD { get; set; }
         public string search { get; set;}
         public string sort { get; set;}
         public int pageIndex{ get; set; }

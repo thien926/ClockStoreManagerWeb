@@ -18,16 +18,16 @@ namespace StoreApi.Controllers
         private readonly ISanPhamRepository sanPhamRepository;
         private readonly IKhachHangRepository KhachHangRepository;
         private readonly JwtKhachHangService jwtKhachHang;
-        private readonly IHoaDonRepository hoaDonRepository;
-        private readonly IChiTietHDRepository chiTietHDRepository;
+        private readonly IDonHangRepository DonHangRepository;
+        private readonly IChiTietDHRepository chiTietDHRepository;
         public CartController(ISanPhamRepository sanPhamRepository, IKhachHangRepository khachHangRepository,
-        JwtKhachHangService jwtKhachHangService, IHoaDonRepository hoaDonRepository, IChiTietHDRepository chiTietHDRepository)
+        JwtKhachHangService jwtKhachHangService, IDonHangRepository DonHangRepository, IChiTietDHRepository chiTietDHRepository)
         {
             this.sanPhamRepository = sanPhamRepository;
             this.KhachHangRepository = khachHangRepository;
             this.jwtKhachHang = jwtKhachHangService;
-            this.hoaDonRepository = hoaDonRepository;
-            this.chiTietHDRepository = chiTietHDRepository;
+            this.DonHangRepository = DonHangRepository;
+            this.chiTietDHRepository = chiTietDHRepository;
         }
 
         // Load sản phẩm của đơn hàng cho Cart
@@ -68,7 +68,7 @@ namespace StoreApi.Controllers
 
         // Thực hiện thanh toán cho Cart
         [HttpPost("checkoutcart")]
-        public ActionResult<HoaDon> CheckoutCart(CartDto cart)
+        public ActionResult<DonHang> CheckoutCart(CartDto cart)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace StoreApi.Controllers
                 }
 
                 // Tạo hóa đơn và lưu hóa đơn
-                HoaDon hd = new HoaDon();
+                DonHang hd = new DonHang();
                 hd.KHuser = kh.user;
                 hd.phone = kh.phone;
                 hd.address = cart.address;
@@ -156,29 +156,29 @@ namespace StoreApi.Controllers
                 hd.total = total;
                 hd.status = 1;
 
-                hd = hoaDonRepository.HoaDon_Add(hd);
-                List<ChiTietHD> listCTHD = new List<ChiTietHD>();
+                hd = DonHangRepository.DonHang_Add(hd);
+                List<ChiTietDH> listCTHD = new List<ChiTietDH>();
 
                 // Tạo chi tiết và lưu chi tiết hóa đơn
                 foreach (var item in sps)
                 {
                     for(i = 0; i < listProduct_id.Count(); ++i) {
                         if(item.Id == listProduct_id[i]) {
-                            ChiTietHD newChiTietHD = new ChiTietHD();
-                            newChiTietHD.billId = hd.Id;
-                            newChiTietHD.productId = item.Id;
-                            newChiTietHD.name = item.name;
-                            newChiTietHD.amount = listSoluong[i];
-                            newChiTietHD.price = item.price;
-                            newChiTietHD.img = item.img;
-                            listCTHD.Add(newChiTietHD);
+                            ChiTietDH newChiTietDH = new ChiTietDH();
+                            newChiTietDH.billId = hd.Id;
+                            newChiTietDH.productId = item.Id;
+                            newChiTietDH.name = item.name;
+                            newChiTietDH.amount = listSoluong[i];
+                            newChiTietDH.price = item.price;
+                            newChiTietDH.img = item.img;
+                            listCTHD.Add(newChiTietDH);
                             
                             // Update lại số lượng của sản phẩm sau khi thêm hóa đơn
                             item.amount = item.amount - listSoluong[i];
                         }
                     }
                 }
-                chiTietHDRepository.ChiTietHD_AddRange(listCTHD);
+                chiTietDHRepository.ChiTietDH_AddRange(listCTHD);
 
                 // Update lại sản phẩm và lưu vào database
                 sanPhamRepository.SanPham_UpdateRand((List<SanPham>)sps);

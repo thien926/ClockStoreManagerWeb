@@ -10,7 +10,7 @@ using StoreApi.Repositories;
 namespace StoreApi.Migrations
 {
     [DbContext(typeof(ClockStoreDBContext))]
-    [Migration("20211218080040_CreateDatabase")]
+    [Migration("20211218093744_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace StoreApi.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("StoreApi.Models.ChiTietHD", b =>
+            modelBuilder.Entity("StoreApi.Models.ChiTietDH", b =>
                 {
                     b.Property<int>("billId")
                         .HasColumnType("int");
@@ -47,7 +47,7 @@ namespace StoreApi.Migrations
 
                     b.HasIndex("productId");
 
-                    b.ToTable("ChiTietHDs");
+                    b.ToTable("ChiTietDHs");
                 });
 
             modelBuilder.Entity("StoreApi.Models.ChiTietPN", b =>
@@ -79,7 +79,7 @@ namespace StoreApi.Migrations
                     b.ToTable("ChiTietPNs");
                 });
 
-            modelBuilder.Entity("StoreApi.Models.HoaDon", b =>
+            modelBuilder.Entity("StoreApi.Models.DonHang", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -121,7 +121,7 @@ namespace StoreApi.Migrations
 
                     b.HasIndex("NVuser");
 
-                    b.ToTable("HoaDons");
+                    b.ToTable("DonHangs");
                 });
 
             modelBuilder.Entity("StoreApi.Models.KhachHang", b =>
@@ -402,16 +402,16 @@ namespace StoreApi.Migrations
                     b.ToTable("ThuongHieus");
                 });
 
-            modelBuilder.Entity("StoreApi.Models.ChiTietHD", b =>
+            modelBuilder.Entity("StoreApi.Models.ChiTietDH", b =>
                 {
-                    b.HasOne("StoreApi.Models.HoaDon", "bill")
-                        .WithMany("chitietHDs")
+                    b.HasOne("StoreApi.Models.DonHang", "bill")
+                        .WithMany("chitietDHs")
                         .HasForeignKey("billId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StoreApi.Models.SanPham", "product")
-                        .WithMany("chitietHDs")
+                        .WithMany("chitietDHs")
                         .HasForeignKey("productId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -440,7 +440,7 @@ namespace StoreApi.Migrations
                     b.Navigation("product");
                 });
 
-            modelBuilder.Entity("StoreApi.Models.HoaDon", b =>
+            modelBuilder.Entity("StoreApi.Models.DonHang", b =>
                 {
                     b.HasOne("StoreApi.Models.KhachHang", "KH")
                         .WithMany("hoadons")
@@ -514,9 +514,9 @@ namespace StoreApi.Migrations
                     b.Navigation("wire");
                 });
 
-            modelBuilder.Entity("StoreApi.Models.HoaDon", b =>
+            modelBuilder.Entity("StoreApi.Models.DonHang", b =>
                 {
-                    b.Navigation("chitietHDs");
+                    b.Navigation("chitietDHs");
                 });
 
             modelBuilder.Entity("StoreApi.Models.KhachHang", b =>
@@ -558,7 +558,7 @@ namespace StoreApi.Migrations
 
             modelBuilder.Entity("StoreApi.Models.SanPham", b =>
                 {
-                    b.Navigation("chitietHDs");
+                    b.Navigation("chitietDHs");
 
                     b.Navigation("chiTietPNs");
                 });

@@ -163,7 +163,7 @@ function CouponAdmin() {
                             <th>Số điện thoại</th>
                             <th>Thư điện tử</th>
                             <th>Địa chỉ</th>
-                            <th>Ngày nhận</th>
+                            <th>Ngày lập</th>
                             <th>Tổng</th>
                             {/* <th>Trạng thái</th> */}
                             <th>Hành động</th>

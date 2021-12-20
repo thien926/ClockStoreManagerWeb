@@ -7,9 +7,9 @@ using StoreApi.Services;
 
 namespace StoreApi.DTOs
 {
-    public class ViewHoaDonAdminDto
+    public class ViewDonHangAdminDto
     {
-        public PaginatedList<HoaDon> ListHD { get; set; }
+        public PaginatedList<DonHang> ListHD { get; set; }
         public string search { get; set;}
         public int status { get; set;}
         public int pageIndex{ get; set; }

@@ -36,6 +36,13 @@ function ProductsAdmin() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const utf8_from_str = (s) => {
+        var temp = decodeURIComponent(s);
+        temp = temp.split("+");
+        temp = temp.join(" ");
+        return temp;
+    }
+
     // Khi url thay đổi => sort, pageIndex thay đổi => setSort, setPageIndex
     useEffect(() => {
         var {search} = location;
@@ -65,7 +72,7 @@ function ProductsAdmin() {
                         
                         break;
                     case "search":
-                        setSearch(dauBang[1]);
+                        setSearch(utf8_from_str(dauBang[1]));
                         break;
                     default:
                         break;

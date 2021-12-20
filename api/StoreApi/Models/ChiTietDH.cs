@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StoreApi.Models
 {
-    public class ChiTietHD
+    public class ChiTietDH
     {
         [Key]
         [Required(ErrorMessage = "Mã hóa đơn là bắt buộc")]
@@ -30,7 +30,7 @@ namespace StoreApi.Models
         public string img { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public virtual HoaDon bill { get; set;}
+        public virtual DonHang bill { get; set;}
         
         public virtual SanPham product { get; set; }
     }
