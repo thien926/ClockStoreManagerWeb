@@ -123,12 +123,12 @@ function BillAdmin() {
 
     // đi đến URL khác khi status
     const changeStatus = (statusValue) => {
-        navigate('/admin/bill?search=' + search + '&status=' + statusValue + '&pageIndex=' + pageIndex);
+        navigate('/admin/bill?search=' + search + '&status=' + statusValue + '&pageIndex=' + 1);
     }
 
     // Thực hiện thao tác xóa
     const actionDelete = (id) => {
-        var res = window.confirm("Bạn có chắc muốn xóa hóa đơn có Id = " + id + " không?");
+        var res = window.confirm("Bạn có chắc muốn xóa đơn hàng có Id = " + id + " không?");
         if(res) {
             dispatch(actDeleteBillAdmin(id));
         }

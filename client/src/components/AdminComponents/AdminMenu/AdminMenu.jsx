@@ -148,7 +148,7 @@ function AdminMenu() {
                         setElmLinkPermission(null)
                     }
 
-                    if(UserAdmin.dataValue.quyen.details.search("HoaDon") >= 0){
+                    if(UserAdmin.dataValue.quyen.details.search("DonHang") >= 0){
                         setElmLinkMobileBill(<CustomLinkMobileMenuAdmin to='/admin/bill'>Đơn hàng</CustomLinkMobileMenuAdmin>)
                         setElmLinkBill(<CustomLinkAdmin to="/admin/bill">Đơn hàng</CustomLinkAdmin>)
                     }

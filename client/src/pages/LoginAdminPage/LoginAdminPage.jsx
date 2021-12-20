@@ -95,12 +95,12 @@ function LoginAdmin() {
 
                     <div className="form-group mt-4">
                         <label htmlFor="exampleInputEmail1">Tên đăng nhập : </label>
-                        <input type="text" className="form-control" placeholder="Username" value={user} onChange={(e) => setUser(e.target.value)}/>
+                        <input type="text" className="form-control" value={user} onChange={(e) => setUser(e.target.value)}/>
                         <small className="note form-text text-muted">{noteUser}</small>
                     </div>
                     <div className="form-group mt-4">
                         <label htmlFor="exampleInputPassword1">Mật khẩu : </label>
-                        <input type="password" className="form-control" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)}/>
                         <small className="note form-text text-muted">{notePassword}</small>
                     </div>
                     <button type="submit" className="btn btn-primary mt-4 btn-login-admin">Đăng nhập</button>

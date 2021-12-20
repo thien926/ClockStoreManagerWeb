@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoreApi.Models
 {
-    public class HoaDon
+    public class DonHang
     {
         public int Id {get; set;}
 
@@ -40,12 +40,12 @@ namespace StoreApi.Models
         public virtual KhachHang KH { get; set;}
         public virtual NhanVien NV { get; set; }
         [System.Text.Json.Serialization.JsonIgnore]
-        public ICollection<ChiTietHD> chitietHDs {get; set;}
+        public ICollection<ChiTietDH> chitietDHs {get; set;}
 
-        public HoaDon (){
+        public DonHang (){
             total = 0;
             status = 1;
-            this.chitietHDs = new HashSet<ChiTietHD>();
+            this.chitietDHs = new HashSet<ChiTietDH>();
         }
     }
 }

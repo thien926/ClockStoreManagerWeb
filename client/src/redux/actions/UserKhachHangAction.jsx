@@ -245,7 +245,7 @@ export const actUpdatePasswordKhachHang = (data) => (dispatch) => {
 
 export const actGetBillByUserKH = (pageIndex) => (dispatch) => {
     axios.get(
-        `${API_URL}hoadon/getByUserKH/${pageIndex}`,
+        `${API_URL}donhang/getByUserKH/${pageIndex}`,
         {
             headers : {
                 'Content-Type' : 'application/json'

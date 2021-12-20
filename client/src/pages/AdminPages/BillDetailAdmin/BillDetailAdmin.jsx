@@ -51,7 +51,7 @@ function BillDetailAdmin() {
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="breadcrumb-text product-more text-center">
-                                <h4>Hóa đơn Id = {Id}</h4>
+                                <h4>Đơn hàng Id = {Id}</h4>
                             </div>
                         </div>
                     </div>

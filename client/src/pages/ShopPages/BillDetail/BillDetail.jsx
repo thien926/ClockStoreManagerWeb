@@ -48,7 +48,7 @@ function BillDetail() {
                         <div className="col-lg-12">
                             <div className="breadcrumb-text product-more">
                                 <Link to='/home'><i className="fa fa-home" /> Trang chủ</Link>
-                                <span>Giỏ hàng</span>
+                                <span>Đơn hàng</span>
                             </div>
                         </div>
                     </div>

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StoreApi.DTOs
 {
-    public class FilterHoaDonDto
+    public class FilterDonHangDto
     {
         public string search { get; set; }
         public int pageIndex { get; set; }

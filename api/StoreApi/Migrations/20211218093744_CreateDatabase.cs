@@ -165,7 +165,7 @@ namespace StoreApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "HoaDons",
+                name: "DonHangs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -181,15 +181,15 @@ namespace StoreApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_HoaDons", x => x.Id);
+                    table.PrimaryKey("PK_DonHangs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HoaDons_KhachHangs_KHuser",
+                        name: "FK_DonHangs_KhachHangs_KHuser",
                         column: x => x.KHuser,
                         principalTable: "KhachHangs",
                         principalColumn: "user",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_HoaDons_NhanViens_NVuser",
+                        name: "FK_DonHangs_NhanViens_NVuser",
                         column: x => x.NVuser,
                         principalTable: "NhanViens",
                         principalColumn: "user",
@@ -222,7 +222,7 @@ namespace StoreApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ChiTietHDs",
+                name: "ChiTietDHs",
                 columns: table => new
                 {
                     billId = table.Column<int>(type: "int", nullable: false),
@@ -234,15 +234,15 @@ namespace StoreApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChiTietHDs", x => new { x.billId, x.productId });
+                    table.PrimaryKey("PK_ChiTietDHs", x => new { x.billId, x.productId });
                     table.ForeignKey(
-                        name: "FK_ChiTietHDs_HoaDons_billId",
+                        name: "FK_ChiTietDHs_DonHangs_billId",
                         column: x => x.billId,
-                        principalTable: "HoaDons",
+                        principalTable: "DonHangs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ChiTietHDs_SanPhams_productId",
+                        name: "FK_ChiTietDHs_SanPhams_productId",
                         column: x => x.productId,
                         principalTable: "SanPhams",
                         principalColumn: "Id",
@@ -278,8 +278,8 @@ namespace StoreApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChiTietHDs_productId",
-                table: "ChiTietHDs",
+                name: "IX_ChiTietDHs_productId",
+                table: "ChiTietDHs",
                 column: "productId");
 
             migrationBuilder.CreateIndex(
@@ -288,13 +288,13 @@ namespace StoreApi.Migrations
                 column: "productId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HoaDons_KHuser",
-                table: "HoaDons",
+                name: "IX_DonHangs_KHuser",
+                table: "DonHangs",
                 column: "KHuser");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HoaDons_NVuser",
-                table: "HoaDons",
+                name: "IX_DonHangs_NVuser",
+                table: "DonHangs",
                 column: "NVuser");
 
             migrationBuilder.CreateIndex(
@@ -331,13 +331,13 @@ namespace StoreApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ChiTietHDs");
+                name: "ChiTietDHs");
 
             migrationBuilder.DropTable(
                 name: "ChiTietPNs");
 
             migrationBuilder.DropTable(
-                name: "HoaDons");
+                name: "DonHangs");
 
             migrationBuilder.DropTable(
                 name: "PhieuNhaps");

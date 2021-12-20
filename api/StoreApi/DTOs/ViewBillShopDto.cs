@@ -9,7 +9,7 @@ namespace StoreApi.DTOs
 {
     public class ViewBillShopDto
     {
-        public PaginatedList<HoaDon> ListHD { get; set; }
+        public PaginatedList<DonHang> ListHD { get; set; }
         public int pageIndex{ get; set; }
 
         // Kích thước của 1 trang có bao nhiêu loại sản phẩm
